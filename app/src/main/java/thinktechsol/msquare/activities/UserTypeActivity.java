@@ -1,16 +1,21 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.utils.Constant;
 
 public class UserTypeActivity extends Activity {
 
-    ImageView type_seller_btn, type_buyer_btn;
+    ImageView type_seller_btn, type_buyer_btn, app_logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +24,53 @@ public class UserTypeActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_activity_user_type);
 
+        getScreenSize();
+
+        app_logo = (ImageView) findViewById(R.id.app_logo);
         type_seller_btn = (ImageView) findViewById(R.id.type_seller_btn);
         type_buyer_btn = (ImageView) findViewById(R.id.type_buyer_btn);
 
         type_seller_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent sellerLogin=new Intent(UserTypeActivity.this,SellerLoginActivity.class);
+                startActivity(sellerLogin);
             }
         });
+
+        app_logo.setLayoutParams(AppLayoutParam(20.83f, 45.00f, 0, 0, 0, 10, null));
+        type_buyer_btn.setLayoutParams(AppLayoutParam(37.08f, 49.58f, 0, 10, 0, 0, app_logo));
+        type_seller_btn.setLayoutParams(AppLayoutParam(37.08f, 49.58f, 0, 5, 0, 0, type_buyer_btn));
     }
+
+    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                getSize("w", width),
+                getSize("h", height));
+        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        if (below != null)
+            paramName.addRule(RelativeLayout.BELOW, below.getId());
+        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
+        return paramName;
+    }
+
+    public void getScreenSize() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Constant.screenWidth = dm.widthPixels;
+        Constant.screenHeight = dm.heightPixels;
+
+        Log.e("MainActivity", "width=" + Constant.screenWidth + " height=" + Constant.screenHeight);
+    }
+
+    public int getSize(String dimension, float size) {
+        float x = 0;
+        if (dimension.equals("w")) {
+            x = (size / 100) * Constant.screenWidth;
+        } else {
+            x = (size / 100) * Constant.screenWidth;
+        }
+        return (int) x;
+    }
+
 }

@@ -1,0 +1,55 @@
+package thinktechsol.msquare.activities;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import thinktechsol.msquare.R;
+import thinktechsol.msquare.utils.Constant;
+
+public class SellerLoginActivity extends Activity {
+
+    ImageView app_logo;
+    RelativeLayout submitbg;
+    ImageView btn_submit;
+    EditText et_login_code;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_seller_login);
+
+        app_logo = (ImageView) findViewById(R.id.app_logo);
+        submitbg = (RelativeLayout) findViewById(R.id.submitbg);
+        btn_submit = (ImageView) findViewById(R.id.btn_submit);
+        et_login_code = (EditText) findViewById(R.id.et_login_code);
+
+
+        app_logo.setLayoutParams(AppLayoutParam(20.83f, 45.00f, 0, 10, 0, 10, null));
+        submitbg.setLayoutParams(AppLayoutParam(43.54f, 85.41f, 0, 5, 0, 10, app_logo));
+        btn_submit.setLayoutParams(AppLayoutParam(10f, 44.58f, 0, 0, 0, 0, et_login_code));
+    }
+
+    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                getSize("w", width),
+                getSize("h", height));
+        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        if (below != null)
+            paramName.addRule(RelativeLayout.BELOW, below.getId());
+        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
+        return paramName;
+    }
+
+    public int getSize(String dimension, float size) {
+        float x = 0;
+        if (dimension.equals("w")) {
+            x = (size / 100) * Constant.screenWidth;
+        } else {
+            x = (size / 100) * Constant.screenWidth;
+        }
+        return (int) x;
+    }
+}

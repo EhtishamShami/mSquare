@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MSquare</string>
+    <string name="lbl_enter_code">Enter Your Code</string>
 </resources>
