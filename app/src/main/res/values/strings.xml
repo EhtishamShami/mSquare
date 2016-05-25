@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MSquare</string>
     <string name="lbl_enter_code">Enter Your Code</string>
+    <string name="title_activity_seller_dash_board">SellerDashBoardActivity</string>
+    <string name="lbl_message">Messages</string>
+    <string name="lbl_customer">Customer</string>
+    <string name="lbl_order">Order</string>
+    <string name="lbl_product">Product</string>
 </resources>

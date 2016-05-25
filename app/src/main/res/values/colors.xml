@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="messageColor">#0068a5</color>
+    <color name="customerColor">#2688ad</color>
+    <color name="orderColor">#82b421</color>
+    <color name="productColor">#daa400</color>
 </resources>

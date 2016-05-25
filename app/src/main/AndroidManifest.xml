@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="thinktechsol.msquare">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,8 +29,13 @@
         <activity
             android:name=".activities.UserTypeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.SellerLoginActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+        <activity
+            android:name=".activities.SellerLoginActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activities.SellerDashBoardActivity"
+            android:label="@string/title_activity_seller_dash_board"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

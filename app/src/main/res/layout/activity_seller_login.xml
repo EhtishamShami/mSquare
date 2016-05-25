@@ -36,6 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/lbl_enter_code"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <EditText
@@ -46,6 +48,7 @@
                     android:layout_margin="20dp"
                     android:singleLine="true"
                     android:lines="1"
+                    android:text="4ycg8gib"
                     android:background="@drawable/bg_edittext"
                     android:hint="@string/lbl_enter_code"
                     android:padding="5dp" />

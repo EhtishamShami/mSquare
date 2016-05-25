@@ -1,6 +1,7 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class SellerLoginActivity extends Activity {
     RelativeLayout submitbg;
     ImageView btn_submit;
     EditText et_login_code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,14 @@ public class SellerLoginActivity extends Activity {
         app_logo.setLayoutParams(AppLayoutParam(20.83f, 45.00f, 0, 10, 0, 10, null));
         submitbg.setLayoutParams(AppLayoutParam(43.54f, 85.41f, 0, 5, 0, 10, app_logo));
         btn_submit.setLayoutParams(AppLayoutParam(10f, 44.58f, 0, 0, 0, 0, et_login_code));
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                new sellerLogIn(SellerLoginActivity.this,et_login_code.getText().toString());
+                startActivity(new Intent(SellerLoginActivity.this, SellerDashBoardActivity.class));
+            }
+        });
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
