@@ -2,11 +2,13 @@ package thinktechsol.msquare.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -22,6 +24,10 @@ public class UserTypeActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_activity_user_type);
 
         getScreenSize();
@@ -33,8 +39,10 @@ public class UserTypeActivity extends Activity {
         type_seller_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sellerLogin=new Intent(UserTypeActivity.this,SellerLoginActivity.class);
+                Intent sellerLogin=new Intent(UserTypeActivity.this, SellerLoginActivity.class);
                 startActivity(sellerLogin);
+                overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
+                finish();
             }
         });
 

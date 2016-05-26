@@ -7,4 +7,6 @@
     <color name="customerColor">#2688ad</color>
     <color name="orderColor">#82b421</color>
     <color name="productColor">#daa400</color>
+    <color name="sellerDashBoardTitleBg">#000000</color>
+    <color name="bottomBarColor">#f9f9f9</color>
 </resources>

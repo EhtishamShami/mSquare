@@ -2,8 +2,11 @@ package thinktechsol.msquare.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,6 +24,12 @@ public class SellerLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_seller_login);
 
         app_logo = (ImageView) findViewById(R.id.app_logo);
@@ -36,8 +45,10 @@ public class SellerLoginActivity extends Activity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new sellerLogIn(SellerLoginActivity.this,et_login_code.getText().toString());
-                startActivity(new Intent(SellerLoginActivity.this, SellerDashBoardActivity.class));
+                Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, SellerDashBoardActivity.class);
+                startActivity(sellerDeshBoard);
+                overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
+                finish();
             }
         });
     }
