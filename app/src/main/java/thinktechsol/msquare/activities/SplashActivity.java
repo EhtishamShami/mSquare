@@ -68,7 +68,7 @@ public class SplashActivity extends Activity {
     }
 
     Animation animater;
-    public void DashBoard() {
+    public void DashBoard() { 
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 Intent i = new Intent(SplashActivity.this,
