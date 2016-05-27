@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_alignParentBottom="true"
+    android:layout_centerInParent="true"
     android:background="@android:color/white">
 
     <View
@@ -14,50 +15,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="3dp"
+        android:gravity="center"
         android:background="#f9f9f9"
         android:weightSum="5">
 
-
-        <ImageView
-            android:id="@+id/product"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:src="@drawable/product_btn_bottom" />
+            android:gravity="center"
+            android:layout_weight="1">
 
 
-        <ImageView
-            android:id="@+id/customer"
+            <ImageView
+                android:id="@+id/product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/product_btn_bottom" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:src="@drawable/customer_btn_bottom" />
+            android:gravity="center"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/order"
+            <ImageView
+                android:id="@+id/customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/customer_btn_bottom" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:src="@drawable/order_btn_bottom" />
+            android:gravity="center"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/message"
+            <ImageView
+                android:id="@+id/order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/order_btn_bottom" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:src="@drawable/msg_btn_bottom" />
+            android:gravity="center"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/setting"
+            <ImageView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/msg_btn_bottom" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:src="@drawable/setting_btn_bottom" />
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/setting_btn_bottom" />
+        </LinearLayout>
 
     </LinearLayout>
 

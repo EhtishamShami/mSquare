@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.widget.ImageView;
 
 import thinktechsol.msquare.R;
 
@@ -29,8 +28,8 @@ public class SplashActivity extends Activity {
 
 
 
-        ImageView splashImage = (ImageView) findViewById(R.id.splashImg);
-        splashImage.setBackgroundResource(R.drawable.splash_bg);
+//        ImageView splashImage = (ImageView) findViewById(R.id.splashImg);
+//        splashImage.setBackgroundResource(R.drawable.splash_bg);
 
 //		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //		editor = preferences.edit();
@@ -68,7 +67,7 @@ public class SplashActivity extends Activity {
     }
 
     Animation animater;
-    public void DashBoard() { 
+    public void DashBoard() {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 Intent i = new Intent(SplashActivity.this,

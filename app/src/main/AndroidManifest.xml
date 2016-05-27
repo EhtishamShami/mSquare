@@ -10,13 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait">
@@ -32,10 +25,8 @@
         <activity
             android:name=".activities.SellerLoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".activities.SellerDashBoardActivity"
-            android:label="@string/title_activity_seller_dash_board"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".activities.SellerDeshBoardActivity"></activity>
     </application>
 
 </manifest>

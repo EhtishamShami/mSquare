@@ -45,7 +45,7 @@ public class SellerLoginActivity extends Activity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, SellerDashBoardActivity.class);
+                Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, SellerDeshBoardActivity.class);
                 startActivity(sellerDeshBoard);
                 overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
                 finish();
