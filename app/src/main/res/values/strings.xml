@@ -6,4 +6,31 @@
     <string name="lbl_customer">Customer</string>
     <string name="lbl_order">Order</string>
     <string name="lbl_product">Product</string>
+
+
+    <!--home-->
+    <string name="lbl_baqala">Baqala</string>
+    <string name="lbl_cleaning">Handmade Products</string>
+    <string name="lbl_cleanmycar">Cleaning</string>
+    <string name="lbl_handmade_pro">Salon</string>
+    <string name="lbl_house_made">Maintenance</string>
+    <string name="lbl_laundry">Housemaid</string>
+    <string name="lbl_maintence">Laundry</string>
+    <string name="lbl_salon">Clean my car</string>
+
+    <!--add product-->
+    <string name="lbl_title_pro">Product Title</string>
+    <string name="lbl_des_pro">Product Description</string>
+    <string name="lbl_price_pro">Price/Hourly</string>
+    <string name="lbl_time_pro">00:00</string>
+
+    <string-array name="values">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+        <item>Item 4</item>
+        <item>Item 5</item>
+        <item>Item 6</item>
+    </string-array>
+
 </resources>
