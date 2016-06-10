@@ -9,4 +9,28 @@
     <color name="productColor">#daa400</color>
     <color name="sellerDashBoardTitleBg">#000000</color>
     <color name="bottomBarColor">#f9f9f9</color>
+    <color name="whiteColor">#ffffff</color>
+
+    <!--add product title bar color-->
+    <color name="addProductTitleBarColor">#daa400</color>
+    <color name="addProductSelectorColor">#daa400</color>
+
+    <color name="buttonSelectorColor">#FF007AFF</color>
+
+    <!--home-->
+    <color name="item1Color">#973c5f</color>
+    <color name="item2Color">#cb3b5c</color>
+    <color name="item3Color">#0068a5</color>
+    <color name="item4Color">#2688ad</color>
+    <color name="item5Color">#de7112</color>
+    <color name="item6Color">#dc4d15</color>
+    <color name="item7Color">#13a06b</color>
+    <color name="item8Color">#82b421</color>
+
+
+    <!--categories color-->
+    <color name="cat_item1_color">#13a06b</color>
+    <color name="cat_item2_color">#82b421</color>
+    <color name="cat_item3_color">#6c1e00</color>
+    <color name="cat_item4_color">#a32d00</color>
 </resources>

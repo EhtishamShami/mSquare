@@ -16,6 +16,10 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.fragments.Fragment_2_items;
+import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
+import thinktechsol.msquare.interfaceMine.subItemClick;
 import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
@@ -24,7 +28,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter2 extends ArrayAdapter<Item> {
 
     private static final int Message = 0;
     private static final int Customer = 1;
@@ -36,16 +40,25 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private static int rowHeight = 80 / 4;
     private static float swiperSubItemWidth = 16.66f;
     private static float swiperSubItemHeight = 12.5f;
+    Fragment_2_items TwoItemsFrag;
+    SellerDeshBoardActivity ActivityContext;
+    SellerDashBoardProductFragment fragContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
+    subItemClick click;
     private ArrayList<Item> objects;
 
 
-    public ItemAdapter(Context context, int textViewResourceId, ArrayList<Item> objects) {
+    public ItemAdapter2(Context context, SellerDeshBoardActivity ActivityContext, int textViewResourceId, ArrayList<Item> objects, SellerDashBoardProductFragment fragContext) {
         super(context, textViewResourceId, objects);
         this.objects = objects;
         this.context = context;
+        this.ActivityContext = ActivityContext;
+//        click = ActivityContext;
+//        TwoItemsFrag = new Fragment_2_items();
+        this.fragContext = fragContext;
+
     }
 
     @Override
@@ -68,23 +81,27 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         return 0;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         int viewType = this.getItemViewType(position);
 
         try {
             switch (viewType) {
                 case Layout_2_sub_items:
-                    Type1Holder holder1;
+                    final Type1Holder holder1;
                     SwipeLayout swipeLayout = null;
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.dashboard_row_item1, parent, false);
+                        v = vi.inflate(R.layout.dashboard_row_item1_test_frag, parent, false);
 
 
                         holder1 = new Type1Holder();
                         holder1.swipeLayout = (SwipeLayout) v.findViewById(R.id.simple1);
                         holder1.bglayout = (RelativeLayout) v.findViewById(R.id.bglayout);
+                        holder1.btmWraper = (LinearLayout) v.findViewById(R.id.bottom_wrapper_2);
+                        holder1.btmWraper.bringToFront();
+                        holder1.btmWraper.setVisibility(View.INVISIBLE);
+
                         holder1.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder1.lbl_txt = (TextView) v.findViewById(R.id.lbl_txt);
                         holder1.counterTV = (TextView) v.findViewById(R.id.counterTV);
@@ -97,6 +114,19 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                     } else {
                         holder1 = (Type1Holder) v.getTag();
                     }
+
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (holder1.btmWraper.getVisibility() == View.VISIBLE) {
+                                holder1.btmWraper.setVisibility(View.INVISIBLE);
+                                holder1.counterTV.setVisibility(View.VISIBLE);
+                            } else if (holder1.btmWraper.getVisibility() == View.INVISIBLE) {
+                                holder1.btmWraper.setVisibility(View.VISIBLE);
+                                holder1.counterTV.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
 
                     Item myItem = objects.get(position);
 
@@ -125,6 +155,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                             holder1.subItem2.setBackgroundResource(myItem.subItemIcon2);
                             holder1.subItem2.setLayoutParams(AppLayoutParamSubItems(swiperSubItemHeight, swiperSubItemWidth, 0, 0, 0, 0, null));
                         }
+
+                        holder1.subItem1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+//                                SellerAddProductFragment fragobj = new SellerAddProductFragment();
+                                fragContext.openFragment(position, "left");
+                            }
+                        });
+
+
+                        holder1.subItem2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fragContext.openFragment(position, "right");
+                            }
+                        });
                     }
                     return v;
 //
@@ -234,6 +280,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     public static class Type1Holder {
         public SwipeLayout swipeLayout;
         public RelativeLayout bglayout;
+        public LinearLayout btmWraper;
         public ImageView lbl;
         public TextView lbl_txt;
         public TextView counterTV;

@@ -24,27 +24,31 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerLoginActivity;
+import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.SellerLogInResponse;
+import thinktechsol.msquare.model.SellerProductItem;
+import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class sellerLogIn {
+public class SellerProductList {
 
     private static final String TAG_SUCCESS = "success";
 
-    String service_url = "http://weblinelab.com/demo/msquare/api/getSellerDetails/{code}";
+    String _url = "getServices/";
     Context ctx;
     ProgressDialog progressDialog;
-    String code;
-    SellerLogInResponse parsedObject;
-    //    JobsActivity jobsAct;
-    SellerLoginActivity ref;
+    String serviceid;
     AlertDialog NotFoundDialog;
+    SellerAddProductFragment ref;
 
-    public sellerLogIn(final Context ctx, SellerLoginActivity ref, String code) {
+    public SellerProductList(final Context ctx, SellerAddProductFragment ref, String serviceid) {
         this.ctx = ctx;
         this.ref = ref;
+        this.serviceid = serviceid;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Searching Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -52,7 +56,7 @@ public class sellerLogIn {
         progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage("Plesae try again! Internet problem or Wrong Code");
+        builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
         builder.setTitle("Not Found");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -65,70 +69,53 @@ public class sellerLogIn {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        getSellerLoginDetail(code);
+        getSellerProductDetail(serviceid);
     }
 
-    public void getSellerLoginDetail(String code) {
-        this.code = code;
-        Log.e("sellerLogIn", "code=" + code);
-        new getSellerLoginDetailAsync().execute(code);
+    public void getSellerProductDetail(String serviceid) {
+        this.serviceid = serviceid;
+        Log.e("sellerLogIn", "code=" + serviceid);
+        new getSellerProductDetialAsync().execute(serviceid);
     }
 
-    private SellerLogInResponse returnParsedJsonObject(String result) {
+    private ArrayList<SellerProductItem> returnParsedJsonObject(String result) {
 
         List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
         SellerLogInResponse sellerLogInResponse = null;
+        ArrayList<SellerProductItem> product = new ArrayList<SellerProductItem>();
 
         try {
             JSONObject parentObject = new JSONObject(result);
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            String childObject = parentJSONObjDetails.getString("data");
+            JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
 
-            JSONObject childJSONObjDetails = new JSONObject(childObject);
-
-            String logo = childJSONObjDetails.getString("logo");
-            String status = childJSONObjDetails.getString("status");
-            String documents = childJSONObjDetails.getString("documents");
-            String tradeNo = childJSONObjDetails.getString("tradeNo");
-            String lName = childJSONObjDetails.getString("lName");
-            String companyName = childJSONObjDetails.getString("companyName");
-            String password = childJSONObjDetails.getString("password");
-            String fName = childJSONObjDetails.getString("fName");
-            String phoneNo = childJSONObjDetails.getString("phoneNo");
-            String id = childJSONObjDetails.getString("id");
-            String email = childJSONObjDetails.getString("email");
-            String address = childJSONObjDetails.getString("address");
-            String description = childJSONObjDetails.getString("description");
-            String activationCode = childJSONObjDetails.getString("activationCode");
-            String service = childJSONObjDetails.getString("service");
-            String longitude = childJSONObjDetails.getString("longitude");
-            String latitude = childJSONObjDetails.getString("latitude");
-            String datetime = childJSONObjDetails.getString("datetime");
-            String mobileNo = childJSONObjDetails.getString("mobileNo");
-
-            sellerLogInResponse = new SellerLogInResponse(logo, status, documents, tradeNo, lName, companyName, password, fName, phoneNo, id, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
-            Log.e("sellerLogIn", "responsu code=" + sellerLogInResponse.service);
+            for (int i = 0; i < productArray.length(); i++) {
+                JSONObject feedObj = (JSONObject) productArray.get(i);
+                String id = feedObj.getString("id");
+                String status = feedObj.getString("status");
+                String description = feedObj.getString("description");
+                String name = feedObj.getString("name");
+                String parent = feedObj.getString("parent");
+                String thumb = feedObj.getString("thumb");
+                product.add(new SellerProductItem(id, status, description, name, parent, thumb));
+            }
 
         } catch (JSONException e) {
             Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
             e.printStackTrace();
             NotFoundDialog.show();
         }
-
-        return sellerLogInResponse;
+        return product;
     }
 
-    public SellerLogInResponse getJsonArray() {
-        return parsedObject;
-    }
 
     /**
      * Background Async Task to fetch all jobs
      */
-    class getSellerLoginDetailAsync extends AsyncTask<String, String, String> {
+    class getSellerProductDetialAsync extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -137,9 +124,9 @@ public class sellerLogIn {
 
         protected String doInBackground(String... input) {
             try {
-                String code = input[0];
-                URL url = new URL("http://weblinelab.com/demo/msquare/api/getSellerDetails/" + code + "");
-                Log.e("sellerLogIn", "url is=" + url);
+                String serviceid = input[0];
+                URL url = new URL(Constant.baseUrl + _url + serviceid + "");
+                Log.e("seller get product list", "url is=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -147,7 +134,7 @@ public class sellerLogIn {
                 httpURLConnection.setReadTimeout(30000);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(code, "UTF-8");
+                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(serviceid, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
@@ -162,7 +149,7 @@ public class sellerLogIn {
                 }
                 bufferedReader.close();
                 inputStream.close();
-
+                Log.e("sellerLogIn", "result is=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
@@ -178,16 +165,12 @@ public class sellerLogIn {
 
         protected void onPostExecute(String response) {
             if (response != null) {
-
-                parsedObject = returnParsedJsonObject(response);
-                globels.getGlobelRef().sellerlogin = parsedObject;
-                ref.transation();
+                ArrayList<SellerProductItem> list = returnParsedJsonObject(response);
+                ref.fill_data_to_adapter(list);
                 progressDialog.dismiss();
-
             } else {
                 NotFoundDialog.show();
             }
         }
     }
-
 }

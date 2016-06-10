@@ -25,8 +25,12 @@
         <activity
             android:name=".activities.SellerLoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
-        <activity android:name=".activities.SellerDeshBoardActivity"></activity>
+        <activity android:name=".activities.SellerDeshBoardActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity
+            android:name=".activities.AddProActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
     </application>
 
 </manifest>

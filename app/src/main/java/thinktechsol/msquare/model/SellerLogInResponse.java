@@ -4,25 +4,25 @@ package thinktechsol.msquare.model;
  * Created by Arshad.Iqbal on 5/24/2016.
  */
 public class SellerLogInResponse {
-    private String logo;
-    private String status;
-    private String documents;
-    private String tradeNo;
-    private String lName;
-    private String companyName;
-    private String password;
-    private String fName;
-    private String phoneNo;
-    private String id;
-    private String email;
-    private String address;
-    private String description;
-    private String activationCode;
-    private String service;
-    private String longitude;
-    private String latitude;
-    private String datetime;
-    private String mobileNo;
+    public String logo;
+    public String status;
+    public String documents;
+    public String tradeNo;
+    public String lName;
+    public String companyName;
+    public String password;
+    public String fName;
+    public String phoneNo;
+    public String id;
+    public String email;
+    public String address;
+    public String description;
+    public String activationCode;
+    public String service;
+    public String longitude;
+    public String latitude;
+    public String datetime;
+    public String mobileNo;
     public SellerLogInResponse(String logo, String status, String documents, String tradeNo, String lName, String companyName, String password, String fName, String phoneNo, String id, String email, String address, String description, String activationCode, String service, String longitude, String latitude, String datetime, String mobileNo) {
         this.logo = logo;
         this.status = status;
@@ -44,7 +44,4 @@ public class SellerLogInResponse {
         this.datetime = datetime;
         this.mobileNo = mobileNo;
     }
-
-
-
 }

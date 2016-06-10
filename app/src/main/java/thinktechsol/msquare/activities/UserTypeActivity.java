@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import thinktechsol.msquare.utils.Constant;
 public class UserTypeActivity extends Activity {
 
     ImageView type_seller_btn, type_buyer_btn, app_logo;
+    int btnSelectorColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class UserTypeActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_activity_user_type);
+        btnSelectorColor = getResources().getColor(R.color.buttonSelectorColor);
 
         getScreenSize();
 
@@ -36,15 +39,44 @@ public class UserTypeActivity extends Activity {
         type_seller_btn = (ImageView) findViewById(R.id.type_seller_btn);
         type_buyer_btn = (ImageView) findViewById(R.id.type_buyer_btn);
 
-        type_seller_btn.setOnClickListener(new View.OnClickListener() {
+        type_buyer_btn.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent sellerLogin=new Intent(UserTypeActivity.this, SellerLoginActivity.class);
-                startActivity(sellerLogin);
-                overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
-                finish();
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                int action = arg1.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    Constant.makeImageAlphLowOrHigh(type_buyer_btn, 0.3f);
+                    return true;
+                } else if (action == MotionEvent.ACTION_UP) {
+                    Constant.makeImageAlphLowOrHigh(type_buyer_btn, 1f);
+                    return true;
+                }
+                return false;
             }
         });
+
+        type_seller_btn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                int action = arg1.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    Constant.makeImageAlphLowOrHigh(type_seller_btn, 0.3f);
+                    return true;
+                } else if (action == MotionEvent.ACTION_UP) {
+//                    Constant.makeImageAlphLowOrHigh(type_seller_btn, 1f);
+//                    Intent sellerLogin = new Intent(UserTypeActivity.this, SellerLoginActivity.class);
+//                    startActivity(sellerLogin);
+//                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+//                    finish();
+
+                    Intent sellerLogin = new Intent(UserTypeActivity.this, AddProActivity.class);
+                    startActivity(sellerLogin);
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         app_logo.setLayoutParams(AppLayoutParam(20.83f, 45.00f, 0, 0, 0, 10, null));
         type_buyer_btn.setLayoutParams(AppLayoutParam(37.08f, 49.58f, 0, 10, 0, 0, app_logo));
