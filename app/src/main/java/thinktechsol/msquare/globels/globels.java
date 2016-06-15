@@ -16,5 +16,6 @@ public class globels {
     }
 
     public SellerLogInResponse sellerlogin;
+    public String IdForAddProduct;
 
 }

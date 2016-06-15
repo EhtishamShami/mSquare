@@ -4,6 +4,15 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    useLibrary 'org.apache.http.legacy'
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
     defaultConfig {
         applicationId "thinktechsol.msquare"
         minSdkVersion 16
@@ -17,6 +26,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
@@ -28,7 +39,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.daimajia.androidanimations:library:1.1.2@aar'
     compile 'com.theartofdev.edmodo:android-image-cropper:1.1.+'
-    //    compile 'com.nineoldandroids:library:2.4.0'
-    //compile files('libs/AndroidSwipeLayout-v1.1.8.jar')
-    //    compile 'jp.wasabeef:recyclerview-animators:1.0.3@aar'
+    compile 'dev.dworks.libs:volleyplus:+'
+//    compile 'org.apache.httpcomponents:httpcore:4.4.1'
+//    compile 'org.apache.httpcomponents:httpclient:4.5'
+
 }

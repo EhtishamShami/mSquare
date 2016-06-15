@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.utils.Constant;
 
@@ -90,7 +92,7 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
                         holder1 = (Type1Holder) v.getTag();
                     }
 
-                    AddProductItem myItem = objects.get(position);
+                    final AddProductItem myItem = objects.get(position);
                     if (myItem != null) {
                         //1st item
                         if (holder1.lbl_txt != null) {
@@ -109,6 +111,8 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+//                            Toast.makeText(context, "" + myItem.id, Toast.LENGTH_SHORT).show();
+                            globels.getGlobelRef().IdForAddProduct = myItem.id;
                             Intent add = new Intent(context, AddProActivity.class);
                             context.startActivity(add);
                         }

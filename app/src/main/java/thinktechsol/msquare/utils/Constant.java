@@ -13,6 +13,8 @@ public class Constant {
     public static int screenHeight;
     public static int screenWidth;
 
+    public static String folderNameForCapturedImage = "MSquare";
+
     public static void makeImageAlphLowOrHigh(View v, float alphaValue) {
         AlphaAnimation alpha = new AlphaAnimation(alphaValue, alphaValue);
         alpha.setFillAfter(true);

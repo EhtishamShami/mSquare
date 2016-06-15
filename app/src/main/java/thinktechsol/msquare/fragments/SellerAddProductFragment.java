@@ -105,7 +105,7 @@ public class SellerAddProductFragment extends Fragment {
 
         int colorId = 0;
         for (int i = 0; i < list.size(); i++) {
-            m_parts.add(new AddProductItem(list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
+            m_parts.add(new AddProductItem(list.get(i).id, list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
             colorId = (colorId < 3) ? colorId += 1 : 0;
         }
 

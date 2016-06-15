@@ -4,20 +4,26 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,16 +37,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapter;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
+import thinktechsol.msquare.services.AddImageOfProduct;
+import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.utils.Constant;
 
 public class AddProActivity extends Activity implements UploadImgInterface {
@@ -96,20 +108,19 @@ public class AddProActivity extends Activity implements UploadImgInterface {
             }
         });
         titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.addProductTitleBarColor));
-        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0,null));
-
+        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
 
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0,null));
-        imgs.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0,null));
+        viewPager.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
+        imgs.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
         adapter = new ImgSwiperAdapter(AddProActivity.this,
                 getFilePaths(), viewPager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
         setAndShowDotsOnPager();
 
-        fields1.setLayoutParams(AppLayoutParam(40.0f, 100f, 0, 5, 0, 0,imgs));
+        fields1.setLayoutParams(AppLayoutParam(40.0f, 100f, 0, 5, 0, 0, imgs));
 //        bottombarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0,fields1));
 
         add_product.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +174,18 @@ public class AddProActivity extends Activity implements UploadImgInterface {
 //
 //            }
 //        });
+
+        add_product_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("AddProActivity", "first path=" + selectedImagePath.size());
+
+
+//                Toast.makeText(AddProActivity.this, "btn pressed=" + adapter.bitmapList.get(1), Toast.LENGTH_SHORT).show();
+//                new AddImageOfProduct(AddProActivity.this, AddProActivity.this, selectedImagePath);
+                new SellerAddProduct(AddProActivity.this, AddProActivity.this, selectedImagePath);
+            }
+        });
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
@@ -196,9 +219,36 @@ public class AddProActivity extends Activity implements UploadImgInterface {
 
     @Override
     public void onClicked() {
-//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(cameraIntent, CAMERA_REQUEST);
-        openCameraAndCapture();
+
+
+        openChooserDialog();
+    }
+
+    public void openChooserDialog() {
+
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddProActivity.this);
+//        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    //Capture image from camera
+                    takePhoto();
+                } else if (options[item].equals("Choose from Gallery")) {
+                    //pick image from gallary
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    startActivityForResult(photoPickerIntent, 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+
     }
 
     private void setAndShowDotsOnPager() {
@@ -243,92 +293,62 @@ public class AddProActivity extends Activity implements UploadImgInterface {
         }
     };
 
-    public void openCameraAndCapture() {
-        startActivityForResult(getPickImageChooserIntent(), 200);
-    }
-
-    public Intent getPickImageChooserIntent() {
-
-        // Determine Uri of camera image to save.
-        Uri outputFileUri = getCaptureImageOutputUri();
-
-        List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager = getPackageManager();
-
-        // collect all camera intents
-        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            }
-            allIntents.add(intent);
-        }
-
-        // collect all gallery intents
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new Intent(galleryIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            allIntents.add(intent);
-        }
-
-        Intent mainIntent = allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
-                mainIntent = intent;
-                break;
-            }
-        }
-        allIntents.remove(mainIntent);
-
-        // Create a chooser from the main intent
-        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
-        // Add all other intents
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-        return chooserIntent;
-    }
-
-    private Uri getCaptureImageOutputUri() {
-        Uri outputFileUri = null;
-        File getImage = getExternalCacheDir();
-        if (getImage != null) {
-            outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));
-        }
-        return outputFileUri;
-    }
+    ArrayList<String> selectedImagePath;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Uri imageUri = getPickImageResultUri(data);
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                adapter.bitmapList.add(bitmap);
-                setAndShowDotsOnPager();
 
-                viewPager.getAdapter().notifyDataSetChanged();
-                viewPager.invalidate();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Uri photoUri = data.getData();
+                    if (photoUri != null) {
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        String filePath = cursor.getString(columnIndex);
+                        cursor.close();
+                        Log.e("AddProActivity", "Gallery File Path=====>>>" + filePath);
+
+                        AddImgToViewPager(filePath);
+                    }
+                }
+
+                break;
+            case 2:
+                if (resultCode == RESULT_OK) {
+                    AddImgToViewPager(path);
+                }
+                break;
         }
     }
 
-    public Uri getPickImageResultUri(Intent data) {
-        boolean isCamera = true;
-        if (data != null && data.getData() != null) {
-            String action = data.getAction();
-            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+    public void AddImgToViewPager(String ImgPath) {
+        try {
+            selectedImagePath.add(ImgPath);
+
+            Uri uri = Uri.fromFile(new File("" + ImgPath));
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            adapter.bitmapList.add(bitmap);
+//            getImageUri(AddProActivity.this, bitmap);
+            setAndShowDotsOnPager();
+
+            viewPager.getAdapter().notifyDataSetChanged();
+            viewPager.invalidate();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
+
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 
     public RelativeLayout.LayoutParams AppLayoutParam2(float height, float width, float mL, float mT, float mR, float mB) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
@@ -359,4 +379,23 @@ public class AddProActivity extends Activity implements UploadImgInterface {
                 break;
         }
     }
+
+    String path;
+
+    public void takePhoto() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        File folder = new File(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage);
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        final Calendar c = Calendar.getInstance();
+        String new_Date = c.get(Calendar.DAY_OF_MONTH) + "-" + ((c.get(Calendar.MONTH)) + 1) + "-" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND);
+        path = String.format(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage + "/%s.png", "Product(" + new_Date + ")");
+        File photo = new File(path);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+        startActivityForResult(intent, 2);
+    }
+
+
 }

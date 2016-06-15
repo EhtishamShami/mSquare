@@ -62,14 +62,11 @@ public class UserTypeActivity extends Activity {
                     Constant.makeImageAlphLowOrHigh(type_seller_btn, 0.3f);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
-//                    Constant.makeImageAlphLowOrHigh(type_seller_btn, 1f);
-//                    Intent sellerLogin = new Intent(UserTypeActivity.this, SellerLoginActivity.class);
-//                    startActivity(sellerLogin);
-//                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-//                    finish();
-
-                    Intent sellerLogin = new Intent(UserTypeActivity.this, AddProActivity.class);
+                    Constant.makeImageAlphLowOrHigh(type_seller_btn, 1f);
+                    Intent sellerLogin = new Intent(UserTypeActivity.this, SellerLoginActivity.class);
                     startActivity(sellerLogin);
+                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+                    finish();
 
                     return true;
                 }
