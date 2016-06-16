@@ -111,6 +111,20 @@ public class GetSellerProducts {
                 String dateTime = childJsonObj.getString("dateTime");
                 String status = childJsonObj.getString("status");
 
+                String productImages = childJsonObj.getString("productImages");
+                if(productImages.equals("false")){
+                    Log.e(TAG, "productImages in parsing object t=" + productImages);
+                }else {
+                    JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
+                    for (int img = 0; img < productImagesArray.length(); img++) {
+                        JSONObject ImgJsonObj = (JSONObject) productArray.get(img);
+                        String ImgId = childJsonObj.getString("id");
+                        String sellerProductId = childJsonObj.getString("sellerProductId");
+                        String image = childJsonObj.getString("image");
+//                        new ProductImages();
+                    }
+                }
+
 //                String productImages = childJsonObj.getString("productImages");
 //                String productReviews = childJsonObj.getString("productReviews");
 //                String productRating = childJsonObj.getString("productRating");
@@ -119,7 +133,7 @@ public class GetSellerProducts {
             }
 
         } catch (JSONException e) {
-            Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
+            Log.e(TAG, "JSONExc ParsedJsonObject=" + e);
             e.printStackTrace();
             NotFoundDialog.show();
         }

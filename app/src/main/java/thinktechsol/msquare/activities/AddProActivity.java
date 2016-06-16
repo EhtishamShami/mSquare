@@ -416,7 +416,7 @@ public class AddProActivity extends Activity implements UploadImgInterface {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
                 Constant.getSize("w", width),
                 Constant.getSize("h", height));
-//        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        paramName.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 //        if (below != null)
 //            paramName.addRule(RelativeLayout.BELOW, below.getId());
         paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
@@ -461,12 +461,12 @@ public class AddProActivity extends Activity implements UploadImgInterface {
 
     public void fillProductListWithData(ArrayList<getSellerProductsResponse> list) {
 
-        ArrayList<ViewProductItem> listItem = new ArrayList<ViewProductItem>();
-        listItem.add(new ViewProductItem("Test Pro", "processed", R.drawable.messages, true));
-        listItem.add(new ViewProductItem("Test Pro2", "not processed", R.drawable.messages, true));
+//        ArrayList<ViewProductItem> listItem = new ArrayList<ViewProductItem>();
+//        listItem.add(new ViewProductItem("Test Pro", "processed", R.drawable.messages, true));
+//        listItem.add(new ViewProductItem("Test Pro2", "not processed", R.drawable.messages, true));
 
         try {
-            ViewProductListAdapter m_adapter = new ViewProductListAdapter(AddProActivity.this, AddProActivity.this, R.layout.view_product_list_item, listItem);
+            ViewProductListAdapter m_adapter = new ViewProductListAdapter(AddProActivity.this, AddProActivity.this, R.layout.view_product_list_item, list);
             product_list.setAdapter(m_adapter);
         } catch (Exception e) {
             Log.e("SellerDashBoardActivity", "adapter=" + e);

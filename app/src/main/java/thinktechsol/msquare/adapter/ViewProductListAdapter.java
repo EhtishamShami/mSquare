@@ -12,17 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
-
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddProActivity;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
-import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.interfaceMine.subItemClick;
-import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.ViewProductItem;
 import thinktechsol.msquare.utils.Constant;
 
@@ -31,7 +27,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class ViewProductListAdapter extends ArrayAdapter<ViewProductItem> {
+public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsResponse> {
 
     private static final int _row = 0;
 
@@ -41,12 +37,12 @@ public class ViewProductListAdapter extends ArrayAdapter<ViewProductItem> {
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     subItemClick click;
-    private ArrayList<ViewProductItem> objects;
+    private ArrayList<getSellerProductsResponse> productList;
 
 
-    public ViewProductListAdapter(Context context, AddProActivity ActivityContext, int textViewResourceId, ArrayList<ViewProductItem> objects) {
-        super(context, textViewResourceId, objects);
-        this.objects = objects;
+    public ViewProductListAdapter(Context context, AddProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
+        super(context, textViewResourceId, productList);
+        this.productList = productList;
         this.context = context;
         this.ActivityContext = ActivityContext;
     }
@@ -97,22 +93,23 @@ public class ViewProductListAdapter extends ArrayAdapter<ViewProductItem> {
                         }
                     });
 
-                    ViewProductItem myItem = objects.get(position);
+                    getSellerProductsResponse myItem = productList.get(position);
 
                     if (myItem != null) {
                         if (holder1.lbl != null) {
-                            holder1.lbl.setBackgroundResource(myItem.imgUrl);
+//                            holder1.lbl.setBackgroundResource(myItem.imgUrl);
 //                            holder1.lbl.setLayoutParams(AppLayoutParamSubItems(swiperSubItemHeight, swiperSubItemWidth, 0, 0, 0, 0, null));
                         }
 
                         if (holder1.productName != null) {
-                            holder1.productName.setText(myItem.proName);
+                            holder1.productName.setText(myItem.title);
                         }
                         if (holder1.status != null) {
-                            holder1.status.setText(myItem.status);
+                            holder1.status.setText(myItem.price);
                         }
                         if (holder1.isSelected != null) {
-                            holder1.isSelected.setChecked(myItem.isSelected);
+                            holder1.isSelected.setChecked(true);
+//                            holder1.isSelected.setChecked(myItem.isSelected);
 //                            holder1.isSelected.setLayoutParams(AppLayoutParam(5.50f, 18.91f, 5, 0, 0, 0, null));
                         }
 
