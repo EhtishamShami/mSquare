@@ -43,9 +43,12 @@ public class SellerAddProduct {
     AddProActivity ref;
     ArrayList<String> selectedImagePath;
 
-    public SellerAddProduct(final Context ctx, AddProActivity ref, ArrayList<String> selectedImagePath) {
+    String productDetails[];
+
+    public SellerAddProduct(final Context ctx, AddProActivity ref, String productDetails[], ArrayList<String> selectedImagePath) {
         this.ctx = ctx;
         this.ref = ref;
+        this.productDetails = productDetails;
         this.selectedImagePath = selectedImagePath;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Saving Please wait...");
@@ -117,19 +120,27 @@ public class SellerAddProduct {
 
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+//                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().sellerlogin.id, "UTF-8")
+//                        + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().IdForAddProduct, "UTF-8")
+//                        + "&" + URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
+//                        + "&" + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
+//                        + "&" + URLEncoder.encode("price", "UTF-8") + "=" + URLEncoder.encode("122", "UTF-8")
+//                        + "&" + URLEncoder.encode("deliveryTime", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8");
+
+                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerlogin.id + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
+
                 String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().sellerlogin.id, "UTF-8")
                         + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().IdForAddProduct, "UTF-8")
-                        + "&" + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
-                        + "&" + URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
-                        + "&" + URLEncoder.encode("price", "UTF-8") + "=" + URLEncoder.encode("122", "UTF-8")
-                        + "&" + URLEncoder.encode("deliveryTime", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8");
+                        + "&" + URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode(productDetails[0], "UTF-8")
+                        + "&" + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(productDetails[1], "UTF-8")
+                        + "&" + URLEncoder.encode("price", "UTF-8") + "=" + URLEncoder.encode(productDetails[2], "UTF-8")
+                        + "&" + URLEncoder.encode("deliveryTime", "UTF-8") + "=" + URLEncoder.encode(productDetails[3], "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
-                Log.e("sellerLogIn", "result is=" + httpURLConnection.getResponseMessage());
-                Log.e("sellerLogIn", "result is=" + post_data);
+                Log.e("sellerLogIn", "data save result is=" + httpURLConnection.getResponseMessage());
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
@@ -160,8 +171,10 @@ public class SellerAddProduct {
                 String id = returnParsedJsonObject(response);
                 progressDialog.dismiss();
 
-                for (int i = 0; i < selectedImagePath.size(); i++) {
-                    new AddImageOfProduct(ref, ref, selectedImagePath.get(i), id);
+                if (selectedImagePath != null && selectedImagePath.size() > 0) {
+                    for (int i = 0; i < selectedImagePath.size(); i++) {
+                        new AddImageOfProduct(ref, ref, selectedImagePath.get(i), id);
+                    }
                 }
 
             } else {

@@ -6,242 +6,263 @@
     android:background="#f2f2f2">
 
     <include
-    android:id="@+id/titlebar"
-    layout="@layout/titlebar" />
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/add_product_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottombarlayout"
         android:layout_below="@+id/titlebar"
-        android:scrollbars="none"
-        >
+        android:background="#f2f2f2">
 
-        <RelativeLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_margin="10dp"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <RelativeLayout
-                android:id="@+id/imgs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--<ImageView-->
-                <!--android:id="@+id/upload_img"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="236dp"-->
-                <!--android:src="@drawable/upload_img_bg" />-->
-                <!--<com.devsmart.android.ui.HorizontalListView-->
-                <!--android:id="@+id/hlistview"-->
-                <!--android:layout_width="150dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_centerHorizontal="true" />-->
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#050505"
-
-                    android:scaleType="centerCrop" />
+                android:layout_height="0dip"
+                android:layout_margin="10dp"
+                android:background="@android:color/white">
 
                 <RelativeLayout
-                    android:id="@+id/viewPagerIndicator"
+                    android:id="@+id/imgs"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:layout_alignBottom="@+id/pager"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:id="@+id/viewPagerCountDots"
+                    <!--<ImageView-->
+                    <!--android:id="@+id/upload_img"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="236dp"-->
+                    <!--android:src="@drawable/upload_img_bg" />-->
+                    <!--<com.devsmart.android.ui.HorizontalListView-->
+                    <!--android:id="@+id/hlistview"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_centerHorizontal="true" />-->
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:background="#050505"
+
+                        android:scaleType="centerCrop" />
+
+                    <RelativeLayout
+                        android:id="@+id/viewPagerIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_alignBottom="@+id/pager"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp">
+
+                        <LinearLayout
+                            android:id="@+id/viewPagerCountDots"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal"></LinearLayout>
+                    </RelativeLayout>
+
                 </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/fields1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgs"
-                >
 
                 <RelativeLayout
-                    android:id="@+id/fields"
+                    android:id="@+id/fields1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
-                    <!--title et-->
-                    <RelativeLayout
-                        android:id="@+id/pro_title_etlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
+                    android:layout_below="@+id/imgs">
 
-                        <EditText
-                            android:id="@+id/pro_title_et"
+                    <RelativeLayout
+                        android:id="@+id/fields"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <!--title et-->
+                        <RelativeLayout
+                            android:id="@+id/pro_title_etlayout"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_toRightOf="@+id/icon"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/lbl_title_pro"
-                            android:lines="1"
-                            android:paddingBottom="3dp"
-                            android:paddingLeft="10dp"
-                            android:singleLine="true"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp">
 
-                        <ImageView
-                            android:id="@+id/icon"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="3dp"
-                            android:src="@drawable/pro_title" />
+                            <EditText
+                                android:id="@+id/pro_title_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_toRightOf="@+id/icon"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/lbl_title_pro"
+                                android:lines="1"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
-                            android:background="#e9e9e9" />
-                    </RelativeLayout>
-                    <!--desc et-->
-                    <RelativeLayout
-                        android:id="@+id/pro_desc_etlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/pro_title_etlayout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
+                            <ImageView
+                                android:id="@+id/icon"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:paddingBottom="1dp"
+                                android:paddingTop="3dp"
+                                android:src="@drawable/pro_title" />
 
-                        <EditText
-                            android:id="@+id/pro_desc_et"
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="5dp"
+                                android:background="#e9e9e9" />
+                        </RelativeLayout>
+                        <!--desc et-->
+                        <RelativeLayout
+                            android:id="@+id/pro_desc_etlayout"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_toRightOf="@+id/icon2"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/lbl_des_pro"
-                            android:lines="1"
-                            android:paddingBottom="3dp"
-                            android:paddingLeft="10dp"
-                            android:singleLine="true"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:layout_below="@+id/pro_title_etlayout"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp">
 
-                        <ImageView
-                            android:id="@+id/icon2"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="3dp"
-                            android:src="@drawable/pro_discription" />
+                            <EditText
+                                android:id="@+id/pro_desc_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_toRightOf="@+id/icon2"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/lbl_des_pro"
+                                android:lines="1"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
-                            android:background="#e9e9e9" />
-                    </RelativeLayout>
-                    <!--price-->
-                    <RelativeLayout
-                        android:id="@+id/pro_price_etlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/pro_desc_etlayout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
+                            <ImageView
+                                android:id="@+id/icon2"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:paddingBottom="1dp"
+                                android:paddingTop="3dp"
+                                android:src="@drawable/pro_discription" />
 
-                        <EditText
-                            android:id="@+id/pro_price_et"
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="5dp"
+                                android:background="#e9e9e9" />
+                        </RelativeLayout>
+                        <!--price-->
+                        <RelativeLayout
+                            android:id="@+id/pro_price_etlayout"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_toRightOf="@+id/icon3"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/lbl_price_pro"
-                            android:lines="1"
-                            android:paddingBottom="3dp"
-                            android:paddingLeft="10dp"
-                            android:singleLine="true"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:layout_below="@+id/pro_desc_etlayout"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp">
 
-                        <ImageView
-                            android:id="@+id/icon3"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="3dp"
-                            android:src="@drawable/pro_price" />
+                            <EditText
+                                android:id="@+id/pro_price_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_toRightOf="@+id/icon3"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/lbl_price_pro"
+                                android:lines="1"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
-                            android:background="#e9e9e9" />
-                    </RelativeLayout>
-                    <!--time-->
-                    <RelativeLayout
-                        android:id="@+id/pro_time_etlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/pro_price_etlayout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
+                            <ImageView
+                                android:id="@+id/icon3"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:paddingBottom="1dp"
+                                android:paddingTop="3dp"
+                                android:src="@drawable/pro_price" />
 
-                        <EditText
-                            android:id="@+id/pro_time_et"
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="5dp"
+                                android:background="#e9e9e9" />
+                        </RelativeLayout>
+                        <!--time-->
+                        <RelativeLayout
+                            android:id="@+id/pro_time_etlayout"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_toRightOf="@+id/icon4"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/lbl_time_pro"
-                            android:lines="1"
-                            android:paddingBottom="3dp"
-                            android:paddingLeft="10dp"
-                            android:singleLine="true"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:layout_below="@+id/pro_price_etlayout"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp">
 
-                        <ImageView
-                            android:id="@+id/icon4"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="3dp"
-                            android:src="@drawable/pro_time" />
+                            <EditText
+                                android:id="@+id/pro_time_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_toRightOf="@+id/icon4"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/lbl_time_pro"
+                                android:lines="1"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="10dp"
+                                android:singleLine="true"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
-                            android:background="#e9e9e9" />
+                            <ImageView
+                                android:id="@+id/icon4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:paddingBottom="1dp"
+                                android:paddingTop="3dp"
+                                android:src="@drawable/pro_time" />
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="5dp"
+                                android:background="#e9e9e9" />
+                        </RelativeLayout>
+
+
                     </RelativeLayout>
 
-
+                    <ImageView
+                        android:id="@+id/add_product_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fields"
+                        android:src="@drawable/add_product_btn" />
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/add_product_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/fields"
-                    android:src="@drawable/add_product_btn" />
+
             </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/view_product_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottombarlayout"
+        android:layout_below="@+id/titlebar"
+        android:background="#f2f2f2">
 
-        </RelativeLayout>
-    </ScrollView>
+        <ListView
+            android:id="@+id/product_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </RelativeLayout>
 
     <include
         android:id="@+id/bottombarlayout"
         layout="@layout/bottombar_add_product" />
+
 
 </RelativeLayout>

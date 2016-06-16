@@ -95,7 +95,6 @@ public class AddImageOfProduct {
     }
 
     public void addSellerProductImages() {
-        Log.e("AddImageOfProduct", "http helloo");
         new addSellerProductImagesAsync().execute();
     }
 
@@ -113,7 +112,7 @@ public class AddImageOfProduct {
 
         protected String doInBackground(String... input) {
             try {
-                Log.e("AddImageOfProduct", "http helloo do in bck");
+
                 String urlServer = Constant.baseUrl + _url;//"http://192.168.1.1/handle_upload.php";
                 String path = bitmap.toString();
                 String response= uploadFile(urlServer, path);
@@ -185,7 +184,6 @@ public class AddImageOfProduct {
                 responseString = "Error occurred! Http Status Code: "
                         + statusCode;
             }
-            Log.e("AddImageOfProduct", "http helloo");
         } catch (ClientProtocolException e) {
             responseString = e.toString();
             Log.e("AddImageOfProduct", "http ClientProtocolException is=" + e);
