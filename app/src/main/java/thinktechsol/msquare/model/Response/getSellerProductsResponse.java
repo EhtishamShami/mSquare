@@ -17,7 +17,7 @@ public class getSellerProductsResponse {
     public ProductReviews productReviews;
     public ProductRating productRating;
 
-    public getSellerProductsResponse(String id, String sellerId, String serviceId, String description, String title, String price, String deliveryTime, String dateTime, String status /*, ProductImages productImages, ProductReviews productReviews, ProductRating productRating*/ ) {
+    public getSellerProductsResponse(String id, String sellerId, String serviceId, String description, String title, String price, String deliveryTime, String dateTime, String status , ProductImages productImages/*, ProductReviews productReviews, ProductRating productRating*/ ) {
         this.id = id;
         this.sellerId = sellerId;
         this.serviceId = serviceId;
@@ -28,7 +28,7 @@ public class getSellerProductsResponse {
         this.dateTime = dateTime;
         this.status = status;
         this.productImages = productImages;
-        this.productReviews = productReviews;
-        this.productRating = productRating;
+//        this.productReviews = productReviews;
+//        this.productRating = productRating;
     }
 }

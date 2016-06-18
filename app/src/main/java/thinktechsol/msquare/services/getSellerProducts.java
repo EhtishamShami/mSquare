@@ -98,7 +98,7 @@ public class GetSellerProducts {
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
             JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
-            Log.e(TAG,"JSONArray lenght"+productArray.length());
+            Log.e(TAG, "JSONArray lenght" + productArray.length());
             for (int i = 0; i < productArray.length(); i++) {
                 JSONObject childJsonObj = (JSONObject) productArray.get(i);
                 String id = childJsonObj.getString("id");
@@ -112,24 +112,34 @@ public class GetSellerProducts {
                 String status = childJsonObj.getString("status");
 
                 String productImages = childJsonObj.getString("productImages");
-                if(productImages.equals("false")){
-                    Log.e(TAG, "productImages in parsing object t=" + productImages);
-                }else {
+
+                ProductImages imgesObj = null;
+
+                if (productImages.equals("false")) {
+                    //Log.e(TAG, "productImages in parsing object t=" + productImages);
+                    imgesObj = new ProductImages("R.drawable.pro_title");
+
+                } else {
                     JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
+                    //Log.e(TAG, "productImages array size=" + productImagesArray.get(0));
+
                     for (int img = 0; img < productImagesArray.length(); img++) {
-                        JSONObject ImgJsonObj = (JSONObject) productArray.get(img);
-                        String ImgId = childJsonObj.getString("id");
-                        String sellerProductId = childJsonObj.getString("sellerProductId");
-                        String image = childJsonObj.getString("image");
-//                        new ProductImages();
+                        JSONObject ImgJsonObj = (JSONObject) productImagesArray.get(img);
+
+                        String ImgId = ImgJsonObj.getString("id");
+                        String sellerProductId = ImgJsonObj.getString("sellerProductId");
+                        String image = ImgJsonObj.getString("image");
+
+                        imgesObj = new ProductImages(ImgId, sellerProductId, image);
                     }
                 }
+
 
 //                String productImages = childJsonObj.getString("productImages");
 //                String productReviews = childJsonObj.getString("productReviews");
 //                String productRating = childJsonObj.getString("productRating");
 
-                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status /*, productImages, productReviews, productRating*/ ));
+                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status, imgesObj/*, productReviews, productRating*/));
             }
 
         } catch (JSONException e) {
@@ -193,7 +203,7 @@ public class GetSellerProducts {
         protected void onPostExecute(String response) {
             if (response != null) {
                 ArrayList<getSellerProductsResponse> list = returnParsedJsonObject(response);
-                Log.e(TAG,"sellerProduct list"+list.size());
+                Log.e(TAG, "sellerProduct list" + list.size());
                 ref.fillProductListWithData(list);
                 progressDialog.dismiss();
             } else {

@@ -11,19 +11,19 @@
         android:layout_centerVertical="true">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/lbl"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="5dp"
-            android:src="@drawable/pro_title"
+
             android:layout_centerVertical="true"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/lbl"
             android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/pro_name"

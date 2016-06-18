@@ -14,4 +14,7 @@ public class ProductImages {
         this.sellerProductId = sellerProductId;
         this.image = image;
     }
+    public ProductImages(String image) {
+        this.image = image;
+    }
 }

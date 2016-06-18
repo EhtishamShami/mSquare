@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddProActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.interfaceMine.subItemClick;
+import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.ViewProductItem;
 import thinktechsol.msquare.utils.Constant;
@@ -30,6 +34,8 @@ import thinktechsol.msquare.utils.Constant;
 public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsResponse> {
 
     private static final int _row = 0;
+    private static final String TAG = "ViewProductListAdapter";
+
 
     Fragment_2_items TwoItemsFrag;
     AddProActivity ActivityContext;
@@ -38,6 +44,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
     Context context;
     subItemClick click;
     private ArrayList<getSellerProductsResponse> productList;
+    private ArrayList<String> imgLoadedIds;
 
 
     public ViewProductListAdapter(Context context, AddProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
@@ -45,6 +52,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
         this.productList = productList;
         this.context = context;
         this.ActivityContext = ActivityContext;
+        imgLoadedIds = new ArrayList<String>();
     }
 
     @Override
@@ -96,10 +104,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                     getSellerProductsResponse myItem = productList.get(position);
 
                     if (myItem != null) {
-                        if (holder1.lbl != null) {
-//                            holder1.lbl.setBackgroundResource(myItem.imgUrl);
-//                            holder1.lbl.setLayoutParams(AppLayoutParamSubItems(swiperSubItemHeight, swiperSubItemWidth, 0, 0, 0, 0, null));
-                        }
+
 
                         if (holder1.productName != null) {
                             holder1.productName.setText(myItem.title);
@@ -110,9 +115,26 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                         if (holder1.isSelected != null) {
                             holder1.isSelected.setChecked(true);
 //                            holder1.isSelected.setChecked(myItem.isSelected);
-//                            holder1.isSelected.setLayoutParams(AppLayoutParam(5.50f, 18.91f, 5, 0, 0, 0, null));
                         }
+                        if (holder1.lbl != null) {
 
+
+                            //if (myItem.productImages.image != null && myItem.productImages.image != "null") {
+//                                Log.e(TAG, "Show Picasso Images=" + imgLoadedIds.size());
+//                                imgLoadedIds.add(myItem.id);
+//                                for (int i = 0; i < imgLoadedIds.size(); i++) {
+//                                    if (!(imgLoadedIds.get(i).contains(myItem.id))) {
+                                Log.e(TAG, "Show Picasso Images=" + myItem.productImages.image);
+                                Picasso.with(context).load(Constant.imgbaseUrl + myItem.productImages.image).into(holder1.lbl);
+                                Picasso.with(context).setIndicatorsEnabled(true);
+//                                    }
+//                                }
+                            //}
+//                            else {
+//                                Log.e(TAG, "switer on setting=" + myItem.productImages.image);
+//                                holder1.lbl.setBackgroundResource(R.drawable.pro_title);
+//                            }
+                        }
                     }
                     return v;
                 default:
