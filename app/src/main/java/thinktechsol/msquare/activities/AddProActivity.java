@@ -57,6 +57,7 @@ import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.ViewProductItem;
 import thinktechsol.msquare.services.AddImageOfProduct;
@@ -82,6 +83,7 @@ public class AddProActivity extends Activity implements UploadImgInterface {
     ArrayList<String> selectedImagePath;
     EditText pro_title_et, pro_desc_et, pro_price_et, pro_time_et;
     ListView product_list;
+    ArrayList<ProductImages> productImagesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,7 @@ public class AddProActivity extends Activity implements UploadImgInterface {
                 MakeItemSelected(ADD_PRODUCT);
                 add_product_layout.setVisibility(View.VISIBLE);
                 view_product_layout.setVisibility(View.GONE);
+                title.setText("Add Product");
             }
         });
         view_product.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +162,7 @@ public class AddProActivity extends Activity implements UploadImgInterface {
                 MakeItemSelected(VIEW_PRODUCT);
                 view_product_layout.setVisibility(View.VISIBLE);
                 add_product_layout.setVisibility(View.GONE);
+                title.setText("Product");
                 new GetSellerProducts(AddProActivity.this, AddProActivity.this, globels.getGlobelRef().sellerlogin.id);
 
 
@@ -393,7 +397,6 @@ public class AddProActivity extends Activity implements UploadImgInterface {
             Uri uri = Uri.fromFile(new File("" + ImgPath));
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             adapter.bitmapList.add(bitmap);
-//            getImageUri(AddProActivity.this, bitmap);
             setAndShowDotsOnPager();
 
             viewPager.getAdapter().notifyDataSetChanged();

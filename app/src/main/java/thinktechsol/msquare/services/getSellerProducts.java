@@ -2,11 +2,15 @@ package thinktechsol.msquare.services;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,11 +83,8 @@ public class GetSellerProducts {
         new getSellerProductDetialAsync().execute(sellerId);
     }
 
-//    public void getSellerProductDetail(String sellerId) {
-//        this.sellerId = sellerId;
-//        Log.e("sellerLogIn", "code=" + sellerId);
-//
-//    }
+
+
 
     private ArrayList<getSellerProductsResponse> returnParsedJsonObject(String result) {
 
@@ -92,6 +93,7 @@ public class GetSellerProducts {
         JSONArray jsonArray = null;
         SellerLogInResponse sellerLogInResponse = null;
         ArrayList<getSellerProductsResponse> product = new ArrayList<getSellerProductsResponse>();
+
 
         try {
             JSONObject parentObject = new JSONObject(result);
@@ -114,14 +116,14 @@ public class GetSellerProducts {
                 String productImages = childJsonObj.getString("productImages");
 
                 ProductImages imgesObj = null;
+                ArrayList<ProductImages> productImagesList = new ArrayList<ProductImages>();
 
                 if (productImages.equals("false")) {
-                    //Log.e(TAG, "productImages in parsing object t=" + productImages);
-                    imgesObj = new ProductImages("R.drawable.pro_title");
-
+                    Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ctx.getPackageName() + "/drawable/" + "pro_title");
+                    imgesObj = new ProductImages(""+uri);
+                    productImagesList.add(new ProductImages("" + uri));
                 } else {
                     JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
-                    //Log.e(TAG, "productImages array size=" + productImagesArray.get(0));
 
                     for (int img = 0; img < productImagesArray.length(); img++) {
                         JSONObject ImgJsonObj = (JSONObject) productImagesArray.get(img);
@@ -130,7 +132,8 @@ public class GetSellerProducts {
                         String sellerProductId = ImgJsonObj.getString("sellerProductId");
                         String image = ImgJsonObj.getString("image");
 
-                        imgesObj = new ProductImages(ImgId, sellerProductId, image);
+                        imgesObj = new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image);
+                        productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image));
                     }
                 }
 
@@ -139,7 +142,7 @@ public class GetSellerProducts {
 //                String productReviews = childJsonObj.getString("productReviews");
 //                String productRating = childJsonObj.getString("productRating");
 
-                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status, imgesObj/*, productReviews, productRating*/));
+                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status, imgesObj,productImagesList/*, productReviews, productRating*/));
             }
 
         } catch (JSONException e) {

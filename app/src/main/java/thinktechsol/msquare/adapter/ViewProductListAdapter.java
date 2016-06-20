@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddProActivity;
+import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.interfaceMine.subItemClick;
 import thinktechsol.msquare.model.Response.ProductImages;
@@ -91,13 +94,12 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            if (holder1.btmWraper.getVisibility() == View.VISIBLE) {
-//                                holder1.btmWraper.setVisibility(View.INVISIBLE);
-//                                holder1.counterTV.setVisibility(View.VISIBLE);
-//                            } else if (holder1.btmWraper.getVisibility() == View.INVISIBLE) {
-//                                holder1.btmWraper.setVisibility(View.VISIBLE);
-//                                holder1.counterTV.setVisibility(View.INVISIBLE);
-//                            }
+                            getSellerProductsResponse myItem = productList.get(position);
+                            Toast.makeText(context, "" + position + ": " + myItem.productImagesList.size(), Toast.LENGTH_SHORT).show();
+
+                            Constant.productImagesList = myItem.productImagesList;
+                            Intent viewProductDetails = new Intent(context, ViewSellProDetailActivity.class);
+                            context.startActivity(viewProductDetails);
                         }
                     });
 
@@ -124,9 +126,9 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
 //                                imgLoadedIds.add(myItem.id);
 //                                for (int i = 0; i < imgLoadedIds.size(); i++) {
 //                                    if (!(imgLoadedIds.get(i).contains(myItem.id))) {
-                                Log.e(TAG, "Show Picasso Images=" + myItem.productImages.image);
-                                Picasso.with(context).load(Constant.imgbaseUrl + myItem.productImages.image).into(holder1.lbl);
-                                Picasso.with(context).setIndicatorsEnabled(true);
+                            Log.e(TAG, "Show Picasso Images=" + myItem.productImages.image);
+                            Picasso.with(context).load(myItem.productImages.image).into(holder1.lbl);
+                            Picasso.with(context).setIndicatorsEnabled(true);
 //                                    }
 //                                }
                             //}
@@ -145,6 +147,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
             return null;
         }
     }
+
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
