@@ -1,10 +1,13 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
-import android.media.Rating;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,10 +20,13 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterProDetail;
 import thinktechsol.msquare.model.Response.ProductImages;
+import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.utils.Constant;
 
 public class ViewSellProDetailActivity extends Activity {
 
+    public static final String ADD_PRODUCT = "addproduct";
+    public static final String VIEW_PRODUCT = "viewproduct";
     RelativeLayout titlebarlayout, bottombarlayout, pro_name_rating_price_layout, pro_name_rating_layout, pro_price_layout;
     private ViewPager viewPager;
     private ImgSwiperAdapterProDetail adapter;
@@ -31,7 +37,8 @@ public class ViewSellProDetailActivity extends Activity {
     public static ImageView backBtn;
     ArrayList<String> selectedImagePath;
     RatingBar rating;
-
+    ImageView add_product, view_product;
+    TextView pro_name,pro_price;
 
     ArrayList<ProductImages> productImagesList;
 
@@ -40,10 +47,16 @@ public class ViewSellProDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sell_pro_detail);
 
-//        selectedImagePath = new ArrayList<String>();
-
+//        seller product single
+        getSellerProductsResponse singleProduct = Constant.singleProduct;
 //        list of images of the seller products
         productImagesList = Constant.productImagesList;
+
+        add_product = (ImageView) findViewById(R.id.add_product);
+        view_product = (ImageView) findViewById(R.id.view_product);
+
+        add_product.setBackgroundResource(R.drawable.add_product_normal);
+        view_product.setBackgroundResource(R.drawable.view_product_sel);
 
         RelativeLayout imgs = (RelativeLayout) findViewById(R.id.imgs);
         bottombarlayout = (RelativeLayout) findViewById(R.id.bottombarlayout);
@@ -51,9 +64,14 @@ public class ViewSellProDetailActivity extends Activity {
         pro_name_rating_price_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_price_layout);
         pro_name_rating_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_layout);
         pro_price_layout = (RelativeLayout) findViewById(R.id.pro_price_layout);
+        pro_name = (TextView) findViewById(R.id.pro_name);
+        pro_price = (TextView) findViewById(R.id.pro_price);
         rating = (RatingBar) findViewById(R.id.rating);
 
+
         titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.addProductTitleBarColor));
+
+
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Product Details");
@@ -62,6 +80,7 @@ public class ViewSellProDetailActivity extends Activity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Constant.addOrViewProduct = false;
                 finish();
             }
         });
@@ -76,10 +95,50 @@ public class ViewSellProDetailActivity extends Activity {
         setAndShowDotsOnPager();
 
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, imgs));
-        pro_name_rating_layout.setLayoutParams(AppLayoutParam3(10.00f, 70f, 0, 0, 0, 0, null,0));
-        pro_price_layout.setLayoutParams(AppLayoutParam3(10.00f, 30f, 0, 0, 0, 0, null,R.id.pro_name_rating_layout));
-//        rating.setLayoutParams(AppLayoutParam3(5.00f, 20f, 0, 0, 0, 0, null));
+        pro_name_rating_layout.setLayoutParams(AppLayoutParam3(10.00f, 70f, 0, 0, 0, 0, null, 0));
+        pro_price_layout.setLayoutParams(AppLayoutParam3(10.00f, 30f, 0, 0, 0, 0, null, R.id.pro_name_rating_layout));
 
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                MakeItemSelected(ADD_PRODUCT);
+//                title.setText("Add Product");
+                Constant.addOrViewProduct = true;
+                finish();
+            }
+        });
+
+        pro_name.setText(singleProduct.title);
+        pro_price.setText(singleProduct.price+"AED");
+        Log.e("ViewSellPro", "rating=" + singleProduct.productRating);
+        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        if (!singleProduct.productRating.equals("not available")) {
+            float ratingNum = Float.parseFloat(singleProduct.productRating);
+            Log.e("ViewSellPro", "rating 2=" + (int)ratingNum);
+            rating.setRating(1);
+            rating.setRating((int)ratingNum);
+        }
+
+    }
+
+    public void MakeItemSelected(String btnName) {
+
+        add_product.setBackgroundResource(R.drawable.add_product_normal);
+        view_product.setBackgroundResource(R.drawable.view_product_normal);
+
+
+        switch (btnName) {
+            case ADD_PRODUCT:
+                add_product.setBackgroundResource(R.drawable.add_product_sel);
+                break;
+
+            case VIEW_PRODUCT:
+                view_product.setBackgroundResource(R.drawable.view_product_sel);
+                break;
+        }
     }
 
     private void setAndShowDotsOnPager() {
@@ -142,7 +201,7 @@ public class ViewSellProDetailActivity extends Activity {
         return paramName;
     }
 
-    public RelativeLayout.LayoutParams AppLayoutParam3(float height, float width, float mL, float mT, float mR, float mB, View below,int toRightView) {
+    public RelativeLayout.LayoutParams AppLayoutParam3(float height, float width, float mL, float mT, float mR, float mB, View below, int toRightView) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
                 Constant.getSize("w", width),
                 Constant.getSize("h", height));

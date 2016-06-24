@@ -4,17 +4,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.RecoverySystem;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.request.SimpleMultiPartRequest;
-import com.android.volley.toolbox.multipart.MultipartEntity;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,30 +18,11 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 
-import thinktechsol.msquare.activities.AddProActivity;
-import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -60,12 +34,12 @@ public class AddImageOfProduct {
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    AddProActivity ref;
+    AddOrViewProActivity ref;
     String bitmap;
     String idAgainstImagesUpload;
     ProgressDialog pd;
 
-    public AddImageOfProduct(final Context ctx, AddProActivity ref, String bitmap, String idAgainstImagesUpload) {
+    public AddImageOfProduct(final Context ctx, AddOrViewProActivity ref, String bitmap, String idAgainstImagesUpload) {
         this.ctx = ctx;
         this.ref = ref;
         this.idAgainstImagesUpload = idAgainstImagesUpload;

@@ -6,6 +6,7 @@ import android.view.animation.AlphaAnimation;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.model.Response.ProductImages;
+import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 
 /**
  * Created by Arshad.Iqbal on 5/17/2016.
@@ -19,9 +20,19 @@ public class Constant {
 
     public static String folderNameForCapturedImage = "MSquare";
 
+    //    list of sellers products
+    public static ArrayList<getSellerProductsResponse> productList;
+    //    seller product single
+    public static getSellerProductsResponse singleProduct;
     //    list of images of the seller products
     public static ArrayList<ProductImages> productImagesList;
 
+    //    add or view product selection switch
+    public static boolean addOrViewProduct;
+
+    public static String logInAs;
+
+    // buttons clicked (making btn as selected)
     public static void makeImageAlphLowOrHigh(View v, float alphaValue) {
         AlphaAnimation alpha = new AlphaAnimation(alphaValue, alphaValue);
         alpha.setFillAfter(true);

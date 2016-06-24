@@ -208,6 +208,7 @@
                                 android:background="@android:color/transparent"
                                 android:hint="@string/lbl_time_pro"
                                 android:lines="1"
+                                android:inputType="number"
                                 android:paddingBottom="3dp"
                                 android:paddingLeft="10dp"
                                 android:singleLine="true"

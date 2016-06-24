@@ -11,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddProActivity;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
@@ -113,7 +112,7 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
                         public void onClick(View v) {
 //                            Toast.makeText(context, "" + myItem.id, Toast.LENGTH_SHORT).show();
                             globels.getGlobelRef().IdForAddProduct = myItem.id;
-                            Intent add = new Intent(context, AddProActivity.class);
+                            Intent add = new Intent(context, AddOrViewProActivity.class);
                             context.startActivity(add);
                         }
                     });

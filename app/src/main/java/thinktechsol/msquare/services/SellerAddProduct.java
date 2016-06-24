@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,13 +21,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.activities.AddProActivity;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -36,16 +31,16 @@ public class SellerAddProduct {
 
     private static final String TAG_SUCCESS = "success";
 
-    String _url = "addProduct/";
+    String _url = "addOrViewProduct/";
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    AddProActivity ref;
+    AddOrViewProActivity ref;
     ArrayList<String> selectedImagePath;
 
     String productDetails[];
 
-    public SellerAddProduct(final Context ctx, AddProActivity ref, String productDetails[], ArrayList<String> selectedImagePath) {
+    public SellerAddProduct(final Context ctx, AddOrViewProActivity ref, String productDetails[], ArrayList<String> selectedImagePath) {
         this.ctx = ctx;
         this.ref = ref;
         this.productDetails = productDetails;

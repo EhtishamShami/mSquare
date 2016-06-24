@@ -13,6 +13,9 @@
 
     <!--add product title bar color-->
     <color name="addProductTitleBarColor">#daa400</color>
+    <color name="buyerHomeActivityTitleBarColor">#000000</color>
+
+
     <color name="addProductSelectorColor">#daa400</color>
 
     <color name="buttonSelectorColor">#FF007AFF</color>

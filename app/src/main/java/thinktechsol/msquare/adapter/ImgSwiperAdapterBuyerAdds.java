@@ -22,42 +22,35 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.ViewSellProDetailActivity;
+import thinktechsol.msquare.activities.buyer.HomeActivity;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.utils.Constant;
 
-public class ImgSwiperAdapterProDetail extends PagerAdapter {
+public class ImgSwiperAdapterBuyerAdds extends PagerAdapter {
 
-    private ViewSellProDetailActivity _activity;
+    private HomeActivity _activity;
     private LayoutInflater inflater;
     private ImageView mImaView;
     ViewPager viewPager;
     private static final int CAMERA_REQUEST = 1888;
-    ArrayList<ProductImages> productImagesList;
+    ArrayList<String> addsImagesList;
 
     private static final String TAG = "ImgSwiperAdapterPro";
 
 
-    public ImgSwiperAdapterProDetail(ViewSellProDetailActivity activity,
-                                     ViewPager viewPager, ArrayList<ProductImages> productImagesList) {
+    public ImgSwiperAdapterBuyerAdds(HomeActivity activity,
+                                     ViewPager viewPager, ArrayList<String> addsImagesList) {
         this._activity = activity;
-        this.productImagesList = productImagesList;
+        this.addsImagesList = addsImagesList;
 
-        Log.e(TAG, "productImagesList size=" + productImagesList.size());
-
-        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + _activity.getPackageName() + "/drawable/" + "upload_img_bg");
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
-            bitmapList.add(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Log.e(TAG, "productImagesList size=" + addsImagesList.size());
 
         this.viewPager = viewPager;
     }
 
     @Override
     public int getCount() {
-        return this.productImagesList.size();
+        return this.addsImagesList.size();
 //        return this.bitmapList.size();
     }
 
@@ -76,12 +69,19 @@ public class ImgSwiperAdapterProDetail extends PagerAdapter {
         mImaView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
-//        mImaView.setImageBitmap(bitmapList.get(position));
-        ProductImages myItem = this.productImagesList.get(position);
-        Picasso.with(_activity).load(myItem.image).into(mImaView);
+
+        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + _activity.getPackageName() + "/drawable/" +addsImagesList.get(position) /*"upload_img_bg"*/);
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
+            bitmapList.add(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mImaView.setImageBitmap(bitmapList.get(position));
+//        ProductImages myItem = this.productImagesList.get(position);
+//        Picasso.with(_activity).load(myItem.image).into(mImaView);
 
         ((ViewPager) container).addView(viewLayout);
         PageListener pageListener = new PageListener();

@@ -93,6 +93,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:rating="0"
+                            android:max="5"
+                            android:numStars="5"
                             android:layout_margin="5dp" />
 
                         <View

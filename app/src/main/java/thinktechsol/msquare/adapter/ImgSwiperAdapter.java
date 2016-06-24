@@ -2,31 +2,27 @@ package thinktechsol.msquare.adapter;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddProActivity;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.utils.Constant;
 
 public class ImgSwiperAdapter extends PagerAdapter {
 
-    private AddProActivity _activity;
+    private AddOrViewProActivity _activity;
     //    private ArrayList<Integer> _imagePaths;
     private LayoutInflater inflater;
     private ImageView mImaView;
@@ -35,7 +31,7 @@ public class ImgSwiperAdapter extends PagerAdapter {
     UploadImgInterface clicked;
 
 
-    public ImgSwiperAdapter(AddProActivity activity,
+    public ImgSwiperAdapter(AddOrViewProActivity activity,
                             ArrayList<Integer> imagePaths, ViewPager viewPager) {
         this._activity = activity;
         clicked = activity;

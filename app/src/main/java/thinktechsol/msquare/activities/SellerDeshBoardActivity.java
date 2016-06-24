@@ -74,7 +74,7 @@ public class SellerDeshBoardActivity extends Activity {
 //                Toast.makeText(SellerDeshBoardActivity.this, ""+backBtn.getTag(), Toast.LENGTH_SHORT).show();
                 if (backBtn.getTag().equals(DeshBoardTagbackButton)) {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "DeshBoard's Back Button is clicked", Toast.LENGTH_SHORT).show();
-//                    Intent add=new Intent(SellerDeshBoardActivity.this,AddProActivity.class);
+//                    Intent add=new Intent(SellerDeshBoardActivity.this,AddOrViewProActivity.class);
 //                    startActivity(add);
                 } else if (backBtn.getTag().equals(AddProductScreenTagbackButton)) {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "Category's Back Button is clicked", Toast.LENGTH_SHORT).show();

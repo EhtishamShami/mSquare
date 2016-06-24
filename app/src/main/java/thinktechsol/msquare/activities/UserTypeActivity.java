@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
 import thinktechsol.msquare.utils.Constant;
 
 public class UserTypeActivity extends Activity {
@@ -48,6 +49,10 @@ public class UserTypeActivity extends Activity {
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
                     Constant.makeImageAlphLowOrHigh(type_buyer_btn, 1f);
+                    Intent sellerLogin = new Intent(UserTypeActivity.this, BuyerLoginActivity.class);
+                    startActivity(sellerLogin);
+                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+                    finish();
                     return true;
                 }
                 return false;

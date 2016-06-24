@@ -2,7 +2,6 @@ package thinktechsol.msquare.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddProActivity;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.interfaceMine.subItemClick;
-import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
-import thinktechsol.msquare.model.ViewProductItem;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -41,7 +38,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
 
 
     Fragment_2_items TwoItemsFrag;
-    AddProActivity ActivityContext;
+    AddOrViewProActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
@@ -50,7 +47,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
     private ArrayList<String> imgLoadedIds;
 
 
-    public ViewProductListAdapter(Context context, AddProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
+    public ViewProductListAdapter(Context context, AddOrViewProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
         super(context, textViewResourceId, productList);
         this.productList = productList;
         this.context = context;
@@ -95,7 +92,9 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                         @Override
                         public void onClick(View v) {
                             getSellerProductsResponse myItem = productList.get(position);
-                            Toast.makeText(context, "" + position + ": " + myItem.productImagesList.size(), Toast.LENGTH_SHORT).show();
+
+                            Constant.singleProduct = myItem;
+                            Toast.makeText(context, "" + position + ": " + myItem , Toast.LENGTH_SHORT).show();
 
                             Constant.productImagesList = myItem.productImagesList;
                             Intent viewProductDetails = new Intent(context, ViewSellProDetailActivity.class);
@@ -120,7 +119,6 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                         }
                         if (holder1.lbl != null) {
 
-
                             //if (myItem.productImages.image != null && myItem.productImages.image != "null") {
 //                                Log.e(TAG, "Show Picasso Images=" + imgLoadedIds.size());
 //                                imgLoadedIds.add(myItem.id);
@@ -128,7 +126,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
 //                                    if (!(imgLoadedIds.get(i).contains(myItem.id))) {
                             Log.e(TAG, "Show Picasso Images=" + myItem.productImages.image);
                             Picasso.with(context).load(myItem.productImages.image).into(holder1.lbl);
-                            Picasso.with(context).setIndicatorsEnabled(true);
+//                            Picasso.with(context).setIndicatorsEnabled(true);
 //                                    }
 //                                }
                             //}

@@ -6,11 +6,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,19 +22,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.activities.AddProActivity;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
-import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.model.Response.ProductImages;
-import thinktechsol.msquare.model.Response.ProductRating;
-import thinktechsol.msquare.model.Response.ProductReviews;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -50,11 +40,11 @@ public class GetSellerProducts {
     ProgressDialog progressDialog;
     String sellerId;
     AlertDialog NotFoundDialog;
-    AddProActivity ref;
+    AddOrViewProActivity ref;
     private static final String TAG = "GetSellerProducts";
 
     //    globels.getGlobelRef().sellerlogin.id
-    public GetSellerProducts(final Context ctx, AddProActivity ref, String sellerId) {
+    public GetSellerProducts(final Context ctx, AddOrViewProActivity ref, String sellerId) {
         this.ctx = ctx;
         this.ref = ref;
         this.sellerId = sellerId;
@@ -84,8 +74,6 @@ public class GetSellerProducts {
     }
 
 
-
-
     private ArrayList<getSellerProductsResponse> returnParsedJsonObject(String result) {
 
 //        List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
@@ -113,14 +101,26 @@ public class GetSellerProducts {
                 String dateTime = childJsonObj.getString("dateTime");
                 String status = childJsonObj.getString("status");
 
-                String productImages = childJsonObj.getString("productImages");
+                //getting ratting from service
+                String ratingObj = "null";
+                String rating = "not available";
+                ratingObj = childJsonObj.getString("productRating");
+                if (!ratingObj.contains("null")) {
+                    JSONObject rateJsonObj = new JSONObject(ratingObj);
+                    rating = rateJsonObj.getString("rating");
+                    if(rating.contains("null"))
+                        rating = "not available";
+                }
+                //getting ratting end
 
+                //getting images from service
+                String productImages = childJsonObj.getString("productImages");
                 ProductImages imgesObj = null;
                 ArrayList<ProductImages> productImagesList = new ArrayList<ProductImages>();
 
                 if (productImages.equals("false")) {
                     Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ctx.getPackageName() + "/drawable/" + "pro_title");
-                    imgesObj = new ProductImages(""+uri);
+                    imgesObj = new ProductImages("" + uri);
                     productImagesList.add(new ProductImages("" + uri));
                 } else {
                     JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
@@ -136,13 +136,12 @@ public class GetSellerProducts {
                         productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image));
                     }
                 }
+                //getting images from service end
 
-
-//                String productImages = childJsonObj.getString("productImages");
 //                String productReviews = childJsonObj.getString("productReviews");
-//                String productRating = childJsonObj.getString("productRating");
 
-                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status, imgesObj,productImagesList/*, productReviews, productRating*/));
+
+                product.add(new getSellerProductsResponse(id, sellerId, serviceId, description, title, price, deliveryTime, dateTime, status, imgesObj, productImagesList, rating/*, productReviews, productRating*/));
             }
 
         } catch (JSONException e) {

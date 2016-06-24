@@ -29,13 +29,22 @@
         <activity
             android:name=".activities.SellerLoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".activities.SellerDeshBoardActivity" />
-        <activity android:name=".activities.HomeActivity" />
         <activity
-            android:name=".activities.AddProActivity"
+            android:name=".activities.buyer.BuyerLoginActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity android:name=".activities.SellerDeshBoardActivity" />
+        <activity
+            android:name=".activities.AddOrViewProActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".activities.ViewSellProDetailActivity"></activity>
+        <activity android:name=".activities.buyer.HomeActivity"></activity>
+
+        <!--facebook integration metadata-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
     </application>
 
 </manifest>
