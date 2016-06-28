@@ -26,7 +26,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
 
     private static final int Layout_items = 0;
 
-    private static int rowHeight = 92 / 4;
+    private static int rowHeight = 80 / 4;
     SellerDeshBoardActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

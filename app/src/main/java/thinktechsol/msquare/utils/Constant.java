@@ -13,8 +13,13 @@ import thinktechsol.msquare.model.Response.getSellerProductsResponse;
  */
 public class Constant {
 
-    public static String baseUrl = "http://weblinelab.com/demo/msquare/api/";
-    public static String imgbaseUrl = "http://weblinelab.com/demo/msquare/";
+    //    weblinelab url
+//    public static String baseUrl = "http://weblinelab.com/demo/msquare/api/";
+//    public static String imgbaseUrl = "http://weblinelab.com/demo/msquare/";
+
+    //    original url
+    public static String baseUrl =    "http://smartit.ae/api/";
+    public static String imgbaseUrl = "http://smartit.ae/";
     public static int screenHeight;
     public static int screenWidth;
 

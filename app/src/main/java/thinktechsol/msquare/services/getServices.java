@@ -2,8 +2,10 @@ package thinktechsol.msquare.services;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -20,38 +22,35 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellerLoginActivity;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
-import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.AddProductItem;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.buyer.HomeActivity;
+import thinktechsol.msquare.model.Buyer.GetServicesModel;
+import thinktechsol.msquare.model.Response.ProductImages;
+import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class SellerProductList {
+public class getServices {
 
     private static final String TAG_SUCCESS = "success";
 
-//    String _url = "GetServicesModel/";
     String _url = "getServices/";
     Context ctx;
     ProgressDialog progressDialog;
-    String serviceid;
     AlertDialog NotFoundDialog;
-    SellerAddProductFragment ref;
+    HomeActivity ref;
+    private static final String TAG = "GetServicesModel";
 
-    public SellerProductList(final Context ctx, SellerAddProductFragment ref, String serviceid) {
+    //    globels.getGlobelRef().sellerlogin.id
+    public getServices(final Context ctx, HomeActivity ref) {
         this.ctx = ctx;
         this.ref = ref;
-        this.serviceid = serviceid;
+
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Searching Please wait...");
+        progressDialog.setMessage("Fetching Records Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -70,53 +69,50 @@ public class SellerProductList {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        getSellerProductDetail(serviceid);
+
+        new getAllServicesDetialAsync().execute("0");
     }
 
-    public void getSellerProductDetail(String serviceid) {
-        this.serviceid = serviceid;
-        Log.e("sellerLogIn", "code=" + serviceid);
-        new getSellerProductDetialAsync().execute(serviceid);
-    }
 
-    private ArrayList<SellerProductItem> returnParsedJsonObject(String result) {
+    private ArrayList<GetServicesModel> returnParsedJsonObject(String result) {
 
-        List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
-        SellerLogInResponse sellerLogInResponse = null;
-        ArrayList<SellerProductItem> product = new ArrayList<SellerProductItem>();
+        ArrayList<GetServicesModel> allServices = new ArrayList<GetServicesModel>();
+
 
         try {
             JSONObject parentObject = new JSONObject(result);
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
             JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
-
+            Log.e(TAG, "JSONArray lenght" + productArray.length());
             for (int i = 0; i < productArray.length(); i++) {
-                JSONObject feedObj = (JSONObject) productArray.get(i);
-                String id = feedObj.getString("id");
-                String status = feedObj.getString("status");
-                String description = feedObj.getString("description");
-                String name = feedObj.getString("name");
-                String parent = feedObj.getString("parent");
-                String thumb = feedObj.getString("thumb");
-                product.add(new SellerProductItem(id, status, description, name, parent, thumb));
+                JSONObject childJsonObj = (JSONObject) productArray.get(i);
+                String id = childJsonObj.getString("id");
+                String sellerId = childJsonObj.getString("status");
+                String serviceId = childJsonObj.getString("description");
+                String description = childJsonObj.getString("name");
+                String title = childJsonObj.getString("parent");
+                String price = childJsonObj.getString("thumb");
+                String deliveryTime = childJsonObj.getString("categoryType");
+
+                allServices.add(new GetServicesModel(id, sellerId, serviceId, description, title, price, deliveryTime));
             }
 
         } catch (JSONException e) {
-            Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
+            Log.e(TAG, "JSONExc ParsedJsonObject=" + e);
             e.printStackTrace();
             NotFoundDialog.show();
         }
-        return product;
+        return allServices;
     }
 
 
     /**
-     * Background Async Task to fetch all jobs
+     * Background Async Task to fetch all services
      */
-    class getSellerProductDetialAsync extends AsyncTask<String, String, String> {
+    class getAllServicesDetialAsync extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -125,18 +121,16 @@ public class SellerProductList {
 
         protected String doInBackground(String... input) {
             try {
-                String serviceid = input[0];
-                URL url = new URL(Constant.baseUrl + _url + serviceid + "");
-                Log.e("seller get product list", "url is=" + url);
+                //String sellerId = input[0];
+                URL url = new URL(Constant.baseUrl + _url);
+                Log.e(TAG, "GetServicesModel url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setReadTimeout(30000);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(serviceid, "UTF-8");
-                bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
@@ -150,7 +144,7 @@ public class SellerProductList {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e("sellerLogIn", "result is=" + result);
+                Log.e(TAG, "GetServicesModel result is=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
@@ -166,8 +160,9 @@ public class SellerProductList {
 
         protected void onPostExecute(String response) {
             if (response != null) {
-                ArrayList<SellerProductItem> list = returnParsedJsonObject(response);
-                ref.fill_data_to_adapter(list);
+                ArrayList<GetServicesModel> list = returnParsedJsonObject(response);
+                Log.e(TAG, "getService list" + list.size());
+                ref.fillProductListWithData(list);
                 progressDialog.dismiss();
             } else {
                 NotFoundDialog.show();

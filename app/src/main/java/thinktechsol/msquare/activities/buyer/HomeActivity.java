@@ -2,6 +2,7 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
@@ -22,13 +24,15 @@ import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
+import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.HomeItem;
+import thinktechsol.msquare.model.HomeItemSingle;
+import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
 public class HomeActivity extends Activity {
 
     RelativeLayout titlebarlayout;
-
     TextView title;
     ImageView backBtn, btn_menu;
 
@@ -60,10 +64,10 @@ public class HomeActivity extends Activity {
         btn_menu = (ImageView) findViewById(R.id.btn_menu);
         ListView listview = (ListView) findViewById(R.id.listView);
 
-
+        new getServices(HomeActivity.this, HomeActivity.this);
         // title bar
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
-        btn_menu.setLayoutParams(AppLayoutParam(12f, 12f, 0, 0, 2, 0, null, "ver", 0, "right"));
+        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
         btn_menu.setVisibility(View.VISIBLE);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +117,7 @@ public class HomeActivity extends Activity {
 
     }
 
+
     private void setAndShowDotsOnPager() {
         dotsLayout = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         dotsCount = adapter.getCount();
@@ -154,6 +159,35 @@ public class HomeActivity extends Activity {
         public void onPageScrollStateChanged(int arg0) {
         }
     };
+
+    String bgColors[] = new String[]{"#973c5f", "#cb3b5c", "#0068a5", "#2688ad", "#de7112", "#dc4d15", "#13a06b", "#82b421"};
+
+    public void fillProductListWithData(ArrayList<GetServicesModel> list) {
+
+        ArrayList<HomeItemSingle> part1 = new ArrayList<HomeItemSingle>();
+        ArrayList<HomeItemSingle> part2 = new ArrayList<HomeItemSingle>();
+//        for (int j = 0; j < 2; j++) {
+
+
+        for (int i = 0; i < list.size(); i++) {
+            GetServicesModel myItem = list.get(i);
+            String item1Id = myItem.id;
+            String item1Name = myItem.name;
+
+            if (i + 1 > list.size()) {
+                GetServicesModel myItem2 = list.get(i + 1);
+            }
+
+
+            part1.add(new HomeItemSingle(myItem.name, R.drawable.baqala_icon, Color.parseColor(bgColors[i]), 100));
+
+            //ArrayList<HomeItemSingle> m_parts = new ArrayList<HomeItemSingle>();
+            //m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
+            //m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
+
+        }
+//        }
+    }
 
     /*
     *

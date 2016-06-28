@@ -86,33 +86,42 @@ public class sellerLogIn {
             JSONObject parentObject = new JSONObject(result);
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            String childObject = parentJSONObjDetails.getString("data");
 
-            JSONObject childJSONObjDetails = new JSONObject(childObject);
+            String isLoginSuccessful = parentJSONObjDetails.getString("response");
 
-            String logo = childJSONObjDetails.getString("logo");
-            String status = childJSONObjDetails.getString("status");
-            String documents = childJSONObjDetails.getString("documents");
-            String tradeNo = childJSONObjDetails.getString("tradeNo");
-            String lName = childJSONObjDetails.getString("lName");
-            String companyName = childJSONObjDetails.getString("companyName");
-            String password = childJSONObjDetails.getString("password");
-            String fName = childJSONObjDetails.getString("fName");
-            String phoneNo = childJSONObjDetails.getString("phoneNo");
-            String id = childJSONObjDetails.getString("id");
-            String email = childJSONObjDetails.getString("email");
-            String address = childJSONObjDetails.getString("address");
-            String description = childJSONObjDetails.getString("description");
-            String activationCode = childJSONObjDetails.getString("activationCode");
-            String service = childJSONObjDetails.getString("service");
-            String longitude = childJSONObjDetails.getString("longitude");
-            String latitude = childJSONObjDetails.getString("latitude");
-            String datetime = childJSONObjDetails.getString("datetime");
-            String mobileNo = childJSONObjDetails.getString("mobileNo");
+            Log.e("sellerLogIn", "isLoginSuccessful code=" + isLoginSuccessful);
 
-            sellerLogInResponse = new SellerLogInResponse(logo, status, documents, tradeNo, lName, companyName, password, fName, phoneNo, id, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
-            Log.e("sellerLogIn", "responsu code=" + sellerLogInResponse.service);
+            if (isLoginSuccessful.equals("true")) {
+                String childObject = parentJSONObjDetails.getString("data");
 
+                JSONObject childJSONObjDetails = new JSONObject(childObject);
+
+                String logo = childJSONObjDetails.getString("logo");
+                String status = childJSONObjDetails.getString("status");
+                String documents = childJSONObjDetails.getString("documents");
+                String tradeNo = childJSONObjDetails.getString("tradeNo");
+                String lName = childJSONObjDetails.getString("lName");
+                String companyName = childJSONObjDetails.getString("companyName");
+                String password = childJSONObjDetails.getString("password");
+                String fName = childJSONObjDetails.getString("fName");
+                String phoneNo = childJSONObjDetails.getString("phoneNo");
+                String id = childJSONObjDetails.getString("id");
+                String email = childJSONObjDetails.getString("email");
+                String address = childJSONObjDetails.getString("address");
+                String description = childJSONObjDetails.getString("description");
+                String activationCode = childJSONObjDetails.getString("activationCode");
+                String service = childJSONObjDetails.getString("service");
+                String longitude = childJSONObjDetails.getString("longitude");
+                String latitude = childJSONObjDetails.getString("latitude");
+                String datetime = childJSONObjDetails.getString("datetime");
+                String mobileNo = childJSONObjDetails.getString("mobileNo");
+
+                sellerLogInResponse = new SellerLogInResponse(logo, status, documents, tradeNo, lName, companyName, password, fName, phoneNo, id, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
+                Log.e("sellerLogIn", "respons code=" + sellerLogInResponse.service);
+            } else {
+                NotFoundDialog.show();
+                return null;
+            }
         } catch (JSONException e) {
             Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
             e.printStackTrace();
@@ -139,7 +148,7 @@ public class sellerLogIn {
         protected String doInBackground(String... input) {
             try {
                 String code = input[0];
-                URL url = new URL(Constant.baseUrl+_url + code + "");
+                URL url = new URL(Constant.baseUrl + _url + code + "");
                 Log.e("sellerLogIn", "url is=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -181,10 +190,14 @@ public class sellerLogIn {
             if (response != null) {
 
                 parsedObject = returnParsedJsonObject(response);
-                globels.getGlobelRef().sellerlogin = parsedObject;
-                ref.transation();
-                progressDialog.dismiss();
-
+                if (parsedObject != null) {
+                    globels.getGlobelRef().sellerlogin = parsedObject;
+                    ref.transation();
+                    progressDialog.dismiss();
+                } else {
+                    progressDialog.dismiss();
+                    NotFoundDialog.show();
+                }
             } else {
                 NotFoundDialog.show();
             }

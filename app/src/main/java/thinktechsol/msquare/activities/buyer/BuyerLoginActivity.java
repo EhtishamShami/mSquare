@@ -13,28 +13,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.*;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,9 +33,6 @@ import java.util.Arrays;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
-import thinktechsol.msquare.activities.SellerLoginActivity;
-import thinktechsol.msquare.activities.UserTypeActivity;
-import thinktechsol.msquare.services.sellerLogIn;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerLoginActivity extends Activity {
@@ -167,13 +155,13 @@ public class BuyerLoginActivity extends Activity {
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 int action = arg1.getAction();
                 if (action == MotionEvent.ACTION_DOWN) {
-                    Constant.makeImageAlphLowOrHigh(btn_guest, 0.3f);
+                    Constant.makeImageAlphLowOrHigh(btn_google, 0.3f);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
 
                     Constant.logInAs = "google";
 
-                    Constant.makeImageAlphLowOrHigh(btn_guest, 1f);
+                    Constant.makeImageAlphLowOrHigh(btn_google, 1f);
                     return true;
                 }
                 return false;
@@ -192,6 +180,7 @@ public class BuyerLoginActivity extends Activity {
 
                     Constant.logInAs = "guest";
                     startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+//                    startActivity(new Intent(BuyerLoginActivity.this, SalonDetailsActivity.class));
 
                     return true;
                 }
