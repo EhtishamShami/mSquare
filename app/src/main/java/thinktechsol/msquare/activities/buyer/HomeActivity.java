@@ -44,6 +44,7 @@ public class HomeActivity extends Activity {
     private int dotsCount;
     private TextView[] dots;
     private ArrayList<String> addsImagesList;
+    ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class HomeActivity extends Activity {
         title = (TextView) findViewById(R.id.title);
         backBtn = (ImageView) findViewById(R.id.backBtn);
         btn_menu = (ImageView) findViewById(R.id.btn_menu);
-        ListView listview = (ListView) findViewById(R.id.listView);
+        listview = (ListView) findViewById(R.id.listView);
 
         new getServices(HomeActivity.this, HomeActivity.this);
         // title bar
@@ -102,18 +103,18 @@ public class HomeActivity extends Activity {
         setAndShowDotsOnPager();
 
 
-        ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
-        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
-        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_cleaning), R.drawable.cleaning_icon, R.color.item3Color, 50f, getResources().getString(R.string.lbl_salon), R.drawable.salon_icon, R.color.item4Color));
-        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_maintence), R.drawable.maintenance_icon, R.color.item5Color, 67.5f, getResources().getString(R.string.lbl_house_made), R.drawable.housemade_icon, R.color.item6Color));
-        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_laundry), R.drawable.laundry_icon, R.color.item7Color, 50f, getResources().getString(R.string.lbl_cleanmycar), R.drawable.cleanmycar_icon, R.color.item8Color));
-
-        try {
-            HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
-            listview.setAdapter(m_adapter);
-        } catch (Exception e) {
-            Log.e("HomeActivity", "adapter=" + e);
-        }
+//        ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
+//        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
+//        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_cleaning), R.drawable.cleaning_icon, R.color.item3Color, 50f, getResources().getString(R.string.lbl_salon), R.drawable.salon_icon, R.color.item4Color));
+//        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_maintence), R.drawable.maintenance_icon, R.color.item5Color, 67.5f, getResources().getString(R.string.lbl_house_made), R.drawable.housemade_icon, R.color.item6Color));
+//        m_parts.add(new HomeItem(getResources().getString(R.string.lbl_laundry), R.drawable.laundry_icon, R.color.item7Color, 50f, getResources().getString(R.string.lbl_cleanmycar), R.drawable.cleanmycar_icon, R.color.item8Color));
+//
+//        try {
+//            HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
+//            listview.setAdapter(m_adapter);
+//        } catch (Exception e) {
+//            Log.e("HomeActivity", "adapter=" + e);
+//        }
 
     }
 
@@ -161,32 +162,70 @@ public class HomeActivity extends Activity {
     };
 
     String bgColors[] = new String[]{"#973c5f", "#cb3b5c", "#0068a5", "#2688ad", "#de7112", "#dc4d15", "#13a06b", "#82b421"};
+    int width[] = new int[]{30, 50, 70, 50};
 
     public void fillProductListWithData(ArrayList<GetServicesModel> list) {
+        int ColorCounter = 0;
+        int WidthCounter = 0;
 
-        ArrayList<HomeItemSingle> part1 = new ArrayList<HomeItemSingle>();
-        ArrayList<HomeItemSingle> part2 = new ArrayList<HomeItemSingle>();
-//        for (int j = 0; j < 2; j++) {
+        String id2 = null;
+        String status2 = null;
+        String description2 = null;
+        String name2 = null;
+        String parent2 = null;
+        String thumb2 = null;
+        String categoryType2 = null;
 
+
+        ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
 
         for (int i = 0; i < list.size(); i++) {
+
+            m_parts.clear();
+
             GetServicesModel myItem = list.get(i);
-            String item1Id = myItem.id;
-            String item1Name = myItem.name;
+
+            String id1 = myItem.id;
+            String status1 = myItem.status;
+            String description1 = myItem.description;
+            String name1 = myItem.name;
+            String parent1 = myItem.parent;
+            String thumb1 = myItem.thumb;
+            String categoryType1 = myItem.categoryType;
 
             if (i + 1 > list.size()) {
                 GetServicesModel myItem2 = list.get(i + 1);
+
+                id2 = myItem.id;
+                status2 = myItem.status;
+                description2 = myItem.description;
+                name2 = myItem.name;
+                parent2 = myItem.parent;
+                thumb2 = myItem.thumb;
+                categoryType2 = myItem.categoryType;
             }
 
+            if (name2 != null) {
+                m_parts.add(new HomeItem(name1, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter]), width[WidthCounter], name2, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter])));
+            } else {
+                m_parts.add(new HomeItem(name1, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter]), 100, "", 0, 0));
+            }
 
-            part1.add(new HomeItemSingle(myItem.name, R.drawable.baqala_icon, Color.parseColor(bgColors[i]), 100));
+            if (ColorCounter >= 8) {
+                ColorCounter += 1;
+            } else {
+                ColorCounter = 0;
+            }
 
-            //ArrayList<HomeItemSingle> m_parts = new ArrayList<HomeItemSingle>();
-            //m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
-            //m_parts.add(new HomeItem(getResources().getString(R.string.lbl_baqala), R.drawable.baqala_icon, R.color.item1Color, 35f, getResources().getString(R.string.lbl_handmade_pro), R.drawable.handmadepro_icon, R.color.item2Color));
-
+            if (WidthCounter >= 4) {
+                WidthCounter += 1;
+            } else {
+                WidthCounter = 0;
+            }
         }
-//        }
+
+        HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
+        listview.setAdapter(m_adapter);
     }
 
     /*

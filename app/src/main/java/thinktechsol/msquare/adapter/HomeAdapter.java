@@ -103,7 +103,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                         }
                         if (holder1.item1 != null) {
                             holder1.item1.setLayoutParams(AppLayoutParam2(rowHeight, myItem.width, 0, 0, 0, 0, null));
-                            holder1.item1.setBackgroundColor(context.getResources().getColor(myItem.bgColor));
+//                            holder1.item1.setBackgroundColor(context.getResources().getColor(myItem.bgColor));
                         }
 
                         //2nd item
@@ -117,7 +117,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                         }
                         if (holder1.item2 != null) {
                             holder1.item2.setLayoutParams(AppLayoutParam2(rowHeight, 100 - myItem.width, 0, 0, 0, 0, holder1.item1));
-                            holder1.item2.setBackgroundColor(context.getResources().getColor(myItem.bgColor2));
+//                            holder1.item2.setBackgroundColor(context.getResources().getColor(myItem.bgColor2));
                         }
                     }
                     return v;
