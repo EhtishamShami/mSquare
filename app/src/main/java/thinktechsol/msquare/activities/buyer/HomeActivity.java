@@ -179,6 +179,9 @@ public class HomeActivity extends Activity {
 
         ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
 
+
+
+
         for (int i = 0; i < list.size(); i++) {
 
             m_parts.clear();
