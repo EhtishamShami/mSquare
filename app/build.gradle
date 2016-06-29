@@ -11,6 +11,8 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/License.txt'
+        exclude 'META-INF/Notice.txt'
     }
 
     defaultConfig {
@@ -19,6 +21,12 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
+    }
+
+    dexOptions{
+        preDexLibraries = false;
     }
     buildTypes {
         release {

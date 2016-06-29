@@ -5,16 +5,16 @@ package thinktechsol.msquare.model;
  */
 public class HomeItem {
     public String label;
-    public int icon;
+    public String icon;
     public int bgColor;
 
     public String label2;
-    public int icon2;
+    public String icon2;
     public int bgColor2;
 
     public float width;
 
-    public HomeItem(String label, int icon, int bgColor, float width, String label2, int icon2, int bgColor2) {
+    public HomeItem(String label, String icon, int bgColor, float width, String label2, String icon2, int bgColor2) {
         this.label = label;
         this.icon = icon;
         this.bgColor = bgColor;

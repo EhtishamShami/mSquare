@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
@@ -38,6 +40,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
         this.objects = objects;
         this.context = context;
         this.ActivityContext = ActivityContext;
+        Log.e("HomeAdapter", "HomeAdapter object size=" + objects.size());
     }
 
     @Override
@@ -99,11 +102,15 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                         }
                         if (holder1.lbl != null) {
 //                            holder1.lbl.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                            holder1.lbl.setBackgroundResource(myItem.icon);
+//                            holder1.lbl.setBackgroundResource(myItem.icon);
+
+                            holder1.lbl.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
+                            Picasso.with(context).load(myItem.icon).into(holder1.lbl);
+
                         }
                         if (holder1.item1 != null) {
                             holder1.item1.setLayoutParams(AppLayoutParam2(rowHeight, myItem.width, 0, 0, 0, 0, null));
-//                            holder1.item1.setBackgroundColor(context.getResources().getColor(myItem.bgColor));
+                            holder1.item1.setBackgroundColor(context.getResources().getColor(myItem.bgColor));
                         }
 
                         //2nd item
@@ -113,11 +120,18 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
 
                         if (holder1.lbl2 != null) {
 //                            holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                            holder1.lbl2.setBackgroundResource(myItem.icon2);
+
+
+                            Log.e("HomeAdapter", "2nd cat icon is=" + myItem.icon2);
+
+                            //if (!myItem.icon2.equals("empty")) {
+                                holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
+                                Picasso.with(context).load(myItem.icon2).into(holder1.lbl2);
+                            //}
                         }
                         if (holder1.item2 != null) {
                             holder1.item2.setLayoutParams(AppLayoutParam2(rowHeight, 100 - myItem.width, 0, 0, 0, 0, holder1.item1));
-//                            holder1.item2.setBackgroundColor(context.getResources().getColor(myItem.bgColor2));
+                            holder1.item2.setBackgroundColor(context.getResources().getColor(myItem.bgColor2));
                         }
                     }
                     return v;

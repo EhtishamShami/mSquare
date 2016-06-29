@@ -13,7 +13,7 @@ public class GetServicesModel {
     public String thumb;
     public String categoryType;
 
-    public GetServicesModel(String categoryType, String id, String status, String description, String name, String parent, String thumb) {
+    public GetServicesModel(String id, String status, String description, String name, String parent, String thumb, String categoryType) {
         this.id = id;
         this.status = status;
         this.description = description;

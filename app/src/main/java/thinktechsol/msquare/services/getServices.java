@@ -90,14 +90,22 @@ public class getServices {
             for (int i = 0; i < productArray.length(); i++) {
                 JSONObject childJsonObj = (JSONObject) productArray.get(i);
                 String id = childJsonObj.getString("id");
-                String sellerId = childJsonObj.getString("status");
-                String serviceId = childJsonObj.getString("description");
-                String description = childJsonObj.getString("name");
-                String title = childJsonObj.getString("parent");
-                String price = childJsonObj.getString("thumb");
-                String deliveryTime = childJsonObj.getString("categoryType");
+                String status = childJsonObj.getString("status");
+                String description = childJsonObj.getString("description");
+                String name = childJsonObj.getString("name");
+                String parent = childJsonObj.getString("parent");
+                String thumb = childJsonObj.getString("thumb");
+                String categoryType = childJsonObj.getString("categoryType");
 
-                allServices.add(new GetServicesModel(id, sellerId, serviceId, description, title, price, deliveryTime));
+//                Log.e("HomeActivity", "getService list id1=" + id);
+//                Log.e("HomeActivity", "getService list status1=" + status);
+//                Log.e("HomeActivity", "getService list description1=" + description);
+//                Log.e("HomeActivity", "getService list name1=" + name);
+//                Log.e("HomeActivity", "getService list parent1=" + parent);
+//                Log.e("HomeActivity", "getService list parent1 thumb1=" + thumb);
+//                Log.e("HomeActivity", "getService list categoryType1=" + categoryType);
+
+                allServices.add(new GetServicesModel(id, status, description, name, parent, thumb, categoryType));
             }
 
         } catch (JSONException e) {

@@ -2,7 +2,6 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -16,17 +15,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.adapter.HomeAdapter;
-import thinktechsol.msquare.adapter.ImgSwiperAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.HomeItem;
-import thinktechsol.msquare.model.HomeItemSingle;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -161,13 +156,25 @@ public class HomeActivity extends Activity {
         }
     };
 
-    String bgColors[] = new String[]{"#973c5f", "#cb3b5c", "#0068a5", "#2688ad", "#de7112", "#dc4d15", "#13a06b", "#82b421"};
+
+    int bgColors[][] = new int[][]{{R.color.item1Color, R.color.item2Color}, {R.color.item3Color, R.color.item4Color},
+            {R.color.item5Color, R.color.item6Color}, {R.color.item7Color, R.color.item8Color}};
     int width[] = new int[]{30, 50, 70, 50};
+
+    boolean firstCategory = true;
+    boolean even = false;
 
     public void fillProductListWithData(ArrayList<GetServicesModel> list) {
         int ColorCounter = 0;
         int WidthCounter = 0;
 
+        String id1 = null;
+        String status1 = null;
+        String description1 = null;
+        String name1 = null;
+        String parent1 = null;
+        String thumb1 = null;
+        String categoryType1 = null;
         String id2 = null;
         String status2 = null;
         String description2 = null;
@@ -178,26 +185,30 @@ public class HomeActivity extends Activity {
 
 
         ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
+        m_parts.clear();
 
-
-
+        if (list.size() % 2 == 0)
+            even = true;
 
         for (int i = 0; i < list.size(); i++) {
 
-            m_parts.clear();
-
             GetServicesModel myItem = list.get(i);
 
-            String id1 = myItem.id;
-            String status1 = myItem.status;
-            String description1 = myItem.description;
-            String name1 = myItem.name;
-            String parent1 = myItem.parent;
-            String thumb1 = myItem.thumb;
-            String categoryType1 = myItem.categoryType;
+            if (firstCategory) {
+                firstCategory = false;
 
-            if (i + 1 > list.size()) {
-                GetServicesModel myItem2 = list.get(i + 1);
+                id1 = myItem.id;
+                status1 = myItem.status;
+                description1 = myItem.description;
+                name1 = myItem.name;
+                parent1 = myItem.parent;
+                thumb1 = myItem.thumb;
+                categoryType1 = myItem.categoryType;
+                Log.e("HomeActivity", "first items from list =" + name1);
+
+
+            } else {
+                firstCategory = true;
 
                 id2 = myItem.id;
                 status2 = myItem.status;
@@ -208,28 +219,32 @@ public class HomeActivity extends Activity {
                 categoryType2 = myItem.categoryType;
             }
 
-            if (name2 != null) {
-                m_parts.add(new HomeItem(name1, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter]), width[WidthCounter], name2, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter])));
-            } else {
-                m_parts.add(new HomeItem(name1, R.drawable.baqala_icon, Color.parseColor(bgColors[ColorCounter]), 100, "", 0, 0));
-            }
 
-            if (ColorCounter >= 8) {
-                ColorCounter += 1;
-            } else {
-                ColorCounter = 0;
-            }
+            if (firstCategory) {
+                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], width[WidthCounter], name2, Constant.imgbaseUrl + thumb2, bgColors[ColorCounter][1]));
 
-            if (WidthCounter >= 4) {
-                WidthCounter += 1;
-            } else {
-                WidthCounter = 0;
+                if (ColorCounter < 3) {
+                    ColorCounter += 1;
+                } else {
+                    ColorCounter = 0;
+                }
+
+                if (WidthCounter < 3) {
+                    WidthCounter += 1;
+                } else {
+                    WidthCounter = 0;
+                }
+            }
+            if (even == false && i == list.size() - 1) {
+                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], 100, "full layout", "empty", bgColors[ColorCounter][1]));
             }
         }
+
 
         HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
         listview.setAdapter(m_adapter);
     }
+
 
     /*
     *
