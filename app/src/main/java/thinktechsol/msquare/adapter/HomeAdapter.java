@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +19,8 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
-import thinktechsol.msquare.model.HomeItem;
+import thinktechsol.msquare.activities.buyer.SalonDetailsActivity;
+import thinktechsol.msquare.model.Buyer.HomeItem;
 import thinktechsol.msquare.utils.Constant;
 
 
@@ -94,19 +97,38 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                         holder1 = (Type1Holder) v.getTag();
                     }
 
+                    holder1.item1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //getSellerProductsResponse myItem = productList.get(position);
+                            HomeItem myItem = objects.get(position);
+
+                            Toast.makeText(context, "" + position + ": " + myItem.name, Toast.LENGTH_SHORT).show();
+//                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
+//                            context.startActivity(viewProductDetails);
+                        }
+                    });
+                    holder1.item2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //getSellerProductsResponse myItem = productList.get(position);
+                            HomeItem myItem = objects.get(position);
+
+                            Toast.makeText(context, "" + position + ": " + myItem.name2, Toast.LENGTH_SHORT).show();
+                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
+                            context.startActivity(viewProductDetails);
+                        }
+                    });
+
                     HomeItem myItem = objects.get(position);
                     if (myItem != null) {
                         //1st item
                         if (holder1.lbl_txt != null) {
-                            holder1.lbl_txt.setText(myItem.label);
+                            holder1.lbl_txt.setText(myItem.name);
                         }
                         if (holder1.lbl != null) {
-//                            holder1.lbl.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-//                            holder1.lbl.setBackgroundResource(myItem.icon);
-
                             holder1.lbl.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                            Picasso.with(context).load(myItem.icon).into(holder1.lbl);
-
+                            Picasso.with(context).load(myItem.thumb).into(holder1.lbl);
                         }
                         if (holder1.item1 != null) {
                             holder1.item1.setLayoutParams(AppLayoutParam2(rowHeight, myItem.width, 0, 0, 0, 0, null));
@@ -115,18 +137,14 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
 
                         //2nd item
                         if (holder1.lbl_txt2 != null) {
-                            holder1.lbl_txt2.setText(myItem.label2);
+                            holder1.lbl_txt2.setText(myItem.name2);
                         }
 
                         if (holder1.lbl2 != null) {
-//                            holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-
-
-                            Log.e("HomeAdapter", "2nd cat icon is=" + myItem.icon2);
 
                             //if (!myItem.icon2.equals("empty")) {
-                                holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                                Picasso.with(context).load(myItem.icon2).into(holder1.lbl2);
+                            holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
+                            Picasso.with(context).load(myItem.thumb2).into(holder1.lbl2);
                             //}
                         }
                         if (holder1.item2 != null) {

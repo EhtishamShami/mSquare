@@ -7,20 +7,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
+import thinktechsol.msquare.model.Buyer.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerListFragment extends Fragment {
+public class BuyerServiceSellersList extends Fragment {
+
+    ListView listView;
+    BuyerServiceSellersListAdapter adapter;
+    ArrayList<getServiceSellers> productList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
+        View v = inflater.inflate(R.layout.fragment_buyer_service_seller_list, container, false);
 
+        productList = new ArrayList<getServiceSellers>();
+        productList.add(new getServiceSellers("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
+        productList.add(new getServiceSellers("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
+        productList.add(new getServiceSellers("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
 
+        listView = (ListView) v.findViewById(R.id.list);
+        adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, productList);
+        listView.setAdapter(adapter);
 
         return v;
     }

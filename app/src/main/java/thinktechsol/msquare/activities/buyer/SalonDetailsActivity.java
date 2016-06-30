@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Buyer.BuyerMapFragment;
 import thinktechsol.msquare.utils.Constant;
 
@@ -97,7 +98,7 @@ public class SalonDetailsActivity extends FragmentActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new BuyerMapFragment(), getResources().getString(R.string.lbl_tab1_text));
-        adapter.addFrag(new BuyerMapFragment(), getResources().getString(R.string.lbl_tab2_text));
+        adapter.addFrag(new BuyerServiceSellersList(), getResources().getString(R.string.lbl_tab2_text));
         viewPager.setAdapter(adapter);
     }
 

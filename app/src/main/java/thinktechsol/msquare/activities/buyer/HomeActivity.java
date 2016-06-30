@@ -21,7 +21,6 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
-import thinktechsol.msquare.model.HomeItem;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -204,8 +203,6 @@ public class HomeActivity extends Activity {
                 parent1 = myItem.parent;
                 thumb1 = myItem.thumb;
                 categoryType1 = myItem.categoryType;
-                Log.e("HomeActivity", "first items from list =" + name1);
-
 
             } else {
                 firstCategory = true;
@@ -239,7 +236,6 @@ public class HomeActivity extends Activity {
                 m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], 100, "full layout", "empty", bgColors[ColorCounter][1]));
             }
         }
-
 
         HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
         listview.setAdapter(m_adapter);

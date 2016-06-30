@@ -52,7 +52,7 @@ public class UserTypeActivity extends Activity {
                     Intent sellerLogin = new Intent(UserTypeActivity.this, BuyerLoginActivity.class);
                     startActivity(sellerLogin);
                     overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-                    finish();
+                    //finish();
                     return true;
                 }
                 return false;
@@ -71,7 +71,7 @@ public class UserTypeActivity extends Activity {
                     Intent sellerLogin = new Intent(UserTypeActivity.this, SellerLoginActivity.class);
                     startActivity(sellerLogin);
                     overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-                    finish();
+                    //finish();
 
                     return true;
                 }

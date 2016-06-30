@@ -76,6 +76,7 @@ public class SellerDeshBoardActivity extends Activity {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "DeshBoard's Back Button is clicked", Toast.LENGTH_SHORT).show();
 //                    Intent add=new Intent(SellerDeshBoardActivity.this,AddOrViewProActivity.class);
 //                    startActivity(add);
+                    finish();
                 } else if (backBtn.getTag().equals(AddProductScreenTagbackButton)) {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "Category's Back Button is clicked", Toast.LENGTH_SHORT).show();
                     SellerDashBoardProductFragment fragobj = new SellerDashBoardProductFragment();
@@ -153,7 +154,6 @@ public class SellerDeshBoardActivity extends Activity {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentLayout, fragobj);
                 transaction.commit();
-
 
             }
         });
