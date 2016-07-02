@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -20,6 +21,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
+import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.utils.Constant;
@@ -91,7 +94,8 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
+                            context.startActivity(serviceSellerActivity);
                         }
                     });
 

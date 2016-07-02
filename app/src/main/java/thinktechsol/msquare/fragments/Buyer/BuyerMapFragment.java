@@ -9,17 +9,48 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerMapFragment extends Fragment {
+public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
+
+    private GoogleMap mMap;
+    static final LatLng testLatLng = new LatLng(24.433904943494827,54.41303014755249);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
+        View v = inflater.inflate(R.layout.fragment_buyer_map, container, false);
 
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
+
+        try {
+            if (mMap == null) {
+                mMap = ((MapFragment) getActivity().getFragmentManager().
+                        findFragmentById(R.id.map)).getMap();
+            }
+            mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            Marker testMarker = mMap.addMarker(new MarkerOptions().
+                    position(testLatLng).title("TestAddress"));
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+            mMap.animateCamera(cameraUpdate);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return v;
@@ -55,5 +86,15 @@ public class BuyerMapFragment extends Fragment {
             x = (size / 100) * Constant.screenHeight;
         }
         return (int) x;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }

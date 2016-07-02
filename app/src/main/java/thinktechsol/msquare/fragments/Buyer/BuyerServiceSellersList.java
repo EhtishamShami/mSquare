@@ -34,15 +34,9 @@ public class BuyerServiceSellersList extends Fragment {
 
         new getServiceSellers(getActivity(),BuyerServiceSellersList.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
 
-//        Constant.sellerServiceId/24.433904943494827/54.41303014755249
-//        productList = new ArrayList<getServiceSellersModel>();
-//        productList.add(new getServiceSellersModel("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
-//        productList.add(new getServiceSellersModel("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
-//        productList.add(new getServiceSellersModel("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"));
 
         listView = (ListView) v.findViewById(R.id.list);
-//        adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, productList);
-//        listView.setAdapter(adapter);
+
 
         return v;
     }

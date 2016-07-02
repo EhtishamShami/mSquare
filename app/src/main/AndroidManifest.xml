@@ -47,6 +47,7 @@
         <activity android:name=".activities.ViewSellProDetailActivity" />
         <activity android:name=".activities.buyer.HomeActivity" />
         <activity android:name=".activities.buyer.SalonDetailsActivity" />
+        <activity android:name=".activities.buyer.ServiceSellerDetailActivity" />
 
         <!-- facebook integration metadata -->
         <meta-data
@@ -65,9 +66,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import thinktechsol.msquare.MapsActivity;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.buyer.SalonDetailsActivity;
@@ -106,7 +105,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
 
                             Toast.makeText(context, "" + position + ": " + myItem.id, Toast.LENGTH_SHORT).show();
                             Constant.sellerServiceId = myItem.id;
-                            Intent viewProductDetails = new Intent(context, MapsActivity.class);
+                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
                             context.startActivity(viewProductDetails);
                         }
                     });
