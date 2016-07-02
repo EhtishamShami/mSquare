@@ -3,6 +3,7 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 
@@ -35,10 +36,6 @@ public class SalonDetailsActivity extends FragmentActivity {
     TextView title;
     ImageView backBtn, btn_menu;
 
-    private int[] tabIcons = {
-            R.drawable.switch_off,
-            R.drawable.switch_on
-    };
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -97,8 +94,8 @@ public class SalonDetailsActivity extends FragmentActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new BuyerMapFragment(), getResources().getString(R.string.lbl_tab1_text));
-        adapter.addFrag(new BuyerServiceSellersList(), getResources().getString(R.string.lbl_tab2_text));
+        adapter.addFrag(new BuyerMapFragment(), ""/*getResources().getString(R.string.lbl_tab1_text)*/);
+        adapter.addFrag(new BuyerServiceSellersList(), ""/* getResources().getString(R.string.lbl_tab2_text)*/);
         viewPager.setAdapter(adapter);
     }
 
@@ -131,29 +128,84 @@ public class SalonDetailsActivity extends FragmentActivity {
         }
     }
 
+    int[] tabIcons = {
+            R.drawable.buyer_map_active,
+            R.drawable.buyer_list_normal,
+            R.drawable.buyer_map_normal,
+            R.drawable.buyer_list_active
+    };
+    View view1,view2;
     private void setupTabIcons() {
+
 
 //        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
 //        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 
-        final TextView maps = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab2, null);
-        maps.setText(getResources().getString(R.string.lbl_tab1_text));
-        maps.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_tab_call, 0, 0, 0);
-        maps.setTextColor(Color.BLACK);
+        view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
+
+        view2 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_normal);
+        tabLayout.getTabAt(0).setCustomView(view1);
+        tabLayout.getTabAt(1).setCustomView(view2);
+
+
+
+//        View view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+//        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
+//        tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
+//
+//        View view2 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+//        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_normal);
+//        tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
+
+
+        /*final TextView maps = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab2, null);
+        maps.setText(""*//*getResources().getString(R.string.lbl_tab1_text)*//*);
+        maps.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.buyer_map_active, 0, 0);
+//        maps.setTextColor(Color.BLACK);
         tabLayout.getTabAt(0).setCustomView(maps);
+
+//        Drawable img = getResources().getDrawable( R.drawable.buyer_map_active );
+//        img.setBounds(0, 0, 230, 80);
+//        maps.setCompoundDrawables( img, null, null, null );
+
 //        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 //        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         final TextView list = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab2, null);
-        list.setText(getResources().getString(R.string.lbl_tab2_text));
-        list.setTextColor(Color.BLACK);
-        list.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_tab_contacts, 0, 0, 0);
-        tabLayout.getTabAt(1).setCustomView(list);
+        list.setText(""*//*getResources().getString(R.string.lbl_tab2_text)*//*);
+        list.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.buyer_list_normal, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(list);*/
+
+//        Drawable img2 = getResources().getDrawable( R.drawable.buyer_list_normal );
+//        img.setBounds(0, 0, 230, 80);
+//        maps.setCompoundDrawables( img2, null, null, null );
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
+                if (tab.getPosition() == 0) {
+
+
+
+                    view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
+                    tabLayout.getTabAt(0).setCustomView(view1);
+
+                    view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_normal);
+                    tabLayout.getTabAt(1).setCustomView(view2);
+
+                } else if (tab.getPosition() == 1) {
+
+                    view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_normal);
+                    tabLayout.getTabAt(0).setCustomView(view1);
+
+                    view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_active);
+                    tabLayout.getTabAt(1).setCustomView(view2);
+
+                }
             }
 
             @Override

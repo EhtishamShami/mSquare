@@ -18,7 +18,7 @@ public class Constant {
 //    public static String imgbaseUrl = "http://weblinelab.com/demo/msquare/";
 
     //    original url
-    public static String baseUrl =    "http://smartit.ae/api/";
+    public static String baseUrl = "http://smartit.ae/api/";
     public static String imgbaseUrl = "http://smartit.ae/";
     public static int screenHeight;
     public static int screenWidth;
@@ -31,6 +31,8 @@ public class Constant {
     public static getSellerProductsResponse singleProduct;
     //    list of images of the seller products
     public static ArrayList<ProductImages> productImagesList;
+    //    service seller id like if saloon is clicked then id of the saloon(its in the buyer's end)
+    public static String sellerServiceId;
 
     //    add or view product selection switch
     public static boolean addOrViewProduct;

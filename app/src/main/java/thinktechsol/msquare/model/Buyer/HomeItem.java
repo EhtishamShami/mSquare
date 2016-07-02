@@ -1,5 +1,7 @@
 package thinktechsol.msquare.model.Buyer;
 
+import thinktechsol.msquare.R;
+
 /**
  * Created by Arshad.Iqbal on 5/16/2016.
  */
@@ -14,6 +16,7 @@ public class HomeItem {
     public String categoryType;
     public int bgColor;
 
+
     public String id2;
     public String status2;
     public String description2;
@@ -23,9 +26,13 @@ public class HomeItem {
     public String categoryType2;
     public int bgColor2;
 
-    public float width;
+    public int width;
 
-    public HomeItem(String id, String status, String description, String name, String parent, String thumb, String categoryType, int bgColor, String id2, String status2, String description2, String name2, String parent2, String thumb2, String categoryType2, int bgColor2, float width) {
+    public HomeItem() {
+    }
+
+    public HomeItem(String id, String status, String description, String name, String parent, String thumb, String categoryType, int bgColor,
+                    String id2, String status2, String description2, String name2, String parent2, String thumb2, String categoryType2, int bgColor2, int width) {
         this.id = id;
         this.status = status;
         this.description = description;
@@ -46,15 +53,23 @@ public class HomeItem {
     }
 
 
-//    public HomeItem(String label, String icon, int bgColor, float width, String label2, String icon2, int bgColor2) {
-//        this.label = label;
-//        this.icon = icon;
-//        this.bgColor = bgColor;
-//
-//        this.width = width;
-//
-//        this.label2 = label2;
-//        this.icon2 = icon2;
-//        this.bgColor2 = bgColor2;
-//    }
+    public void clearObject() {
+        this.id = "";
+        this.status = "";
+        this.description = "";
+        this.name = "";
+        this.parent = "";
+        this.thumb = "empty";
+        this.categoryType = "";
+        this.bgColor = 0;
+        this.id2 = "";
+        this.status2 = "";
+        this.description2 = "";
+        this.name2 = "";
+        this.parent2 = "";
+        this.thumb2 = "empty";
+        this.categoryType2 = "";
+        this.bgColor2 = 0;
+        this.width = 0;
+    }
 }

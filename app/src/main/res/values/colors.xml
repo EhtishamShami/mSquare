@@ -37,4 +37,7 @@
     <color name="cat_item2_color">#82b421</color>
     <color name="cat_item3_color">#6c1e00</color>
     <color name="cat_item4_color">#a32d00</color>
+
+
+    <color name="rating_color">#fed130</color>
 </resources>

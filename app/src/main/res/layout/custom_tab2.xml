@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/tab"
-    android:textColor="#000000"
-    android:textSize="15sp"
-    android:text="test"
-    android:padding="10dp"
+    android:layout_margin="5dp"
     android:drawablePadding="15dp"
-
-   />
+    android:padding="10dp"
+    android:text="test"
+    android:textColor="#000000"
+    android:textSize="15sp" />
 
     <!--android:fontFamily="@string/font_fontFamily_medium"-->

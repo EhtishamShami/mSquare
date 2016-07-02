@@ -4,7 +4,7 @@ package thinktechsol.msquare.model.Buyer;
  * Created by Arshad Iqbal on 30/06/2016.
  */
 
-public class getServiceSellers {
+public class getServiceSellersModel {
 
     public String logo;
     public String status;
@@ -28,7 +28,7 @@ public class getServiceSellers {
     public String datetime;
     public String mobileNo;
 
-    public getServiceSellers(String mobileNo, String logo, String status, String tradeNo, String documents, String lName, String companyName, String password, String fName, String productRating, String id, String phoneNo, String distance, String email, String address, String description, String activationCode, String service, String longitude, String latitude, String datetime) {
+    public getServiceSellersModel(String mobileNo, String logo, String status, String tradeNo, String documents, String lName, String companyName, String password, String fName, String productRating, String id, String phoneNo, String distance, String email, String address, String description, String activationCode, String service, String longitude, String latitude, String datetime) {
         this.mobileNo = mobileNo;
         this.logo = logo;
         this.status = status;

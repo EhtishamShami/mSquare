@@ -25,7 +25,6 @@
     <string name="lbl_time_pro">00:00</string>
 
 
-
     <string name="facebook_app_id">733055416833817</string>
 
     <string-array name="values">
@@ -39,5 +38,6 @@
 
     <string name="lbl_tab1_text">Map</string>
     <string name="lbl_tab2_text">List</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

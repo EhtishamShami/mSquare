@@ -21,6 +21,7 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
+import thinktechsol.msquare.model.Buyer.HomeItem;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -184,58 +185,112 @@ public class HomeActivity extends Activity {
 
 
         ArrayList<HomeItem> m_parts = new ArrayList<HomeItem>();
+
+
         m_parts.clear();
 
         if (list.size() % 2 == 0)
             even = true;
 
-        for (int i = 0; i < list.size(); i++) {
+//        HomeItem homeItem = new HomeItem();
+//        for (int i = 0; i < list.size(); i++) {
+          for (int i = list.size()-1; i >= 0; i--) {
 
-            GetServicesModel myItem = list.get(i);
-
-            if (firstCategory) {
-                firstCategory = false;
-
-                id1 = myItem.id;
-                status1 = myItem.status;
-                description1 = myItem.description;
-                name1 = myItem.name;
-                parent1 = myItem.parent;
-                thumb1 = myItem.thumb;
-                categoryType1 = myItem.categoryType;
-
-            } else {
-                firstCategory = true;
-
-                id2 = myItem.id;
-                status2 = myItem.status;
-                description2 = myItem.description;
-                name2 = myItem.name;
-                parent2 = myItem.parent;
-                thumb2 = myItem.thumb;
-                categoryType2 = myItem.categoryType;
-            }
+                GetServicesModel myItem = list.get(i);
 
 
-            if (firstCategory) {
-                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], width[WidthCounter], name2, Constant.imgbaseUrl + thumb2, bgColors[ColorCounter][1]));
+                if (firstCategory) {
+                    firstCategory = false;
 
-                if (ColorCounter < 3) {
-                    ColorCounter += 1;
+                    id1 = myItem.id;
+                    status1 = myItem.status;
+                    description1 = myItem.description;
+                    name1 = myItem.name;
+                    parent1 = myItem.parent;
+                    thumb1 = myItem.thumb;
+                    categoryType1 = myItem.categoryType;
+
+//                homeItem.id = myItem.id;
+//                homeItem.status = myItem.status;
+//                homeItem.description = myItem.description;
+//                homeItem.name = myItem.name;
+//                homeItem.parent = myItem.parent;
+//                homeItem.thumb = Constant.imgbaseUrl + myItem.thumb;
+//                homeItem.categoryType = myItem.categoryType;
+
                 } else {
-                    ColorCounter = 0;
+                    firstCategory = true;
+
+                    id2 = myItem.id;
+                    status2 = myItem.status;
+                    description2 = myItem.description;
+                    name2 = myItem.name;
+                    parent2 = myItem.parent;
+                    thumb2 = myItem.thumb;
+                    categoryType2 = myItem.categoryType;
+
+//                homeItem.id2 = myItem.id;
+//                homeItem.status2 = myItem.status;
+//                homeItem.description2 = myItem.description;
+//                homeItem.name2 = myItem.name;
+//                homeItem.parent2 = myItem.parent;
+//                homeItem.thumb2 = Constant.imgbaseUrl + myItem.thumb;
+//                homeItem.categoryType2 = myItem.categoryType;
                 }
 
-                if (WidthCounter < 3) {
-                    WidthCounter += 1;
-                } else {
-                    WidthCounter = 0;
+
+                if (firstCategory) {
+
+//                homeItem.width = width[WidthCounter];
+//                homeItem.bgColor = bgColors[ColorCounter][0];
+//                homeItem.bgColor2 = bgColors[ColorCounter][1];
+
+
+                    //m_parts.add(homeItem);
+//                Log.e("HomeActivity", "name1=" + homeItem.bgColor);
+//                Log.e("HomeActivity", "name2=" + homeItem.bgColor2);
+//                homeItem.clearObject();
+
+                    m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
+                            id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], width[WidthCounter]
+                    ));
+
+
+                    if (ColorCounter < 3) {
+                        ColorCounter += 1;
+                    } else {
+                        ColorCounter = 0;
+                    }
+
+                    if (WidthCounter < 3) {
+                        WidthCounter += 1;
+                    } else {
+                        WidthCounter = 0;
+                    }
+                }
+
+                if (even == false && i == list.size() - 1) {
+
+//                homeItem.width = 100;
+//                homeItem.bgColor = bgColors[ColorCounter][0];
+//                homeItem.bgColor2 = bgColors[ColorCounter][1];
+
+//                homeItem.id2 = "";
+//                homeItem.status2 = "";
+//                homeItem.description2 = "";
+//                homeItem.name2 = "";
+//                homeItem.parent2 = "";
+//                homeItem.thumb2 = "";
+//                homeItem.categoryType2 = "";
+
+//                m_parts.add(homeItem);
+//                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], 100, "full layout", "empty", bgColors[ColorCounter][1]));
+
+                    m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
+                            id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], 100
+                    ));
                 }
             }
-            if (even == false && i == list.size() - 1) {
-                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], 100, "full layout", "empty", bgColors[ColorCounter][1]));
-            }
-        }
 
         HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
         listview.setAdapter(m_adapter);

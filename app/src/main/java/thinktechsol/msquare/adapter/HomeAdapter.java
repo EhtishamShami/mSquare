@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import thinktechsol.msquare.MapsActivity;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.buyer.SalonDetailsActivity;
@@ -103,9 +104,10 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                             //getSellerProductsResponse myItem = productList.get(position);
                             HomeItem myItem = objects.get(position);
 
-                            Toast.makeText(context, "" + position + ": " + myItem.name, Toast.LENGTH_SHORT).show();
-//                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
-//                            context.startActivity(viewProductDetails);
+                            Toast.makeText(context, "" + position + ": " + myItem.id, Toast.LENGTH_SHORT).show();
+                            Constant.sellerServiceId = myItem.id;
+                            Intent viewProductDetails = new Intent(context, MapsActivity.class);
+                            context.startActivity(viewProductDetails);
                         }
                     });
                     holder1.item2.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +116,8 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                             //getSellerProductsResponse myItem = productList.get(position);
                             HomeItem myItem = objects.get(position);
 
-                            Toast.makeText(context, "" + position + ": " + myItem.name2, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "" + position + ": " + myItem.id2, Toast.LENGTH_SHORT).show();
+                            Constant.sellerServiceId = myItem.id2;
                             Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
                             context.startActivity(viewProductDetails);
                         }

@@ -1,31 +1,27 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddOrViewProActivity;
-import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
-import thinktechsol.msquare.interfaceMine.subItemClick;
-import thinktechsol.msquare.model.Buyer.getServiceSellers;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
+import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -33,7 +29,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSellers> {
+public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSellersModel> {
 
     private static final int _row = 0;
     private static final String TAG = "ServiceSellersListAdapter";
@@ -45,11 +41,11 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
 //    subItemClick click;
-    private ArrayList<getServiceSellers> productList;
+    private ArrayList<getServiceSellersModel> productList;
     private ArrayList<String> imgLoadedIds;
 
 
-    public BuyerServiceSellersListAdapter(Context context, /*AddOrViewProActivity ActivityContext,*/ int textViewResourceId, ArrayList<getServiceSellers> productList) {
+    public BuyerServiceSellersListAdapter(Context context, /*AddOrViewProActivity ActivityContext,*/ int textViewResourceId, ArrayList<getServiceSellersModel> productList) {
         super(context, textViewResourceId, productList);
         this.productList = productList;
         this.context = context;
@@ -99,24 +95,36 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                         }
                     });
 
-                    getServiceSellers myItem = productList.get(position);
+                    getServiceSellersModel myItem = productList.get(position);
 
                     if (myItem != null) {
 
+                        LayerDrawable stars = (LayerDrawable) holder.rating.getProgressDrawable();
+                        stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
+                        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
+                        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
                         if (holder.lbl != null) {
-                            //Picasso.with(context).load(myItem.productImages.image).into(holder1.lbl);
+                            Picasso.with(context).load(Constant.imgbaseUrl+myItem.logo).into(holder.lbl);
                         }
                         if (holder.companyName != null) {
-                            //holder1.companyName.setText(myItem.title);
+                            holder.companyName.setText(myItem.companyName);
                         }
                         if (holder.description != null) {
-                            //holder1.description.setText(myItem.price);
+                            holder.description.setText(myItem.description);
                         }
                         if (holder.distance != null) {
-                            //holder1.distance.setText(myItem.price);
+                            holder.distance.setText(myItem.distance);
                         }
                         if (holder.rating != null) {
-                            //holder1.rating.setText(myItem.price);
+//                            holder.rating.setText(myItem.price);
+
+                            if (!myItem.productRating.equals("not available")) {
+                                float ratingNum = Float.parseFloat(myItem.productRating);
+                                Log.e("ViewSellPro", "rating 2=" + (int)ratingNum);
+                                holder.rating.setRating(1);
+                                holder.rating.setRating((int)ratingNum);
+                            }
                         }
                     }
                     return v;

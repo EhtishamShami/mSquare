@@ -112,7 +112,7 @@ public class ViewSellProDetailActivity extends Activity {
         pro_price.setText(singleProduct.price+"AED");
         Log.e("ViewSellPro", "rating=" + singleProduct.productRating);
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
         if (!singleProduct.productRating.equals("not available")) {
