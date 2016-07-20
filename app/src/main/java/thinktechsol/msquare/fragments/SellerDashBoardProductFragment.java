@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.ItemAdapter2;
-import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.model2.Item;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardProductFragment extends Fragment {
@@ -73,10 +73,12 @@ public class SellerDashBoardProductFragment extends Fragment {
 
 
         ArrayList<Item> m_parts = new ArrayList<Item>();
+
         m_parts.add(new Item(getResources().getString(R.string.lbl_message), 1, R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
         m_parts.add(new Item(getResources().getString(R.string.lbl_customer), 1, R.drawable.customer, R.color.customerColor, R.drawable.customer_slide1, R.drawable.customer_slide2));
         m_parts.add(new Item(getResources().getString(R.string.lbl_order), 1, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
         m_parts.add(new Item(getResources().getString(R.string.lbl_product), 1, R.drawable.product, R.color.productColor, R.drawable.product_slide1, R.drawable.product_slide2));
+
 
         try {
             ItemAdapter2 m_adapter = new ItemAdapter2(getActivity(), SellerDeshBoardActivity.getContext(), R.layout.dashboard_row_item1, m_parts, this);

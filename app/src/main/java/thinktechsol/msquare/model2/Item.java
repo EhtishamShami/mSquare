@@ -1,4 +1,4 @@
-package thinktechsol.msquare.model;
+package thinktechsol.msquare.model2;
 
 /**
  * Created by Arshad.Iqbal on 5/16/2016.

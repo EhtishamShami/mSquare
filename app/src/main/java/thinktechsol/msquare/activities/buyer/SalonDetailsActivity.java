@@ -2,8 +2,6 @@ package thinktechsol.msquare.activities.buyer;
 
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 
@@ -14,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,6 +25,9 @@ import java.util.List;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Buyer.BuyerMapFragment;
+import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
 public class SalonDetailsActivity extends FragmentActivity {
@@ -50,6 +50,9 @@ public class SalonDetailsActivity extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main3);
+
+        new getServiceSellers(this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249");
+
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
@@ -82,12 +85,12 @@ public class SalonDetailsActivity extends FragmentActivity {
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
+//
+//        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
+//        setupTabIcons();
 
 
     }
@@ -134,7 +137,8 @@ public class SalonDetailsActivity extends FragmentActivity {
             R.drawable.buyer_map_normal,
             R.drawable.buyer_list_active
     };
-    View view1,view2;
+    View view1, view2;
+
     private void setupTabIcons() {
 
 
@@ -148,7 +152,6 @@ public class SalonDetailsActivity extends FragmentActivity {
         view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_normal);
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);
-
 
 
 //        View view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
@@ -190,7 +193,6 @@ public class SalonDetailsActivity extends FragmentActivity {
                 if (tab.getPosition() == 0) {
 
 
-
                     view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
                     tabLayout.getTabAt(0).setCustomView(view1);
 
@@ -220,6 +222,31 @@ public class SalonDetailsActivity extends FragmentActivity {
 
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    ArrayList<getServiceSellersModel> SellersProductDetailList;
+
+    public void fillProductListWithData(ArrayList<getServiceSellersModel> list) {
+        SellersProductDetailList = new ArrayList<getServiceSellersModel>();
+
+        SellersProductDetailList = list;
+        Log.e("BuyerServiceSellersList", "list size is 1=" + list.size());
+//        for (int i = 0; i < list.size(); i++) {
+//            SellersProductDetailList.add(new getServiceSellersModel(list.get(i).mobileNo, list.get(i).logo, list.get(i).status, list.get(i).tradeNo, list.get(i).documents, list.get(i).lName, list.get(i).companyName, list.get(i).password, list.get(i).fName, list.get(i).productRating, list.get(i).id, list.get(i).phoneNo, list.get(i).distance, list.get(i).email, list.get(i).address, list.get(i).description, list.get(i).activationCode, list.get(i).service, list.get(i).longitude, list.get(i).latitude, list.get(i).datetime));
+//        }
+
+        globels.getGlobelRef().SellersProductDetailList = SellersProductDetailList;
+
+        Log.e("BuyerServiceSellersList", "list size is 2=" + SellersProductDetailList.size());
+//        adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, SellersProductDetailList);
+//        listView.setAdapter(adapter);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
     }
 
     /*

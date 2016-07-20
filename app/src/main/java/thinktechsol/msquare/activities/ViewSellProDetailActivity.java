@@ -64,7 +64,7 @@ public class ViewSellProDetailActivity extends Activity {
         pro_name_rating_price_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_price_layout);
         pro_name_rating_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_layout);
         pro_price_layout = (RelativeLayout) findViewById(R.id.pro_price_layout);
-        pro_name = (TextView) findViewById(R.id.pro_name);
+        pro_name = (TextView) findViewById(R.id.sellers_title);
         pro_price = (TextView) findViewById(R.id.pro_price);
         rating = (RatingBar) findViewById(R.id.rating);
 

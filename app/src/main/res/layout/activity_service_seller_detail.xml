@@ -7,4 +7,49 @@
         android:id="@+id/titlebar"
         layout="@layout/titlebar" />
 
+    <RelativeLayout
+        android:id="@+id/imgLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titlebar">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#050505"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dummy_user" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/OtherLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLayout">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/tit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
+
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                tabGravity="fill"
+                tabMode="fixed"
+                android:layout_width="match_parent"
+                android:layout_height="52dp" />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tit" />
+    </RelativeLayout>
 </RelativeLayout>

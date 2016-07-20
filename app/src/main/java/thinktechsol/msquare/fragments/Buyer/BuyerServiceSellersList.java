@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.services.getServiceSellers;
@@ -32,11 +33,12 @@ public class BuyerServiceSellersList extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_buyer_service_seller_list, container, false);
 
-        new getServiceSellers(getActivity(),BuyerServiceSellersList.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
+//        new getServiceSellers(getActivity(),BuyerServiceSellersList.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
 
 
         listView = (ListView) v.findViewById(R.id.list);
-
+        adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
+        listView.setAdapter(adapter);
 
         return v;
     }

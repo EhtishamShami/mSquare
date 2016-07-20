@@ -1,7 +1,6 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -10,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -21,11 +21,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
-import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
+import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
+import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
-import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.model.Buyer.TimeListItemModel;
+import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -33,28 +33,26 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSellersModel> {
+public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
 
     private static final int _row = 0;
-    private static final String TAG = "ServiceSellersListAdapter";
+    private static final String TAG = "TimeListAdapter";
+    int itemCheckCounter = 0;
 
 
     Fragment_2_items TwoItemsFrag;
-//    AddOrViewProActivity ActivityContext;
+    BuyerReservationActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
-    //    subItemClick click;
-    private ArrayList<getServiceSellersModel> productList;
-    private ArrayList<String> imgLoadedIds;
+    private ArrayList<TimeListItemModel> list;
 
 
-    public BuyerServiceSellersListAdapter(Context context, /*AddOrViewProActivity ActivityContext,*/ int textViewResourceId, ArrayList<getServiceSellersModel> productList) {
-        super(context, textViewResourceId, productList);
-        this.productList = productList;
+    public TimeListAdapter(Context context, BuyerReservationActivity ActivityContext, int textViewResourceId, ArrayList<TimeListItemModel> list) {
+        super(context, textViewResourceId, list);
+        this.list = list;
         this.context = context;
-//        this.ActivityContext = ActivityContext;
-        imgLoadedIds = new ArrayList<String>();
+        this.ActivityContext = ActivityContext;
     }
 
     @Override
@@ -76,61 +74,32 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.buyer_service_seller_list_item, parent, false);
+                        v = vi.inflate(R.layout.time_list_adapter_item, parent, false);
 
                         holder = new ViewHolder();
 
-                        holder.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder.companyName = (TextView) v.findViewById(R.id.companyName);
-                        holder.description = (TextView) v.findViewById(R.id.description);
-                        holder.distance = (TextView) v.findViewById(R.id.distance);
-                        holder.rating = (RatingBar) v.findViewById(R.id.rating);
-
+                        holder.timeString = (TextView) v.findViewById(R.id.timeString);
 
                         v.setTag(holder);
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
-
-                    final getServiceSellersModel myItem = productList.get(position);
+                    final TimeListItemModel myItem = list.get(position);
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
-                            globels.getGlobelRef().serviceSellerProductId = myItem.id;
-                            context.startActivity(serviceSellerActivity);
+//                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
+//                            context.startActivity(serviceSellerActivity);
+                            //Toast.makeText(context, "hi=" + myItem.products.get(0).id + "&" + myItem.products.get(0).sellerId, Toast.LENGTH_SHORT).show();
                         }
                     });
 
 
                     if (myItem != null) {
 
-                        LayerDrawable stars = (LayerDrawable) holder.rating.getProgressDrawable();
-                        stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
-                        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
-                        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
-                        if (holder.lbl != null) {
-                            Picasso.with(context).load(Constant.imgbaseUrl + myItem.logo).into(holder.lbl);
-                        }
-                        if (holder.companyName != null) {
-                            holder.companyName.setText(myItem.companyName);
-                        }
-                        if (holder.description != null) {
-                            holder.description.setText(myItem.description);
-                        }
-                        if (holder.distance != null) {
-                            holder.distance.setText(myItem.distance);
-                        }
-                        if (holder.rating != null) {
-//                            holder.rating.setText(myItem.price);
-
-                            if (!myItem.productRating.equals("not available")) {
-                                float ratingNum = Float.parseFloat(myItem.productRating);
-                                Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
-                                holder.rating.setRating(1);
-                                holder.rating.setRating((int) ratingNum);
-                            }
+                        if (holder.timeString != null) {
+                            holder.timeString.setText(myItem.time);
                         }
                     }
                     return v;
@@ -138,7 +107,7 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                     return null;
             }
         } catch (Exception e) {
-            Log.e("BuyerServiceSellersAda", "Exection in Adapter=" + e);
+            Log.e("TimeListAdapter", "Exection in TimeListAdapter=" + e);
             return null;
         }
     }
@@ -177,10 +146,6 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
     }
 
     public static class ViewHolder {
-        public ImageView lbl;
-        public TextView companyName;
-        public TextView description;
-        public TextView distance;
-        public RatingBar rating;
+        public TextView timeString;
     }
 }

@@ -55,7 +55,10 @@ public class SellerLoginActivity extends Activity {
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
                     Constant.makeImageAlphLowOrHigh(btn_submit, 1f);
+//                    transation();
                     new sellerLogIn(SellerLoginActivity.this,SellerLoginActivity.this, et_login_code.getText().toString());
+
+
 //                    Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, SellerDeshBoardActivity.class);
 //                    startActivity(sellerDeshBoard);
 //                    overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);

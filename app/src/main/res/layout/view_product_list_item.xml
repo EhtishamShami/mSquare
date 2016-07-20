@@ -25,7 +25,7 @@
             android:layout_toRightOf="@+id/lbl"
             android:layout_marginLeft="10dp">
         <TextView
-            android:id="@+id/pro_name"
+            android:id="@+id/sellers_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="aaaaasdds"
@@ -37,7 +37,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pro_name"
+            android:layout_below="@+id/sellers_title"
             android:text="aaaaasdfsdd"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="12sp"></TextView>

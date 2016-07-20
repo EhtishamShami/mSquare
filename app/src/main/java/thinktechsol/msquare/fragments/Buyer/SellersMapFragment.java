@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,50 +22,42 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
+public class SellersMapFragment extends Fragment  {
 
     private GoogleMap mMap;
-    static final LatLng testLatLng = new LatLng(24.433904943494827,54.41303014755249);
+    static View v = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_buyer_map, container, false);
 
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        if (v == null) {
+            v = inflater.inflate(R.layout.fragment_seller_map, container, false);
 
-//        if (mMap == null) {
-//            mMap = ((MapFragment) getActivity().getFragmentManager().
-//                    findFragmentById(R.id.map)).getMap();
-//
-//            //mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-//        }
-//        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-//
-//        for(int i=0;i<globels.getGlobelRef().SellersProductDetailList.size();i++){
-//            LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().SellersProductDetailList.get(i).latitude),
-//                    Double.parseDouble( globels.getGlobelRef().SellersProductDetailList.get(i).longitude));
-//
+            LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.latitude),
+                    Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.longitude));
+
 //            try {
-//
+//                if (mMap == null) {
+//                    mMap = ((MapFragment) getActivity().getFragmentManager().
+//                            findFragmentById(R.id.map)).getMap();
+//                }
+//                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 //                Marker testMarker = mMap.addMarker(new MarkerOptions().
-//                        position(testLatLng).title("TestAddress"));
+//                        position(testLatLng).title("Address"));
 //                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
 //                mMap.animateCamera(cameraUpdate);
-//            }
-//            catch (Exception e) {
+//            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-//        }
-
+        }
 
 
 
         return v;
     }
+
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
@@ -100,13 +91,15 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
         return (int) x;
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mMap = googleMap;
+//
+//        // Add a marker in Sydney and move the camera
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//    }
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
+
 }

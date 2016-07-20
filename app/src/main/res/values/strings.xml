@@ -1,4 +1,6 @@
 <resources>
+
+
     <string name="app_name">MSquare</string>
     <string name="lbl_enter_code">Enter Your Code</string>
     <string name="title_activity_seller_dash_board">SellerDashBoardActivity</string>
@@ -39,5 +41,19 @@
     <string name="lbl_tab1_text">Map</string>
     <string name="lbl_tab2_text">List</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="lbl_services">Services</string>
+    <string name="lbl_about">About</string>
+    <string name="lbl_loctation">Location</string>
+
+
+    <string name="lbl_name">Name</string>
+    <string name="lbl_rating">Rating</string>
+    <string name="lbl_contact">Contact</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_address">Address</string>
+    <string name="lbl_btn_addtofavorite">Add to Favorite</string>
+
+    <string name="btn_reservation">Reservation</string>
 
 </resources>

@@ -20,7 +20,7 @@ import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.interfaceMine.subItemClick;
-import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.model2.Item;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;

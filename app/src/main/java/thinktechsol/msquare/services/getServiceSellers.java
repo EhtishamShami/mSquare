@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.HomeActivity;
+import thinktechsol.msquare.activities.buyer.SalonDetailsActivity;
 import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
@@ -37,14 +38,14 @@ public class getServiceSellers {
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    BuyerServiceSellersList ref;
+    SalonDetailsActivity ref;
     private static final String TAG = "getServiceSellers";
     String latitude;
     String longitude;
     String sellerServiceId;
 
     //    globels.getGlobelRef().sellerlogin.id
-    public getServiceSellers(final Context ctx, BuyerServiceSellersList ref, String sellerServiceId, String latitude, String longitude) {
+    public getServiceSellers(final Context ctx, SalonDetailsActivity ref, String sellerServiceId, String latitude, String longitude) {
         this.ctx = ctx;
         this.ref = ref;
         this.sellerServiceId = sellerServiceId;

@@ -14,6 +14,7 @@
     <!--add product title bar color-->
     <color name="addProductTitleBarColor">#daa400</color>
     <color name="buyerHomeActivityTitleBarColor">#000000</color>
+    <color name="color_userLayout">#fafafa</color>
 
 
     <color name="addProductSelectorColor">#daa400</color>
@@ -40,4 +41,7 @@
 
 
     <color name="rating_color">#fed130</color>
+
+    <color name="selected_tab_text_color">#2688ad</color>
+    <color name="unselected_tab_text_color">#bfbfbf</color>
 </resources>

@@ -79,7 +79,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                         holder1 = new Type1Holder();
 
                         holder1.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder1.productName = (TextView) v.findViewById(R.id.pro_name);
+                        holder1.productName = (TextView) v.findViewById(R.id.sellers_title);
                         holder1.status = (TextView) v.findViewById(R.id.status);
                         holder1.isSelected = (CheckBox) v.findViewById(R.id.isSelected);
 
