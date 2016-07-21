@@ -30,7 +30,8 @@
             android:layout_margin="5dp"
             android:layout_toRightOf="@+id/userImg"
             android:text="Yasir"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#989898" />
 
         <TextView
             android:id="@+id/changeUser"
@@ -49,28 +50,26 @@
     <RelativeLayout
         android:id="@+id/calenderLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/peopleLayout"
         android:background="#ffffff">
 
 
         <com.alamkanak.weekview.WeekView
             android:id="@+id/weekView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            dayBackgroundColor="#05000000"
             eventTextColor="@android:color/white"
-            textSize="12sp"
-            hourHeight="10dp"
+            headerColumnBackground="#ffffffff"
             headerColumnPadding="8dp"
             headerColumnTextColor="@color/addProductSelectorColor"
-            headerRowPadding="12dp"
-            columnGap="8dp"
-            noOfVisibleDays="14"
             headerRowBackgroundColor="@color/addProductSelectorColor"
-            dayBackgroundColor="#05000000"
+            headerRowPadding="12dp"
+            hourHeight="10dp"
+            textSize="12sp"
             todayBackgroundColor="#1848adff"
-            headerColumnBackground="#ffffffff"
-            todayHeaderTextColor="@color/addProductSelectorColor" />
+            todayHeaderTextColor="@color/addProductSelectorColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <View
             android:layout_width="match_parent"
@@ -82,7 +81,7 @@
     <RelativeLayout
         android:id="@+id/timeLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/calenderLayout">
 
         <ListView
@@ -99,17 +98,190 @@
 
     </RelativeLayout>
 
-    <!--<RelativeLayout
-        android:id="@+id/serviceDetailLayout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/timeLayout"
-        android:background="#fafafa">
+        android:scrollbars="none">
 
-        <View
+
+        <RelativeLayout
+            android:id="@+id/scrollableLayout"
             android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray"></View>
-    </RelativeLayout>-->
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeLayout"
+            android:background="#fafafa">
+
+            <RelativeLayout
+                android:id="@+id/serviceDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="#fafafa">
+
+                <TextView
+                    android:id="@+id/titleServiceDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/lbl_service_details"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#989898" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleServiceDetails"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="AED 70.0"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#555555" />
+
+                <TextView
+                    android:id="@+id/serviceNames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPrice"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Massage, Cutting, Triming"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#989898" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/darker_gray"></View>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sellersDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/serviceDetailLayout"
+                android:background="#fafafa">
+
+                <TextView
+                    android:id="@+id/sellersTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Maroof Saloon"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#989898" />
+
+                <RelativeLayout
+                    android:id="@+id/selectedDateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sellersTitle"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/calenderIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_calender" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/calenderIcon"
+                        android:text="2016 July 19"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#555555" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/selectedTimeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/selectedDateLayout"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/timeIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_clock" />
+
+                    <TextView
+                        android:id="@+id/tvTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/timeIcon"
+                        android:text="02:45"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#555555" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/selectedServiceProviderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/selectedTimeLayout"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/providerIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_user" />
+
+                    <TextView
+                        android:id="@+id/tvServiceProvider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/providerIcon"
+                        android:text="With Yasir"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#555555" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/selectedServiceProviderLayout"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/lbl_description"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#555555" />
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblDescription"
+                    android:layout_margin="15dp"
+                    android:background="#ece9ec"
+                    android:hint="Type Description here"
+                    android:lines="4"
+                    android:maxLines="4"
+                    android:padding="10dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>

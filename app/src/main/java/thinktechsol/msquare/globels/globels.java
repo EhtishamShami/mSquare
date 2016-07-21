@@ -28,5 +28,8 @@ public class globels {
     //buyer's view (product list)
     public static ArrayList<getServiceSellersProductModel> productList;
     public static String serviceSellerProductId;
+    public int SelectedServicesPrice;
+    public String SelectedServicesName = "";
+    public String allSelectedServices = "";
 
 }

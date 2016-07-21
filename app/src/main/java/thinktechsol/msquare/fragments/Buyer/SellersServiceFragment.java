@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class SellersServiceFragment extends Fragment {
 //        new getServiceSellersProduct(getActivity(),SellersServiceFragment.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
         Log.e("SellersServiceFrag", "list value 2=" + globels.getGlobelRef().productList);
         listView = (ListView) v.findViewById(R.id.list);
-        adapter = new BuyerServiceSellersProductListAdapter(getActivity(),SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().productList);
+        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().productList);
         listView.setAdapter(adapter);
 
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
@@ -80,7 +81,13 @@ public class SellersServiceFragment extends Fragment {
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),BuyerReservationActivity.class));
+//                Toast.makeText(getContext(), ""+, Toast.LENGTH_SHORT).show();
+                adapter.addIdsToSelectedList();
+                globels.getGlobelRef().allSelectedServices = adapter.allSelectedServices;
+                Toast.makeText(getContext(), "selected list size is=" + adapter.allSelectedServices, Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(getActivity(), BuyerReservationActivity.class));
+
             }
         });
 
@@ -96,7 +103,7 @@ public class SellersServiceFragment extends Fragment {
             //productList.add(new getServiceSellersProductModel(list.get(i).mobileNo, list.get(i).logo, list.get(i).status, list.get(i).tradeNo, list.get(i).documents, list.get(i).lName, list.get(i).companyName, list.get(i).password, list.get(i).fName, list.get(i).productRating, list.get(i).id, list.get(i).phoneNo, list.get(i).distance, list.get(i).email, list.get(i).address, list.get(i).description, list.get(i).activationCode, list.get(i).service, list.get(i).longitude, list.get(i).latitude, list.get(i).datetime));
         }
 
-        adapter = new BuyerServiceSellersProductListAdapter(getActivity(),SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, list);
+        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, list);
         listView.setAdapter(adapter);
     }
 
@@ -145,5 +152,15 @@ public class SellersServiceFragment extends Fragment {
             x = (size / 100) * Constant.screenHeight;
         }
         return (int) x;
+    }
+
+    public void showReservationButton(boolean flag, int price) {
+
+        globels.getGlobelRef().SelectedServicesPrice = price;
+
+        if (flag)
+            reservationBtn.setVisibility(View.VISIBLE);
+        else
+            reservationBtn.setVisibility(View.GONE);
     }
 }

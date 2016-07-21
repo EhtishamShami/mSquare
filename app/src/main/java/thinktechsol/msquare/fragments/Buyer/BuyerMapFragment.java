@@ -38,12 +38,12 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
 //                .findFragmentById(R.id.map);
 //        mapFragment.getMapAsync(this);
 
-//        if (mMap == null) {
-//            mMap = ((MapFragment) getActivity().getFragmentManager().
-//                    findFragmentById(R.id.map)).getMap();
-//
-//            //mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-//        }
+        if (mMap == null) {
+            ((MapFragment) getActivity().getFragmentManager().
+                    findFragmentById(R.id.map)).getMapAsync(this);
+
+            //mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        }
 //        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 //
 //        for(int i=0;i<globels.getGlobelRef().SellersProductDetailList.size();i++){
@@ -105,8 +105,26 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
+        for(int i=0;i<globels.getGlobelRef().SellersProductDetailList.size();i++){
+            LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().SellersProductDetailList.get(i).latitude),
+                    Double.parseDouble( globels.getGlobelRef().SellersProductDetailList.get(i).longitude));
+
+            try {
+
+                Marker testMarker = mMap.addMarker(new MarkerOptions().
+                        position(testLatLng).title("TestAddress"));
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+                mMap.animateCamera(cameraUpdate);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

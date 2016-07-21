@@ -1,12 +1,16 @@
 package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.pm.ActivityInfo;
 import android.graphics.RectF;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,33 +29,42 @@ import java.util.List;
 import java.util.Locale;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.adapter.BuyerServiceSellersProductListAdapter;
+import thinktechsol.msquare.adapter.ChangeServiceProviderListAdapter;
 import thinktechsol.msquare.adapter.TimeListAdapter;
-import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.ChangeServiceProviderListItemModel;
 import thinktechsol.msquare.model.Buyer.TimeListItemModel;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerReservationActivity extends Activity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener
+public class BuyerReservationActivity extends Activity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.ScrollListener
         /*implements WeekView.EventClickListener, WeekView.EventLongPressListener */ {
 
     RelativeLayout titlebarlayout;
     TextView title;
     ImageView backBtn, btn_menu;
 
-    RelativeLayout peopleLayout, calenderLayout, timeLayout;
+    RelativeLayout peopleLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout;
     ListView timelisview;
     ArrayList<TimeListItemModel> list;
+    ArrayList<ChangeServiceProviderListItemModel> providerList;
 
     WeekView mWeekView;
     private static ArrayList<WeekViewEvent> mNewEvents;
+    TextView userName, changeUser, tvDate, tvTime, tvServiceProvider, sellersTitle, tvPrice, serviceNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_buyer_reservation);
 
         list = new ArrayList<TimeListItemModel>();
+        providerList = new ArrayList<ChangeServiceProviderListItemModel>();
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
         title = (TextView) findViewById(R.id.title);
@@ -61,6 +74,22 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         peopleLayout = (RelativeLayout) findViewById(R.id.peopleLayout);
         calenderLayout = (RelativeLayout) findViewById(R.id.calenderLayout);
         timeLayout = (RelativeLayout) findViewById(R.id.timeLayout);
+        serviceDetailLayout = (RelativeLayout) findViewById(R.id.serviceDetailLayout);
+        sellersDetailLayout = (RelativeLayout) findViewById(R.id.sellersDetailLayout);
+        userName = (TextView) findViewById(R.id.userName);
+        changeUser = (TextView) findViewById(R.id.changeUser);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        tvServiceProvider = (TextView) findViewById(R.id.tvServiceProvider);
+        sellersTitle = (TextView) findViewById(R.id.sellersTitle);
+        tvPrice = (TextView) findViewById(R.id.tvPrice);
+        serviceNames = (TextView) findViewById(R.id.serviceNames);
+
+
+        setSellersTitle(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+        setTotalServicesPrice(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
+        setSelectedServicesName(String.valueOf(globels.getGlobelRef().allSelectedServices));
+
         timelisview = (ListView) findViewById(R.id.timelisview);
 
         // title bar
@@ -89,15 +118,15 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         peopleLayout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
 
         calenderLayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
-        timeLayout.setLayoutParams(AppLayoutParam(25.00f, 100f, 0, 0, 0, 0, calenderLayout, "hor", 0, "null"));
+        timeLayout.setLayoutParams(AppLayoutParam(26.00f, 100f, 0, 0, 0, -1, calenderLayout, "hor", 0, "null"));
+        serviceDetailLayout.setLayoutParams(AppLayoutParam(17.00f, 100f, 0, 0, 0, 0, timeLayout, "hor", 0, "null"));
+        sellersDetailLayout.setLayoutParams(AppLayoutParam(53f, 100f, 0, 0, 0, 0, serviceDetailLayout, "hor", 0, "null"));
 
 
 //        calender work out
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
-
         mNewEvents = new ArrayList<WeekViewEvent>();
-
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
         // The week view has infinite scrolling horizontally. We have to provide the events of a
@@ -107,28 +136,40 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         mWeekView.setEventLongPressListener(this);
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
+
+        mWeekView.setScrollListener(this);
+
+//        mWeekView.setOverScrollMode(7);
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
 
 
-//        mWeekViewType = TYPE_WEEK_VIEW;
         mWeekView.setNumberOfVisibleDays(5);
-
         mWeekView.setHourHeight(250);
         // Lets change some dimensions to best fit the view.
         mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
         mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
         mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+        //calender work end
 
 
         list.add(new TimeListItemModel("1", "01:00 AM"));
         list.add(new TimeListItemModel("2", "01:15 AM"));
         list.add(new TimeListItemModel("3", "01:30 AM"));
         list.add(new TimeListItemModel("4", "01:45 AM"));
-
         TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
         timelisview.setAdapter(adapter);
+
+
+        PopUpForChangeServiceProvider();
+
+        changeUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeServiceProviderUser.show();
+            }
+        });
     }
 
 //    WeekView.MonthChangeListener mMonthChangeListener = new WeekView.MonthChangeListener() {
@@ -202,9 +243,9 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
                 // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
                 if (shortDate)
                     weekday = String.valueOf(weekday.charAt(0));
-                String value = format.format(date.getTime());
-                return weekday.toUpperCase()+"" +
-                        ""+value;
+                String dateOfMonth = format.format(date.getTime());
+//                return weekday.toUpperCase();
+                return weekday.toUpperCase() + "" + "" + dateOfMonth;
 //                return weekday.toUpperCase() + format.format(date.getTime());
             }
 
@@ -248,7 +289,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
         ArrayList<WeekViewEvent> newEvents = getNewEvents(newYear, newMonth);
 
-        Toast.makeText(this, "onMonthChange: " + newEvents, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onMonthChange: " + newEvents, Toast.LENGTH_SHORT).show();
         return newEvents;
     }
 
@@ -280,5 +321,63 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
             }
         }
         return events;
+    }
+
+    @Override
+    public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay) {
+        Toast.makeText(this, "scrolling: " + mWeekView.getScrollX(), Toast.LENGTH_SHORT).show();
+
+//        mWeekView.computeScroll();
+//        mWeekView.getScrollX();
+    }
+
+    AlertDialog changeServiceProviderUser;
+
+    public void PopUpForChangeServiceProvider() {
+        LayoutInflater inflater = this.getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(BuyerReservationActivity.this);
+        View dialogView = inflater.inflate(R.layout.change_service_provider_popup, null);
+        builder.setView(dialogView);
+
+        ListView change_user_list = (ListView) dialogView.findViewById(R.id.change_user_list);
+        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Yasir Ahmed"));
+        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Bilal"));
+        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Zain u din"));
+        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Maroof"));
+        providerList.add(new ChangeServiceProviderListItemModel(0, ""));
+
+        ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, providerList);
+        change_user_list.setAdapter(adapter);
+
+        changeServiceProviderUser = builder.create();
+        changeServiceProviderUser.setCancelable(true);
+        changeServiceProviderUser.setCanceledOnTouchOutside(true);
+//        changeServiceProviderUser.show();
+    }
+
+    public void changeServiceProviderUser(String name) {
+        userName.setText(name);
+        tvServiceProvider.setText("With " + name);
+        changeServiceProviderUser.dismiss();
+    }
+
+    public void changeSelectedTime(String time) {
+        tvTime.setText(time);
+    }
+
+    public void changeSelectedDate(String date) {
+        tvDate.setText(date);
+    }
+
+    public void setSellersTitle(String name) {
+        sellersTitle.setText(name);
+    }
+
+    public void setTotalServicesPrice(String price) {
+        tvPrice.setText("AED " + price);
+    }
+
+    public void setSelectedServicesName(String selectedServiceNames) {
+        serviceNames.setText(selectedServiceNames);
     }
 }

@@ -40,6 +40,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
     private static final int _row = 0;
     private static final String TAG = "ServiceSellersListAdapter";
     int itemCheckCounter = 0;
+    public static int SelectedServicesPrice = 0;
 
 
     Fragment_2_items TwoItemsFrag;
@@ -105,16 +106,26 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
                                 if (myItem.products.get(0).isChecked == true) {
                                     myItem.products.get(0).isChecked = false;
                                     itemCheckCounter -= 1;
+
+                                    if (SelectedServicesPrice != 0)
+                                        SelectedServicesPrice -= Integer.parseInt(myItem.products.get(0).price);
                                 } else {
                                     myItem.products.get(0).isChecked = true;
                                     itemCheckCounter += 1;
+
+                                    SelectedServicesPrice += Integer.parseInt(myItem.products.get(0).price);
                                 }
 
-                                if(itemCheckCounter>0){
-                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
-                                }else {
-                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
+                                if (itemCheckCounter > 0) {
+//                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
+                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
+                                } else {
+//                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
+                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
                                 }
+//                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
+
+                                getServiceNameById(position);
 
                                 holder.isChecked.setChecked(myItem.products.get(0).isChecked);
                             }
@@ -153,9 +164,9 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
                             holder.isChecked.setChecked(myItem.products.get(0).isChecked);
                         }
 
-                        if(itemCheckCounter>0){
+                        if (itemCheckCounter > 0) {
                             ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             ActivityContext.reservationBtn.setVisibility(View.GONE);
                         }
                     }
@@ -209,4 +220,26 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
         public RatingBar rating;
         public CheckBox isChecked;
     }
+
+    public void getServiceNameById(int position) {
+        final getServiceSellersProductModel myItem = productList.get(position);
+        Toast.makeText(getContext(), "" + myItem.products.get(0).title, Toast.LENGTH_SHORT).show();
+    }
+
+    public String allSelectedServices;
+
+    public void addIdsToSelectedList() {
+        allSelectedServices = "";
+
+        for (int i = 0; i < productList.size(); i++) {
+            final getServiceSellersProductModel myItem = productList.get(i);
+            if (myItem.products.get(0).isChecked) {
+                if (allSelectedServices != "")
+                    allSelectedServices += ", ";
+
+                allSelectedServices += myItem.products.get(0).title;
+            }
+        }
+    }
+
 }
