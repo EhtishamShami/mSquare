@@ -57,5 +57,6 @@
     <string name="btn_reservation">Reservation</string>
     <string name="lbl_service_details">Service Details</string>
     <string name="lbl_description">Description</string>
+    <string name="lbl_confirmbooking">CONFIRM BOOKING</string>
 
 </resources>

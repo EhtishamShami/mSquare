@@ -48,30 +48,66 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/calenderLayout"
+        android:id="@+id/calenderOuterLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/peopleLayout"
         android:background="#ffffff">
 
-
-        <com.alamkanak.weekview.WeekView
-            android:id="@+id/weekView"
-            dayBackgroundColor="#05000000"
-            eventTextColor="@android:color/white"
-            headerColumnBackground="#ffffffff"
-            headerColumnPadding="8dp"
-            headerColumnTextColor="@color/addProductSelectorColor"
-            headerRowBackgroundColor="@color/addProductSelectorColor"
-            headerRowPadding="12dp"
-            hourHeight="10dp"
-            textSize="12sp"
-            todayBackgroundColor="#1848adff"
-            todayHeaderTextColor="@color/addProductSelectorColor"
+        <RelativeLayout
+            android:id="@+id/calenderLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="80dp"
+            android:background="#ffffff">
+
+
+            <com.alamkanak.weekview.WeekView
+                android:id="@+id/weekView"
+                dayBackgroundColor="#05000000"
+                eventTextColor="@android:color/white"
+                headerColumnBackground="#ffffffff"
+                headerColumnPadding="8dp"
+                headerColumnTextColor="@color/addProductSelectorColor"
+                headerRowBackgroundColor="@color/addProductSelectorColor"
+                headerRowPadding="12dp"
+                hourHeight="10dp"
+                textSize="12sp"
+                todayBackgroundColor="#1848adff"
+                todayHeaderTextColor="@color/addProductSelectorColor"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/TitleDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Today, "
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/currentDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toRightOf="@+id/TitleDate"
+                    android:text="tsasdkfdd"
+                    android:textStyle="normal|bold" />
+
+
+            </RelativeLayout>
+        </RelativeLayout>
 
         <View
+            android:id="@+id/lineView"
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:layout_alignParentBottom="true"
@@ -82,12 +118,13 @@
         android:id="@+id/timeLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/calenderLayout">
+        android:layout_below="@+id/calenderOuterLayout">
 
         <ListView
             android:id="@+id/timelisview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
             android:background="#ffffff"></ListView>
 
         <View
@@ -101,6 +138,7 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/reservationBtn"
         android:layout_below="@+id/timeLayout"
         android:scrollbars="none">
 
@@ -283,5 +321,15 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/confrmBookingBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#265e28"
+        android:text="@string/lbl_confirmbooking"
+        android:textColor="@android:color/white"
+        android:visibility="visible" />
 
 </RelativeLayout>

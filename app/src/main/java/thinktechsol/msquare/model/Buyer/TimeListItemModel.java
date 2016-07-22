@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class TimeListItemModel {
     public String id;
     public String time;
+    public boolean selected;
 
-    public TimeListItemModel(String id, String time) {
+    public TimeListItemModel(String id, String time, boolean selected) {
         this.id = id;
         this.time = time;
+        this.selected = selected;
     }
 }

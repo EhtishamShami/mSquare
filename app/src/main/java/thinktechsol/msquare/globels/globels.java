@@ -29,7 +29,8 @@ public class globels {
     public static ArrayList<getServiceSellersProductModel> productList;
     public static String serviceSellerProductId;
     public int SelectedServicesPrice;
-    public String SelectedServicesName = "";
     public String allSelectedServices = "";
+    public ArrayList<String> selectedServicesIds;
+    public ArrayList<String> selectedProductsIds;
 
 }

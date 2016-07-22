@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,6 +80,7 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
                         holder = new ViewHolder();
 
                         holder.timeString = (TextView) v.findViewById(R.id.timeString);
+                        holder.outterLayout = (RelativeLayout) v.findViewById(R.id.outterLayout);
 
                         v.setTag(holder);
                     } else {
@@ -93,17 +95,30 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
                             //Toast.makeText(context, "hi=" + myItem.products.get(0).id + "&" + myItem.products.get(0).sellerId, Toast.LENGTH_SHORT).show();
                             if (myItem.time != "" && myItem.time != " ")
                                 ActivityContext.changeSelectedTime(myItem.time);
+
+//                            if (myItem.selected == false) {
+//                                myItem.selected = true;
+//                                holder.outterLayout.setBackgroundColor(Color.RED);
+//                            } else {
+//                                myItem.selected = false;
+//                                holder.outterLayout.setBackgroundColor(Color.TRANSPARENT);
+//                            }
                         }
                     });
 
 
                     if (myItem != null) {
-
-
                         if (holder.timeString != null) {
                             holder.timeString.setText(myItem.time);
                         }
                     }
+
+//                    if (myItem.selected == false) {
+//                        holder.outterLayout.setBackgroundColor(Color.RED);
+//                    } else {
+//                        holder.outterLayout.setBackgroundColor(Color.TRANSPARENT);
+//                    }
+
                     return v;
                 default:
                     return null;
@@ -149,5 +164,13 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
 
     public static class ViewHolder {
         public TextView timeString;
+        public RelativeLayout outterLayout;
+    }
+
+    public void makeItemUnSelected(View v) {
+        for (int i = 0; i < list.size(); i++) {
+            final TimeListItemModel myItem = list.get(i);
+            myItem.selected = false;
+        }
     }
 }

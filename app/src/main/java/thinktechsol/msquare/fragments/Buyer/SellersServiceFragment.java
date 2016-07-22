@@ -83,8 +83,21 @@ public class SellersServiceFragment extends Fragment {
             public void onClick(View v) {
 //                Toast.makeText(getContext(), ""+, Toast.LENGTH_SHORT).show();
                 adapter.addIdsToSelectedList();
+
+                if (globels.getGlobelRef().selectedServicesIds != null && globels.getGlobelRef().selectedProductsIds != null) {
+                    globels.getGlobelRef().selectedServicesIds.clear();
+                    globels.getGlobelRef().selectedProductsIds.clear();
+                }
+
                 globels.getGlobelRef().allSelectedServices = adapter.allSelectedServices;
-                Toast.makeText(getContext(), "selected list size is=" + adapter.allSelectedServices, Toast.LENGTH_SHORT).show();
+                globels.getGlobelRef().selectedServicesIds = adapter.selectedServicesIds;
+                globels.getGlobelRef().selectedProductsIds = adapter.selectedProductsIds;
+                //Toast.makeText(getContext(), "selected list size is=" + adapter.allSelectedServices, Toast.LENGTH_SHORT).show();
+
+                for (int i = 0; i < globels.getGlobelRef().selectedServicesIds.size(); i++) {
+                    Log.e("SellersServiceFragment", "selectedPPServices=" + globels.getGlobelRef().selectedServicesIds.get(i));
+                    Log.e("SellersServiceFragment", "selectedPPProductIds=" + globels.getGlobelRef().selectedProductsIds.get(i));
+                }
 
                 startActivity(new Intent(getActivity(), BuyerReservationActivity.class));
 
@@ -162,5 +175,17 @@ public class SellersServiceFragment extends Fragment {
             reservationBtn.setVisibility(View.VISIBLE);
         else
             reservationBtn.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null)
+            adapter.updateList();
+
+        if (reservationBtn != null)
+            reservationBtn.setVisibility(View.GONE);
+
+        Log.e("SellersServiceFragment", "i m resumed ");
     }
 }

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,24 +36,28 @@ import thinktechsol.msquare.adapter.ChangeServiceProviderListAdapter;
 import thinktechsol.msquare.adapter.TimeListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.ChangeServiceProviderListItemModel;
+import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
 import thinktechsol.msquare.model.Buyer.TimeListItemModel;
+import thinktechsol.msquare.services.AddBuyerOrder;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerReservationActivity extends Activity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.ScrollListener
+public class BuyerReservationActivity extends Activity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.ScrollListener, WeekView.EmptyViewClickListener, WeekView.OnClickListener
         /*implements WeekView.EventClickListener, WeekView.EventLongPressListener */ {
 
     RelativeLayout titlebarlayout;
     TextView title;
     ImageView backBtn, btn_menu;
 
-    RelativeLayout peopleLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout;
+    RelativeLayout peopleLayout, calenderOuterLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout;
     ListView timelisview;
     ArrayList<TimeListItemModel> list;
     ArrayList<ChangeServiceProviderListItemModel> providerList;
 
     WeekView mWeekView;
     private static ArrayList<WeekViewEvent> mNewEvents;
-    TextView userName, changeUser, tvDate, tvTime, tvServiceProvider, sellersTitle, tvPrice, serviceNames;
+    TextView userName, changeUser, tvDate, tvTime, tvServiceProvider, sellersTitle, tvPrice, serviceNames, currentDate;
+    Button confrmBookingBtn;
+    EditText etDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         peopleLayout = (RelativeLayout) findViewById(R.id.peopleLayout);
         calenderLayout = (RelativeLayout) findViewById(R.id.calenderLayout);
+        calenderOuterLayout = (RelativeLayout) findViewById(R.id.calenderOuterLayout);
         timeLayout = (RelativeLayout) findViewById(R.id.timeLayout);
         serviceDetailLayout = (RelativeLayout) findViewById(R.id.serviceDetailLayout);
         sellersDetailLayout = (RelativeLayout) findViewById(R.id.sellersDetailLayout);
@@ -84,6 +92,9 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         sellersTitle = (TextView) findViewById(R.id.sellersTitle);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
         serviceNames = (TextView) findViewById(R.id.serviceNames);
+        currentDate = (TextView) findViewById(R.id.currentDate);
+        confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
+        etDescription = (EditText) findViewById(R.id.etDescription);
 
 
         setSellersTitle(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
@@ -99,6 +110,8 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globels.getGlobelRef().allSelectedServices = "";
+                globels.getGlobelRef().SelectedServicesPrice = 0;
                 finish();
             }
         });
@@ -117,10 +130,11 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         peopleLayout.setLayoutParams(AppLayoutParam(7.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
         peopleLayout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
 
-        calenderLayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
-        timeLayout.setLayoutParams(AppLayoutParam(26.00f, 100f, 0, 0, 0, -1, calenderLayout, "hor", 0, "null"));
+        calenderOuterLayout.setLayoutParams(AppLayoutParam(15.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
+//        calenderOuterLayout.setLayoutParams(AppLayoutParam(20.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
+        timeLayout.setLayoutParams(AppLayoutParam(26.00f, 100f, 0, 0, 0, -1, calenderOuterLayout, "hor", 0, "null"));
         serviceDetailLayout.setLayoutParams(AppLayoutParam(17.00f, 100f, 0, 0, 0, 0, timeLayout, "hor", 0, "null"));
-        sellersDetailLayout.setLayoutParams(AppLayoutParam(53f, 100f, 0, 0, 0, 0, serviceDetailLayout, "hor", 0, "null"));
+        sellersDetailLayout.setLayoutParams(AppLayoutParam(58f, 100f, 0, 0, 0, 0, serviceDetailLayout, "hor", 0, "null"));
 
 
 //        calender work out
@@ -136,8 +150,11 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         mWeekView.setEventLongPressListener(this);
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
+        mWeekView.setEmptyViewClickListener(this);
+//        mWeekView.setOnClickListener(this);
 
         mWeekView.setScrollListener(this);
+        mWeekView.setTodayBackgroundColor(R.color.customerColor);
 
 //        mWeekView.setOverScrollMode(7);
         // Set up a date time interpreter to interpret how the date and time will be formatted in
@@ -147,6 +164,9 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         mWeekView.setNumberOfVisibleDays(5);
         mWeekView.setHourHeight(250);
+
+//        mWeekView.setXScrollingSpeed(5);
+
         // Lets change some dimensions to best fit the view.
         mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
         mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
@@ -154,20 +174,45 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         //calender work end
 
 
-        list.add(new TimeListItemModel("1", "01:00 AM"));
-        list.add(new TimeListItemModel("2", "01:15 AM"));
-        list.add(new TimeListItemModel("3", "01:30 AM"));
-        list.add(new TimeListItemModel("4", "01:45 AM"));
+        list.add(new TimeListItemModel("1", "01:00 AM", false));
+        list.add(new TimeListItemModel("2", "01:15 AM", false));
+        list.add(new TimeListItemModel("3", "01:30 AM", false));
+        list.add(new TimeListItemModel("4", "01:45 AM", false));
         TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
         timelisview.setAdapter(adapter);
+
+//        timelisview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        timelisview.setSelector(android.R.color.darker_gray);
 
 
         PopUpForChangeServiceProvider();
 
+        getCurrentDateAndShowOnView();
         changeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeServiceProviderUser.show();
+            }
+        });
+
+        confrmBookingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(BuyerReservationActivity.this, "Confirm booking is clicked", Toast.LENGTH_SHORT).show();
+
+                String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
+                String buyerId = "1";
+                String extraRemarks = etDescription.getText().toString();
+                String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
+                String staffId = "1";
+
+                int[] serviceId = new int[globels.getGlobelRef().selectedServicesIds.size()];
+                int[] productId = new int[globels.getGlobelRef().selectedServicesIds.size()];
+                int[] quantity = new int[1];
+
+                ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, null);
+
+                new AddBuyerOrder(BuyerReservationActivity.this, BuyerReservationActivity.this, obj);
             }
         });
     }
@@ -257,12 +302,6 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         });
     }
 
-//    protected String getEventTitle(Calendar time) {
-//        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-//        //return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-////        return String.format("%s %d/%02d", time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-//    }
-
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
@@ -275,7 +314,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        //Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {
@@ -325,11 +364,39 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     @Override
     public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay) {
-        Toast.makeText(this, "scrolling: " + mWeekView.getScrollX(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "scrolling: " + mWeekView.getScrollX(), Toast.LENGTH_SHORT).show();
 
 //        mWeekView.computeScroll();
 //        mWeekView.getScrollX();
     }
+
+    @Override
+    public void onEmptyViewClicked(Calendar time) {
+        // Set the new event with duration one hour.
+        Calendar endTime = (Calendar) time.clone();
+        endTime.add(Calendar.HOUR, 1);
+
+        // Create a new event.
+//        WeekViewEvent event = new WeekViewEvent(0, "", time, endTime);
+//        mNewEvents.add(event);
+
+        // Refresh the week view. onMonthChange will be called again.
+        mWeekView.notifyDatasetChanged();
+
+//        mWeekView.setDateTimeInterpreter();
+
+//        mWeekView.setNowLineColor(R.color.messageColor);
+//        mWeekView.setShowNowLine(true);
+
+//        String value = String.format("%02d %02d %02d", time.get(Calendar.YEAR), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
+//        Toast.makeText(this, "selected Date: " + new SimpleDateFormat("yyyy MMM dd").format(time.getTime()), Toast.LENGTH_SHORT).show();
+
+        dateFormatForPosting = new SimpleDateFormat("yyyy-MM-dd");
+        tvDate.setText(new SimpleDateFormat("yyyy MMM dd").format(time.getTime()));
+        selectedDateForPostingToService = dateFormatForPosting.format(time.getTime());
+    }
+
+    DateFormat dateFormatForPosting;
 
     AlertDialog changeServiceProviderUser;
 
@@ -379,5 +446,30 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     public void setSelectedServicesName(String selectedServiceNames) {
         serviceNames.setText(selectedServiceNames);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    String selectedDateForPostingToService, selectedTimeForPostingToService;
+
+
+    public void getCurrentDateAndShowOnView() {
+        DateFormat dateFormat = new SimpleDateFormat("E, yyyy MMM dd");
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy MMM dd");
+
+        DateFormat dateFormat3 = new SimpleDateFormat("hh:mm:ss");
+
+        Calendar cal = Calendar.getInstance();
+        currentDate.setText(dateFormat.format(cal.getTime()));
+
+        tvDate.setText(dateFormat2.format(cal.getTime()));
+        tvTime.setText(dateFormat3.format(cal.getTime()));
+
+        if (dateFormatForPosting != null)
+            selectedDateForPostingToService = dateFormatForPosting.format(cal.getTime());
+        selectedTimeForPostingToService = dateFormat3.format(cal.getTime());
     }
 }
