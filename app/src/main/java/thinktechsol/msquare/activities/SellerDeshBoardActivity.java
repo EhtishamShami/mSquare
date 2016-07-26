@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
 import thinktechsol.msquare.utils.Constant;
@@ -36,7 +37,7 @@ public class SellerDeshBoardActivity extends Activity {
     public static ImageView backBtn;
     RelativeLayout titlebarlayout, bottombarlayout;
     RelativeLayout fragmentLayout;
-    ImageView product, customer, order, message, setting;
+    static ImageView product, customer, order, message, setting;
     int btnSelectorColor;
 
     public static SellerDeshBoardActivity getContext() {
@@ -120,6 +121,7 @@ public class SellerDeshBoardActivity extends Activity {
             public void onClick(View v) {
                 MakeItemSelected(PRODUCT);
 
+                title.setText("Product");
                 SellerDashBoardProductFragment fragobj = new SellerDashBoardProductFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentLayout, fragobj);
@@ -130,11 +132,13 @@ public class SellerDeshBoardActivity extends Activity {
             @Override
             public void onClick(View v) {
                 MakeItemSelected(CUSTOMER);
+                title.setText("Customer");
             }
         });
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                title.setText("Order");
                 MakeItemSelected(ORDER);
             }
         });
@@ -142,6 +146,13 @@ public class SellerDeshBoardActivity extends Activity {
             @Override
             public void onClick(View v) {
                 MakeItemSelected(MESSAGE);
+
+                title.setText("Messages");
+                SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentLayout, fragobj);
+                transaction.commit();
+
             }
         });
 
@@ -150,6 +161,7 @@ public class SellerDeshBoardActivity extends Activity {
             public void onClick(View v) {
                 MakeItemSelected(SETTING);
 
+                title.setText("Setting");
                 SellerDashBoardSettingFragment fragobj = new SellerDashBoardSettingFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentLayout, fragobj);

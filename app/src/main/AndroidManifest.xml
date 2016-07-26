@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -49,6 +52,9 @@
         <activity android:name=".activities.buyer.HomeActivity" />
         <activity android:name=".activities.buyer.SalonDetailsActivity" />
         <activity android:name=".activities.buyer.ServiceSellerDetailActivity" />
+        <activity android:name=".activities.buyer.BuyerRegisterationActivity" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
         <!-- facebook integration metadata -->
         <meta-data
@@ -66,6 +72,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activities.buyer.BuyerReservationActivity"></activity>
     </application>

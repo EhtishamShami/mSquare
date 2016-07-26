@@ -73,7 +73,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         setContentView(R.layout.activity_add_pro);
         btnSelectorColor = getResources().getColor(R.color.addProductSelectorColor);
-        Constant.addOrViewProduct = true;
+//        Constant.addOrViewProduct = true;
 
         selectedImagePath = new ArrayList<String>();
 
@@ -108,7 +108,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         } else {
             add_product.setBackgroundResource(R.drawable.add_product_normal);
             view_product.setBackgroundResource(R.drawable.view_product_sel);
-
+            new GetSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
             MakeItemSelected(VIEW_PRODUCT);
         }
 

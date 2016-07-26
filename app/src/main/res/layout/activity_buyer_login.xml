@@ -83,6 +83,20 @@
                 android:layout_toRightOf="@+id/btn_twitter"
                 android:src="@drawable/btn_google" />
 
+            <!--<com.google.android.gms.common.SignInButton-->
+                <!--android:id="@+id/btn_google"-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_toRightOf="@+id/btn_twitter"/>-->
+
+            <!--<Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/common_signin_button_text_long" />-->
+
         </RelativeLayout>
 
         <ImageView
@@ -90,6 +104,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/two_btn"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/btn_guest" />
+        <ImageView
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_guest"
             android:layout_marginTop="5dp"
             android:src="@drawable/btn_guest" />
 

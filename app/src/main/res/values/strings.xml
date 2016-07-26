@@ -59,4 +59,8 @@
     <string name="lbl_description">Description</string>
     <string name="lbl_confirmbooking">CONFIRM BOOKING</string>
 
+    <!-- Button text -->
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+
 </resources>

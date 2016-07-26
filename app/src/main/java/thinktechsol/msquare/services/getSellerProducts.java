@@ -68,7 +68,7 @@ public class GetSellerProducts {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        //getSellerProductDetail(sellerId);
+        //registerBuyer(sellerId);
         Log.e("GetSellerProducts", "sellerId=" + sellerId);
         new getSellerProductDetialAsync().execute(sellerId);
     }

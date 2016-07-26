@@ -2,12 +2,16 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,6 +32,17 @@ import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.*;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,14 +52,21 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerLoginActivity extends Activity {
+public class BuyerLoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     ImageView app_logo;
     RelativeLayout two_btn;
-    ImageView btn_login, btn_fb, btn_twitter, btn_google, btn_guest;
+    ImageView btn_login, btn_fb, btn_twitter, btn_google, btn_guest, btn_register;
+    //    SignInButton btn_google;
     EditText email, password;
     private CallbackManager callbackManager;
     LoginButton fbloginButton;
+    private boolean signedInUser;
+    private ConnectionResult mConnectionResult;
+    // Google client to communicate with Google
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 0;
+    private boolean mIntentInProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +80,9 @@ public class BuyerLoginActivity extends Activity {
         setContentView(R.layout.activity_buyer_login);
 
         AppEventsLogger.activateApp(this);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
+
 
         //getting app key hashes for the facebook sdk requirements
         try {
@@ -84,7 +109,9 @@ public class BuyerLoginActivity extends Activity {
         two_btn = (RelativeLayout) findViewById(R.id.two_btn);
         btn_twitter = (ImageView) findViewById(R.id.btn_twitter);
         btn_google = (ImageView) findViewById(R.id.btn_google);
+//        btn_google = (SignInButton) findViewById(R.id.btn_google);
         btn_guest = (ImageView) findViewById(R.id.btn_guest);
+        btn_register = (ImageView) findViewById(R.id.btn_register);
 
 
         //setting the sizes of the views
@@ -95,8 +122,14 @@ public class BuyerLoginActivity extends Activity {
         btn_fb.setLayoutParams(AppLayoutParam(10f, 80f, 0, 7, 0, 0, btn_login));
         two_btn.setLayoutParams(AppLayoutParam(10f, 80f, 0, -2, 0, 0, btn_fb));
         btn_twitter.setLayoutParams(AppLayoutParam2(10f, 39f, 0, 0, 1, 0, 0));
+
+        googlePluseLogin();
         btn_google.setLayoutParams(AppLayoutParam2(10f, 39f, 1, 0, 0, 0, R.id.btn_twitter));
+//        btn_google.setSize(SignInButton.SIZE_STANDARD);
+//        btn_google.setScopes(gso.getScopeArray());
+
         btn_guest.setLayoutParams(AppLayoutParam(10f, 80f, 0, 6, 0, 0, btn_fb));
+        btn_register.setLayoutParams(AppLayoutParam(10f, 80f, 0, -2, 0, 0, btn_guest));
 
 
         //action listener on all the views
@@ -151,6 +184,26 @@ public class BuyerLoginActivity extends Activity {
                 return false;
             }
         });
+        btn_register.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                int action = arg1.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    Constant.makeImageAlphLowOrHigh(btn_register, 0.3f);
+                    return true;
+                } else if (action == MotionEvent.ACTION_UP) {
+
+//                    Toast.makeText(BuyerLoginActivity.this, "Register btn clicked", Toast.LENGTH_SHORT).show();
+
+                    Constant.makeImageAlphLowOrHigh(btn_register, 1f);
+
+                    startActivity(new Intent(BuyerLoginActivity.this, BuyerRegisterationActivity.class));
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         btn_google.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -162,6 +215,27 @@ public class BuyerLoginActivity extends Activity {
                 } else if (action == MotionEvent.ACTION_UP) {
 
                     Constant.logInAs = "google";
+//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                    startActivityForResult(signInIntent, RC_SIGN_IN);
+
+//                    if(mGoogleApiClient!=null){
+//                        mGoogleApiClient.disconnect();
+//                    }
+//
+//                    mGoogleApiClient = new GoogleApiClient.Builder(BuyerLoginActivity.this)
+//                            .addConnectionCallbacks(BuyerLoginActivity.this)
+//                            .addOnConnectionFailedListener(BuyerLoginActivity.this)
+//                            .addApi(Plus.API)
+//                            .addScope(Plus.SCOPE_PLUS_LOGIN)
+//                            .addScope(Plus.SCOPE_PLUS_PROFILE)
+//                            .build();
+//                    mGoogleApiClient.connect();
+
+                    if (!mGoogleApiClient.isConnecting()) {
+                        signedInUser = true;
+                        resolveSignInError();
+                    }
+
 
                     Constant.makeImageAlphLowOrHigh(btn_google, 1f);
                     return true;
@@ -238,8 +312,27 @@ public class BuyerLoginActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.e("data", data.toString());
+
+//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//
+        Log.e("BuyerLoginActivity", "sign in activity Result:" + resultCode);
+//
+//            handleSignInResult(result);
+
+        if (resultCode == RC_SIGN_IN) {
+            signedInUser = false;
+            mIntentInProgress = false;
+            if (!mGoogleApiClient.isConnecting()) {
+                mGoogleApiClient.connect();
+            }
+        } else {
+            if (callbackManager != null) {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+                Log.e("data", data.toString());
+            }
+        }
     }
 
 
@@ -283,8 +376,136 @@ public class BuyerLoginActivity extends Activity {
                 });
     }
 
+
+    GoogleSignInOptions gso;
+
+    public void googlePluseLogin() {
+
+//        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
+//            if (mGoogleApiClient == null) {
+//                Plus.PlusOptions plusOptions = new Plus.PlusOptions.Builder().addActivityTypes(
+//                        "http://schemas.google.com/AddActivity", "http://schemas.google.com/ReviewActivity").build();
+//                mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Games.API).addScope(Games.SCOPE_GAMES)
+//                        .addApi(Plus.API, plusOptions).addScope(Plus.SCOPE_PLUS_LOGIN)
+//                        .addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
+//            }
+//            mGoogleApiClient.connect();
+//        } else {
+//            Toast.makeText(this, "R.string.texteErreurGPlus", Toast.LENGTH_LONG).show();
+//        }
+
+//        // Configure sign-in to request the user's ID, email address, and basic
+//        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+//        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//
+//        // Build a GoogleApiClient with access to the Google Sign-In API and the
+//        // options specified by gso.
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+    }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         System.exit(0);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
+        Log.e("BuyerLoginActivity", "sign in onConnectionFailed:" + result);
+        if (!result.hasResolution()) {
+            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
+            return;
+        }
+
+        if (!mIntentInProgress) {
+            // store mConnectionResult
+            mConnectionResult = result;
+
+            if (signedInUser) {
+                resolveSignInError();
+            }
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.e("BuyerLoginActivity", "sign in top:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+//            updateUI(true);
+
+            Log.e("BuyerLoginActivity", "sign in successful:" + acct.getDisplayName());
+        } else {
+            // Signed out, show unauthenticated UI.
+            //updateUI(false);
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+//        Log.e("BuyerLoginActivity", "sign in onConnected:" + bundle.size());
+        signedInUser = false;
+        Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+        getProfileInformation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.e("BuyerLoginActivity", "sign in onConnectionSuspended:" + i);
+        mGoogleApiClient.connect();
+    }
+
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private void resolveSignInError() {
+        if (mConnectionResult != null) {
+            if (mConnectionResult.hasResolution()) {
+                try {
+                    mIntentInProgress = true;
+                    mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                } catch (IntentSender.SendIntentException e) {
+                    mIntentInProgress = false;
+                    mGoogleApiClient.connect();
+                }
+            }
+        }
+    }
+
+    private void getProfileInformation() {
+        try {
+            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+                String personName = currentPerson.getDisplayName();
+                String personPhotoUrl = currentPerson.getImage().getUrl();
+//                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                Toast.makeText(this, "name=" + personName, Toast.LENGTH_LONG).show();
+//                username.setText(personName);
+//                emailLabel.setText(email);
+
+                //new LoadProfileImage(image).execute(personPhotoUrl);
+
+                // update profile frame with new info about Google Account
+                // profile
+//                updateProfile(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
