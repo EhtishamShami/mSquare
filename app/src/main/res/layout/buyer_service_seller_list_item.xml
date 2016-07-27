@@ -28,7 +28,7 @@
             android:layout_toRightOf="@+id/lbl">
 
             <TextView
-                android:id="@+id/companyName"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -39,10 +39,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/lbl_selected_services"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/companyName"
+                android:layout_below="@+id/name"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:lines="2"
@@ -54,7 +54,7 @@
                 android:id="@+id/loc_icon"
                 android:layout_width="12dp"
                 android:layout_height="18dp"
-                android:layout_below="@id/description"
+                android:layout_below="@id/lbl_selected_services"
                 android:layout_marginTop="5dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/location_icon" />
@@ -63,7 +63,7 @@
                 android:id="@+id/distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/description"
+                android:layout_below="@id/lbl_selected_services"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@id/loc_icon"

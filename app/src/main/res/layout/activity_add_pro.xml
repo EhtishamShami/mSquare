@@ -10,6 +10,12 @@
         layout="@layout/titlebar" />
 
     <RelativeLayout
+        android:id="@+id/fragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar"
+        android:layout_above="@+id/bottombarlayout"></RelativeLayout>
+    <RelativeLayout
         android:id="@+id/add_product_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

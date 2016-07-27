@@ -67,7 +67,7 @@ public class SellerInfo {
 //    public String tradeNo;
 //    public String documents;
 //    public String lName;
-//    public String companyName;
+//    public String name;
 //    public String password;
 //    public String fName;
 //    public String id;
@@ -82,14 +82,14 @@ public class SellerInfo {
 //    public String datetime;
 //    public String mobileNo;
 
-//    public SellerInfo(String sellerRatings, String logo, String status, String tradeNo, String documents, String lName, String companyName, String password, String fName, String id, String phoneNo, String email, String address, String description, String activationCode, String service, String longitude, String latitude, String datetime, String mobileNo) {
+//    public SellerInfo(String sellerRatings, String logo, String status, String tradeNo, String documents, String lName, String name, String password, String fName, String id, String phoneNo, String email, String address, String description, String activationCode, String service, String longitude, String latitude, String datetime, String mobileNo) {
 //        this.sellerRatings = sellerRatings;
 //        this.logo = logo;
 //        this.status = status;
 //        this.tradeNo = tradeNo;
 //        this.documents = documents;
 //        this.lName = lName;
-//        this.companyName = companyName;
+//        this.name = name;
 //        this.password = password;
 //        this.fName = fName;
 //        this.id = id;

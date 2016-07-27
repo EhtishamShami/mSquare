@@ -9,14 +9,23 @@
         android:layout_height="match_parent"
         android:background="#0068a5">
 
-        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/simple1"
-            android:layout_width="match_parent"
-            android:layout_height="130dp">
+        <!--<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:id="@+id/simple1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="130dp">-->
+
+            <LinearLayout
+                android:id="@+id/fragment"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></LinearLayout>
+
             <!--show items when user slides-->
             <LinearLayout
-                android:layout_width="260dp"
+                android:id="@+id/bottom_wrapper_2"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="right"
                 android:gravity="right|center_vertical">
 
                 <LinearLayout
@@ -126,7 +135,7 @@
             </LinearLayout>
             <!--first showing items-->
 
-        </com.daimajia.swipe.SwipeLayout>
+        <!--</com.daimajia.swipe.SwipeLayout>-->
 
     </RelativeLayout>
 

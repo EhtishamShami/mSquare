@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true">
+
+
+    <RelativeLayout
+        android:id="@+id/main_layout_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/lbl"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:src="@drawable/dummy_user" />-->
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lbl"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="7dp"
+            android:src="@drawable/dummy_user"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/lbl">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Arslan Ahmed"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lbl_selected_services"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="Selected Services:"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"></TextView>
+
+            <TextView
+                android:id="@+id/_selected_services"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/lbl_selected_services"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="3"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"></TextView>
+
+            <TextView
+                android:id="@+id/lbl_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lbl_selected_services"
+                android:layout_marginTop="1dp"
+                android:text="Total Price:"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lbl_selected_services"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="1dp"
+                android:layout_toRightOf="@id/lbl_total_price"
+                android:text="36"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/order_reject"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/order_reject"
+                android:layout_margin="5dp"/>
+
+            <ImageView
+                android:id="@+id/order_approve"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_toRightOf="@+id/order_reject"
+                android:src="@drawable/order_approve"
+                android:layout_margin="5dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignBottom="@+id/main_layout_item"
+        />
+
+</RelativeLayout>

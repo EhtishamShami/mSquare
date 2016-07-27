@@ -77,6 +77,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activities.buyer.BuyerReservationActivity"></activity>
+        <activity android:name=".activities.SellersOrdersActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import java.util.Calendar;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapter;
 import thinktechsol.msquare.adapter.ViewProductListAdapter;
+import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.model.Response.ProductImages;
@@ -144,6 +146,11 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 MakeItemSelected(ADD_PRODUCT);
 //                add_product_layout.setVisibility(View.VISIBLE);
 //                view_product_layout.setVisibility(View.GONE);
+                Constant.addOrViewProduct = true;
+                SellerAddProductFragment fragobj = new SellerAddProductFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentLayout, fragobj);
+                transaction.commit();
             }
         });
         view_product.setOnClickListener(new View.OnClickListener() {
@@ -433,7 +440,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
             case VIEW_PRODUCT:
                 view_product.setBackgroundResource(R.drawable.view_product_sel);
-                title.setText("Product");
+                title.setText("Products");
                 view_product_layout.setVisibility(View.VISIBLE);
                 add_product_layout.setVisibility(View.GONE);
                 break;

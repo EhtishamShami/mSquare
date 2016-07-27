@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
-import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
@@ -81,8 +80,8 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                         holder = new ViewHolder();
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder.companyName = (TextView) v.findViewById(R.id.companyName);
-                        holder.description = (TextView) v.findViewById(R.id.description);
+                        holder.companyName = (TextView) v.findViewById(R.id.name);
+                        holder.description = (TextView) v.findViewById(R.id.lbl_selected_services);
                         holder.distance = (TextView) v.findViewById(R.id.distance);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
 

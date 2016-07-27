@@ -2,6 +2,7 @@ package thinktechsol.msquare.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +16,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.adapter.ItemAdapter2;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model2.Item;
 import thinktechsol.msquare.utils.Constant;
 
@@ -122,22 +126,32 @@ public class SellerDashBoardProductFragment extends Fragment {
         return (int) x;
     }
 
+    public static final String MESSAGE = "message";
+
     public void openFragment(int id, String position) {
         Fragment frag = null;
         String title = null;
         switch (id) {
             case 0:
+                SellerDeshBoardActivity.getContext().MakeItemSelected(MESSAGE);
                 if (position.equals("left")) {
-                    SellerDeshBoardActivity.getContext().MakeItemSelected("message");
                     SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
                     title = "Messages";
                     frag = fragobj;
                 } else {
-                    SellerDeshBoardActivity.getContext().MakeItemSelected("message");
                     SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
                     title = "Messages";
                     frag = fragobj;
                 }
+
+//                SellerDeshBoardActivity.getContext().MakeItemSelected(MESSAGE);
+
+                //title.setText("Messages");
+//                SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
+
                 break;
             case 1:
                 if (position.equals("left")) {
@@ -147,10 +161,20 @@ public class SellerDashBoardProductFragment extends Fragment {
                 }
                 break;
             case 2:
-                if (position.equals("left")) {
-
-                } else {
-
+                if (position.equals("leftMost")) {
+                    globels.getGlobelRef().orderType = "0";
+                    startActivity(new Intent(getActivity(), SellersOrdersActivity.class));
+                } else if (position.equals("left")) {
+                    globels.getGlobelRef().orderType = "3";
+                    startActivity(new Intent(getActivity(), SellersOrdersActivity.class));
+                }
+                if (position.equals("right")) {
+                    globels.getGlobelRef().orderType = "1";
+                    startActivity(new Intent(getActivity(), SellersOrdersActivity.class));
+                }
+                if (position.equals("rightMost")) {
+                    globels.getGlobelRef().orderType = "2";
+                    startActivity(new Intent(getActivity(), SellersOrdersActivity.class));
                 }
                 break;
             case 3:
@@ -161,9 +185,12 @@ public class SellerDashBoardProductFragment extends Fragment {
                     frag = fragobj;
                 } else {
                     Constant.addOrViewProduct = false;
-                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
-                    title = "Add Product";
-                    frag = fragobj;
+//                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
+//                    title = "Add Product";
+//                    frag = fragobj;
+//                    globels.getGlobelRef().IdForAddProduct = myItem.id;
+                    Intent add = new Intent(getActivity(), AddOrViewProActivity.class);
+                    getActivity().startActivity(add);
                 }
                 break;
 

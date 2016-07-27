@@ -88,7 +88,8 @@ public class GetSellerProducts {
             Log.e(TAG, "JSON parentObject" + parentObject.length());
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
             JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
-            Log.e(TAG, "JSONArray lenght" + productArray.length());
+//            Log.e(TAG, "JSONArray lenght" + productArray.length());
+//            Log.e(TAG, "JSONArray lenght" + productArray.length());
             for (int i = 0; i < productArray.length(); i++) {
                 JSONObject childJsonObj = (JSONObject) productArray.get(i);
                 String id = childJsonObj.getString("id");
@@ -100,6 +101,7 @@ public class GetSellerProducts {
                 String deliveryTime = childJsonObj.getString("deliveryTime");
                 String dateTime = childJsonObj.getString("dateTime");
                 String status = childJsonObj.getString("status");
+                String status2 = childJsonObj.getString("status");
 
                 Log.e(TAG, "inside loop test" + title);
 

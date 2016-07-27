@@ -96,7 +96,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
 
 
                         holder1 = new Type1Holder();
-                        holder1.swipeLayout = (SwipeLayout) v.findViewById(R.id.simple1);
+                        holder1.swipeLayoutt = (SwipeLayout) v.findViewById(R.id.simple1);
                         holder1.bglayout = (RelativeLayout) v.findViewById(R.id.bglayout);
                         holder1.btmWraper = (LinearLayout) v.findViewById(R.id.bottom_wrapper_2);
                         holder1.btmWraper.bringToFront();
@@ -176,7 +176,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
 //
 
                 case Layout_4_sub_items:
-                    Type2Holder holder2;
+                    final Type2Holder holder2;
 
                     View v2 = convertView;
                     if (v2 == null) {
@@ -185,6 +185,10 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
 
                         holder2 = new Type2Holder();
                         holder2.bglayout = (RelativeLayout) v2.findViewById(R.id.bglayout);
+                        holder2.btmWraper = (LinearLayout) v2.findViewById(R.id.bottom_wrapper_2);
+                        holder2.btmWraper.bringToFront();
+                        holder2.btmWraper.setVisibility(View.INVISIBLE);
+
                         holder2.lbl = (ImageView) v2.findViewById(R.id.lbl);
                         holder2.lbl_txt = (TextView) v2.findViewById(R.id.lbl_txt);
                         holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV);
@@ -199,6 +203,20 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                     } else {
                         holder2 = (Type2Holder) v2.getTag();
                     }
+
+                    v2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (holder2.btmWraper.getVisibility() == View.VISIBLE) {
+                                holder2.btmWraper.setVisibility(View.INVISIBLE);
+                                holder2.counterTV.setVisibility(View.VISIBLE);
+                            } else if (holder2.btmWraper.getVisibility() == View.INVISIBLE) {
+                                holder2.btmWraper.setVisibility(View.VISIBLE);
+                                holder2.counterTV.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+
                     Item myItem3 = objects.get(position);
 
 
@@ -234,6 +252,34 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                             holder2.subItem4.setBackgroundResource(myItem3.subItemIcon4);
                             holder2.subItem4.setLayoutParams(AppLayoutParamSubItems(swiperSubItemHeight, swiperSubItemWidth, 0, 0, 0, 0, null));
                         }
+
+
+                        holder2.subItem1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fragContext.openFragment(position, "leftMost");
+                            }
+                        });
+                        holder2.subItem2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fragContext.openFragment(position, "left");
+                            }
+                        });
+
+                        holder2.subItem3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fragContext.openFragment(position, "right");
+                            }
+                        });
+                        holder2.subItem4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fragContext.openFragment(position, "rightMost");
+                            }
+                        });
+
                     }
                     return v2;
                 default:
@@ -278,7 +324,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
     }
 
     public static class Type1Holder {
-        public SwipeLayout swipeLayout;
+        public SwipeLayout swipeLayoutt;
         public RelativeLayout bglayout;
         public LinearLayout btmWraper;
         public ImageView lbl;
@@ -289,7 +335,9 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
     }
 
     public static class Type2Holder {
+        public SwipeLayout swipeLayout;
         public RelativeLayout bglayout;
+        public LinearLayout btmWraper;
         public ImageView lbl;
         public TextView lbl_txt;
         public TextView counterTV;

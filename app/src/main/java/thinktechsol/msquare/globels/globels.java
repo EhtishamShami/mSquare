@@ -33,4 +33,6 @@ public class globels {
     public ArrayList<String> selectedServicesIds;
     public ArrayList<String> selectedProductsIds;
 
+    public static String orderType = "0";
+
 }

@@ -232,7 +232,7 @@ public class SalonDetailsActivity extends FragmentActivity {
         SellersProductDetailList = list;
         Log.e("BuyerServiceSellersList", "list size is 1=" + list.size());
 //        for (int i = 0; i < list.size(); i++) {
-//            SellersProductDetailList.add(new getServiceSellersModel(list.get(i).mobileNo, list.get(i).logo, list.get(i).status, list.get(i).tradeNo, list.get(i).documents, list.get(i).lName, list.get(i).companyName, list.get(i).password, list.get(i).fName, list.get(i).productRating, list.get(i).id, list.get(i).phoneNo, list.get(i).distance, list.get(i).email, list.get(i).address, list.get(i).description, list.get(i).activationCode, list.get(i).service, list.get(i).longitude, list.get(i).latitude, list.get(i).datetime));
+//            SellersProductDetailList.add(new getServiceSellersModel(list.get(i).mobileNo, list.get(i).logo, list.get(i).status, list.get(i).tradeNo, list.get(i).documents, list.get(i).lName, list.get(i).name, list.get(i).password, list.get(i).fName, list.get(i).productRating, list.get(i).id, list.get(i).phoneNo, list.get(i).distance, list.get(i).email, list.get(i).address, list.get(i).description, list.get(i).activationCode, list.get(i).service, list.get(i).longitude, list.get(i).latitude, list.get(i).datetime));
 //        }
 
         globels.getGlobelRef().SellersProductDetailList = SellersProductDetailList;

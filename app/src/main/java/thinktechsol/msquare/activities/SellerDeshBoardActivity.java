@@ -24,7 +24,7 @@ public class SellerDeshBoardActivity extends Activity {
     public static final String PRODUCT = "product";
     public static final String CUSTOMER = "customer";
     public static final String ORDER = "order";
-    public static final String MESSAGE = "message";
+//    public static final String MESSAGE = "message";
     public static final String SETTING = "setting";
     public static float IconsHeight = 6.00f;
     public static float IconsWidth = 9.55f;
@@ -37,7 +37,7 @@ public class SellerDeshBoardActivity extends Activity {
     public static ImageView backBtn;
     RelativeLayout titlebarlayout, bottombarlayout;
     RelativeLayout fragmentLayout;
-    static ImageView product, customer, order, message, setting;
+    static ImageView product, customer, order, message1, setting;
     int btnSelectorColor;
 
     public static SellerDeshBoardActivity getContext() {
@@ -94,7 +94,7 @@ public class SellerDeshBoardActivity extends Activity {
         product = (ImageView) findViewById(R.id.product);
         customer = (ImageView) findViewById(R.id.customer);
         order = (ImageView) findViewById(R.id.order);
-        message = (ImageView) findViewById(R.id.message);
+//        message = (ImageView) findViewById(R.id.message);
         setting = (ImageView) findViewById(R.id.setting);
 
 
@@ -110,7 +110,7 @@ public class SellerDeshBoardActivity extends Activity {
         product.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight, IconsWidth, 0, 0, 0, 0));
         customer.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight + 1f, IconsWidth + 1f, 0, 0, 0, 0));
         order.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight, IconsWidth, 0, 0, 0, 0));
-        message.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight, IconsWidth, 0, 0, 0, 0));
+//        message.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight, IconsWidth, 0, 0, 0, 0));
         setting.setLayoutParams(AppLayoutParamLinearLayout(IconsHeight, IconsWidth, 0, 0, 0, 0));
 
         //make product button selected
@@ -142,19 +142,19 @@ public class SellerDeshBoardActivity extends Activity {
                 MakeItemSelected(ORDER);
             }
         });
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MakeItemSelected(MESSAGE);
-
-                title.setText("Messages");
-                SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentLayout, fragobj);
-                transaction.commit();
-
-            }
-        });
+//        message.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MakeItemSelected(MESSAGE);
+//
+//                title.setText("Messages");
+//                SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
+//
+//            }
+//        });
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +226,7 @@ public class SellerDeshBoardActivity extends Activity {
         product.setColorFilter(null);
         customer.setColorFilter(null);
         order.setColorFilter(null);
-        message.setColorFilter(null);
+//        message.setColorFilter(null);
         setting.setColorFilter(null);
 
         switch (btnName) {
@@ -242,9 +242,9 @@ public class SellerDeshBoardActivity extends Activity {
                 order.setColorFilter(btnSelectorColor);
                 break;
 
-            case MESSAGE:
-                message.setColorFilter(btnSelectorColor);
-                break;
+//            case MESSAGE:
+//                message.setColorFilter(btnSelectorColor);
+//                break;
 
             case SETTING:
                 setting.setColorFilter(btnSelectorColor);

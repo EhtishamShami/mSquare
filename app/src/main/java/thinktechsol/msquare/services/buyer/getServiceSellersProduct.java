@@ -120,7 +120,7 @@ public class getServiceSellersProduct {
             String categoryTypeD = JsonObjSellerDetails.getString("categoryType");
             String lNameD = JsonObjSellerDetails.getString("lName");
             String toTimeD = JsonObjSellerDetails.getString("toTime");
-            String companyNameD = JsonObjSellerDetails.getString("companyName");
+            String companyNameD = JsonObjSellerDetails.getString("name");
             String passwordD = JsonObjSellerDetails.getString("password");
             String fromTimeD = JsonObjSellerDetails.getString("fromTime");
             String fNameD = JsonObjSellerDetails.getString("fName");
