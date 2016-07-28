@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thinktechsol.msquare.activities.SellerLoginActivity;
+import thinktechsol.msquare.activities.SellersOrdersActivity;
+import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -39,13 +43,15 @@ public class UpdateOrderStatus {
     String orderId;
     SellerLogInResponse parsedObject;
     String OrderStatus;
-    SellerLoginActivity ref;
+    SellersOrdersActivity ref;
     AlertDialog NotFoundDialog;
+    int selectedListPosition = 0;
 
-    public UpdateOrderStatus(final Context ctx, SellerLoginActivity ref, String orderId, String OrderStatus) {
+    public UpdateOrderStatus(final Context ctx, SellersOrdersActivity ref, String orderId, String OrderStatus, int selectedListPosition) {
         this.ctx = ctx;
         this.ref = ref;
         this.OrderStatus = OrderStatus;
+        this.selectedListPosition = selectedListPosition;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Searching Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -129,6 +135,7 @@ public class UpdateOrderStatus {
         return parsedObject;
     }
 
+
     /**
      * Background Async Task to fetch all jobs
      */
@@ -184,6 +191,15 @@ public class UpdateOrderStatus {
             Log.e("sellerLogIn", "onPostExecuter=" + response);
             if (response != null) {
                 Log.e("sellerLogIn", "onPostExecuter 1=" + response);
+                if (globels.getGlobelRef().orderType == "0")
+                    Toast.makeText(ref, "Order In Process Now", Toast.LENGTH_SHORT).show();
+                else if (globels.getGlobelRef().orderType == "1")
+                    Toast.makeText(ref, "Order Completed", Toast.LENGTH_SHORT).show();
+                else if (globels.getGlobelRef().orderType == "2")
+                    Toast.makeText(ref, "Order Dispute Clicked", Toast.LENGTH_SHORT).show();
+                else if (globels.getGlobelRef().orderType == "3")
+                    Toast.makeText(ref, "Order Complete Clicked", Toast.LENGTH_SHORT).show();
+
                 progressDialog.dismiss();
             } else {
                 progressDialog.dismiss();
@@ -191,5 +207,4 @@ public class UpdateOrderStatus {
             }
         }
     }
-
 }

@@ -58,21 +58,7 @@
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="Selected Services:"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="12sp"></TextView>
-
-            <TextView
-                android:id="@+id/_selected_services"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="3dp"
-                android:layout_toRightOf="@id/email"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="3"
+                android:text="test@gmail.com"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp"></TextView>
 
@@ -82,45 +68,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/email"
                 android:layout_marginTop="1dp"
-                android:text="Total Price:"
+                android:text="test"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/email"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="1dp"
-                android:layout_toRightOf="@id/address"
-                android:text="36"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="12sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="5dp">
-
-            <ImageView
-                android:id="@+id/order_reject"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/order_reject"
-                android:layout_margin="5dp"/>
-
-            <ImageView
-                android:id="@+id/order_approve"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_toRightOf="@+id/order_reject"
-                android:src="@drawable/order_approve"
-                android:layout_margin="5dp"/>
 
         </RelativeLayout>
 

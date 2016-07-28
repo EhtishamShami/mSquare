@@ -34,5 +34,8 @@ public class globels {
     public ArrayList<String> selectedProductsIds;
 
     public static String orderType = "0";
+    public static String approveRecentOrder = "1";
+    public static String approveInProcessOrder = "3";
+    public static String rejectOrder = "2";
 
 }

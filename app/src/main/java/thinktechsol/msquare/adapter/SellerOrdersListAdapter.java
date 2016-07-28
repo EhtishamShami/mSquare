@@ -1,23 +1,17 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.devsmart.android.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,8 +20,8 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.model.GetSellerOrdersModel;
+import thinktechsol.msquare.services.UpdateOrderStatus;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -45,17 +39,18 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 
     Fragment_2_items TwoItemsFrag;
     SellersOrdersActivity ActivityContext;
+    String CurrentOrderType = "0";
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     //    subItemClick click;
-    private ArrayList<GetSellerOrdersModel> productList;
+    private ArrayList<GetSellerOrdersModel> ordersList;
     private ArrayList<String> imgLoadedIds;
 
 
-    public SellerOrdersListAdapter(Context context, SellersOrdersActivity ActivityContext, int textViewResourceId, ArrayList<GetSellerOrdersModel> productList) {
-        super(context, textViewResourceId, productList);
-        this.productList = productList;
+    public SellerOrdersListAdapter(Context context, SellersOrdersActivity ActivityContext, int textViewResourceId, ArrayList<GetSellerOrdersModel> ordersList) {
+        super(context, textViewResourceId, ordersList);
+        this.ordersList = ordersList;
         this.context = context;
         this.ActivityContext = ActivityContext;
         imgLoadedIds = new ArrayList<String>();
@@ -93,17 +88,28 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                         holder.order_reject = (ImageView) v.findViewById(R.id.order_reject);
                         holder.order_approve = (ImageView) v.findViewById(R.id.order_approve);
 
+                        if (globels.getGlobelRef().orderType == "3" || globels.getGlobelRef().orderType == "2") {
+                            holder.order_reject.setVisibility(View.GONE);
+                            holder.order_approve.setVisibility(View.GONE);
+                        }
+
+                        if (globels.getGlobelRef().orderType == "1") {
+                            holder.order_reject.setVisibility(View.GONE);
+                        }
 
                         v.setTag(holder);
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
-                    final GetSellerOrdersModel myItem = productList.get(position);
+                    final GetSellerOrdersModel myItem = ordersList.get(position);
 
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "hi=" + myItem.buyerDetails.thumb, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
+//                            new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
+//                            ordersList.remove(position);
+//                            notifyDataSetChanged();
                         }
                     });
 
@@ -135,7 +141,19 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                             holder.order_reject.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(context, "order_reject=" + myItem.id, Toast.LENGTH_SHORT).show();
+
+                                    if (globels.getGlobelRef().orderType == "0") {
+                                        Toast.makeText(context, "order_reject of Recent=", Toast.LENGTH_SHORT).show();
+                                        new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().rejectOrder, position);
+                                        ordersList.remove(position);
+                                        notifyDataSetChanged();
+                                    } else if (globels.getGlobelRef().orderType == "1") {
+                                        Toast.makeText(context, "order_reject of In Process=", Toast.LENGTH_SHORT).show();
+                                    } else if (globels.getGlobelRef().orderType == "2") {
+                                        Toast.makeText(context, "order_reject of Dispute=", Toast.LENGTH_SHORT).show();
+                                    } else if (globels.getGlobelRef().orderType == "3") {
+                                        Toast.makeText(context, "order_reject of Complete=", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                         }
@@ -144,7 +162,23 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                             holder.order_approve.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(context, "order_approve=" + myItem.id, Toast.LENGTH_SHORT).show();
+
+                                    if (globels.getGlobelRef().orderType == "0") {
+                                        Toast.makeText(context, "order_approve of Recent=", Toast.LENGTH_SHORT).show();
+                                        new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
+                                        ordersList.remove(position);
+                                        notifyDataSetChanged();
+                                    } else if (globels.getGlobelRef().orderType == "1") {
+                                        Toast.makeText(context, "order_approve of In Process=", Toast.LENGTH_SHORT).show();
+                                        new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveInProcessOrder, position);
+                                        ordersList.remove(position);
+                                        notifyDataSetChanged();
+                                    } else if (globels.getGlobelRef().orderType == "2") {
+                                        Toast.makeText(context, "order_approve of Dispute=", Toast.LENGTH_SHORT).show();
+                                    } else if (globels.getGlobelRef().orderType == "3") {
+                                        Toast.makeText(context, "order_approve of Complete=", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             });
                         }
@@ -201,7 +235,6 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
         public ImageView order_approve;
     }
 
-
     public String allSelectedServices;
     public ArrayList<String> selectedServicesIds;
     public ArrayList<String> selectedProductsIds;
@@ -212,8 +245,8 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 //        selectedServicesIds.clear();
 //        selectedProductsIds.clear();
 //
-//        for (int i = 0; i < productList.size(); i++) {
-//            final GetSellerOrdersModel myItem = productList.get(i);
+//        for (int i = 0; i < ordersList.size(); i++) {
+//            final GetSellerOrdersModel myItem = ordersList.get(i);
 //            if (myItem.products.get(0).isChecked) {
 //                if (allSelectedServices != "")
 //                    allSelectedServices += ", ";
@@ -230,8 +263,8 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 //        itemCheckCounter = 0;
 //        SelectedServicesPrice = 0;
 //
-//        for (int i = 0; i < globels.getGlobelRef().productList.size(); i++) {
-//            final getServiceSellersProductModel myItem = productList.get(i);
+//        for (int i = 0; i < globels.getGlobelRef().ordersList.size(); i++) {
+//            final getServiceSellersProductModel myItem = ordersList.get(i);
 //            myItem.products.get(0).isChecked = false;
 //        }
 //

@@ -1,10 +1,7 @@
 package thinktechsol.msquare.fragments;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,28 +10,24 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
-import thinktechsol.msquare.adapter.AddProductAdapter;
+import thinktechsol.msquare.adapter.SellerCustomerListAdapter;
+import thinktechsol.msquare.adapter.SellerOrdersListAdapter;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.AddProductItem;
-import thinktechsol.msquare.model.SellerProductItem;
-import thinktechsol.msquare.services.SellerProductList;
+import thinktechsol.msquare.model.GetSellerOrdersModel;
+import thinktechsol.msquare.model.SellerCustomerModel;
+import thinktechsol.msquare.services.GetSellerCustomerList;
 import thinktechsol.msquare.utils.Constant;
 
-public class SellerAddProductFragment extends Fragment {
+public class SellerCustomerFragment extends Fragment {
 
     TextView title;
     RelativeLayout titlebarlayout, bottombarlayout;
     static String AddProductScreenTagbackButton = "AddProduct";
-    ListView listView;
+    ListView customerList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,12 +36,12 @@ public class SellerAddProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
 
         SellerDeshBoardActivity.getContext().backBtn.setTag(AddProductScreenTagbackButton);
+        SellerDeshBoardActivity.getContext().MakeItemSelected(SellerDeshBoardActivity.CUSTOMER);
 //        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
 
+        new GetSellerCustomerList(getActivity(), SellerCustomerFragment.this, globels.getGlobelRef().sellerlogin.id);
 
-        new SellerProductList(getActivity(), SellerAddProductFragment.this, globels.getGlobelRef().sellerlogin.service);
-
-        listView = (ListView) v.findViewById(R.id.listView);
+        customerList = (ListView) v.findViewById(R.id.listView);
 //        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
 //        m_parts.add(new AddProductItem("a", R.drawable.messages, colorCode[0]));
 //        m_parts.add(new AddProductItem("b", R.drawable.customer, R.color.customerColor));
@@ -99,21 +92,8 @@ public class SellerAddProductFragment extends Fragment {
         return (int) x;
     }
 
-    public void fill_data_to_adapter(ArrayList<SellerProductItem> list) {
-        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
-        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
-
-        int colorId = 0;
-        for (int i = 0; i < list.size(); i++) {
-            m_parts.add(new AddProductItem(list.get(i).id, list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
-            colorId = (colorId < 3) ? colorId += 1 : 0;
-        }
-
-        try {
-            AddProductAdapter m_adapter = new AddProductAdapter(getActivity(), R.layout.dashboard_row_item1, m_parts);
-            listView.setAdapter(m_adapter);
-        } catch (Exception e) {
-            Log.e("SellerAddProduct", "adapter=" + e);
-        }
+    public void fill_data_to_adapter(ArrayList<SellerCustomerModel> list) {
+        SellerCustomerListAdapter adapter = new SellerCustomerListAdapter(getActivity(), SellerCustomerFragment.this, R.layout.seller_customer_list_item, list);
+        customerList.setAdapter(adapter);
     }
 }

@@ -1,10 +1,6 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,19 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
+import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
+import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.model.GetSellerOrdersModel;
+import thinktechsol.msquare.model.SellerCustomerModel;
+import thinktechsol.msquare.services.UpdateOrderStatus;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -32,28 +31,30 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSellersModel> {
+public class SellerCustomerListAdapter extends ArrayAdapter<SellerCustomerModel> {
 
     private static final int _row = 0;
-    private static final String TAG = "ServiceSellersListAdapter";
+    private static final String TAG = "SellerCustomerListAdapter";
+    int itemCheckCounter = 0;
+    public int SelectedServicesPrice = 0;
 
 
     Fragment_2_items TwoItemsFrag;
-//    AddOrViewProActivity ActivityContext;
+    SellerCustomerFragment ActivityContext;
+    String CurrentOrderType = "0";
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     //    subItemClick click;
-    private ArrayList<getServiceSellersModel> productList;
+    private ArrayList<SellerCustomerModel> ordersList;
     private ArrayList<String> imgLoadedIds;
 
 
-    public BuyerServiceSellersListAdapter(Context context, /*AddOrViewProActivity ActivityContext,*/ int textViewResourceId, ArrayList<getServiceSellersModel> productList) {
-        super(context, textViewResourceId, productList);
-        this.productList = productList;
+    public SellerCustomerListAdapter(Context context, SellerCustomerFragment ActivityContext, int textViewResourceId, ArrayList<SellerCustomerModel> ordersList) {
+        super(context, textViewResourceId, ordersList);
+        this.ordersList = ordersList;
         this.context = context;
-//        this.ActivityContext = ActivityContext;
-        imgLoadedIds = new ArrayList<String>();
+        this.ActivityContext = ActivityContext;
     }
 
     @Override
@@ -75,61 +76,50 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.buyer_service_seller_list_item, parent, false);
+                        v = vi.inflate(R.layout.seller_customer_list_item, parent, false);
 
                         holder = new ViewHolder();
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.email);
-                        holder.distance = (TextView) v.findViewById(R.id.distance);
-                        holder.rating = (RatingBar) v.findViewById(R.id.rating);
-
+                        holder.name = (TextView) v.findViewById(R.id.name);
+                        holder.email = (TextView) v.findViewById(R.id.email);
+                        holder.address = (TextView) v.findViewById(R.id.address);
 
                         v.setTag(holder);
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
+                    final SellerCustomerModel myItem = ordersList.get(position);
 
-                    final getServiceSellersModel myItem = productList.get(position);
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
-                            globels.getGlobelRef().serviceSellerProductId = myItem.id;
-                            context.startActivity(serviceSellerActivity);
+                            Toast.makeText(context, "hi=" + myItem.email, Toast.LENGTH_SHORT).show();
                         }
                     });
 
 
                     if (myItem != null) {
 
-                        LayerDrawable stars = (LayerDrawable) holder.rating.getProgressDrawable();
-                        stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
-                        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
-                        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-
                         if (holder.lbl != null) {
-                            Picasso.with(context).load(Constant.imgbaseUrl + myItem.logo).into(holder.lbl);
-                        }
-                        if (holder.companyName != null) {
-                            holder.companyName.setText(myItem.companyName);
-                        }
-                        if (holder.description != null) {
-                            holder.description.setText(myItem.description);
-                        }
-                        if (holder.distance != null) {
-                            holder.distance.setText(myItem.distance);
-                        }
-                        if (holder.rating != null) {
-//                            holder.rating.setText(myItem.price);
 
-                            if (!myItem.productRating.equals("not available")) {
-                                float ratingNum = Float.parseFloat(myItem.productRating);
-                                Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
-                                holder.rating.setRating(1);
-                                holder.rating.setRating((int) ratingNum);
+                            if (myItem.thumb != null && !myItem.thumb.isEmpty() && myItem.thumb != " ") {
+                                Picasso.with(context).load(Constant.imgbaseUrl + myItem.thumb).into(holder.lbl);
+                            } else {
+                                Picasso.with(context).load(R.drawable.dummy_user).into(holder.lbl);
                             }
+                        }
+                        if (holder.name != null) {
+                            //holder.name.setText(myItem.products.get(0).title);
+                            holder.name.setText(myItem.fName + " " + myItem.lName);
+                        }
+                        if (holder.email != null) {
+                            //holder._selected_services.setText(myItem.products.get(0).description);
+                            holder.email.setText(myItem.email);
+                        }
+                        if (holder.address != null) {
+//                            holder._total_price.setText(myItem.products.get(0).description);
+                            holder.address.setText(myItem.houseNo + " " + myItem.streetNo + " " + myItem.area + " " + myItem.state);
                         }
                     }
                     return v;
@@ -177,9 +167,8 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
 
     public static class ViewHolder {
         public ImageView lbl;
-        public TextView companyName;
-        public TextView description;
-        public TextView distance;
-        public RatingBar rating;
+        public TextView name;
+        public TextView email;
+        public TextView address;
     }
 }

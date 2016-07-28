@@ -256,6 +256,7 @@ public class SellersOrdersActivity extends Activity {
         switch (btnName) {
             case RECENT:
 //                order_recent.setColorFilter(btnSelectorColor);
+                globels.getGlobelRef().orderType="0";
                 title.setText("Recent Orders");
                 new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "0");
                 order_recent.setBackgroundResource(R.drawable.seller_recent_order_active);
@@ -263,6 +264,7 @@ public class SellersOrdersActivity extends Activity {
 
             case COMPLETE:
 //                order_complete.setColorFilter(btnSelectorColor);
+                globels.getGlobelRef().orderType="3";
                 title.setText("Complete Orders");
                 new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "3");
                 order_complete.setBackgroundResource(R.drawable.seller_complete_order_active);
@@ -270,6 +272,7 @@ public class SellersOrdersActivity extends Activity {
 
             case INPROCESS:
 //                order_inprocess.setColorFilter(btnSelectorColor);
+                globels.getGlobelRef().orderType="1";
                 title.setText("In Process Orders");
                 new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "1");
                 order_inprocess.setBackgroundResource(R.drawable.seller_inprocess_order_active);
@@ -277,6 +280,7 @@ public class SellersOrdersActivity extends Activity {
 
             case DISPUTE:
 //                order_dispute.setColorFilter(btnSelectorColor);
+                globels.getGlobelRef().orderType="2";
                 title.setText("Dispute Orders");
                 new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "2");
                 order_dispute.setBackgroundResource(R.drawable.seller_dispute_order_active);

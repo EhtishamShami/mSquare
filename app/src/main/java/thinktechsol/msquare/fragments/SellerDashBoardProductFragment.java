@@ -155,7 +155,9 @@ public class SellerDashBoardProductFragment extends Fragment {
                 break;
             case 1:
                 if (position.equals("left")) {
-
+                    SellerCustomerFragment fragobj = new SellerCustomerFragment();
+                    title = "Customers";
+                    frag = fragobj;
                 } else {
 
                 }

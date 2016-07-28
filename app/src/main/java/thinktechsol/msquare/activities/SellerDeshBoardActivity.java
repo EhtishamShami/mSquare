@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
@@ -38,7 +39,7 @@ public class SellerDeshBoardActivity extends Activity {
     RelativeLayout titlebarlayout, bottombarlayout;
     RelativeLayout fragmentLayout;
     static ImageView product, customer, order, message1, setting;
-    int btnSelectorColor;
+    static int btnSelectorColor;
 
     public static SellerDeshBoardActivity getContext() {
         return ContextOfActivity;
@@ -77,6 +78,9 @@ public class SellerDeshBoardActivity extends Activity {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "DeshBoard's Back Button is clicked", Toast.LENGTH_SHORT).show();
 //                    Intent add=new Intent(SellerDeshBoardActivity.this,AddOrViewProActivity.class);
 //                    startActivity(add);
+                    title.setText("DashBoard");
+                    //make product button selected
+                    product.setColorFilter(btnSelectorColor);
                     finish();
                 } else if (backBtn.getTag().equals(AddProductScreenTagbackButton)) {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "Category's Back Button is clicked", Toast.LENGTH_SHORT).show();
@@ -85,6 +89,11 @@ public class SellerDeshBoardActivity extends Activity {
                     //transaction.setCustomAnimations(android.R.animator.fade_out, android.R.animator.fade_out);
                     transaction.replace(R.id.fragmentLayout, fragobj);
                     transaction.commit();
+
+                    title.setText("DashBoard");
+                    MakeItemSelected(PRODUCT);
+
+                    backBtn.setTag(DeshBoardTagbackButton);
                 }
             }
         });
@@ -133,6 +142,11 @@ public class SellerDeshBoardActivity extends Activity {
             public void onClick(View v) {
                 MakeItemSelected(CUSTOMER);
                 title.setText("Customer");
+                SellerCustomerFragment fragobj = new SellerCustomerFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentLayout, fragobj);
+                transaction.commit();
+                SellerDeshBoardActivity.getContext().changeTitle("Customer");
             }
         });
         order.setOnClickListener(new View.OnClickListener() {

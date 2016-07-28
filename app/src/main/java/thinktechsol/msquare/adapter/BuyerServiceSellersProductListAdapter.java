@@ -85,7 +85,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.lbl_selected_services);
+                        holder.description = (TextView) v.findViewById(R.id.email);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
                         holder.CheckBox = (CheckBox) v.findViewById(R.id.isChecked);
 
