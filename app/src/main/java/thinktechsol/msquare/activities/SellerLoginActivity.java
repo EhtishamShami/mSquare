@@ -59,7 +59,7 @@ public class SellerLoginActivity extends Activity {
                     new sellerLogIn(SellerLoginActivity.this,SellerLoginActivity.this, et_login_code.getText().toString());
 
 
-//                    Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, SellerDeshBoardActivity.class);
+//                    Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, ViewSellOrderDetailActivity.class);
 //                    startActivity(sellerDeshBoard);
 //                    overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
 //                    finish();

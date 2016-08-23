@@ -31,7 +31,7 @@ public class SellerAddProduct {
 
     private static final String TAG_SUCCESS = "success";
 
-    String _url = "addOrViewProduct/";
+    String _url = "addProduct/";
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;

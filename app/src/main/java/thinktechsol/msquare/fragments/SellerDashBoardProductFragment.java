@@ -2,6 +2,7 @@ package thinktechsol.msquare.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,7 @@ import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.adapter.ItemAdapter2;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model2.Item;
+import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardProductFragment extends Fragment {
@@ -127,6 +128,7 @@ public class SellerDashBoardProductFragment extends Fragment {
     }
 
     public static final String MESSAGE = "message";
+    ProgressDialog progressDialog;
 
     public void openFragment(int id, String position) {
         Fragment frag = null;
@@ -182,6 +184,7 @@ public class SellerDashBoardProductFragment extends Fragment {
             case 3:
                 if (position.equals("left")) {
                     Constant.addOrViewProduct = true;
+
                     SellerAddProductFragment fragobj = new SellerAddProductFragment();
                     title = "Add Product";
                     frag = fragobj;
@@ -191,6 +194,7 @@ public class SellerDashBoardProductFragment extends Fragment {
 //                    title = "Add Product";
 //                    frag = fragobj;
 //                    globels.getGlobelRef().IdForAddProduct = myItem.id;
+
                     Intent add = new Intent(getActivity(), AddOrViewProActivity.class);
                     getActivity().startActivity(add);
                 }

@@ -75,7 +75,7 @@ public class SalonDetailsActivity extends FragmentActivity {
 
             }
         });
-        title.setText("MSquare");
+        title.setText("Saloon");
         titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
@@ -246,6 +246,7 @@ public class SalonDetailsActivity extends FragmentActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(1);
         setupTabIcons();
     }
 

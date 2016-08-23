@@ -61,16 +61,14 @@ public class ViewSellProDetailActivity extends Activity {
         RelativeLayout imgs = (RelativeLayout) findViewById(R.id.imgs);
         bottombarlayout = (RelativeLayout) findViewById(R.id.bottombarlayout);
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
-        pro_name_rating_price_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_price_layout);
-        pro_name_rating_layout = (RelativeLayout) findViewById(R.id.pro_name_rating_layout);
-        pro_price_layout = (RelativeLayout) findViewById(R.id.pro_price_layout);
+        pro_name_rating_price_layout = (RelativeLayout) findViewById(R.id.sellers_detials_layout);
+        pro_name_rating_layout = (RelativeLayout) findViewById(R.id.sellers_title_layout);
+        pro_price_layout = (RelativeLayout) findViewById(R.id.rating_layout);
         pro_name = (TextView) findViewById(R.id.sellers_title);
         pro_price = (TextView) findViewById(R.id.pro_price);
         rating = (RatingBar) findViewById(R.id.rating);
 
-
         titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.addProductTitleBarColor));
-
 
 
         title = (TextView) findViewById(R.id.title);
@@ -96,7 +94,7 @@ public class ViewSellProDetailActivity extends Activity {
 
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, imgs));
         pro_name_rating_layout.setLayoutParams(AppLayoutParam3(10.00f, 70f, 0, 0, 0, 0, null, 0));
-        pro_price_layout.setLayoutParams(AppLayoutParam3(10.00f, 30f, 0, 0, 0, 0, null, R.id.pro_name_rating_layout));
+        pro_price_layout.setLayoutParams(AppLayoutParam3(10.00f, 30f, 0, 0, 0, 0, null, R.id.sellers_title_layout));
 
         add_product.setOnClickListener(new View.OnClickListener() {
             @Override

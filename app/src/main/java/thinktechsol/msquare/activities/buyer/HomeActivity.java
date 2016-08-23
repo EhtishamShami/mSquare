@@ -1,6 +1,7 @@
 package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
@@ -63,8 +65,9 @@ public class HomeActivity extends Activity {
         new getServices(HomeActivity.this, HomeActivity.this);
         // title bar
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
-        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
+        btn_menu.setLayoutParams(AppLayoutParam(6f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
         btn_menu.setVisibility(View.VISIBLE);
+        btn_menu.setBackgroundResource(R.drawable.btn_menu);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +77,8 @@ public class HomeActivity extends Activity {
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent buyerDeshBoard = new Intent(HomeActivity.this, BuyerDeshBoardActivity.class);
+                startActivity(buyerDeshBoard);
             }
         });
         title.setText("MSquare");
@@ -194,21 +198,21 @@ public class HomeActivity extends Activity {
 
 //        HomeItem homeItem = new HomeItem();
 //        for (int i = 0; i < list.size(); i++) {
-          for (int i = list.size()-1; i >= 0; i--) {
+        for (int i = list.size() - 1; i >= 0; i--) {
 
-                GetServicesModel myItem = list.get(i);
+            GetServicesModel myItem = list.get(i);
 
 
-                if (firstCategory) {
-                    firstCategory = false;
+            if (firstCategory) {
+                firstCategory = false;
 
-                    id1 = myItem.id;
-                    status1 = myItem.status;
-                    description1 = myItem.description;
-                    name1 = myItem.name;
-                    parent1 = myItem.parent;
-                    thumb1 = myItem.thumb;
-                    categoryType1 = myItem.categoryType;
+                id1 = myItem.id;
+                status1 = myItem.status;
+                description1 = myItem.description;
+                name1 = myItem.name;
+                parent1 = myItem.parent;
+                thumb1 = myItem.thumb;
+                categoryType1 = myItem.categoryType;
 
 //                homeItem.id = myItem.id;
 //                homeItem.status = myItem.status;
@@ -218,16 +222,16 @@ public class HomeActivity extends Activity {
 //                homeItem.thumb = Constant.imgbaseUrl + myItem.thumb;
 //                homeItem.categoryType = myItem.categoryType;
 
-                } else {
-                    firstCategory = true;
+            } else {
+                firstCategory = true;
 
-                    id2 = myItem.id;
-                    status2 = myItem.status;
-                    description2 = myItem.description;
-                    name2 = myItem.name;
-                    parent2 = myItem.parent;
-                    thumb2 = myItem.thumb;
-                    categoryType2 = myItem.categoryType;
+                id2 = myItem.id;
+                status2 = myItem.status;
+                description2 = myItem.description;
+                name2 = myItem.name;
+                parent2 = myItem.parent;
+                thumb2 = myItem.thumb;
+                categoryType2 = myItem.categoryType;
 
 //                homeItem.id2 = myItem.id;
 //                homeItem.status2 = myItem.status;
@@ -236,40 +240,40 @@ public class HomeActivity extends Activity {
 //                homeItem.parent2 = myItem.parent;
 //                homeItem.thumb2 = Constant.imgbaseUrl + myItem.thumb;
 //                homeItem.categoryType2 = myItem.categoryType;
-                }
+            }
 
 
-                if (firstCategory) {
+            if (firstCategory) {
 
 //                homeItem.width = width[WidthCounter];
 //                homeItem.bgColor = bgColors[ColorCounter][0];
 //                homeItem.bgColor2 = bgColors[ColorCounter][1];
 
 
-                    //m_parts.add(homeItem);
+                //m_parts.add(homeItem);
 //                Log.e("HomeActivity", "name1=" + homeItem.bgColor);
 //                Log.e("HomeActivity", "name2=" + homeItem.bgColor2);
 //                homeItem.clearObject();
 
-                    m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
-                            id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], width[WidthCounter]
-                    ));
+                m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
+                        id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], width[WidthCounter]
+                ));
 
 
-                    if (ColorCounter < 3) {
-                        ColorCounter += 1;
-                    } else {
-                        ColorCounter = 0;
-                    }
-
-                    if (WidthCounter < 3) {
-                        WidthCounter += 1;
-                    } else {
-                        WidthCounter = 0;
-                    }
+                if (ColorCounter < 3) {
+                    ColorCounter += 1;
+                } else {
+                    ColorCounter = 0;
                 }
 
-                if (even == false && i == list.size() - 1) {
+                if (WidthCounter < 3) {
+                    WidthCounter += 1;
+                } else {
+                    WidthCounter = 0;
+                }
+            }
+
+            if (even == false && i == list.size() - 1) {
 
 //                homeItem.width = 100;
 //                homeItem.bgColor = bgColors[ColorCounter][0];
@@ -286,11 +290,11 @@ public class HomeActivity extends Activity {
 //                m_parts.add(homeItem);
 //                m_parts.add(new HomeItem(name1, Constant.imgbaseUrl + thumb1, bgColors[ColorCounter][0], 100, "full layout", "empty", bgColors[ColorCounter][1]));
 
-                    m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
-                            id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], 100
-                    ));
-                }
+                m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
+                        id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], 100
+                ));
             }
+        }
 
         HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
         listview.setAdapter(m_adapter);

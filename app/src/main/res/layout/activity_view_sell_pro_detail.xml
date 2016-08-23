@@ -65,12 +65,12 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/pro_name_rating_price_layout"
+                    android:id="@+id/sellers_detials_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:id="@+id/pro_name_rating_layout"
+                        android:id="@+id/sellers_title_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#ffffff">
@@ -108,7 +108,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/pro_price_layout"
+                        android:id="@+id/rating_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#ffffff">

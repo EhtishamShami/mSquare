@@ -1,6 +1,5 @@
 package thinktechsol.msquare.activities.buyer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
@@ -8,13 +7,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -32,24 +29,25 @@ import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.*;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.BuyerLogin;
+import thinktechsol.msquare.services.buyer.BuyerCustomLogin;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerLoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -142,6 +140,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
                     Constant.makeImageAlphLowOrHigh(btn_login, 1f);
+
+                    if (email.getText().toString().trim().length() > 0 && password.getText().toString().trim().length() > 0) {
+                        new BuyerCustomLogin(BuyerLoginActivity.this, BuyerLoginActivity.this, email.getText().toString(), password.getText().toString());
+                    } else {
+                        Toast.makeText(BuyerLoginActivity.this, "Please Enter Email & Password", Toast.LENGTH_SHORT).show();
+                    }
                     return true;
                 }
                 return false;
@@ -507,5 +511,11 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void onLoginCompleted(ArrayList<BuyerLogin> list) {
+        globels.getGlobelRef().buyerLoginId = list.get(0).id;
+        Constant.logInAs = "customeLogin";
+        startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
     }
 }

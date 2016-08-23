@@ -2,15 +2,18 @@ package thinktechsol.msquare.activities;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +27,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.wefika.horizontalpicker.HorizontalPicker;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,7 +52,7 @@ import thinktechsol.msquare.services.GetSellerProducts;
 import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.utils.Constant;
 
-public class AddOrViewProActivity extends Activity implements UploadImgInterface {
+public class AddOrViewProActivity extends Activity implements UploadImgInterface, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked {
 
     public static final String ADD_PRODUCT = "addproduct";
     public static final String VIEW_PRODUCT = "viewproduct";
@@ -63,6 +71,9 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     EditText pro_title_et, pro_desc_et, pro_price_et, pro_time_et;
     ListView product_list;
     ArrayList<ProductImages> productImagesList;
+    LinearLayout scroler_textview;
+    ProgressDialog progressDialog;
+    HorizontalPicker picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +102,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         RelativeLayout fields1 = (RelativeLayout) findViewById(R.id.fields1);
         RelativeLayout fields = (RelativeLayout) findViewById(R.id.fields);
         RelativeLayout imgs = (RelativeLayout) findViewById(R.id.imgs);
+//        scroler_textview = (LinearLayout) findViewById(R.id.scroler_textview);
         add_product_save.setLayoutParams(AppLayoutParam(8.5f, 32.58f, 0, 3, 0, 0, fields));
 
 
@@ -162,6 +174,19 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 new GetSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
             }
         });
+
+        progressDialog = new ProgressDialog(AddOrViewProActivity.this);
+        progressDialog.setMessage("Loading Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+//        progressDialog.show();
+
+//        load_timer_text();
+        picker = (HorizontalPicker) findViewById(R.id.picker);
+        picker.setOnItemClickedListener(this);
+        picker.setOnItemSelectedListener(this);
+
+//        pro_time_etlayout.ad
 //        upload_img = (ImageView) findViewById(R.id.upload_img);
 //        upload_img.setLayoutParams(AppLayoutParam(32.00f, 100f, 0, 0, 0, 0));
 //        upload_img.setOnClickListener(new View.OnClickListener() {
@@ -212,10 +237,11 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 productDetails[0] = pro_title_et.getText().toString();
                 productDetails[1] = pro_desc_et.getText().toString();
                 productDetails[2] = pro_price_et.getText().toString();
-                productDetails[3] = pro_time_et.getText().toString();
+                productDetails[3] = String.valueOf(selectedTimeIndex);
+//                productDetails[3] = pro_time_et.getText().toString();
 
                 if (pro_title_et.getText().toString().trim().length() > 0 && pro_desc_et.getText().toString().trim().length() > 0
-                        && pro_price_et.getText().toString().trim().length() > 0 && pro_time_et.getText().toString().trim().length() > 0 && selectedImagePath.size() > 0) {
+                        && pro_price_et.getText().toString().trim().length() > 0 && selectedImagePath.size() > 0) {
 
 //                if (productDetails[0].trim() != null && productDetails[1].trim() != null && productDetails[2].trim() != null && productDetails[3].trim() != null) {
                     new SellerAddProduct(AddOrViewProActivity.this, AddOrViewProActivity.this, productDetails, selectedImagePath);
@@ -236,6 +262,45 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         });
 
 
+    }
+
+    TextView TextViewArray[] = new TextView[100];
+//    int i = 0;
+
+    public void load_timer_text() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                for (int i = 0; i < 100; i++) {
+                    TextViewArray[i] = new TextView(AddOrViewProActivity.this);
+                    TextViewArray[i].setText(" " + i);
+                    TextViewArray[i].setTag(i);
+                    LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    textViewLayoutParams.setMargins(Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2));
+                    scroler_textview.addView(TextViewArray[i], textViewLayoutParams);
+                    TextViewArray[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for (int j = 0; j < 100; j++) {
+                                TextViewArray[j].setTypeface(null, Typeface.NORMAL);
+                            }
+                            TextViewArray[Integer.parseInt(v.getTag().toString())].setTypeface(null, Typeface.BOLD_ITALIC);
+
+                            //Toast.makeText(AddOrViewProActivity.this, ""+v.getTag(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    dismissDailog();
+                }
+            }
+        }, 1000);
+    }
+
+    public void dismissDailog() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 2 * 1000);
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
@@ -479,4 +544,16 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         }
     }
 
+    @Override
+    public void onItemClicked(int index) {
+//        Toast.makeText(this, "Item clicked"+picker.getSelectedItem(), Toast.LENGTH_SHORT).show();
+    }
+
+    int selectedTimeIndex;
+
+    @Override
+    public void onItemSelected(int index) {
+        selectedTimeIndex = index+1;
+        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
+    }
 }

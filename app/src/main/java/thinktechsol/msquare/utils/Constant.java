@@ -18,8 +18,14 @@ public class Constant {
 //    public static String imgbaseUrl = "http://weblinelab.com/demo/msquare/";
 
     //    original url
-    public static String baseUrl = "http://smartit.ae/api/";
-    public static String imgbaseUrl = "http://smartit.ae/";
+//    public static String baseUrl = "http://smartit.ae/api/";
+//    public static String imgbaseUrl = "http://smartit.ae/";
+
+//    http://servue.ae/api/dashBoardStatsSeller/{sellerId}
+    //    original url
+    public static String baseUrl = "http://servue.ae/api/";
+    public static String imgbaseUrl = "http://servue.ae/";
+
     public static int screenHeight;
     public static int screenWidth;
 

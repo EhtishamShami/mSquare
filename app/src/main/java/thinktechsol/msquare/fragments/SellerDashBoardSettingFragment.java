@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ItemAdapter;
-import thinktechsol.msquare.model2.Item;
+import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardSettingFragment extends Fragment {

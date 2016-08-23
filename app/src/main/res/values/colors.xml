@@ -8,6 +8,8 @@
     <color name="orderColor">#82b421</color>
     <color name="productColor">#daa400</color>
     <color name="sellerDashBoardTitleBg">#000000</color>
+    <color name="sellerOrderTitleBg">#93be41</color>
+    <color name="sellerOrderDetailTitleBg">#0068a5</color>
     <color name="bottomBarColor">#f9f9f9</color>
     <color name="whiteColor">#ffffff</color>
 

@@ -17,19 +17,14 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
-import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
 import thinktechsol.msquare.adapter.BuyerServiceSellersProductListAdapter;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
-import thinktechsol.msquare.services.buyer.getServiceSellersProduct;
-import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellersServiceFragment extends Fragment {
@@ -48,17 +43,16 @@ public class SellersServiceFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_sellers_service, container, false);
 
-
-        pro_name_rating_price_layout = (RelativeLayout) v.findViewById(R.id.pro_name_rating_price_layout);
+        pro_name_rating_price_layout = (RelativeLayout) v.findViewById(R.id.sellers_detials_layout);
         pro_name_line_layout = (RelativeLayout) v.findViewById(R.id.pro_name_line_layout);
         sellers_title = (TextView) v.findViewById(R.id.sellers_title);
         rating = (RatingBar) v.findViewById(R.id.rating);
         reservationBtn = (Button) v.findViewById(R.id.reservationBtn);
 
 //        new getServiceSellersProduct(getActivity(),SellersServiceFragment.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
-        Log.e("SellersServiceFrag", "list value 2=" + globels.getGlobelRef().productList);
+        Log.e("SellersServiceFrag", "list value 2=" + globels.getGlobelRef().productList2.size());
         listView = (ListView) v.findViewById(R.id.list);
-        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().productList);
+        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().productList2);
         listView.setAdapter(adapter);
 
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
@@ -70,7 +64,9 @@ public class SellersServiceFragment extends Fragment {
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
 
+
         sellers_title.setText(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+//        sellers_title.setText(globels.getGlobelRef().productList.get(0).);
 //        float ratingNum = 2/*Float.parseFloat(myItem.productRating)*/;
         if (!globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("not available") && !globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("null")) {
             float ratingNum = Float.parseFloat(globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating);
@@ -116,8 +112,8 @@ public class SellersServiceFragment extends Fragment {
             //productList.add(new getServiceSellersProductModel(list.get(i).mobileNo, list.get(i).logo, list.get(i).status, list.get(i).tradeNo, list.get(i).documents, list.get(i).lName, list.get(i).name, list.get(i).password, list.get(i).fName, list.get(i).productRating, list.get(i).id, list.get(i).phoneNo, list.get(i).distance, list.get(i).email, list.get(i).address, list.get(i).description, list.get(i).activationCode, list.get(i).service, list.get(i).longitude, list.get(i).latitude, list.get(i).datetime));
         }
 
-        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, list);
-        listView.setAdapter(adapter);
+//        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, list);
+//        listView.setAdapter(adapter);
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {

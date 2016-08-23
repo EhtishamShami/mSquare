@@ -17,13 +17,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.fragments.SellerCustomerFragment;
-import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.model.SellerCustomerModel;
-import thinktechsol.msquare.services.UpdateOrderStatus;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -82,7 +78,7 @@ public class SellerCustomerListAdapter extends ArrayAdapter<SellerCustomerModel>
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.name = (TextView) v.findViewById(R.id.name);
-                        holder.email = (TextView) v.findViewById(R.id.email);
+                        holder.email = (TextView) v.findViewById(R.id.time);
                         holder.address = (TextView) v.findViewById(R.id.address);
 
                         v.setTag(holder);

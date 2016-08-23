@@ -247,6 +247,7 @@ public class ServiceSellerDetailActivity extends FragmentActivity {
         Log.e("ServiceSellerDetial", "list value 1=" + list.size());
 
         globels.getGlobelRef().productList = list;
+        globels.getGlobelRef().productList2 = list.get(0).products;
 
 //        Log.e("ServiceSellerDetial", "list value img=" + Constant.imgbaseUrl + globels.getGlobelRef().SellersProductDetailList.get(0).sellerDetails.logo);
         Picasso.with(this).load(Constant.imgbaseUrl + globels.getGlobelRef().productList.get(0).sellerInfo.logo).into(sellersTitleImg);

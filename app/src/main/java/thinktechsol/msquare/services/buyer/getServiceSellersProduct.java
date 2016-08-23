@@ -88,6 +88,9 @@ public class getServiceSellersProduct {
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
         ArrayList<getServiceSellersProductModel> serviceSellersProduct = new ArrayList<getServiceSellersProductModel>();
+        ArrayList<Products> productsList = new ArrayList<Products>();
+        ArrayList<ProductReviews> productReviewsList = new ArrayList<ProductReviews>();
+
 
         try {
             JSONObject parentObject = new JSONObject(result);
@@ -100,9 +103,6 @@ public class getServiceSellersProduct {
 
             //seller details json object
             JSONObject JsonObjSellerDetails = JsonDataObject.getJSONObject("sellerInfo");
-            //product details json array
-            JSONArray JsonArrayProduct = JsonDataObject.getJSONArray("products");
-            Log.e(TAG, "JSONArray lenght 1" + JsonArrayProduct);
 
             //getting seller details start
             String ratingObjSD = "not available";
@@ -120,7 +120,7 @@ public class getServiceSellersProduct {
             String categoryTypeD = JsonObjSellerDetails.getString("categoryType");
             String lNameD = JsonObjSellerDetails.getString("lName");
             String toTimeD = JsonObjSellerDetails.getString("toTime");
-            String companyNameD = JsonObjSellerDetails.getString("name");
+            String companyNameD = JsonObjSellerDetails.getString("companyName");
             String passwordD = JsonObjSellerDetails.getString("password");
             String fromTimeD = JsonObjSellerDetails.getString("fromTime");
             String fNameD = JsonObjSellerDetails.getString("fName");
@@ -142,95 +142,113 @@ public class getServiceSellersProduct {
             //getting seller details end
 
 //            getting product details start
-            for (int i = 0; i < JsonArrayProduct.length(); i++) {
-                ArrayList<Products> productsList = new ArrayList<Products>();
-                JSONObject childJsonObj = (JSONObject) JsonArrayProduct.get(i);
+            String JsonStringProduct = JsonDataObject.getString("products");
 
-                String id = childJsonObj.getString("id");
-                String sellerId = childJsonObj.getString("sellerId");
-                String serviceId = childJsonObj.getString("serviceId");
-                String description = childJsonObj.getString("description");
-                String title = childJsonObj.getString("title");
-                String price = childJsonObj.getString("price");
-                String deliveryTime = childJsonObj.getString("deliveryTime");
-                String dateTime = childJsonObj.getString("dateTime");
-                String status = childJsonObj.getString("status");
+            if (!JsonStringProduct.equals("false")) {
 
+                JSONArray JsonArrayProduct = JsonDataObject.getJSONArray("products");
+                for (int i = 0; i < JsonArrayProduct.length(); i++) {
+                    JSONObject childJsonObj = (JSONObject) JsonArrayProduct.get(i);
 
-                //getting images from service
-                String productImages = childJsonObj.getString("productImages");
-                ProductImages imgesObj = null;
-                ArrayList<ProductImages> productImagesList = new ArrayList<ProductImages>();
+                    String id = childJsonObj.getString("id");
+                    String sellerId = childJsonObj.getString("sellerId");
+                    String serviceId = childJsonObj.getString("serviceId");
+                    String description = childJsonObj.getString("description");
+                    String title = childJsonObj.getString("title");
+                    String price = childJsonObj.getString("price");
+                    String deliveryTime = childJsonObj.getString("deliveryTime");
+                    String dateTime = childJsonObj.getString("dateTime");
+                    String status = childJsonObj.getString("status");
 
-                if (productImages.equals("false")) {
-                    Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ctx.getPackageName() + "/drawable/" + "pro_title");
-                    imgesObj = new ProductImages("" + uri);
-                    productImagesList.add(new ProductImages("" + uri));
-                } else {
-                    JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
+                    //getting images from service
+                    String productImages = childJsonObj.getString("productImages");
+                    ProductImages imgesObj = null;
+                    ArrayList<ProductImages> productImagesList = new ArrayList<ProductImages>();
+                    ArrayList<ProductReviews> productReviewsListInsidePro = new ArrayList<ProductReviews>();
 
-                    for (int img = 0; img < productImagesArray.length(); img++) {
-                        JSONObject ImgJsonObj = (JSONObject) productImagesArray.get(img);
+                    if (productImages.equals("false")) {
+                        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ctx.getPackageName() + "/drawable/" + "pro_title");
+                        imgesObj = new ProductImages("" + uri);
+                        productImagesList.add(new ProductImages("" + uri));
+                    } else {
+                        JSONArray productImagesArray = childJsonObj.getJSONArray("productImages");
 
-                        String ImgId = ImgJsonObj.getString("id");
-                        String sellerProductId = ImgJsonObj.getString("sellerProductId");
-                        String image = ImgJsonObj.getString("image");
+                        for (int img = 0; img < productImagesArray.length(); img++) {
+                            JSONObject ImgJsonObj = (JSONObject) productImagesArray.get(img);
 
-                        imgesObj = new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image);
-                        productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image));
+                            String ImgId = ImgJsonObj.getString("id");
+                            String sellerProductId = ImgJsonObj.getString("sellerProductId");
+                            String image = ImgJsonObj.getString("image");
+
+                            imgesObj = new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image);
+                            productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image));
+                        }
                     }
-                }
-                //getting images from service end
+                    //getting images from service end
 
-                //getting ratting from service
-                String ratingObj = "null";
-                String rating = "not available";
-                ratingObj = childJsonObj.getString("productRating");
-                if (!ratingObj.contains("null")) {
-                    JSONObject rateJsonObj = new JSONObject(ratingObj);
-                    rating = rateJsonObj.getString("rating");
-                    if (rating.contains("null"))
-                        rating = "not available";
-                }
+                    //getting productReviews from service
+                    String JsonStringReview = childJsonObj.getString("productReviews");
+                    Log.e(TAG, "Review insider product =" + JsonStringReview);
+//                    productReviewsListInsidePro.clear();
+                    if (!JsonStringReview.equals("false")) {
 
-                //getting images from service
-                String productReviews = childJsonObj.getString("productReviews");
-                ProductReviews reviewsObj = null;
-                ArrayList<ProductReviews> productReviewsList = new ArrayList<ProductReviews>();
+                        JSONArray JsonArrayReviews = childJsonObj.getJSONArray("productReviews");
+                        Log.e(TAG, "Review insider product inu =" + JsonArrayReviews.length());
+                        for (int rev = 0; rev < JsonArrayReviews.length(); rev++) {
+                            JSONObject ReviewJsonObj = (JSONObject) JsonArrayReviews.get(rev);
 
-                if (productReviews.equals("false")) {
-//                    Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ctx.getPackageName() + "/drawable/" + "pro_title");
-//                    imgesObj = new ProductImages("" + uri);
-//                    productImagesList.add(new ProductImages("" + uri));
-                } else {
-                    JSONArray productReviewsArray = childJsonObj.getJSONArray("productReviews");
+                            String idR = ReviewJsonObj.getString("id");
+                            String reviewTitleR = ReviewJsonObj.getString("reviewTitle");
+                            String serviceIdR = ReviewJsonObj.getString("serviceId");
+                            String statusR = ReviewJsonObj.getString("status");
+                            String sellerIdR = ReviewJsonObj.getString("sellerId");
+                            String buyerIdR = ReviewJsonObj.getString("buyerId");
+                            String reviewDescriptionR = ReviewJsonObj.getString("reviewDescription");
+                            String productIdR = ReviewJsonObj.getString("productId");
 
-                    for (int rev = 0; rev < productReviewsArray.length(); rev++) {
-                        JSONObject ReviewJsonObj = (JSONObject) productReviewsArray.get(rev);
-
-
-                        String idR = ReviewJsonObj.getString("id");
-                        String reviewTitleR = ReviewJsonObj.getString("reviewTitle");
-                        String serviceIdR = ReviewJsonObj.getString("serviceId");
-                        String statusR = ReviewJsonObj.getString("status");
-                        String sellerIdR = ReviewJsonObj.getString("sellerId");
-                        String buyerIdR = ReviewJsonObj.getString("buyerId");
-                        String reviewDescriptionR = ReviewJsonObj.getString("reviewDescription");
-                        String productIdR = ReviewJsonObj.getString("productId");
-
-
-                        productReviewsList.add(new ProductReviews(idR, reviewTitleR, serviceIdR, statusR, sellerIdR, buyerIdR, reviewDescriptionR, productIdR));
+                            productReviewsListInsidePro.add(new ProductReviews(idR, reviewTitleR, serviceIdR, statusR, sellerIdR, buyerIdR, reviewDescriptionR, productIdR));
+                        }
                     }
+                    //getting productReviews from service end
+
+                    //getting ratting from service
+                    String ratingObj = "null";
+                    String rating = "not available";
+                    ratingObj = childJsonObj.getString("productRating");
+                    if (!ratingObj.contains("null")) {
+                        JSONObject rateJsonObj = new JSONObject(ratingObj);
+                        rating = rateJsonObj.getString("rating");
+                        if (rating.contains("null"))
+                            rating = "not available";
+                    }
+                    Log.e(TAG, "Review of each product ="+i+" == " + productReviewsListInsidePro.size());
+                    productsList.add(new Products(id, rating, productImagesList, title, price, deliveryTime, serviceId, status, dateTime, description, sellerId, false, productReviewsListInsidePro));
                 }
-                //getting images from service end
-
-
-                Products productsDetailsObject = new Products(id, rating, productImagesList, title, price, deliveryTime,
-                        serviceId, status, dateTime, description, sellerId, productReviewsList,false);
-                productsList.add(new Products(id, rating, productImagesList, title, price, deliveryTime, serviceId, status, dateTime, description, sellerId, productReviewsList,false));
-
-                serviceSellersProduct.add(new getServiceSellersProductModel(sellerDetailsObj, productsList));
             }
+
+            //getting productReviews from service
+            String JsonStringReview = JsonDataObject.getString("reviews");
+            if (!JsonStringReview.equals("false")) {
+                JSONArray JsonArrayReviews = JsonDataObject.getJSONArray("reviews");
+                for (int rev = 0; rev < JsonArrayReviews.length(); rev++) {
+                    JSONObject ReviewJsonObj = (JSONObject) JsonArrayReviews.get(rev);
+
+                    String idR = ReviewJsonObj.getString("id");
+                    String reviewTitleR = ReviewJsonObj.getString("reviewTitle");
+                    String serviceIdR = ReviewJsonObj.getString("serviceId");
+                    String statusR = ReviewJsonObj.getString("status");
+                    String sellerIdR = ReviewJsonObj.getString("sellerId");
+                    String buyerIdR = ReviewJsonObj.getString("buyerId");
+                    String reviewDescriptionR = ReviewJsonObj.getString("reviewDescription");
+                    String productIdR = ReviewJsonObj.getString("productId");
+
+                    productReviewsList.add(new ProductReviews(idR, reviewTitleR, serviceIdR, statusR, sellerIdR, buyerIdR, reviewDescriptionR, productIdR));
+                }
+            }
+            //getting productReviews from service end
+
+            //putting finaly data in main model
+            serviceSellersProduct.add(new getServiceSellersProductModel(sellerDetailsObj, productReviewsList, productsList));
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONExc ParsedJsonObject=" + e);

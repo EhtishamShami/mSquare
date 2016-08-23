@@ -1,9 +1,9 @@
-package thinktechsol.msquare.model2;
+package thinktechsol.msquare.model.Buyer;
 
 /**
  * Created by Arshad.Iqbal on 5/16/2016.
  */
-public class Item {
+public class BuyerDashBoardAdapterItem {
     public String label;
     public int counter;
     public int icon;
@@ -13,7 +13,7 @@ public class Item {
     public int subItemIcon3;
     public int subItemIcon4;
 
-    public Item(String label, int counter, int icon, int bgColor, int subItemIcon1, int subItemIcon2) {
+    public BuyerDashBoardAdapterItem(String label, int counter, int icon, int bgColor, int subItemIcon1, int subItemIcon2) {
         this.label = label;
         this.counter = counter;
         this.icon = icon;
@@ -22,7 +22,7 @@ public class Item {
         this.subItemIcon2 = subItemIcon2;
     }
 
-    public Item(String label, int counter, int icon, int bgColor, int subItemIcon1, int subItemIcon2, int subItemIcon3, int subItemIcon4) {
+    public BuyerDashBoardAdapterItem(String label, int counter, int icon, int bgColor, int subItemIcon1, int subItemIcon2, int subItemIcon3, int subItemIcon4) {
         this.label = label;
         this.counter = counter;
         this.icon = icon;

@@ -1,5 +1,6 @@
 package thinktechsol.msquare.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -112,6 +113,7 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
                         public void onClick(View v) {
 //                            Toast.makeText(context, "" + myItem.id, Toast.LENGTH_SHORT).show();
                             globels.getGlobelRef().IdForAddProduct = myItem.id;
+
                             Intent add = new Intent(context, AddOrViewProActivity.class);
                             context.startActivity(add);
                         }

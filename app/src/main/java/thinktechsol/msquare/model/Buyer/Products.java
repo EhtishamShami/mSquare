@@ -3,7 +3,7 @@ package thinktechsol.msquare.model.Buyer;
 import java.util.ArrayList;
 
 /**
- * Created by LENOVO on 7/19/2016.
+ * Created by Arshad Iqbal on 7/19/2016.
  */
 
 public class Products {
@@ -21,7 +21,7 @@ public class Products {
     public boolean isChecked;
     public ArrayList<ProductReviews> productReviews;
 
-    public Products(String id, String productRating, ArrayList<ProductImages> productImages, String title, String price, String deliveryTime, String serviceId, String status, String dateTime, String description, String sellerId, ArrayList<ProductReviews> productReviews, boolean isChecked) {
+    public Products(String id, String productRating, ArrayList<ProductImages> productImages, String title, String price, String deliveryTime, String serviceId, String status, String dateTime, String description, String sellerId, boolean isChecked, ArrayList<ProductReviews> productReviews) {
         this.id = id;
         this.productRating = productRating;
         this.productImages = productImages;
@@ -33,7 +33,7 @@ public class Products {
         this.dateTime = dateTime;
         this.description = description;
         this.sellerId = sellerId;
-        this.productReviews = productReviews;
         this.isChecked = isChecked;
+        this.productReviews = productReviews;
     }
 }

@@ -19,6 +19,7 @@ import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDeshBoardActivity extends Activity {
@@ -152,8 +153,12 @@ public class SellerDeshBoardActivity extends Activity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                title.setText("Order");
+                //title.setText("Order");
                 MakeItemSelected(ORDER);
+
+               // SellerDeshBoardActivity.getContext().changeTitle("Order");
+                globels.getGlobelRef().orderType = "0";
+                startActivity(new Intent(SellerDeshBoardActivity.this, SellersOrdersActivity.class));
             }
         });
 //        message.setOnClickListener(new View.OnClickListener() {

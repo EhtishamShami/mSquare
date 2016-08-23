@@ -5,7 +5,6 @@ package thinktechsol.msquare.model.Buyer;
  */
 
 public class SellerInfo {
-
     public String status;
     public String logo;
     public String tradeNo;

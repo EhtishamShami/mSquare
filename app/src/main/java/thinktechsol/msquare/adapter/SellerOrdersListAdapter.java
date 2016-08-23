@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
+import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.GetSellerOrdersModel;
@@ -110,6 +112,10 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 //                            new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
 //                            ordersList.remove(position);
 //                            notifyDataSetChanged();
+                            globels.getGlobelRef().orderId_for_ordr_info = myItem.id;
+
+                            Intent orderDetails = new Intent(ActivityContext, ViewSellOrderDetailActivity.class);
+                            ActivityContext.startActivity(orderDetails);
                         }
                     });
 

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
 import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
@@ -34,17 +35,17 @@ public class SellersMessagesAdapter extends ArrayAdapter<getConversationListSell
     private static final int Layout_items = 0;
 
     private static int rowHeight = 80 / 4;
-    SellerDashBoardMessageFragment ActivityContext;
+//    SellerDashBoardMessageFragment ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     private ArrayList<getConversationListSellerResModel> messageList;
 
-    public SellersMessagesAdapter(Context context, SellerDashBoardMessageFragment ActivityContext, int textViewResourceId, ArrayList<getConversationListSellerResModel> messageList) {
+    public SellersMessagesAdapter(Context context, /*SellerDashBoardMessageFragment ActivityContext,*/ int textViewResourceId, ArrayList<getConversationListSellerResModel> messageList) {
         super(context, textViewResourceId, messageList);
         this.messageList = messageList;
         this.context = context;
-        this.ActivityContext = ActivityContext;
+        //this.ActivityContext = ActivityContext;
     }
 
     @Override
@@ -95,10 +96,10 @@ public class SellersMessagesAdapter extends ArrayAdapter<getConversationListSell
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "" + myItem.id, Toast.LENGTH_SHORT).show();
-//                            globels.getGlobelRef().IdForAddProduct = myItem.id;
-//                            Intent add = new Intent(context, AddOrViewProActivity.class);
-//                            context.startActivity(add);
+                            Toast.makeText(context, "" + myItem.orderId, Toast.LENGTH_SHORT).show();
+                            globels.getGlobelRef().orderId_for_ordr_info = myItem.orderId;
+                            Intent orderDetails = new Intent(context, ViewSellOrderDetailActivity.class);
+                            context.startActivity(orderDetails);
                         }
                     });
 

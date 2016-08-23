@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/pro_name_rating_price_layout"
+        android:id="@+id/sellers_detials_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/pro_name_rating_layout"
+            android:id="@+id/sellers_title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff">
@@ -82,7 +82,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pro_name_rating_price_layout"
+        android:layout_below="@+id/sellers_detials_layout"
         android:scrollbars="none"
         android:layout_above="@+id/reservationBtn"></ListView>
 

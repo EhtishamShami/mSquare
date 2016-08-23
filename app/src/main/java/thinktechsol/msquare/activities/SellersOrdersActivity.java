@@ -82,6 +82,9 @@ public class SellersOrdersActivity extends Activity {
                     finish();
                 } else if (backBtn.getTag().equals(AddProductScreenTagbackButton)) {
 //                    Toast.makeText(SellerDeshBoardActivity.this, "Category's Back Button is clicked", Toast.LENGTH_SHORT).show();
+
+//                    SellerDeshBoardActivity.getContext().changeTitle("TTTTTT");
+
                     SellerDashBoardProductFragment fragobj = new SellerDashBoardProductFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     //transaction.setCustomAnimations(android.R.animator.fade_out, android.R.animator.fade_out);
@@ -99,7 +102,7 @@ public class SellersOrdersActivity extends Activity {
         order_dispute = (ImageView) findViewById(R.id.order_dispute);
 
 
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.sellerDashBoardTitleBg));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.sellerOrderTitleBg));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
         fragmentLayout.setLayoutParams(AppLayoutParam(82.00f, 100f, 0, 10, 0, 0, titlebarlayout));
 
@@ -280,9 +283,9 @@ public class SellersOrdersActivity extends Activity {
 
             case DISPUTE:
 //                order_dispute.setColorFilter(btnSelectorColor);
-                globels.getGlobelRef().orderType="2";
+                globels.getGlobelRef().orderType="4";
                 title.setText("Dispute Orders");
-                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "2");
+                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "4");
                 order_dispute.setBackgroundResource(R.drawable.seller_dispute_order_active);
                 break;
         }

@@ -2,15 +2,11 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,28 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import thinktechsol.msquare.Location.GetLocation;
 import thinktechsol.msquare.R;
@@ -103,7 +83,7 @@ public class BuyerRegisterationActivity extends Activity {
         app_logo = (ImageView) findViewById(R.id.app_logo);
         fname = (EditText) findViewById(R.id.fname);
         lname = (EditText) findViewById(R.id.lname);
-        email = (EditText) findViewById(R.id.email);
+        email = (EditText) findViewById(R.id.time);
         password = (EditText) findViewById(R.id.password);
         btn_registration = (ImageView) findViewById(R.id.btn_registration);
 
@@ -154,8 +134,16 @@ public class BuyerRegisterationActivity extends Activity {
                     GetLocation location = new GetLocation(BuyerRegisterationActivity.this);
 //                    location.getCurrentLatLng();
 //                    Toast.makeText(BuyerRegisterationActivity.this, "latlng=" + location.getCurrentLatLng(), Toast.LENGTH_SHORT).show();
-                    RegisterRequestModel requestModel = new RegisterRequestModel(fname.getText().toString(), lname.getText().toString(), email.getText().toString(), password.getText().toString(), "googlePlus", location.getCurrentLatLng(), "1");
-                    new BuyerRegisteration(BuyerRegisterationActivity.this, BuyerRegisterationActivity.this, requestModel);
+                    if (fname.getText().toString().length() > 0 && lname.getText().toString().length() > 0
+                            && email.getText().toString().length() > 0
+                            && password.getText().toString().length() > 0
+                            ) {
+                        RegisterRequestModel requestModel = new RegisterRequestModel(fname.getText().toString(), lname.getText().toString(), email.getText().toString(), password.getText().toString(), "googlePlus", location.getCurrentLatLng(), "1");
+                        new BuyerRegisteration(BuyerRegisterationActivity.this, BuyerRegisterationActivity.this, requestModel);
+                    }else {
+                        Toast.makeText(BuyerRegisterationActivity.this, "Please Enter the Values first", Toast.LENGTH_SHORT).show();
+                    }
+
                     return true;
                 }
                 return false;
@@ -240,8 +228,8 @@ public class BuyerRegisterationActivity extends Activity {
         finish();
     }
 
-    public void onRegistrationCompleted(ArrayList<RegisterModel> list){
-        Log.e("BuyerRegistration","fname="+list.get(0).fName);
+    public void onRegistrationCompleted(ArrayList<RegisterModel> list) {
+        Log.e("BuyerRegistration", "fname=" + list.get(0).fName);
     }
 
     @Override

@@ -81,7 +81,7 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.email);
+                        holder.description = (TextView) v.findViewById(R.id.time);
                         holder.distance = (TextView) v.findViewById(R.id.distance);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
 

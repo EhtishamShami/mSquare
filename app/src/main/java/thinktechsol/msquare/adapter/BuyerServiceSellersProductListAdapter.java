@@ -1,6 +1,7 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -15,15 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
 import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.Products;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 
@@ -32,7 +36,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServiceSellersProductModel> {
+public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products> {
 
     private static final int _row = 0;
     private static final String TAG = "ServiceSellersListAdapter";
@@ -46,11 +50,11 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     //    subItemClick click;
-    private ArrayList<getServiceSellersProductModel> productList;
+    private ArrayList<Products> productList;
     private ArrayList<String> imgLoadedIds;
 
 
-    public BuyerServiceSellersProductListAdapter(Context context, SellersServiceFragment ActivityContext, int textViewResourceId, ArrayList<getServiceSellersProductModel> productList) {
+    public BuyerServiceSellersProductListAdapter(Context context, SellersServiceFragment ActivityContext, int textViewResourceId, ArrayList<Products> productList) {
         super(context, textViewResourceId, productList);
         this.productList = productList;
         this.context = context;
@@ -85,7 +89,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.email);
+                        holder.description = (TextView) v.findViewById(R.id.time);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
                         holder.CheckBox = (CheckBox) v.findViewById(R.id.isChecked);
 
@@ -93,40 +97,42 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
-                    final getServiceSellersProductModel myItem = productList.get(position);
+                    final Products myItem = productList.get(position);
 
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
-//                            context.startActivity(serviceSellerActivity);
-                            //Toast.makeText(context, "hi=" + myItem.products.get(0).id + "&" + myItem.products.get(0).sellerId, Toast.LENGTH_SHORT).show();
-                            if (holder.CheckBox != null) {
 
-                                if (myItem.products.get(0).isChecked == true) {
-                                    myItem.products.get(0).isChecked = false;
-                                    itemCheckCounter -= 1;
-
-                                    if (SelectedServicesPrice != 0)
-                                        SelectedServicesPrice -= Integer.parseInt(myItem.products.get(0).price);
-                                } else {
-                                    myItem.products.get(0).isChecked = true;
-                                    itemCheckCounter += 1;
-
-                                    SelectedServicesPrice += Integer.parseInt(myItem.products.get(0).price);
-                                }
-
-                                if (itemCheckCounter > 0) {
-//                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
-                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
-                                } else {
-//                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
-                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
-                                }
-//                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
-
-                                holder.CheckBox.setChecked(myItem.products.get(0).isChecked);
-                            }
+                            globels.getGlobelRef().singleProductForBuyProDetail = myItem;
+                            Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
+                            context.startActivity(serviceSellerActivity);
+                            Toast.makeText(context, "hi=" + position, Toast.LENGTH_SHORT).show();
+//                            if (holder.CheckBox != null) {
+//
+//                                if (myItem.products.get(0).isChecked == true) {
+//                                    myItem.products.get(0).isChecked = false;
+//                                    itemCheckCounter -= 1;
+//
+//                                    if (SelectedServicesPrice != 0)
+//                                        SelectedServicesPrice -= Integer.parseInt(myItem.products.get(0).price);
+//                                } else {
+//                                    myItem.products.get(0).isChecked = true;
+//                                    itemCheckCounter += 1;
+//
+//                                    SelectedServicesPrice += Integer.parseInt(myItem.products.get(0).price);
+//                                }
+//
+//                                if (itemCheckCounter > 0) {
+////                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
+//                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
+//                                } else {
+////                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
+//                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
+//                                }
+////                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
+//
+//                                holder.CheckBox.setChecked(myItem.products.get(0).isChecked);
+//                            }
                         }
                     });
 
@@ -139,19 +145,19 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
                         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
                         if (holder.lbl != null) {
-                            Log.e("ViewSellPro", "images of product items=" + myItem.products.get(0).productImages.get(0).image);
-                            Picasso.with(context).load(myItem.products.get(0).productImages.get(0).image).into(holder.lbl);
+                            Log.e("ViewSellPro", "images of product items=" + myItem.productImages.get(0).image);
+                            Picasso.with(context).load(myItem.productImages.get(0).image).into(holder.lbl);
                         }
                         if (holder.companyName != null) {
-                            holder.companyName.setText(myItem.products.get(0).title);
+                            holder.companyName.setText(myItem.title);
                         }
                         if (holder.description != null) {
-                            holder.description.setText(myItem.products.get(0).description);
+                            holder.description.setText(myItem.description);
                         }
                         if (holder.rating != null) {
 
-                            if (!myItem.products.get(0).productRating.equals("not available")) {
-                                float ratingNum = Float.parseFloat(myItem.products.get(0).productRating);
+                            if (!myItem.productRating.equals("not available")) {
+                                float ratingNum = Float.parseFloat(myItem.productRating);
                                 Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
 
                                 holder.rating.setRating(1);
@@ -159,7 +165,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
                             }
                         }
                         if (holder.CheckBox != null) {
-                            holder.CheckBox.setChecked(myItem.products.get(0).isChecked);
+                            holder.CheckBox.setChecked(myItem.isChecked);
                         }
 
                         if (itemCheckCounter > 0) {
@@ -231,15 +237,15 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
         selectedProductsIds.clear();
 
         for (int i = 0; i < productList.size(); i++) {
-            final getServiceSellersProductModel myItem = productList.get(i);
-            if (myItem.products.get(0).isChecked) {
+            final Products myItem = productList.get(i);
+            if (myItem.isChecked) {
                 if (allSelectedServices != "")
                     allSelectedServices += ", ";
 
-                allSelectedServices += myItem.products.get(0).title;
+                allSelectedServices += myItem.title;
 
-                selectedServicesIds.add(myItem.products.get(0).serviceId);
-                selectedProductsIds.add(myItem.products.get(0).id);
+                selectedServicesIds.add(myItem.serviceId);
+                selectedProductsIds.add(myItem.id);
             }
         }
     }
@@ -248,9 +254,9 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<getServi
         itemCheckCounter = 0;
         SelectedServicesPrice = 0;
 
-        for (int i = 0; i < globels.getGlobelRef().productList.size(); i++) {
-            final getServiceSellersProductModel myItem = productList.get(i);
-            myItem.products.get(0).isChecked = false;
+        for (int i = 0; i < globels.getGlobelRef().productList2.size(); i++) {
+            final Products myItem = productList.get(i);
+            myItem.isChecked = false;
         }
 
         notifyDataSetInvalidated();

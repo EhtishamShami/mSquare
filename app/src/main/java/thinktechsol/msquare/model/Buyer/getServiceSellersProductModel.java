@@ -9,10 +9,12 @@ import java.util.ArrayList;
 public class getServiceSellersProductModel {
 
     public SellerInfo sellerInfo;
+    public ArrayList<ProductReviews> roductReviews;
     public ArrayList<Products> products;
 
-    public getServiceSellersProductModel(SellerInfo sellerInfo, ArrayList<Products> products) {
+    public getServiceSellersProductModel(SellerInfo sellerInfo, ArrayList<ProductReviews> roductReviews, ArrayList<Products> products) {
         this.sellerInfo = sellerInfo;
+        this.roductReviews = roductReviews;
         this.products = products;
     }
 

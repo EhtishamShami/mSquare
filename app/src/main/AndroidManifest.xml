@@ -78,6 +78,10 @@
 
         <activity android:name=".activities.buyer.BuyerReservationActivity"></activity>
         <activity android:name=".activities.SellersOrdersActivity" />
+        <activity android:name=".activities.ViewSellOrderDetailActivity" />
+        <activity android:name=".activities.buyer.ViewBuyerProDetailActivity" />
+        <activity android:name=".activities.buyer.BuyerDeshBoardActivity" />
+        <activity android:name=".activities.buyer.BuyerOrdersActivity" />
     </application>
 
 </manifest>

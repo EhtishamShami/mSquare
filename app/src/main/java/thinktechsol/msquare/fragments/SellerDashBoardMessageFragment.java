@@ -14,10 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.adapter.ItemAdapter;
 import thinktechsol.msquare.adapter.SellersMessagesAdapter;
 import thinktechsol.msquare.model.getConversationListSellerResModel;
-import thinktechsol.msquare.model2.Item;
 import thinktechsol.msquare.services.getConversationListSeller;
 import thinktechsol.msquare.utils.Constant;
 
@@ -97,7 +95,7 @@ public class SellerDashBoardMessageFragment extends Fragment {
     public void fillListData(ArrayList<getConversationListSellerResModel> list) {
         Log.e("SellerDashBoardMessage", "getConversation list" + list.size());
         try {
-            SellersMessagesAdapter m_adapter = new SellersMessagesAdapter(getActivity(), SellerDashBoardMessageFragment.this, R.layout.seller_messages_row_item, list);
+            SellersMessagesAdapter m_adapter = new SellersMessagesAdapter(getActivity(), /*SellerDashBoardMessageFragment.this,*/ R.layout.seller_messages_row_item, list);
             simpleCustomeListView.setAdapter(m_adapter);
         } catch (Exception e) {
             Log.e("SellerDashBoardActivity", "adapter=" + e);

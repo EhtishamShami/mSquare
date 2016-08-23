@@ -68,7 +68,7 @@ public class BuyerRegisteration {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-//        registerBuyer();
+//        addToWishList();
         new registerBuyer().execute();
     }
 
@@ -101,6 +101,7 @@ public class BuyerRegisteration {
             String email= childJSonObj.getString("email");
             String facebook= childJSonObj.getString("facebook");
             String streetNo= childJSonObj.getString("streetNo");
+
             String account= childJSonObj.getString("account");
             String datetime= childJSonObj.getString("datetime");
             String thumb= childJSonObj.getString("thumb");

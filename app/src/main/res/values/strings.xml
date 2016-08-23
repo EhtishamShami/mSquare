@@ -8,6 +8,8 @@
     <string name="lbl_customer">Customer</string>
     <string name="lbl_order">Order</string>
     <string name="lbl_product">Product</string>
+    <string name="lbl_wishlist">Wishlist</string>
+    <string name="lbl_favourite">Favourite</string>
 
 
     <!--home-->
@@ -29,14 +31,21 @@
 
     <string name="facebook_app_id">733055416833817</string>
 
-    <string-array name="values">
-        <item>Item 1</item>
-        <item>Item 2</item>
-        <item>Item 3</item>
-        <item>Item 4</item>
-        <item>Item 5</item>
-        <item>Item 6</item>
-    </string-array>
+        <string-array name="values">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+            <item>6</item>
+            <item>8</item>
+            <item>9</item>
+            <item>10</item>
+            <item>11</item>
+            <item>12</item>
+            <item>13</item>
+            <item>14</item>
+        </string-array>
 
     <string name="lbl_tab1_text">Map</string>
     <string name="lbl_tab2_text">List</string>
@@ -53,6 +62,7 @@
     <string name="lbl_email">Email</string>
     <string name="lbl_address">Address</string>
     <string name="lbl_btn_addtofavorite">Add to Favorite</string>
+    <string name="lbl_btn_addtoWishList">Add to Wish List</string>
 
     <string name="btn_reservation">Reservation</string>
     <string name="lbl_service_details">Service Details</string>
@@ -62,5 +72,6 @@
     <!-- Button text -->
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="btn_revoke_access">Revoke Access</string>
+    <string name="hint_messageET">Write a comment...</string>
 
 </resources>

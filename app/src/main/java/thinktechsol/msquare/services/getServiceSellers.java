@@ -97,7 +97,7 @@ public class getServiceSellers {
                 String tradeNo = childJsonObj.getString("tradeNo");
                 String documents = childJsonObj.getString("documents");
                 String lName = childJsonObj.getString("lName");
-                String companyName = childJsonObj.getString("name");
+                String companyName = childJsonObj.getString("companyName");
                 String password = childJsonObj.getString("password");
                 String fName = childJsonObj.getString("fName");
 
