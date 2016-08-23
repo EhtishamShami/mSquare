@@ -82,6 +82,8 @@
         <activity android:name=".activities.buyer.ViewBuyerProDetailActivity" />
         <activity android:name=".activities.buyer.BuyerDeshBoardActivity" />
         <activity android:name=".activities.buyer.BuyerOrdersActivity" />
+        <activity android:name=".activities.buyer.BuyerWishListActivity" />
+        <activity android:name=".activities.buyer.BuyerFavouriteActivity" />
     </application>
 
 </manifest>

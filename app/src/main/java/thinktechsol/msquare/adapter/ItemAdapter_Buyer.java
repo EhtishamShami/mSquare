@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -122,7 +123,7 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(myItem.subItemIcon1!=0) {
+                            if (myItem.subItemIcon1 != 0) {
                                 if (holder1.btmWraper.getVisibility() == View.VISIBLE) {
                                     holder1.btmWraper.setVisibility(View.INVISIBLE);
                                     holder1.counterTV.setVisibility(View.VISIBLE);
@@ -130,11 +131,12 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
                                     holder1.btmWraper.setVisibility(View.VISIBLE);
                                     holder1.counterTV.setVisibility(View.INVISIBLE);
                                 }
+                            } else {
+                                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+                                fragContext.openFragment(position, "left");
                             }
                         }
                     });
-
-
 
                     if (myItem != null) {
                         if (holder1.counterTV != null) {
@@ -154,7 +156,7 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
                         }
 
                         if (holder1.subItem1 != null) {
-                            if(myItem.subItemIcon1!=0){
+                            if (myItem.subItemIcon1 != 0) {
                                 holder1.subItem1.setBackgroundResource(myItem.subItemIcon1);
                                 holder1.subItem1.setLayoutParams(AppLayoutParamSubItems(swiperSubItemHeight, swiperSubItemWidth, 0, 0, 0, 0, null));
                             }

@@ -20,7 +20,9 @@ import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
+import thinktechsol.msquare.activities.buyer.BuyerFavouriteActivity;
 import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
+import thinktechsol.msquare.activities.buyer.BuyerWishListActivity;
 import thinktechsol.msquare.adapter.ItemAdapter_Buyer;
 import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.fragments.SellerCustomerFragment;
@@ -178,26 +180,13 @@ public class BuyerDashBoardFragment extends Fragment {
                 break;
             case 2:
                 if (position.equals("left")) {
-
-                } else {
-
+                    startActivity(new Intent(getActivity(), BuyerWishListActivity.class));
                 }
                 break;
 
             case 3:
                 if (position.equals("left")) {
-//                    Constant.addOrViewProduct = true;
-//                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
-//                    title = "Add Product";
-//                    frag = fragobj;
-                } else {
-//                    Constant.addOrViewProduct = false;
-//                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
-//                    title = "Add Product";
-//                    frag = fragobj;
-//                    globels.getGlobelRef().IdForAddProduct = myItem.id;
-//                    Intent add = new Intent(getActivity(), AddOrViewProActivity.class);
-//                    getActivity().startActivity(add);
+                    startActivity(new Intent(getActivity(), BuyerFavouriteActivity.class));
                 }
                 break;
 

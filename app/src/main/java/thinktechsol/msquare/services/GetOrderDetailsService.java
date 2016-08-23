@@ -109,7 +109,7 @@ public class GetOrderDetailsService {
             String sellerId = childJSONObjDetails.getString("sellerId");
             String extraRemarks = childJSONObjDetails.getString("extraRemarks");
 
-            //SellerDetails start/////////////////////////////////////////////////
+            //SellerDetailsWL start/////////////////////////////////////////////////
             JSONObject JsonObjSellerDetails = childJSONObjDetails.getJSONObject("sellerDetails");
 
             //getting seller ratting start
@@ -149,7 +149,7 @@ public class GetOrderDetailsService {
 
             SellerDetails sellerDetailsObj = new SellerDetails(rating, logo, statusSD, tradeNo, documents, lName, fromTime, companyName, password, toTime, fName, idSD, phoneNo, email,
                     address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
-            //SellerDetails end////////////////////////////////////////////////
+            //SellerDetailsWL end////////////////////////////////////////////////
 
 
             //buyerDetails start///////////////////////////////////////////////
