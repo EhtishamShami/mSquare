@@ -96,7 +96,7 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                         @Override
                         public void onClick(View v) {
                             Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
-                            globels.getGlobelRef().serviceSellerProductId = myItem.id;
+                            globels.getGlobelRef().serviceSellerId = myItem.id;
                             context.startActivity(serviceSellerActivity);
                         }
                     });

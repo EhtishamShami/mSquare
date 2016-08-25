@@ -191,7 +191,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
 
                         holder2.lbl = (ImageView) v2.findViewById(R.id.lbl);
                         holder2.lbl_txt = (TextView) v2.findViewById(R.id.lbl_txt);
-                        holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV);
+                        holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV2);
 
                         //hidden items which shows on swipe
                         holder2.subItem1 = (ImageView) v2.findViewById(R.id.subItem1);

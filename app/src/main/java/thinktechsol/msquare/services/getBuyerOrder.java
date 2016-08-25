@@ -205,7 +205,7 @@ public class getBuyerOrder {
         protected String doInBackground(String... input) {
             try {
                 //String sellerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerProductId + "/" + latitude + "/" + longitude);
+//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + buyerId + "/" + orderType);
                 Log.e(TAG, "getSellerOrders url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

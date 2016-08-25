@@ -7,10 +7,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -20,44 +16,35 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.EditProActivity;
 import thinktechsol.msquare.activities.SellerLoginActivity;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
-import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class SellerProductList {
+public class DeleteImageService {
 
     private static final String TAG_SUCCESS = "success";
 
-//    String _url = "GetServicesModel/";
-    String _url = "getServices/";
+    String _url = "deleteProductImage/";
     Context ctx;
     ProgressDialog progressDialog;
-    String serviceid;
+    String ImageId;
+    EditProActivity ref;
     AlertDialog NotFoundDialog;
-    SellerAddProductFragment ref;
 
-    public SellerProductList(final Context ctx, SellerAddProductFragment ref, String serviceid) {
+    public DeleteImageService(final Context ctx, EditProActivity ref, String ImageId) {
         this.ctx = ctx;
         this.ref = ref;
-        this.serviceid = serviceid;
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Searching Please wait...");
+        progressDialog.setMessage("Deleting Image Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
+        builder.setMessage("Plesae try again! Internet problem or Wrong Code");
         builder.setTitle("Not Found");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -70,53 +57,22 @@ public class SellerProductList {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        getSellerProductDetail(serviceid);
+        deleteImageFromDb(ImageId);
     }
 
-    public void getSellerProductDetail(String serviceid) {
-        this.serviceid = serviceid;
-        Log.e("sellerLogIn", "ImageId=" + serviceid);
-        new getSellerProductDetialAsync().execute(serviceid);
+    public void deleteImageFromDb(String ImageId) {
+        this.ImageId = ImageId;
+        Log.e("DeleteImage", "ImageId=" + ImageId);
+        if (ImageId != null)
+            new deleteImageAsync().execute(ImageId);
+        else
+            progressDialog.dismiss();
     }
-
-    private ArrayList<SellerProductItem> returnParsedJsonObject(String result) {
-
-        List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
-        JSONObject resultObject = null;
-        JSONArray jsonArray = null;
-        SellerLogInResponse sellerLogInResponse = null;
-        ArrayList<SellerProductItem> product = new ArrayList<SellerProductItem>();
-
-        try {
-            JSONObject parentObject = new JSONObject(result);
-
-            JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
-
-            for (int i = 0; i < productArray.length(); i++) {
-                JSONObject feedObj = (JSONObject) productArray.get(i);
-                String id = feedObj.getString("id");
-                String status = feedObj.getString("status");
-                String description = feedObj.getString("description");
-                String name = feedObj.getString("name");
-                String parent = feedObj.getString("parent");
-                String thumb = feedObj.getString("thumb");
-                product.add(new SellerProductItem(id, status, description, name, parent, thumb));
-            }
-
-        } catch (JSONException e) {
-            Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
-            e.printStackTrace();
-            NotFoundDialog.show();
-        }
-        return product;
-    }
-
 
     /**
      * Background Async Task to fetch all jobs
      */
-    class getSellerProductDetialAsync extends AsyncTask<String, String, String> {
+    class deleteImageAsync extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -125,9 +81,9 @@ public class SellerProductList {
 
         protected String doInBackground(String... input) {
             try {
-                String serviceid = input[0];
-                URL url = new URL(Constant.baseUrl + _url + serviceid + "");
-                Log.e("seller get product list", "url is=" + url);
+                String ImageId = input[0];
+                URL url = new URL(Constant.baseUrl + _url + ImageId + "");
+                Log.e("DeleteImage", "url is=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -135,8 +91,8 @@ public class SellerProductList {
                 httpURLConnection.setReadTimeout(30000);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(serviceid, "UTF-8");
-                bufferedWriter.write(post_data);
+                // String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(ImageId, "UTF-8");
+                //bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
@@ -150,15 +106,15 @@ public class SellerProductList {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e("sellerLogIn", "result is=" + result);
+
                 return result;
 
             } catch (MalformedURLException e) {
-                Log.e("sellerLogIn", "MalformedURLException=" + e);
+                Log.e("DeleteImage", "MalformedURLException=" + e);
                 progressDialog.dismiss();
                 return null;
             } catch (Exception e) {
-                Log.e("sellerLogIn", "exception Exception=" + e);
+                Log.e("DeleteImage", "exception Exception=" + e);
                 progressDialog.dismiss();
                 return null;
             }
@@ -166,12 +122,20 @@ public class SellerProductList {
 
         protected void onPostExecute(String response) {
             if (response != null) {
-                ArrayList<SellerProductItem> list = returnParsedJsonObject(response);
-                ref.fill_data_to_adapter(list);
+                Log.e("DeleteImage", "image deletion response=" + response);
+//                parsedObject = returnParsedJsonObject(response);
+//                if (parsedObject != null) {
+                //globels.getGlobelRef().sellerlogin = parsedObject;
+                //ref.transation();
                 progressDialog.dismiss();
+//                } else {
+//                    progressDialog.dismiss();
+//                    NotFoundDialog.show();
+//                }
             } else {
                 NotFoundDialog.show();
             }
         }
     }
+
 }

@@ -20,6 +20,7 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
 import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.subItemClick;
 import thinktechsol.msquare.model.Buyer.BuyerDashBoardAdapterItem;
 import thinktechsol.msquare.model.Item;
@@ -97,7 +98,6 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         v = vi.inflate(R.layout.dashboard_row_item1_test_frag, parent, false);
 
-
                         holder1 = new Type1Holder();
                         holder1.swipeLayoutt = (SwipeLayout) v.findViewById(R.id.simple1);
                         holder1.bglayout = (RelativeLayout) v.findViewById(R.id.bglayout);
@@ -132,7 +132,10 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
                                     holder1.counterTV.setVisibility(View.INVISIBLE);
                                 }
                             } else {
-                                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "" + position, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "" + holder1.counterTV, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "" + myItem.counter, Toast.LENGTH_SHORT).show();
+//                                holder1.counterTV.setText("hello");
                                 fragContext.openFragment(position, "left");
                             }
                         }
@@ -140,7 +143,8 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
 
                     if (myItem != null) {
                         if (holder1.counterTV != null) {
-//                        holder1.counterTV.setText(myItem.counter);
+                            holder1.counterTV.setText("" + myItem.counter);
+//                            Toast.makeText(context, "" + holder1.counterTV, Toast.LENGTH_SHORT).show();
                         }
                         if (holder1.lbl_txt != null) {
                             holder1.lbl_txt.setText(myItem.label);
@@ -202,7 +206,7 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
 
                         holder2.lbl = (ImageView) v2.findViewById(R.id.lbl);
                         holder2.lbl_txt = (TextView) v2.findViewById(R.id.lbl_txt);
-                        holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV);
+                        holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV2);
 
                         //hidden items which shows on swipe
                         holder2.subItem1 = (ImageView) v2.findViewById(R.id.subItem1);
@@ -233,7 +237,7 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
 
                     if (holder2 != null) {
                         if (holder2.counterTV != null) {
-//                        holder3.counterTV.setText(myItem3.counter);
+                            holder2.counterTV.setText("" + myItem3.counter);
                         }
                         if (holder2.lbl_txt != null) {
                             holder2.lbl_txt.setText(myItem3.label);

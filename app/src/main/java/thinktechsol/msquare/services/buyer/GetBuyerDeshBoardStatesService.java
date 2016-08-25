@@ -20,36 +20,36 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardMessageFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
+import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.getConversationListSellerResModel;
+import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
+import thinktechsol.msquare.model.Buyer.BuyerOrderStatesModel;
+import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class getConversationListBuyer {
+public class GetBuyerDeshBoardStatesService {
 
     private static final String TAG_SUCCESS = "success";
 
-    String _url = "getConversationListBuyer/";
+    String _url = "dashBoardStatsBuyer/";
     Context ctx;
     ProgressDialog progressDialog;
+    String buyerId;
     AlertDialog NotFoundDialog;
-    BuyerDashBoardMessageFragment ref;
-    private static final String TAG = "getConversationList";
 
-    //    globels.getGlobelRef().sellerlogin.id
-    public getConversationListBuyer(final Context ctx, BuyerDashBoardMessageFragment ref) {
+    public GetBuyerDeshBoardStatesService(final Context ctx, String buyerId) {
         this.ctx = ctx;
-        this.ref = ref;
-
+        // this.ref = ref;
+        this.buyerId = buyerId;
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Fetching Records Please wait...");
+        progressDialog.setMessage("Fetching Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
@@ -65,57 +65,53 @@ public class getConversationListBuyer {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-
-        new getConversationList().execute("0");
+        new getSellerCustomerDetialAsync().execute(buyerId);
     }
 
+    private ArrayList<BuyerDeshBoardStatesModel> returnParsedJsonObject(String result) {
 
-    private ArrayList<getConversationListSellerResModel> returnParsedJsonObject(String result) {
-
+//        List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
-        ArrayList<getConversationListSellerResModel> allMessages = new ArrayList<getConversationListSellerResModel>();
-
+        SellerLogInResponse sellerLogInResponse = null;
+        ArrayList<BuyerDeshBoardStatesModel> states = new ArrayList<BuyerDeshBoardStatesModel>();
 
         try {
             JSONObject parentObject = new JSONObject(result);
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            String response = parentJSONObjDetails.getString("response");
+            JSONObject childJSonObj = parentJSONObjDetails.getJSONObject("data");
 
-            Log.e(TAG, "Parsed Response is=" + response);
+            String unReadMessages = childJSonObj.getString("unReadMessages");
+            /////////////////////
+            JSONObject JsonObjOrderDetails = childJSonObj.getJSONObject("orders");
+            String recent = JsonObjOrderDetails.getString("recent");
+            String inProcess = JsonObjOrderDetails.getString("inProcess");
+            String reject = JsonObjOrderDetails.getString("reject");
+            String complete = JsonObjOrderDetails.getString("complete");
+            String dispute = JsonObjOrderDetails.getString("dispute");
+            BuyerOrderStatesModel orderStatesObj = new BuyerOrderStatesModel(recent, inProcess, reject, complete, dispute);
+            /////////////////////
+            String wishlist = childJSonObj.getString("wishlist");
+            String favourites = childJSonObj.getString("favourites");
 
-            JSONArray messagesList = parentJSONObjDetails.getJSONArray("data");
+            BuyerDeshBoardStatesModel deshboardStates = new BuyerDeshBoardStatesModel(unReadMessages, orderStatesObj, wishlist, favourites);
+            states.add(deshboardStates);
 
-            Log.e(TAG, "JSONArray lenght" + messagesList.length());
-            for (int i = 0; i < messagesList.length(); i++) {
-                JSONObject childJsonObj = (JSONObject) messagesList.get(i);
-                String messageBody = childJsonObj.getString("messageBody");
-                String sender = childJsonObj.getString("sender");
-                String id = childJsonObj.getString("id");
-                String dated = childJsonObj.getString("dated");
-                String lName = childJsonObj.getString("lName");
-                String thumb = childJsonObj.getString("logo");
-                String orderId = childJsonObj.getString("orderId");
-                String fName = childJsonObj.getString("fName");
-
-                getConversationListSellerResModel obj = new getConversationListSellerResModel(messageBody, sender, id, dated, lName, thumb, orderId, fName);
-                allMessages.add(obj);
-            }
 
         } catch (JSONException e) {
-            Log.e(TAG, "JSONExc ParsedJsonObject=" + e);
+            Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
             e.printStackTrace();
-            NotFoundDialog.show();
+//            NotFoundDialog.show();
         }
-        return allMessages;
+        return states;
     }
 
 
     /**
-     * Background Async Task to fetch all services
+     * Background Async Task to fetch all jobs
      */
-    class getConversationList extends AsyncTask<String, String, String> {
+    class getSellerCustomerDetialAsync extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -124,16 +120,18 @@ public class getConversationListBuyer {
 
         protected String doInBackground(String... input) {
             try {
-                //String buyerId = input[0];
-                URL url = new URL(Constant.baseUrl + _url + globels.getGlobelRef().buyerLoginId);
-                Log.e(TAG, "getConversationList url=" + url);
+                String buyerId = input[0];
+                URL url = new URL(Constant.baseUrl + _url + buyerId + "");
+                Log.e("seller get product list", "url is=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setReadTimeout(30000);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(buyerId, "UTF-8");
+                bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
@@ -147,28 +145,28 @@ public class getConversationListBuyer {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e(TAG, "getConversationList result is=" + result);
+                Log.e("sellerLogIn", "result is=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
-                Log.e(TAG, "MalformedURLException=" + e);
-                progressDialog.dismiss();
+                Log.e("sellerLogIn", "MalformedURLException=" + e);
+                //progressDialog.dismiss();
                 return null;
             } catch (Exception e) {
-                Log.e(TAG, "exception Exception=" + e);
-                progressDialog.dismiss();
+                Log.e("sellerLogIn", "exception Exception=" + e);
+                //progressDialog.dismiss();
                 return null;
             }
         }
 
         protected void onPostExecute(String response) {
             if (response != null) {
-                ArrayList<getConversationListSellerResModel> list = returnParsedJsonObject(response);
-//                Log.e(TAG, "getConversation list" + list.size());
-                ref.fillListData(list);
-                progressDialog.dismiss();
+                ArrayList<BuyerDeshBoardStatesModel> list = returnParsedJsonObject(response);
+                //ref.fill_data_to_adapter(list);
+                globels.getGlobelRef().buyerDeshBoardStatesList = list;
+                //progressDialog.dismiss();
             } else {
-                NotFoundDialog.show();
+                //NotFoundDialog.show();
             }
         }
     }

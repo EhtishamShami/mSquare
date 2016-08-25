@@ -237,7 +237,7 @@ public class getServiceSellersProduct {
                     String reviewTitleR = ReviewJsonObj.getString("reviewTitle");
                     String serviceIdR = ReviewJsonObj.getString("serviceId");
                     String statusR = ReviewJsonObj.getString("status");
-                    String sellerIdR = ReviewJsonObj.getString("sellerId");
+                    String sellerIdR = ReviewJsonObj.getString("buyerId");
                     String buyerIdR = ReviewJsonObj.getString("buyerId");
                     String reviewDescriptionR = ReviewJsonObj.getString("reviewDescription");
                     String productIdR = ReviewJsonObj.getString("productId");
@@ -271,8 +271,8 @@ public class getServiceSellersProduct {
 
         protected String doInBackground(String... input) {
             try {
-                //String sellerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerProductId + "/" + latitude + "/" + longitude);
+                //String buyerId = input[0];
+//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + serviceSellerProductId);
                 Log.e(TAG, "getServiceSellers proooo url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

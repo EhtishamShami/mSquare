@@ -45,7 +45,7 @@ public class BuyerFavouriteActivity extends Activity {
 
         setContentView(R.layout.activity_buyer_favourite);
 
-        new getBuyerFavouriteService(BuyerFavouriteActivity.this,BuyerFavouriteActivity.this,"5");
+        new getBuyerFavouriteService(BuyerFavouriteActivity.this,BuyerFavouriteActivity.this,globels.getGlobelRef().buyerLoginId);
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
@@ -79,7 +79,7 @@ public class BuyerFavouriteActivity extends Activity {
 
     public void fillProductListWithData(ArrayList<BuyerFavouriteListModel> list) {
 
-        adapter = new BuyerFavouriteListAdapter(BuyerFavouriteActivity.this, R.layout.buyer_service_seller_list_item, list);
+        adapter = new BuyerFavouriteListAdapter(BuyerFavouriteActivity.this, R.layout.buyer_wishlist_list_item, list);
         listView.setAdapter(adapter);
     }
 

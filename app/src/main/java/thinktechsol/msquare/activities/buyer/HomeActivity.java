@@ -22,8 +22,10 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.Buyer.HomeItem;
+import thinktechsol.msquare.services.buyer.GetBuyerDeshBoardStatesService;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -54,7 +56,7 @@ public class HomeActivity extends Activity {
 
         setContentView(R.layout.activity_home);
 
-
+        new GetBuyerDeshBoardStatesService(HomeActivity.this, globels.getGlobelRef().buyerLoginId);
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
 
         title = (TextView) findViewById(R.id.title);

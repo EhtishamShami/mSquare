@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -22,6 +23,7 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.services.buyer.AddToFavouriteBuyerService;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellersAboutFragment extends Fragment {
@@ -32,6 +34,7 @@ public class SellersAboutFragment extends Fragment {
     RelativeLayout pro_name_rating_price_layout, pro_name_line_layout;
     RatingBar rating;
     TextView lbl_name_detail, lbl_contact_detail, lbl_email_detail, lbl_address_detail;
+    Button btnAddToFavorite;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,7 @@ public class SellersAboutFragment extends Fragment {
         lbl_contact_detail = (TextView) v.findViewById(R.id.lbl_contact_detail);
         lbl_email_detail = (TextView) v.findViewById(R.id.lbl_email_detail);
         lbl_address_detail = (TextView) v.findViewById(R.id.lbl_address_detail);
+        btnAddToFavorite = (Button) v.findViewById(R.id.btnAddToFavorite);
 
 
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
@@ -63,6 +67,13 @@ public class SellersAboutFragment extends Fragment {
         lbl_email_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.email);
         lbl_address_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.address);
 
+
+        btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddToFavouriteBuyerService(getActivity(), globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId);
+            }
+        });
 
         return v;
     }

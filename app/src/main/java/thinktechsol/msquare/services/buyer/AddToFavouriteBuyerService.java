@@ -23,32 +23,30 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
 import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
 import thinktechsol.msquare.model.Buyer.AddToWishListRequestModel;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
-import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class AddToWishListBuyerService {
+public class AddToFavouriteBuyerService {
 
-    private static final String TAG = "AddToWishListService";
+    private static final String TAG = "addToFavourites";
 
-    String _url = "addToWishlist/";
+    String _url = "addToFavourites/";
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
     ViewBuyerProDetailActivity ref;
-    ArrayList<String> selectedImagePath;
-    AddToWishListRequestModel requestModel;
-
+    String sellerId;
+    String buyerId;
     String productDetails[];
 
-    public AddToWishListBuyerService(final Context ctx, ViewBuyerProDetailActivity ref, AddToWishListRequestModel requestModel) {
+    public AddToFavouriteBuyerService(final Context ctx, String sellerId, String buyerId) {
         this.ctx = ctx;
         this.ref = ref;
-        this.requestModel = requestModel;
+        this.sellerId = sellerId;
+        this.buyerId = buyerId;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Saving Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -69,7 +67,7 @@ public class AddToWishListBuyerService {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        new addToWishList().execute();
+        new addToFavouriteList().execute();
     }
 
 
@@ -121,7 +119,7 @@ public class AddToWishListBuyerService {
     /**
      * Background Async Task to fetch all jobs
      */
-    class addToWishList extends AsyncTask<String, String, String> {
+    class addToFavouriteList extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -141,25 +139,15 @@ public class AddToWishListBuyerService {
 
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-//                String post_data = URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().sellerlogin.id, "UTF-8")
-//                        + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().IdForAddProduct, "UTF-8")
-//                        + "&" + URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
-//                        + "&" + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode("test test", "UTF-8")
-//                        + "&" + URLEncoder.encode("price", "UTF-8") + "=" + URLEncoder.encode("122", "UTF-8")
-//                        + "&" + URLEncoder.encode("deliveryTime", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8");
 
-//                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerlogin.id + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
-
-                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.sellerId, "UTF-8")
-                        + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(requestModel.serviceId, "UTF-8")
-                        + "&" + URLEncoder.encode("productId", "UTF-8") + "=" + URLEncoder.encode(requestModel.productId, "UTF-8")
-                        + "&" + URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.buyerId, "UTF-8");
+                String post_data = URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(buyerId, "UTF-8")
+                        + "&" + URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(sellerId, "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
-                Log.e(TAG, "add to wish list result=" + httpURLConnection.getResponseMessage());
+                Log.e(TAG, "add to favourite list result=" + httpURLConnection.getResponseMessage());
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
@@ -188,10 +176,10 @@ public class AddToWishListBuyerService {
         protected void onPostExecute(String response) {
             if (response != null) {
                 //ArrayList<RegisterModel> list = returnParsedJsonObject(response);
-                Log.e(TAG, "Add to wish list response is=" + response);
+                Log.e(TAG, "Add to favourite list response is=" + response);
                 progressDialog.dismiss();
 //                ref.addToWishListServiceResponse(list);
-                Toast.makeText(ctx, "Added to WishList", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Added to the Favourite", Toast.LENGTH_SHORT).show();
 
             } else {
                 NotFoundDialog.show();

@@ -27,12 +27,16 @@ import java.util.ArrayList;
 import thinktechsol.msquare.activities.buyer.BuyerWishListActivity;
 import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
+import thinktechsol.msquare.model.Buyer.ProductDetailsWL;
 import thinktechsol.msquare.model.Buyer.ProductImages;
 import thinktechsol.msquare.model.Buyer.ProductReviews;
 import thinktechsol.msquare.model.Buyer.Products;
 import thinktechsol.msquare.model.Buyer.SellerDetailsWL;
 import thinktechsol.msquare.model.Buyer.SellerInfo;
+import thinktechsol.msquare.model.Buyer.ServiceDetailsWL;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
+import thinktechsol.msquare.model.OrderDetails.ProductDetails;
+import thinktechsol.msquare.model.OrderDetails.ProductImagesOrd;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -147,11 +151,74 @@ public class getBuyerWishListService {
                             rating = "not available";
                     }
 
-                    SellerDetailsWL sellerDetailsObj = new SellerDetailsWL(rating,  logo,  status,  tradeNo,  documents,  lName,  fromTime,  companyName,  password,  toTime,
-                            fName,  idSD,  phoneNo,  email,  address,  description,  activationCode,  service,  longitude,  latitude,  datetime,  mobileNo);
+                    SellerDetailsWL sellerDetailsObj = new SellerDetailsWL(rating, logo, status, tradeNo, documents, lName, fromTime, companyName, password, toTime,
+                            fName, idSD, phoneNo, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
 
-                    //Log.e(TAG, "Review of each product ="+i+" == " + productReviewsListInsidePro.size());
-                    productsList.add(new BuyerWishListModel(id,  sellerId,  serviceId,  productId,  buyerId, sellerDetailsObj));
+
+                    JSONObject JsonObjServiceDetails = childJsonObj.getJSONObject("serviceDetails");
+                    String idSerD = JsonObjServiceDetails.getString("id");
+                    String parent = JsonObjServiceDetails.getString("parent");
+                    String name = JsonObjServiceDetails.getString("name");
+                    String descriptionSerD = JsonObjServiceDetails.getString("description");
+                    String statusSerD = JsonObjServiceDetails.getString("status");
+                    String thumb = JsonObjServiceDetails.getString("thumb");
+                    String categoryType = JsonObjServiceDetails.getString("categoryType");
+
+                    ServiceDetailsWL serviceDetailsObj = new ServiceDetailsWL(id, parent, name, description, status, thumb, categoryType);
+
+
+                    ////////////////////////////////////////////////////////
+                    // Product details
+                    JSONObject JsonObjProductDetails = childJsonObj.getJSONObject("productDetails");
+                    String idPD = JsonObjProductDetails.getString("id");
+                    //getting ratting from service
+                    String ratingObj2 = "null";
+                    String productRating = "not available";
+                    ratingObj2 = JsonObjProductDetails.getString("productRating");
+                    if (!ratingObj2.contains("null")) {
+                        JSONObject rateJsonObj = new JSONObject(ratingObj2);
+                        productRating = rateJsonObj.getString("rating");
+                        if (productRating.contains("null"))
+                            productRating = "not available";
+                    }
+                    //getting ratting from service end
+                    String title = JsonObjProductDetails.getString("title");
+                    String price = JsonObjProductDetails.getString("price");
+                    String deliveryTime = JsonObjProductDetails.getString("deliveryTime");
+                    String serviceIdPD = JsonObjProductDetails.getString("serviceId");
+                    String statusPD = JsonObjProductDetails.getString("status");
+                    String dateTime = JsonObjProductDetails.getString("dateTime");
+                    String descriptionPD = JsonObjProductDetails.getString("description");
+                    String sellerIdPD = JsonObjProductDetails.getString("sellerId");
+
+                    String productImagesStr = JsonObjProductDetails.getString("productImages");
+                    ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();
+
+                    if (!productImagesStr.equals("false")) {
+                        JSONArray JsonArrayProImages = JsonObjProductDetails.getJSONArray("productImages");
+                        Log.e(TAG, "productImagesStr length=" + JsonArrayProImages.length());
+                        for (int j = 0; j < JsonArrayProImages.length(); j++) {
+                            JSONObject jsonObjProImg = (JSONObject) JsonArrayProImages.get(j);
+
+                            String idPIMG = jsonObjProImg.getString("id");
+                            String sellerProductId = jsonObjProImg.getString("sellerProductId");
+                            String image = jsonObjProImg.getString("image");
+
+                            ProductImagesOrd proImages = new ProductImagesOrd(idPIMG, sellerProductId, Constant.imgbaseUrl + image);
+                            productImages.add(proImages);
+                        }
+                    }
+                    else {
+                        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ref.getPackageName() + "/drawable/" + "dummy_user");
+                        ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
+                        productImages.add(proImages);
+                    }
+
+                    ProductDetailsWL proDetailObj = new ProductDetailsWL(idPD, productRating, productImages, title,
+                            price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);
+                    ////////////////////////////////////////////////////////
+
+                    productsList.add(new BuyerWishListModel(id, sellerId, serviceId, productId, buyerId, sellerDetailsObj, serviceDetailsObj,proDetailObj));
                 }
             }
         } catch (JSONException e) {
@@ -175,8 +242,8 @@ public class getBuyerWishListService {
 
         protected String doInBackground(String... input) {
             try {
-                //String sellerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerProductId + "/" + latitude + "/" + longitude);
+                //String buyerId = input[0];
+//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + sellerServiceId);
                 Log.e(TAG, "getServiceSellers proooo url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -215,10 +282,10 @@ public class getBuyerWishListService {
 
         protected void onPostExecute(String response) {
             if (response != null) {
-//                ArrayList<getServiceSellersProductModel> list = returnParsedJsonObject(response);
-                returnParsedJsonObject(response);
+                ArrayList<BuyerWishListModel> list = returnParsedJsonObject(response);
+//                returnParsedJsonObject(response);
 //                Log.e(TAG, "getServiceSellers list pr1212o" + list.size());
-//                ref.fillProductListWithData(list);
+                ref.fillProductListWithData(list);
                 progressDialog.dismiss();
             } else {
                 NotFoundDialog.show();

@@ -25,7 +25,6 @@ import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerFavouriteListModel;
-import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -74,15 +73,15 @@ public class BuyerFavouriteListAdapter extends ArrayAdapter<BuyerFavouriteListMo
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.buyer_service_seller_list_item, parent, false);
+                        v = vi.inflate(R.layout.buyer_wishlist_list_item, parent, false);
 
                         holder = new ViewHolder();
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder.loc_icon = (ImageView) v.findViewById(R.id.loc_icon);
-                        holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.time);
-                        holder.distance = (TextView) v.findViewById(R.id.distance);
+                       // holder.loc_icon = (ImageView) v.findViewById(R.id.loc_icon);
+                        holder.name = (TextView) v.findViewById(R.id.name);
+                        holder.companyName = (TextView) v.findViewById(R.id.companyName);
+                        //holder.distance = (TextView) v.findViewById(R.id.distance);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
 
 
@@ -96,7 +95,7 @@ public class BuyerFavouriteListAdapter extends ArrayAdapter<BuyerFavouriteListMo
                         @Override
                         public void onClick(View v) {
                             Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
-                            globels.getGlobelRef().serviceSellerProductId = myItem.id;
+                            globels.getGlobelRef().serviceSellerId = myItem.sellerDetial.id;
                             context.startActivity(serviceSellerActivity);
                         }
                     });
@@ -112,17 +111,16 @@ public class BuyerFavouriteListAdapter extends ArrayAdapter<BuyerFavouriteListMo
                         if (holder.lbl != null) {
                             Picasso.with(context).load(Constant.imgbaseUrl + myItem.sellerDetial.logo).into(holder.lbl);
                         }
+
+                        if (holder.name != null) {
+                            holder.name.setText(myItem.sellerDetial.companyName);
+                        }
+
                         if (holder.companyName != null) {
-                            holder.companyName.setText(myItem.sellerDetial.companyName);
+                            holder.companyName.setText(myItem.sellerDetial.fName+" "+myItem.sellerDetial.lName);
                         }
-                        if (holder.description != null) {
-                            holder.description.setText(myItem.sellerDetial.companyName);
-                        }
-                        if (holder.distance != null) {
-//                            holder.distance.setText(myItem.sellerDetial.distance);
-                            holder.distance.setVisibility(View.GONE);
-                            holder.loc_icon .setVisibility(View.GONE);
-                        }
+
+
                         if (holder.rating != null) {
 //                            holder.rating.setText(myItem.price);
 
@@ -179,10 +177,8 @@ public class BuyerFavouriteListAdapter extends ArrayAdapter<BuyerFavouriteListMo
 
     public static class ViewHolder {
         public ImageView lbl;
-        public ImageView loc_icon;
         public TextView companyName;
-        public TextView description;
-        public TextView distance;
+        public TextView name;
         public RatingBar rating;
     }
 }

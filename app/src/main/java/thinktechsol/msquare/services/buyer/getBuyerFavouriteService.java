@@ -104,7 +104,7 @@ public class getBuyerFavouriteService {
                     JSONObject childJsonObj = (JSONObject) JsonArrayProduct.get(i);
 
                     String id = childJsonObj.getString("id");
-                    String sellerId = childJsonObj.getString("sellerId");
+                    String sellerId = childJsonObj.getString("buyerId");
 //                    String serviceId = childJsonObj.getString("serviceId");
 //                    String productId = childJsonObj.getString("productId");
                     String buyerId = childJsonObj.getString("buyerId");
@@ -172,8 +172,8 @@ public class getBuyerFavouriteService {
 
         protected String doInBackground(String... input) {
             try {
-                //String sellerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerProductId + "/" + latitude + "/" + longitude);
+                //String buyerId = input[0];
+//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + sellerServiceId);
                 Log.e(TAG, "getServiceSellers proooo url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

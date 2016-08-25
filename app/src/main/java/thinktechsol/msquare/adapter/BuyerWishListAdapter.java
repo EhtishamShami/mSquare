@@ -75,14 +75,13 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.buyer_service_seller_list_item, parent, false);
+                        v = vi.inflate(R.layout.buyer_wishlist_list_item, parent, false);
 
                         holder = new ViewHolder();
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
-                        holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.time);
-                        holder.distance = (TextView) v.findViewById(R.id.distance);
+                        holder.companyName = (TextView) v.findViewById(R.id.companyName);
+                        holder.name = (TextView) v.findViewById(R.id.name);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
 
 
@@ -95,8 +94,11 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+//                            Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
+//                            globels.getGlobelRef().serviceSellerId = myItem.id;
+//                            context.startActivity(serviceSellerActivity);
                             Intent serviceSellerActivity = new Intent(context, ServiceSellerDetailActivity.class);
-                            globels.getGlobelRef().serviceSellerProductId = myItem.id;
+                            globels.getGlobelRef().serviceSellerId = myItem.sellerDetial.id;
                             context.startActivity(serviceSellerActivity);
                         }
                     });
@@ -110,23 +112,22 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
                         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
                         if (holder.lbl != null) {
-                            Picasso.with(context).load(Constant.imgbaseUrl + myItem.sellerDetial.logo).into(holder.lbl);
+                            Picasso.with(context).load(myItem.productDetial.productImages.get(0).image).into(holder.lbl);
+                        }
+                        if (holder.name != null) {
+                            holder.name.setText(myItem.productDetial.title);
                         }
                         if (holder.companyName != null) {
                             holder.companyName.setText(myItem.sellerDetial.companyName);
                         }
-                        if (holder.description != null) {
-                            holder.description.setText(myItem.sellerDetial.description);
-                        }
-                        if (holder.distance != null) {
-//                            holder.distance.setText(myItem.sellerDetial.distance);
-                        }
+
+
                         if (holder.rating != null) {
 //                            holder.rating.setText(myItem.price);
 
-                            if (!myItem.sellerDetial.sellerRatings.equals("not available")) {
-                                float ratingNum = Float.parseFloat(myItem.sellerDetial.sellerRatings);
-                                Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
+                            if (!myItem.productDetial.productRating.equals("not available")) {
+                                float ratingNum = Float.parseFloat(myItem.productDetial.productRating);
+                                Log.e("ViewSellPro", "rating 22222=" + (int) ratingNum);
                                 holder.rating.setRating(1);
                                 holder.rating.setRating((int) ratingNum);
                             }
@@ -178,8 +179,7 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
     public static class ViewHolder {
         public ImageView lbl;
         public TextView companyName;
-        public TextView description;
-        public TextView distance;
+        public TextView name;
         public RatingBar rating;
     }
 }

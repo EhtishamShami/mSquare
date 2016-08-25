@@ -1,6 +1,7 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -34,11 +35,11 @@ public class ViewSellProDetailActivity extends Activity {
     private int dotsCount;
     private TextView[] dots;
     static TextView title;
-    public static ImageView backBtn;
+    public static ImageView backBtn, btn_menu;
     ArrayList<String> selectedImagePath;
     RatingBar rating;
     ImageView add_product, view_product;
-    TextView pro_name,pro_price;
+    TextView pro_name, pro_price, sellers_description;
 
     ArrayList<ProductImages> productImagesList;
 
@@ -66,6 +67,7 @@ public class ViewSellProDetailActivity extends Activity {
         pro_price_layout = (RelativeLayout) findViewById(R.id.rating_layout);
         pro_name = (TextView) findViewById(R.id.sellers_title);
         pro_price = (TextView) findViewById(R.id.pro_price);
+        sellers_description = (TextView) findViewById(R.id.sellers_description);
         rating = (RatingBar) findViewById(R.id.rating);
 
         titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.addProductTitleBarColor));
@@ -74,11 +76,22 @@ public class ViewSellProDetailActivity extends Activity {
         title = (TextView) findViewById(R.id.title);
         title.setText("Product Details");
         backBtn = (ImageView) findViewById(R.id.backBtn);
-        backBtn.setLayoutParams(AppLayoutParam2(10f, 10f, 0, 0, 0, 0));
+        btn_menu = (ImageView) findViewById(R.id.btn_menu);
+        backBtn.setLayoutParams(AppLayoutParam3(10f, 10f, 0, 0, 0, 0, "left"));
+        btn_menu.setVisibility(View.VISIBLE);
+        btn_menu.setBackgroundResource(R.drawable.edit_menu);
+        btn_menu.setLayoutParams(AppLayoutParam3(8f, 12f, 0, 0, 1, 0, "right"));
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Constant.addOrViewProduct = false;
+                finish();
+            }
+        });
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ViewSellProDetailActivity.this, EditProActivity.class));
                 finish();
             }
         });
@@ -107,7 +120,8 @@ public class ViewSellProDetailActivity extends Activity {
         });
 
         pro_name.setText(singleProduct.title);
-        pro_price.setText(singleProduct.price+"AED");
+        pro_price.setText(singleProduct.price + "AED");
+        sellers_description.setText(singleProduct.description);
         Log.e("ViewSellPro", "rating=" + singleProduct.productRating);
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
@@ -115,9 +129,9 @@ public class ViewSellProDetailActivity extends Activity {
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
         if (!singleProduct.productRating.equals("not available")) {
             float ratingNum = Float.parseFloat(singleProduct.productRating);
-            Log.e("ViewSellPro", "rating 2=" + (int)ratingNum);
+            Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
             rating.setRating(1);
-            rating.setRating((int)ratingNum);
+            rating.setRating((int) ratingNum);
         }
 
     }
@@ -157,7 +171,8 @@ public class ViewSellProDetailActivity extends Activity {
             dots[i].setTextColor(getResources().getColor(android.R.color.darker_gray));
             dotsLayout.addView(dots[i]);
         }
-        dots[0].setTextColor(getResources().getColor(R.color.whiteColor));
+        if (dots != null && dots.length > 0)
+            dots[0].setTextColor(getResources().getColor(R.color.whiteColor));
     }
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -188,6 +203,18 @@ public class ViewSellProDetailActivity extends Activity {
         return paramName;
     }
 
+    public RelativeLayout.LayoutParams AppLayoutParam3(float height, float width, float mL, float mT, float mR, float mB, String leftOrRight) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                Constant.getSize("w", width),
+                Constant.getSize("h", height));
+        if (leftOrRight.equals("right"))
+            paramName.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        paramName.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+
+        paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
+        return paramName;
+    }
+
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
                 Constant.getSize("w", width),
@@ -212,5 +239,11 @@ public class ViewSellProDetailActivity extends Activity {
             paramName.addRule(RelativeLayout.BELOW, below.getId());
         paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
         return paramName;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

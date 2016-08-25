@@ -6,6 +6,7 @@ package thinktechsol.msquare.globels;
 
 import java.util.ArrayList;
 
+import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
 import thinktechsol.msquare.model.Buyer.Products;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
@@ -29,8 +30,9 @@ public class globels {
     //buyer's view (product list)
     public static ArrayList<getServiceSellersProductModel> productList;
     public static ArrayList<Products> productList2;
+
     public static Products singleProductForBuyProDetail;
-    public static String serviceSellerProductId;
+    public static String serviceSellerId;
     public int SelectedServicesPrice;
     public String allSelectedServices = "";
     public ArrayList<String> selectedServicesIds;
@@ -45,5 +47,7 @@ public class globels {
 
     public static String orderId_for_ordr_info = null;
     public static String buyerLoginId = null;
+
+    public static ArrayList<BuyerDeshBoardStatesModel> buyerDeshBoardStatesList;
 
 }

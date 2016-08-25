@@ -109,6 +109,7 @@ public class AddImageOfProduct {
         protected void onPostExecute(String response) {
             if (response != null) {
                 progressDialog.dismiss();
+//                ref.productAdditionCompleted();
             } else {
                 NotFoundDialog.show();
             }
@@ -149,7 +150,7 @@ public class AddImageOfProduct {
 
 
             int statusCode = response.getStatusLine().getStatusCode();
-            Log.e("AddImageOfProduct", "status code for image upload=" + statusCode);
+            Log.e("AddImageOfProduct", "status ImageId for image upload=" + statusCode);
             if (statusCode == 200) {
                 // Server response
                 responseString = EntityUtils.toString(r_entity);

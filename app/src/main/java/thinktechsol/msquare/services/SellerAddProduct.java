@@ -170,8 +170,9 @@ public class SellerAddProduct {
                     for (int i = 0; i < selectedImagePath.size(); i++) {
                         new AddImageOfProduct(ref, ref, selectedImagePath.get(i), id);
                     }
-                }
 
+                    ref.productAdditionCompleted();
+                }
             } else {
                 NotFoundDialog.show();
             }

@@ -48,7 +48,7 @@ public class BuyerWishListActivity extends Activity {
 
         setContentView(R.layout.activity_buyer_wishlist);
 
-        new getBuyerWishListService(BuyerWishListActivity.this,BuyerWishListActivity.this,"5");
+        new getBuyerWishListService(BuyerWishListActivity.this, BuyerWishListActivity.this, globels.getGlobelRef().buyerLoginId);
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
@@ -86,7 +86,7 @@ public class BuyerWishListActivity extends Activity {
         Log.e("BuyerServiceSellersList", "list size is=" + list.size());
 
 
-        adapter = new BuyerWishListAdapter(BuyerWishListActivity.this, R.layout.buyer_service_seller_list_item, list);
+        adapter = new BuyerWishListAdapter(BuyerWishListActivity.this, R.layout.buyer_wishlist_list_item, list);
         listView.setAdapter(adapter);
     }
 

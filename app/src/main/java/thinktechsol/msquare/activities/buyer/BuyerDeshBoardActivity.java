@@ -13,13 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardFragment;
+import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardMessageFragment;
 import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
+import thinktechsol.msquare.services.buyer.GetBuyerDeshBoardStatesService;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerDeshBoardActivity extends Activity {
@@ -57,6 +62,7 @@ public class BuyerDeshBoardActivity extends Activity {
 
         setContentView(R.layout.activity_buyer_desh_board);
 
+//        new GetBuyerDeshBoardStatesService(BuyerDeshBoardActivity.this, BuyerDeshBoardActivity.this, globels.getGlobelRef().buyerLoginId);
 //        Fragment_2_items fragmentS1 = new Fragment_2_items();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragmentS1).commit();
 
@@ -132,6 +138,9 @@ public class BuyerDeshBoardActivity extends Activity {
                 MakeItemSelected(DESHBOARD);
                 title.setText("DeshBoard");
 
+                BuyerDashBoardFragment fragobj = new BuyerDashBoardFragment();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentLayout, fragobj).commit();
 //                SellerDashBoardProductFragment fragobj = new SellerDashBoardProductFragment();
 //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //                transaction.replace(R.id.fragmentLayout, fragobj);
@@ -141,8 +150,10 @@ public class BuyerDeshBoardActivity extends Activity {
         order_buyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MakeItemSelected(ORDER);
-                title.setText("Order");
+                //MakeItemSelected(ORDER);
+                //title.setText("Order");
+                globels.getGlobelRef().orderType = "0";
+                startActivity(new Intent(BuyerDeshBoardActivity.this, BuyerOrdersActivity.class));
 //                SellerCustomerFragment fragobj = new SellerCustomerFragment();
 //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //                transaction.replace(R.id.fragmentLayout, fragobj);
@@ -153,9 +164,9 @@ public class BuyerDeshBoardActivity extends Activity {
         wishlist_buyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                title.setText("WishList");
-                MakeItemSelected(WISHLIST);
-
+                //title.setText("WishList");
+                //MakeItemSelected(WISHLIST);
+                startActivity(new Intent(BuyerDeshBoardActivity.this, BuyerWishListActivity.class));
 //                globels.getGlobelRef().orderType = "0";
 //                startActivity(new Intent(BuyerDeshBoardActivity.this, SellersOrdersActivity.class));
             }
@@ -166,6 +177,11 @@ public class BuyerDeshBoardActivity extends Activity {
                 title.setText("Messages");
                 MakeItemSelected(MESSAGE);
 
+                BuyerDashBoardMessageFragment fragobj = new BuyerDashBoardMessageFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentLayout, fragobj);
+                transaction.commit();
+                BuyerDeshBoardActivity.getContext().changeTitle("Messages");
 //                SellerDashBoardMessageFragment fragobj = new SellerDashBoardMessageFragment();
 //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //                transaction.replace(R.id.fragmentLayout, fragobj);
@@ -244,7 +260,7 @@ public class BuyerDeshBoardActivity extends Activity {
         deshboard_buyer.setColorFilter(null);
         order_buyer.setColorFilter(null);
         wishlist_buyer.setColorFilter(null);
-//        message.setColorFilter(null);
+        message.setColorFilter(null);
         setting.setColorFilter(null);
 
         switch (btnName) {
@@ -272,5 +288,9 @@ public class BuyerDeshBoardActivity extends Activity {
 
     public void changeTitle(String titleString) {
         title.setText("" + titleString);
+    }
+
+    public void fill_data_to_adapter(ArrayList<BuyerDeshBoardStatesModel> list) {
+        globels.getGlobelRef().buyerDeshBoardStatesList = list;
     }
 }

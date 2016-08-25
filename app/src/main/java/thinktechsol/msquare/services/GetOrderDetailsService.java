@@ -230,9 +230,6 @@ public class GetOrderDetailsService {
                     ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
                     productImages.add(proImages);
                 }
-// else {
-//                    productImages.add(new ProductImagesOrd("empty", "empty", "empty"));
-//                }
 
                 ProductDetails proDetail = new ProductDetails(idPD, productRating, productImages, title,
                         price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);

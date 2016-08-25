@@ -89,7 +89,7 @@ public class UpdateOrderStatus {
 
             String isLoginSuccessful = parentJSONObjDetails.getString("response");
 
-            Log.e("sellerLogIn", "isLoginSuccessful code=" + isLoginSuccessful);
+            Log.e("sellerLogIn", "isLoginSuccessful ImageId=" + isLoginSuccessful);
 
             if (isLoginSuccessful.equals("true")) {
                 String childObject = parentJSONObjDetails.getString("data");
@@ -117,7 +117,7 @@ public class UpdateOrderStatus {
                 String mobileNo = childJSONObjDetails.getString("mobileNo");
 
                 sellerLogInResponse = new SellerLogInResponse(logo, status, documents, tradeNo, lName, companyName, password, fName, phoneNo, id, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
-                Log.e("sellerLogIn", "respons code=" + sellerLogInResponse.service);
+                Log.e("sellerLogIn", "respons ImageId=" + sellerLogInResponse.service);
             } else {
                 NotFoundDialog.show();
                 return null;

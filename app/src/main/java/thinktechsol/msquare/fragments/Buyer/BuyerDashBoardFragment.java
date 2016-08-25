@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
@@ -29,6 +30,7 @@ import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerDashBoardAdapterItem;
+import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
 import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
@@ -37,9 +39,10 @@ public class BuyerDashBoardFragment extends Fragment {
     TextView title;
     RelativeLayout titlebarlayout, bottombarlayout;
 
-//    @Override
+    //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
+    ArrayList<BuyerDashBoardAdapterItem> m_parts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,12 +87,22 @@ public class BuyerDashBoardFragment extends Fragment {
 //        setting.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
 
 
-        ArrayList<BuyerDashBoardAdapterItem> m_parts = new ArrayList<BuyerDashBoardAdapterItem>();
+        m_parts = new ArrayList<BuyerDashBoardAdapterItem>();
 
-        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_order), 1, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
-        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_message), 1, R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
-        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_wishlist), 1, R.drawable.order, R.color.customerColor, 0, 0));
-        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_favourite), 1, R.drawable.product, R.color.productColor, 0, 0));
+        ArrayList<BuyerDeshBoardStatesModel> statesList = globels.getGlobelRef().buyerDeshBoardStatesList;
+        int OrdersTotal = Integer.parseInt(statesList.get(0).orderStates.complete) +
+                Integer.parseInt(statesList.get(0).orderStates.dispute) +
+                Integer.parseInt(statesList.get(0).orderStates.inProcess) +
+                Integer.parseInt(statesList.get(0).orderStates.recent) +
+                Integer.parseInt(statesList.get(0).orderStates.reject);
+        String MessageTotal = statesList.get(0).unReadMessages;
+        String WishTotal = statesList.get(0).wishlist;
+        String FavouriteTotal = statesList.get(0).favourites;
+
+        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_order), OrdersTotal, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
+        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_message), Integer.parseInt(MessageTotal), R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
+        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_wishlist), Integer.parseInt(WishTotal), R.drawable.order, R.color.customerColor, 0, 0));
+        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_favourite), Integer.parseInt(FavouriteTotal), R.drawable.product, R.color.productColor, 0, 0));
 
 
         try {
@@ -196,7 +209,6 @@ public class BuyerDashBoardFragment extends Fragment {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentLayout, frag);
             transaction.commit();
-//            SellerDeshBoardActivity.getContext().changeTitle(title);
             BuyerDeshBoardActivity.getContext().changeTitle(title);
         }
     }

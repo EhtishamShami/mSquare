@@ -2,7 +2,6 @@ package thinktechsol.msquare.activities.buyer;
 
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -25,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.adapter.BuyerServiceSellersProductListAdapter;
-import thinktechsol.msquare.fragments.Buyer.BuyerMapFragment;
-import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Buyer.SellersAboutFragment;
 import thinktechsol.msquare.fragments.Buyer.SellersMapFragment;
 import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
@@ -59,7 +55,7 @@ public class ServiceSellerDetailActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_service_seller_detail);
 
-        new getServiceSellersProduct(this, ServiceSellerDetailActivity.this, Constant.sellerServiceId, globels.getGlobelRef().serviceSellerProductId, "24.433904943494827", "54.41303014755249");
+        new getServiceSellersProduct(this, ServiceSellerDetailActivity.this, Constant.sellerServiceId, globels.getGlobelRef().serviceSellerId, "24.433904943494827", "54.41303014755249");
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
