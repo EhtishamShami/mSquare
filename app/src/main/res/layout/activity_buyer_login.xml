@@ -28,7 +28,7 @@
             android:layout_below="@+id/app_logo"
             android:layout_margin="10dp"
             android:background="@android:color/white"
-            android:text="arslan@gmail.com"
+            android:text="arshad@gmail.com"
             android:hint="Email"
             android:paddingLeft="5dp"
             android:textSize="15sp" />

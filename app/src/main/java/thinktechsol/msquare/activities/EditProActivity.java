@@ -36,11 +36,14 @@ import java.util.Calendar;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterEditProduct;
+import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.interfaceMine.UploadImgInterfaceEditPro;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.services.DeleteImageService;
+import thinktechsol.msquare.services.SellerAddProduct;
+import thinktechsol.msquare.services.SellerAddProductForEditImg;
 import thinktechsol.msquare.utils.Constant;
 
 public class EditProActivity extends Activity implements UploadImgInterfaceEditPro, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked {
@@ -168,8 +171,15 @@ public class EditProActivity extends Activity implements UploadImgInterfaceEditP
         picker = (HorizontalPicker) findViewById(R.id.picker);
         picker.setOnItemClickedListener(this);
         picker.setOnItemSelectedListener(this);
-//        Toast.makeText(this, "" + singleProduct.deliveryTime, Toast.LENGTH_SHORT).show();
-        picker.setSelectedItem(Integer.parseInt(singleProduct.deliveryTime) - 1);
+//        Toast.makeText(this, "" + (Integer.parseInt(singleProduct.deliveryTime) - 1), Toast.LENGTH_SHORT).show();
+        Log.e("EditProActivity", "deliveryTime=" + singleProduct.deliveryTime);
+        if (singleProduct.deliveryTime != "" && !singleProduct.deliveryTime.equals(" ") && !singleProduct.deliveryTime.equals("") && Integer.parseInt(singleProduct.deliveryTime) > 0) {
+            picker.setSelectedItem(Integer.parseInt(singleProduct.deliveryTime) - 1);
+            selectedTimeIndex = (Integer.parseInt(singleProduct.deliveryTime) - 1);
+        } else {
+            picker.setSelectedItem(0);
+            selectedTimeIndex = 0;
+        }
 
 //        pro_time_etlayout.ad
 //        upload_img = (ImageView) findViewById(R.id.upload_img);
@@ -215,21 +225,16 @@ public class EditProActivity extends Activity implements UploadImgInterfaceEditP
         update_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.e("AddOrViewProActivity", "first path=" + selectedImagePath.size());
-//                Toast.makeText(AddOrViewProActivity.this, "btn pressed=" + adapter.bitmapList.get(1), Toast.LENGTH_SHORT).show();
-//                new AddImageOfProduct(AddOrViewProActivity.this, AddOrViewProActivity.this, selectedImagePath);
+
                 String productDetails[] = new String[4];
                 productDetails[0] = pro_title_et.getText().toString();
                 productDetails[1] = pro_desc_et.getText().toString();
                 productDetails[2] = pro_price_et.getText().toString();
                 productDetails[3] = String.valueOf(selectedTimeIndex);
-//                productDetails[3] = pro_time_et.getText().toString();
-
+                Log.e("EditProd", "update btn is clicked=" + globels.getGlobelRef().sellerlogin.id);
                 if (pro_title_et.getText().toString().trim().length() > 0 && pro_desc_et.getText().toString().trim().length() > 0
-                        && pro_price_et.getText().toString().trim().length() > 0 && selectedImagePath.size() > 0) {
-
-//                if (productDetails[0].trim() != null && productDetails[1].trim() != null && productDetails[2].trim() != null && productDetails[3].trim() != null) {
-                    //new SellerAddProduct(EditProActivity.this, EditProActivity.this, productDetails, selectedImagePath);
+                        && pro_price_et.getText().toString().trim().length() > 0 && (selectedImagePath.size() > 0 || productImagesList.size() > 0)) {
+                    new SellerAddProductForEditImg(EditProActivity.this, EditProActivity.this, productDetails, selectedImagePath);
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(EditProActivity.this).create();
                     //alertDialog.setTitle("Alert");
@@ -415,16 +420,20 @@ public class EditProActivity extends Activity implements UploadImgInterfaceEditP
         try {
             selectedImagePath.add(ImgPath);
 
-            Uri uri = Uri.fromFile(new File("" + ImgPath));
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            //  Uri uri = Uri.fromFile(new File("" + ImgPath));
+            //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            //adapter.bitmapList.add(bitmap);
 
-            adapter.bitmapList.add(bitmap);
+            productImagesList.add(new ProductImages("", "", ImgPath, true));
+            Constant.productImagesList = productImagesList;
+
 
             setAndShowDotsOnPager();
 
             viewPager.getAdapter().notifyDataSetChanged();
             viewPager.invalidate();
-        } catch (IOException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

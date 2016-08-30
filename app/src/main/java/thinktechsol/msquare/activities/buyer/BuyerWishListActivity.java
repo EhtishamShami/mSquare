@@ -86,8 +86,10 @@ public class BuyerWishListActivity extends Activity {
         Log.e("BuyerServiceSellersList", "list size is=" + list.size());
 
 
-        adapter = new BuyerWishListAdapter(BuyerWishListActivity.this, R.layout.buyer_wishlist_list_item, list);
-        listView.setAdapter(adapter);
+        if (list.size() > 0) {
+            adapter = new BuyerWishListAdapter(BuyerWishListActivity.this, R.layout.buyer_wishlist_list_item, list);
+            listView.setAdapter(adapter);
+        }
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below, String center, int toRightOf, String align) {

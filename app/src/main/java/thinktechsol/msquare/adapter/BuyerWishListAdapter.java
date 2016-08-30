@@ -111,10 +111,10 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
                         stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
                         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
-                        if (holder.lbl != null) {
+                        if (holder.lbl != null && myItem.productDetial != null) {
                             Picasso.with(context).load(myItem.productDetial.productImages.get(0).image).into(holder.lbl);
                         }
-                        if (holder.name != null) {
+                        if (holder.name != null && myItem.productDetial != null) {
                             holder.name.setText(myItem.productDetial.title);
                         }
                         if (holder.companyName != null) {

@@ -37,8 +37,10 @@ public class BuyerServiceSellersList extends Fragment {
 
 
         listView = (ListView) v.findViewById(R.id.list);
-        adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
-        listView.setAdapter(adapter);
+        if(globels.getGlobelRef().SellersProductDetailList!=null) {
+            adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
+            listView.setAdapter(adapter);
+        }
 
         return v;
     }

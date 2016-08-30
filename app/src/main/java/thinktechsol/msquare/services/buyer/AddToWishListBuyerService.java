@@ -81,33 +81,36 @@ public class AddToWishListBuyerService {
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
 
             String response = parentJSONObjDetails.getString("response");
-            JSONObject childJSonObj = parentJSONObjDetails.getJSONObject("data");
 
-            Log.e("BuyerRegistration", "BuyerRegistration childJSonObj=" + childJSonObj);
+            if (response.equals("true")) {
+                JSONObject childJSonObj = parentJSONObjDetails.getJSONObject("data");
 
-            String location = childJSonObj.getString("location");
-            String status = childJSonObj.getString("status");
-            String googlePlus = childJSonObj.getString("googlePlus");
-            String state = childJSonObj.getString("state");
-            String lName = childJSonObj.getString("lName");
-            String udid = childJSonObj.getString("udid");
-            String password = childJSonObj.getString("password");
-            String fName = childJSonObj.getString("fName");
-            String phoneNo = childJSonObj.getString("phoneNo");
-            String houseNo = childJSonObj.getString("houseNo");
-            String id = childJSonObj.getString("id");
-            String twitter = childJSonObj.getString("twitter");
-            String area = childJSonObj.getString("area");
-            String email = childJSonObj.getString("email");
-            String facebook = childJSonObj.getString("facebook");
-            String streetNo = childJSonObj.getString("streetNo");
-            String account = childJSonObj.getString("account");
-            String datetime = childJSonObj.getString("datetime");
-            String thumb = childJSonObj.getString("thumb");
+                Log.e("BuyerRegistration", "BuyerRegistration childJSonObj=" + childJSonObj);
 
-            Log.e("BuyerRegistration", "BuyerRegistration Response Is=" + response);
-            RegisterModel registerModel = new RegisterModel(location, status, googlePlus, state, lName, udid, password, fName, phoneNo, houseNo, id, twitter, area, email, facebook, streetNo, account, datetime, thumb);
-            registerationResponseList.add(registerModel);
+                String location = childJSonObj.getString("location");
+                String status = childJSonObj.getString("status");
+                String googlePlus = childJSonObj.getString("googlePlus");
+                String state = childJSonObj.getString("state");
+                String lName = childJSonObj.getString("lName");
+                String udid = childJSonObj.getString("udid");
+                String password = childJSonObj.getString("password");
+                String fName = childJSonObj.getString("fName");
+                String phoneNo = childJSonObj.getString("phoneNo");
+                String houseNo = childJSonObj.getString("houseNo");
+                String id = childJSonObj.getString("id");
+                String twitter = childJSonObj.getString("twitter");
+                String area = childJSonObj.getString("area");
+                String email = childJSonObj.getString("email");
+                String facebook = childJSonObj.getString("facebook");
+                String streetNo = childJSonObj.getString("streetNo");
+                String account = childJSonObj.getString("account");
+                String datetime = childJSonObj.getString("datetime");
+                String thumb = childJSonObj.getString("thumb");
+
+                Log.e("BuyerRegistration", "BuyerRegistration Response Is=" + response);
+                RegisterModel registerModel = new RegisterModel(location, status, googlePlus, state, lName, udid, password, fName, phoneNo, houseNo, id, twitter, area, email, facebook, streetNo, account, datetime, thumb);
+                registerationResponseList.add(registerModel);
+            }
 
         } catch (JSONException e) {
             Log.e("BuyerRegistration", "JSONExc ParsedJsonObject=" + e);
@@ -150,7 +153,7 @@ public class AddToWishListBuyerService {
 
 //                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerlogin.id + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
 
-                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.sellerId, "UTF-8")
+                String post_data = URLEncoder.encode("selectedStaffid", "UTF-8") + "=" + URLEncoder.encode(requestModel.sellerId, "UTF-8")
                         + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(requestModel.serviceId, "UTF-8")
                         + "&" + URLEncoder.encode("productId", "UTF-8") + "=" + URLEncoder.encode(requestModel.productId, "UTF-8")
                         + "&" + URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.buyerId, "UTF-8");

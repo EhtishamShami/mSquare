@@ -98,15 +98,23 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         holder = (ViewHolder) v.getTag();
                     }
                     final Products myItem = productList.get(position);
+                    holder.companyName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            globels.getGlobelRef().singleProductForBuyProDetail = myItem;
+                            Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
+                            context.startActivity(serviceSellerActivity);
+                        }
+                    });
 
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
                             globels.getGlobelRef().singleProductForBuyProDetail = myItem;
-                            Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
-                            context.startActivity(serviceSellerActivity);
-                            Toast.makeText(context, "hi=" + position, Toast.LENGTH_SHORT).show();
+//                            Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
+//                            context.startActivity(serviceSellerActivity);
+//                            Toast.makeText(context, "hi=" + myItem.price, Toast.LENGTH_SHORT).show();
 //                            if (holder.CheckBox != null) {
 //
 //                                if (myItem.products.get(0).isChecked == true) {
@@ -133,6 +141,34 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 //
 //                                holder.CheckBox.setChecked(myItem.products.get(0).isChecked);
 //                            }
+
+
+                            if (holder.CheckBox != null) {
+
+                                if (myItem.isChecked == true) {
+                                    myItem.isChecked = false;
+                                    itemCheckCounter -= 1;
+
+                                    if (SelectedServicesPrice != 0)
+                                        SelectedServicesPrice -= Integer.parseInt(myItem.price);
+                                } else {
+                                    myItem.isChecked = true;
+                                    itemCheckCounter += 1;
+
+                                    SelectedServicesPrice += Integer.parseInt(myItem.price);
+                                }
+
+                                if (itemCheckCounter > 0) {
+//                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
+                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
+                                } else {
+//                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
+                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
+                                }
+//                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
+
+                                holder.CheckBox.setChecked(myItem.isChecked);
+                            }
                         }
                     });
 

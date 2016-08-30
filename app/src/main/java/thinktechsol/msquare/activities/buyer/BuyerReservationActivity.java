@@ -35,10 +35,13 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ChangeServiceProviderListAdapter;
 import thinktechsol.msquare.adapter.TimeListAdapter;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.ChangeServiceProviderListItemModel;
+import thinktechsol.msquare.model.Buyer.BuyerGetStaffModel;
+import thinktechsol.msquare.model.Buyer.BuyerGetStaffTimeMode;
 import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
 import thinktechsol.msquare.model.Buyer.TimeListItemModel;
 import thinktechsol.msquare.services.AddBuyerOrder;
+import thinktechsol.msquare.services.buyer.GetStaffService;
+import thinktechsol.msquare.services.buyer.GetStaffTime;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerReservationActivity extends Activity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.ScrollListener, WeekView.EmptyViewClickListener, WeekView.OnClickListener
@@ -50,8 +53,8 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     RelativeLayout peopleLayout, calenderOuterLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout;
     ListView timelisview;
-    ArrayList<TimeListItemModel> list;
-    ArrayList<ChangeServiceProviderListItemModel> providerList;
+    ArrayList<BuyerGetStaffTimeMode> list;
+    ArrayList<BuyerGetStaffModel> staffList;
 
     WeekView mWeekView;
     private static ArrayList<WeekViewEvent> mNewEvents;
@@ -70,8 +73,10 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         setContentView(R.layout.activity_buyer_reservation);
 
-        list = new ArrayList<TimeListItemModel>();
-        providerList = new ArrayList<ChangeServiceProviderListItemModel>();
+        new GetStaffService(BuyerReservationActivity.this, BuyerReservationActivity.this, globels.getGlobelRef().serviceSellerId);
+
+        list = new ArrayList<BuyerGetStaffTimeMode>();
+        staffList = new ArrayList<BuyerGetStaffModel>();
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
         title = (TextView) findViewById(R.id.title);
@@ -174,16 +179,15 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         //calender work end
 
 
-        list.add(new TimeListItemModel("1", "01:00 AM", false));
-        list.add(new TimeListItemModel("2", "01:15 AM", false));
-        list.add(new TimeListItemModel("3", "01:30 AM", false));
-        list.add(new TimeListItemModel("4", "01:45 AM", false));
-        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
-        timelisview.setAdapter(adapter);
+        //list.add(new BuyerGetStaffTimeMode("01:00 AM"));
+//        list.add(new BuyerGetStaffTimeMode("2", "01:15 AM", false));
+//        list.add(new TimeListItemModel("3", "01:30 AM", false));
+//        list.add(new TimeListItemModel("4", "01:45 AM", false));
+//        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
+//        timelisview.setAdapter(adapter);
 
 //        timelisview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 //        timelisview.setSelector(android.R.color.darker_gray);
-
 
         PopUpForChangeServiceProvider();
 
@@ -191,7 +195,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         changeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeServiceProviderUser.show();
+                changeStaff.show();
             }
         });
 
@@ -201,7 +205,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
                 Toast.makeText(BuyerReservationActivity.this, "Confirm booking is clicked", Toast.LENGTH_SHORT).show();
 
                 String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
-                String buyerId = "1";
+                String buyerId = globels.getGlobelRef().buyerLoginId;
                 String extraRemarks = etDescription.getText().toString();
                 String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
                 String staffId = "1";
@@ -394,11 +398,15 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         dateFormatForPosting = new SimpleDateFormat("yyyy-MM-dd");
         tvDate.setText(new SimpleDateFormat("yyyy MMM dd").format(time.getTime()));
         selectedDateForPostingToService = dateFormatForPosting.format(time.getTime());
+
+//        new GetStaffTime(this, BuyerReservationActivity.this, "1", "30", selectedDateForPostingToService);
+        new GetStaffTime(this, BuyerReservationActivity.this, "1", "30", "2016-07-15");
     }
 
     DateFormat dateFormatForPosting;
 
-    AlertDialog changeServiceProviderUser;
+    AlertDialog changeStaff;
+    ListView staffListView;
 
     public void PopUpForChangeServiceProvider() {
         LayoutInflater inflater = this.getLayoutInflater();
@@ -406,26 +414,24 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         View dialogView = inflater.inflate(R.layout.change_service_provider_popup, null);
         builder.setView(dialogView);
 
-        ListView change_user_list = (ListView) dialogView.findViewById(R.id.change_user_list);
-        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Yasir Ahmed"));
-        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Bilal"));
-        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Zain u din"));
-        providerList.add(new ChangeServiceProviderListItemModel(R.drawable.avatar, "Maroof"));
-        providerList.add(new ChangeServiceProviderListItemModel(0, ""));
+        staffListView = (ListView) dialogView.findViewById(R.id.change_user_list);
+//        for (int i = 0; i < 4; i++) {
+//            staffList.add(new BuyerGetStaffModel(R.drawable.avatar, "Yasir Ahmed"));
+//        }
 
-        ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, providerList);
-        change_user_list.setAdapter(adapter);
+//        ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, staffList);
+//        staffListView.setAdapter(adapter);
 
-        changeServiceProviderUser = builder.create();
-        changeServiceProviderUser.setCancelable(true);
-        changeServiceProviderUser.setCanceledOnTouchOutside(true);
-//        changeServiceProviderUser.show();
+        changeStaff = builder.create();
+        changeStaff.setCancelable(true);
+        changeStaff.setCanceledOnTouchOutside(true);
+//        changeStaff.show();
     }
 
     public void changeServiceProviderUser(String name) {
         userName.setText(name);
         tvServiceProvider.setText("With " + name);
-        changeServiceProviderUser.dismiss();
+        changeStaff.dismiss();
     }
 
     public void changeSelectedTime(String time) {
@@ -471,5 +477,20 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         if (dateFormatForPosting != null)
             selectedDateForPostingToService = dateFormatForPosting.format(cal.getTime());
         selectedTimeForPostingToService = dateFormat3.format(cal.getTime());
+    }
+
+    public void fillProductListWithData(ArrayList<BuyerGetStaffModel> list) {
+        ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, list);
+        staffListView.setAdapter(adapter);
+    }
+
+    public void getStaffTime(ArrayList<BuyerGetStaffTimeMode> staffTimeList) {
+//        list.add(new BuyerGetStaffTimeMode("01:00 AM"));
+//        list.add(new BuyerGetStaffTimeMode("2", "01:15 AM", false));
+//        list.add(new TimeListItemModel("3", "01:30 AM", false));
+//        list.add(new TimeListItemModel("4", "01:45 AM", false));
+
+        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
+        timelisview.setAdapter(adapter);
     }
 }

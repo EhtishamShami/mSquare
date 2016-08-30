@@ -10,12 +10,7 @@
         android:id="@+id/titlebar"
         layout="@layout/titlebar" />
 
-    <RelativeLayout
-        android:id="@+id/fragmentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottombarlayout"
-        android:layout_below="@+id/titlebar"></RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/add_product_layout"
@@ -320,6 +315,15 @@
             android:id="@+id/product_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottombarlayout"
+        android:layout_below="@+id/titlebar">
 
     </RelativeLayout>
 

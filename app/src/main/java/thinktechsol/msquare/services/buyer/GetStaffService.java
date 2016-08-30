@@ -22,29 +22,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardMessageFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
-import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.getConversationListSellerResModel;
+import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
+import thinktechsol.msquare.model.Buyer.BuyerGetStaffModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class getConversationListBuyer {
+public class GetStaffService {
 
     private static final String TAG_SUCCESS = "success";
 
-    String _url = "getConversationListBuyer/";
+    String _url = "getStaff/";
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    BuyerDashBoardMessageFragment ref;
-    private static final String TAG = "getConversationList";
+    BuyerReservationActivity ref;
+    private static final String TAG = "GetStaffService";
+    String sellerId;
 
-    //    globels.getGlobelRef().sellerlogin.id
-    public getConversationListBuyer(final Context ctx, BuyerDashBoardMessageFragment ref) {
+    public GetStaffService(final Context ctx, BuyerReservationActivity ref, String sellerId) {
         this.ctx = ctx;
         this.ref = ref;
-
+        this.sellerId = sellerId;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Fetching Records Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -66,58 +65,52 @@ public class getConversationListBuyer {
         NotFoundDialog.setCancelable(false);
 
 
-        new getConversationList().execute("0");
+        new getStaff().execute("0");
     }
 
 
-    private ArrayList<getConversationListSellerResModel> returnParsedJsonObject(String result) {
+    private ArrayList<BuyerGetStaffModel> returnParsedJsonObject(String result) {
 
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
-        ArrayList<getConversationListSellerResModel> allMessages = new ArrayList<getConversationListSellerResModel>();
-
+        ArrayList<BuyerGetStaffModel> staffList = new ArrayList<BuyerGetStaffModel>();
 
         try {
             JSONObject parentObject = new JSONObject(result);
 
-            JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            String response = parentJSONObjDetails.getString("response");
+            JSONObject parentJSONObj = parentObject.getJSONObject("results");
 
-            Log.e(TAG, "Parsed Response is=" + response);
+            boolean isResponse = parentJSONObj.getBoolean("response");
+            Log.e(TAG, "getStaff_time reponse is=" + isResponse);
 
-            if(response.equals("true")) {
-                JSONArray messagesList = parentJSONObjDetails.getJSONArray("data");
+            String JsonStringProduct = parentJSONObj.getString("data");
 
-                Log.e(TAG, "JSONArray lenght" + messagesList.length());
-                for (int i = 0; i < messagesList.length(); i++) {
-                    JSONObject childJsonObj = (JSONObject) messagesList.get(i);
-                    String messageBody = childJsonObj.getString("messageBody");
-                    String sender = childJsonObj.getString("sender");
+            if (!JsonStringProduct.equals("false")) {
+
+                JSONArray JsonArrayProduct = parentJSONObj.getJSONArray("data");
+                for (int i = 0; i < JsonArrayProduct.length(); i++) {
+                    JSONObject childJsonObj = (JSONObject) JsonArrayProduct.get(i);
+
                     String id = childJsonObj.getString("id");
-                    String dated = childJsonObj.getString("dated");
-                    String lName = childJsonObj.getString("lName");
-                    String thumb = childJsonObj.getString("logo");
-                    String orderId = childJsonObj.getString("orderId");
-                    String fName = childJsonObj.getString("fName");
+                    String name = childJsonObj.getString("name");
+                    String sellerId = childJsonObj.getString("selectedStaffid");
 
-                    getConversationListSellerResModel obj = new getConversationListSellerResModel(messageBody, sender, id, dated, lName, thumb, orderId, fName);
-                    allMessages.add(obj);
+                    staffList.add(new BuyerGetStaffModel(R.drawable.avatar, id, name, sellerId));
                 }
             }
-
         } catch (JSONException e) {
-            Log.e(TAG, "JSONExc ParsedJsonObject=" + e);
+            Log.e(TAG, "JSONExc getStaff_time=" + e);
             e.printStackTrace();
             NotFoundDialog.show();
         }
-        return allMessages;
+        return staffList;
     }
 
 
     /**
      * Background Async Task to fetch all services
      */
-    class getConversationList extends AsyncTask<String, String, String> {
+    class getStaff extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -126,9 +119,8 @@ public class getConversationListBuyer {
 
         protected String doInBackground(String... input) {
             try {
-                //String buyerId = input[0];
-                URL url = new URL(Constant.baseUrl + _url + globels.getGlobelRef().buyerLoginId);
-                Log.e(TAG, "getConversationList url=" + url);
+                URL url = new URL(Constant.baseUrl + _url + sellerId);
+                Log.e(TAG, "getStaff_time url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.setDoInput(true);
@@ -149,7 +141,7 @@ public class getConversationListBuyer {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e(TAG, "getConversationList result is=" + result);
+                Log.e(TAG, "getStaff_time result=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
@@ -165,9 +157,10 @@ public class getConversationListBuyer {
 
         protected void onPostExecute(String response) {
             if (response != null) {
-                ArrayList<getConversationListSellerResModel> list = returnParsedJsonObject(response);
-//                Log.e(TAG, "getConversation list" + list.size());
-                ref.fillListData(list);
+                ArrayList<BuyerGetStaffModel> list = returnParsedJsonObject(response);
+//                returnParsedJsonObject(response);
+//                Log.e(TAG, "getServiceSellers list pr1212o" + list.size());
+                ref.fillProductListWithData(list);
                 progressDialog.dismiss();
             } else {
                 NotFoundDialog.show();

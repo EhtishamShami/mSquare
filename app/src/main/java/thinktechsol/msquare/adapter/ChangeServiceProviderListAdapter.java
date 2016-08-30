@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,8 +18,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
-import thinktechsol.msquare.model.Buyer.ChangeServiceProviderListItemModel;
-import thinktechsol.msquare.model.Buyer.TimeListItemModel;
+import thinktechsol.msquare.model.Buyer.BuyerGetStaffModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -29,7 +26,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class ChangeServiceProviderListAdapter extends ArrayAdapter<ChangeServiceProviderListItemModel> {
+public class ChangeServiceProviderListAdapter extends ArrayAdapter<BuyerGetStaffModel> {
 
     private static final int _row = 0;
     private static final String TAG = "TimeListAdapter";
@@ -41,10 +38,10 @@ public class ChangeServiceProviderListAdapter extends ArrayAdapter<ChangeService
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
-    private ArrayList<ChangeServiceProviderListItemModel> list;
+    private ArrayList<BuyerGetStaffModel> list;
 
 
-    public ChangeServiceProviderListAdapter(Context context, BuyerReservationActivity ActivityContext, int textViewResourceId, ArrayList<ChangeServiceProviderListItemModel> list) {
+    public ChangeServiceProviderListAdapter(Context context, BuyerReservationActivity ActivityContext, int textViewResourceId, ArrayList<BuyerGetStaffModel> list) {
         super(context, textViewResourceId, list);
         this.list = list;
         this.context = context;
@@ -81,7 +78,7 @@ public class ChangeServiceProviderListAdapter extends ArrayAdapter<ChangeService
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
-                    final ChangeServiceProviderListItemModel myItem = list.get(position);
+                    final BuyerGetStaffModel myItem = list.get(position);
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -116,109 +116,119 @@ public class getBuyerWishListService {
                     String productId = childJsonObj.getString("productId");
                     String buyerId = childJsonObj.getString("buyerId");
 
-                    JSONObject JsonObjSellerDetails = childJsonObj.getJSONObject("sellerDetails");
+                    String SellerDetailsStr = childJsonObj.getString("sellerDetails");
+                    SellerDetailsWL sellerDetailsObj = null;
+                    if (!SellerDetailsStr.equals("false")) {
+                        JSONObject JsonObjSellerDetails = childJsonObj.getJSONObject("sellerDetails");
 
-                    String logo = JsonObjSellerDetails.getString("logo");
-                    String status = JsonObjSellerDetails.getString("status");
-                    String tradeNo = JsonObjSellerDetails.getString("tradeNo");
-                    String documents = JsonObjSellerDetails.getString("documents");
-                    String lName = JsonObjSellerDetails.getString("lName");
-                    String fromTime = JsonObjSellerDetails.getString("fromTime");
-                    String companyName = JsonObjSellerDetails.getString("companyName");
-                    String password = JsonObjSellerDetails.getString("password");
-                    String toTime = JsonObjSellerDetails.getString("toTime");
-                    String fName = JsonObjSellerDetails.getString("fName");
-                    String idSD = JsonObjSellerDetails.getString("id");
-                    String phoneNo = JsonObjSellerDetails.getString("phoneNo");
-                    String email = JsonObjSellerDetails.getString("email");
-                    String address = JsonObjSellerDetails.getString("address");
-                    String description = JsonObjSellerDetails.getString("description");
-                    String activationCode = JsonObjSellerDetails.getString("activationCode");
-                    String service = JsonObjSellerDetails.getString("service");
-                    String longitude = JsonObjSellerDetails.getString("longitude");
-                    String latitude = JsonObjSellerDetails.getString("latitude");
-                    String datetime = JsonObjSellerDetails.getString("datetime");
-                    String mobileNo = JsonObjSellerDetails.getString("mobileNo");
+                        String logo = JsonObjSellerDetails.getString("logo");
+                        String status = JsonObjSellerDetails.getString("status");
+                        String tradeNo = JsonObjSellerDetails.getString("tradeNo");
+                        String documents = JsonObjSellerDetails.getString("documents");
+                        String lName = JsonObjSellerDetails.getString("lName");
+                        String fromTime = JsonObjSellerDetails.getString("fromTime");
+                        String companyName = JsonObjSellerDetails.getString("companyName");
+                        String password = JsonObjSellerDetails.getString("password");
+                        String toTime = JsonObjSellerDetails.getString("toTime");
+                        String fName = JsonObjSellerDetails.getString("fName");
+                        String idSD = JsonObjSellerDetails.getString("id");
+                        String phoneNo = JsonObjSellerDetails.getString("phoneNo");
+                        String email = JsonObjSellerDetails.getString("email");
+                        String address = JsonObjSellerDetails.getString("address");
+                        String description = JsonObjSellerDetails.getString("description");
+                        String activationCode = JsonObjSellerDetails.getString("activationCode");
+                        String service = JsonObjSellerDetails.getString("service");
+                        String longitude = JsonObjSellerDetails.getString("longitude");
+                        String latitude = JsonObjSellerDetails.getString("latitude");
+                        String datetime = JsonObjSellerDetails.getString("datetime");
+                        String mobileNo = JsonObjSellerDetails.getString("mobileNo");
 
-                    //getting ratting from service
-                    String ratingObj = "null";
-                    String rating = "not available";
-                    ratingObj = JsonObjSellerDetails.getString("sellerRatings");
-                    if (!ratingObj.contains("null")) {
-                        JSONObject rateJsonObj = new JSONObject(ratingObj);
-                        rating = rateJsonObj.getString("rating");
-                        if (rating.contains("null"))
-                            rating = "not available";
+                        //getting ratting from service
+                        String ratingObj = "null";
+                        String rating = "not available";
+                        ratingObj = JsonObjSellerDetails.getString("sellerRatings");
+                        if (!ratingObj.contains("null")) {
+                            JSONObject rateJsonObj = new JSONObject(ratingObj);
+                            rating = rateJsonObj.getString("rating");
+                            if (rating.contains("null"))
+                                rating = "not available";
+                        }
+
+                        sellerDetailsObj = new SellerDetailsWL(rating, logo, status, tradeNo, documents, lName, fromTime, companyName, password, toTime,
+                                fName, idSD, phoneNo, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
                     }
 
-                    SellerDetailsWL sellerDetailsObj = new SellerDetailsWL(rating, logo, status, tradeNo, documents, lName, fromTime, companyName, password, toTime,
-                            fName, idSD, phoneNo, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
 
+                    String ServiceDetailsStr = childJsonObj.getString("serviceDetails");
+                    ServiceDetailsWL serviceDetailsObj = null;
+                    if (!ServiceDetailsStr.equals("false")) {
+                        JSONObject JsonObjServiceDetails = childJsonObj.getJSONObject("serviceDetails");
+                        String idSerD = JsonObjServiceDetails.getString("id");
+                        String parent = JsonObjServiceDetails.getString("parent");
+                        String name = JsonObjServiceDetails.getString("name");
+                        String descriptionSerD = JsonObjServiceDetails.getString("description");
+                        String statusSerD = JsonObjServiceDetails.getString("status");
+                        String thumb = JsonObjServiceDetails.getString("thumb");
+                        String categoryType = JsonObjServiceDetails.getString("categoryType");
 
-                    JSONObject JsonObjServiceDetails = childJsonObj.getJSONObject("serviceDetails");
-                    String idSerD = JsonObjServiceDetails.getString("id");
-                    String parent = JsonObjServiceDetails.getString("parent");
-                    String name = JsonObjServiceDetails.getString("name");
-                    String descriptionSerD = JsonObjServiceDetails.getString("description");
-                    String statusSerD = JsonObjServiceDetails.getString("status");
-                    String thumb = JsonObjServiceDetails.getString("thumb");
-                    String categoryType = JsonObjServiceDetails.getString("categoryType");
-
-                    ServiceDetailsWL serviceDetailsObj = new ServiceDetailsWL(id, parent, name, description, status, thumb, categoryType);
-
+                        serviceDetailsObj = new ServiceDetailsWL(id, parent, name, descriptionSerD, statusSerD, thumb, categoryType);
+                    }
 
                     ////////////////////////////////////////////////////////
                     // Product details
-                    JSONObject JsonObjProductDetails = childJsonObj.getJSONObject("productDetails");
-                    String idPD = JsonObjProductDetails.getString("id");
-                    //getting ratting from service
-                    String ratingObj2 = "null";
-                    String productRating = "not available";
-                    ratingObj2 = JsonObjProductDetails.getString("productRating");
-                    if (!ratingObj2.contains("null")) {
-                        JSONObject rateJsonObj = new JSONObject(ratingObj2);
-                        productRating = rateJsonObj.getString("rating");
-                        if (productRating.contains("null"))
-                            productRating = "not available";
-                    }
-                    //getting ratting from service end
-                    String title = JsonObjProductDetails.getString("title");
-                    String price = JsonObjProductDetails.getString("price");
-                    String deliveryTime = JsonObjProductDetails.getString("deliveryTime");
-                    String serviceIdPD = JsonObjProductDetails.getString("serviceId");
-                    String statusPD = JsonObjProductDetails.getString("status");
-                    String dateTime = JsonObjProductDetails.getString("dateTime");
-                    String descriptionPD = JsonObjProductDetails.getString("description");
-                    String sellerIdPD = JsonObjProductDetails.getString("sellerId");
+                    String ProductDetailsStr = childJsonObj.getString("productDetails");
+                    ProductDetailsWL proDetailObj = null;
+                    if (!ProductDetailsStr.equals("false")) {
+                        JSONObject JsonObjProductDetails = childJsonObj.getJSONObject("productDetails");
+                        String idPD = JsonObjProductDetails.getString("id");
+                        //getting ratting from service
+                        String ratingObj2 = "null";
+                        String productRating = "not available";
+                        ratingObj2 = JsonObjProductDetails.getString("productRating");
+                        if (!ratingObj2.contains("null")) {
+                            JSONObject rateJsonObj = new JSONObject(ratingObj2);
+                            productRating = rateJsonObj.getString("rating");
+                            if (productRating.contains("null"))
+                                productRating = "not available";
+                        }
+                        //getting ratting from service end
+                        String title = JsonObjProductDetails.getString("title");
+                        String price = JsonObjProductDetails.getString("price");
+                        String deliveryTime = JsonObjProductDetails.getString("deliveryTime");
+                        String serviceIdPD = JsonObjProductDetails.getString("serviceId");
+                        String statusPD = JsonObjProductDetails.getString("status");
+                        String dateTime = JsonObjProductDetails.getString("dateTime");
+                        String descriptionPD = JsonObjProductDetails.getString("description");
+                        String sellerIdPD = JsonObjProductDetails.getString("selectedStaffid");
 
-                    String productImagesStr = JsonObjProductDetails.getString("productImages");
-                    ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();
+                        String productImagesStr = JsonObjProductDetails.getString("productImages");
+                        ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();
 
-                    if (!productImagesStr.equals("false")) {
-                        JSONArray JsonArrayProImages = JsonObjProductDetails.getJSONArray("productImages");
-                        Log.e(TAG, "productImagesStr length=" + JsonArrayProImages.length());
-                        for (int j = 0; j < JsonArrayProImages.length(); j++) {
-                            JSONObject jsonObjProImg = (JSONObject) JsonArrayProImages.get(j);
+                        if (!productImagesStr.equals("false")) {
+                            JSONArray JsonArrayProImages = JsonObjProductDetails.getJSONArray("productImages");
+                            Log.e(TAG, "productImagesStr length=" + JsonArrayProImages.length());
+                            for (int j = 0; j < JsonArrayProImages.length(); j++) {
+                                JSONObject jsonObjProImg = (JSONObject) JsonArrayProImages.get(j);
 
-                            String idPIMG = jsonObjProImg.getString("id");
-                            String sellerProductId = jsonObjProImg.getString("sellerProductId");
-                            String image = jsonObjProImg.getString("image");
+                                String idPIMG = jsonObjProImg.getString("id");
+                                String sellerProductId = jsonObjProImg.getString("sellerProductId");
+                                String image = jsonObjProImg.getString("image");
 
-                            ProductImagesOrd proImages = new ProductImagesOrd(idPIMG, sellerProductId, Constant.imgbaseUrl + image);
+                                ProductImagesOrd proImages = new ProductImagesOrd(idPIMG, sellerProductId, Constant.imgbaseUrl + image);
+                                productImages.add(proImages);
+                            }
+                        } else {
+                            Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ref.getPackageName() + "/drawable/" + "dummy_user");
+                            ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
                             productImages.add(proImages);
                         }
-                    }
-                    else {
-                        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ref.getPackageName() + "/drawable/" + "dummy_user");
-                        ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
-                        productImages.add(proImages);
-                    }
 
-                    ProductDetailsWL proDetailObj = new ProductDetailsWL(idPD, productRating, productImages, title,
-                            price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);
+                        proDetailObj = new ProductDetailsWL(idPD, productRating, productImages, title,
+                                price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);
+                    }
                     ////////////////////////////////////////////////////////
 
-                    productsList.add(new BuyerWishListModel(id, sellerId, serviceId, productId, buyerId, sellerDetailsObj, serviceDetailsObj,proDetailObj));
+                    productsList.add(new BuyerWishListModel(id, sellerId, serviceId, productId, buyerId, sellerDetailsObj, serviceDetailsObj, proDetailObj));
                 }
             }
         } catch (JSONException e) {
@@ -243,7 +253,7 @@ public class getBuyerWishListService {
         protected String doInBackground(String... input) {
             try {
                 //String buyerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
+//                URL url = new URL(Constant.baseUrl + _url + selectedStaffid + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + sellerServiceId);
                 Log.e(TAG, "getServiceSellers proooo url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

@@ -31,7 +31,7 @@ import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class GetSellerProducts {
+public class GetSellerProducts2 {
 
     private static final String TAG_SUCCESS = "success";
 
@@ -40,11 +40,11 @@ public class GetSellerProducts {
     ProgressDialog progressDialog;
     String sellerId;
     AlertDialog NotFoundDialog;
-    AddOrViewProActivity ref;
+    Context ref;
     private static final String TAG = "GetSellerProducts";
 
     //    globels.getGlobelRef().sellerlogin.id
-    public GetSellerProducts(final Context ctx, AddOrViewProActivity ref, String sellerId) {
+    public GetSellerProducts2(final Context ctx, Context ref, String sellerId) {
         this.ctx = ctx;
         this.ref = ref;
         this.sellerId = sellerId;
@@ -112,7 +112,7 @@ public class GetSellerProducts {
                 if (!ratingObj.contains("null")) {
                     JSONObject rateJsonObj = new JSONObject(ratingObj);
                     rating = rateJsonObj.getString("rating");
-                    if(rating.contains("null"))
+                    if (rating.contains("null"))
                         rating = "not available";
                 }
                 //getting ratting end
@@ -136,8 +136,8 @@ public class GetSellerProducts {
                         String sellerProductId = ImgJsonObj.getString("sellerProductId");
                         String image = ImgJsonObj.getString("image");
 
-                        imgesObj = new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image,false);
-                        productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image,false));
+                        imgesObj = new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image, false);
+                        productImagesList.add(new ProductImages(ImgId, sellerProductId, Constant.imgbaseUrl + image, false));
                     }
                 }
                 //getting images from service end
@@ -210,7 +210,8 @@ public class GetSellerProducts {
             if (response != null) {
                 ArrayList<getSellerProductsResponse> list = returnParsedJsonObject(response);
                 Log.e(TAG, "sellerProduct list" + list.size());
-                ref.fillProductListWithData(list);
+                Constant.productList = list;
+//                ref.fillProductListWithData(list);
                 progressDialog.dismiss();
             } else {
                 NotFoundDialog.show();

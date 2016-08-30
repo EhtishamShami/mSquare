@@ -28,8 +28,10 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     static View v = null;
-    LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.latitude),
-            Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.longitude));
+
+
+    LatLng testLatLng;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,16 +47,24 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
 //                    mMap = ((MapFragment) getActivity().getFragmentManager().
 //                            findFragmentById(R.id.map)).getMap();
 
-                 ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+                    if (globels.getGlobelRef().productList.get(0).sellerInfo.latitude != null &&
+                            globels.getGlobelRef().productList.get(0).sellerInfo.longitude != null) {
+                        testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.latitude),
+                                Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.longitude));
+                    }
+
+                    ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
 
 //                    ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(
 //                            R.id.map)).getMapAsync(this);
                 }
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                Marker testMarker = mMap.addMarker(new MarkerOptions().
-                        position(testLatLng).title("Address"));
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
-                mMap.animateCamera(cameraUpdate);
+                if (testLatLng != null) {
+                    Marker testMarker = mMap.addMarker(new MarkerOptions().
+                            position(testLatLng).title("Address"));
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+                    mMap.animateCamera(cameraUpdate);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

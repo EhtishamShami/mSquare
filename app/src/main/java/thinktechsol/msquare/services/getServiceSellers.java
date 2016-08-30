@@ -86,22 +86,24 @@ public class getServiceSellers {
             JSONObject parentObject = new JSONObject(result);
 
             JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
-            Log.e(TAG, "JSONArray lenght" + productArray.length());
-            for (int i = 0; i < productArray.length(); i++) {
-                JSONObject childJsonObj = (JSONObject) productArray.get(i);
+            String productArrayStr = parentJSONObjDetails.getString("data");
+            if(!productArrayStr.equals("false")) {
+                JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
+                Log.e(TAG, "JSONArray lenght" + productArray.length());
+                for (int i = 0; i < productArray.length(); i++) {
+                    JSONObject childJsonObj = (JSONObject) productArray.get(i);
 
-                String mobileNo = childJsonObj.getString("mobileNo");
-                String logo = childJsonObj.getString("logo");
-                String status = childJsonObj.getString("status");
-                String tradeNo = childJsonObj.getString("tradeNo");
-                String documents = childJsonObj.getString("documents");
-                String lName = childJsonObj.getString("lName");
-                String companyName = childJsonObj.getString("companyName");
-                String password = childJsonObj.getString("password");
-                String fName = childJsonObj.getString("fName");
+                    String mobileNo = childJsonObj.getString("mobileNo");
+                    String logo = childJsonObj.getString("logo");
+                    String status = childJsonObj.getString("status");
+                    String tradeNo = childJsonObj.getString("tradeNo");
+                    String documents = childJsonObj.getString("documents");
+                    String lName = childJsonObj.getString("lName");
+                    String companyName = childJsonObj.getString("companyName");
+                    String password = childJsonObj.getString("password");
+                    String fName = childJsonObj.getString("fName");
 
-                //String productRating = childJsonObj.getString("productRating");
+                    //String productRating = childJsonObj.getString("productRating");
 
 //                String ratingObj = "null";
 //                String rating = "not available";
@@ -117,32 +119,33 @@ public class getServiceSellers {
 //                }
 
 
-                //getting ratting from service
-                String ratingObj = "null";
-                String rating = "not available";
-                ratingObj = childJsonObj.getString("sellerRating");
-                if (!ratingObj.contains("null")) {
-                    JSONObject rateJsonObj = new JSONObject(ratingObj);
-                    rating = rateJsonObj.getString("rating");
-                    if(rating.contains("null"))
-                        rating = "not available";
+                    //getting ratting from service
+                    String ratingObj = "null";
+                    String rating = "not available";
+                    ratingObj = childJsonObj.getString("sellerRating");
+                    if (!ratingObj.contains("null")) {
+                        JSONObject rateJsonObj = new JSONObject(ratingObj);
+                        rating = rateJsonObj.getString("rating");
+                        if (rating.contains("null"))
+                            rating = "not available";
+                    }
+                    Log.e(TAG, "productRating rr=" + rating);
+                    //getting ratting end
+
+                    String id = childJsonObj.getString("id");
+                    String phoneNo = childJsonObj.getString("phoneNo");
+                    String distance = childJsonObj.getString("distance");
+                    String email = childJsonObj.getString("email");
+                    String address = childJsonObj.getString("address");
+                    String description = childJsonObj.getString("description");
+                    String activationCode = childJsonObj.getString("activationCode");
+                    String service = childJsonObj.getString("service");
+                    String longitude = childJsonObj.getString("longitude");
+                    String latitude = childJsonObj.getString("latitude");
+                    String datetime = childJsonObj.getString("datetime");
+
+                    serviceSellers.add(new getServiceSellersModel(mobileNo, logo, status, tradeNo, documents, lName, companyName, password, fName, rating, id, phoneNo, distance, email, address, description, activationCode, service, longitude, latitude, datetime));
                 }
-                Log.e(TAG,"productRating rr="+rating);
-                //getting ratting end
-
-                String id = childJsonObj.getString("id");
-                String phoneNo = childJsonObj.getString("phoneNo");
-                String distance = childJsonObj.getString("distance");
-                String email = childJsonObj.getString("email");
-                String address = childJsonObj.getString("address");
-                String description = childJsonObj.getString("description");
-                String activationCode = childJsonObj.getString("activationCode");
-                String service = childJsonObj.getString("service");
-                String longitude = childJsonObj.getString("longitude");
-                String latitude = childJsonObj.getString("latitude");
-                String datetime = childJsonObj.getString("datetime");
-
-                serviceSellers.add(new getServiceSellersModel(mobileNo,  logo,  status,  tradeNo,  documents,  lName,  companyName,  password,  fName,  rating,  id,  phoneNo,  distance,  email,  address,  description,  activationCode,  service,  longitude,  latitude,  datetime));
             }
 
         } catch (JSONException e) {

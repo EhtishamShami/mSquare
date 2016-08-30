@@ -34,12 +34,12 @@ public class AddImageOfProduct {
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    AddOrViewProActivity ref;
+    Context ref;
     String bitmap;
     String idAgainstImagesUpload;
     ProgressDialog pd;
 
-    public AddImageOfProduct(final Context ctx, AddOrViewProActivity ref, String bitmap, String idAgainstImagesUpload) {
+    public AddImageOfProduct(final Context ctx, Context ref, String bitmap, String idAgainstImagesUpload) {
         this.ctx = ctx;
         this.ref = ref;
         this.idAgainstImagesUpload = idAgainstImagesUpload;

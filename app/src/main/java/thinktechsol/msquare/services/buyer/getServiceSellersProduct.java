@@ -272,7 +272,7 @@ public class getServiceSellersProduct {
         protected String doInBackground(String... input) {
             try {
                 //String buyerId = input[0];
-//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
+//                URL url = new URL(Constant.baseUrl + _url + selectedStaffid + "/" + serviceSellerId + "/" + latitude + "/" + longitude);
                 URL url = new URL(Constant.baseUrl + _url + serviceSellerProductId);
                 Log.e(TAG, "getServiceSellers proooo url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -81,7 +82,20 @@ public class ImgSwiperAdapterProDetail extends PagerAdapter {
         });
 //        mImaView.setImageBitmap(bitmapList.get(position));
         ProductImages myItem = this.productImagesList.get(position);
-        Picasso.with(_activity).load(myItem.image).into(mImaView);
+
+
+        try {
+            if (myItem.isLocalImg) {
+                Uri uri = Uri.fromFile(new File("" + myItem.image));
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
+                mImaView.setImageBitmap(bitmap);
+            } else
+                Picasso.with(_activity).load(myItem.image).into(mImaView);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//        Picasso.with(_activity).load(myItem.image).into(mImaView);
 
         ((ViewPager) container).addView(viewLayout);
         PageListener pageListener = new PageListener();

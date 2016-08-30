@@ -65,7 +65,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     private TextView[] dots;
     static TextView title;
     public static ImageView backBtn, btn_menu;
-    RelativeLayout titlebarlayout, bottombarlayout, add_product_layout, view_product_layout;
+    RelativeLayout titlebarlayout, bottombarlayout, add_product_layout, view_product_layout,fragmentLayout;
     ImageView add_product, view_product, add_product_save;
     ArrayList<String> selectedImagePath;
     EditText pro_title_et, pro_desc_et, pro_price_et, pro_time_et;
@@ -74,6 +74,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     LinearLayout scroler_textview;
     ProgressDialog progressDialog;
     HorizontalPicker picker;
+    SellerAddProductFragment fragobj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         bottombarlayout = (RelativeLayout) findViewById(R.id.bottombarlayout);
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
+        fragmentLayout = (RelativeLayout) findViewById(R.id.fragmentLayout);
         add_product_layout = (RelativeLayout) findViewById(R.id.add_product_layout);
         view_product_layout = (RelativeLayout) findViewById(R.id.view_product_layout);
         backBtn = (ImageView) findViewById(R.id.backBtn);
@@ -162,11 +164,23 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 MakeItemSelected(ADD_PRODUCT);
 //                add_product_layout.setVisibility(View.VISIBLE);
 //                view_product_layout.setVisibility(View.GONE);
-                Constant.addOrViewProduct = true;
-                SellerAddProductFragment fragobj = new SellerAddProductFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentLayout, fragobj);
-                transaction.commit();
+
+//                if(globels.getGlobelRef().IdForAddProduct!=null){
+                    Constant.addOrViewProduct = true;
+                    fragobj = new SellerAddProductFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentLayout, fragobj);
+                    transaction.commit();
+
+
+//                }else {
+//
+//                }
+//                Constant.addOrViewProduct = true;
+//                SellerAddProductFragment fragobj = new SellerAddProductFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
             }
         });
         view_product.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +189,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 MakeItemSelected(VIEW_PRODUCT);
 //                view_product_layout.setVisibility(View.VISIBLE);
 //                add_product_layout.setVisibility(View.GONE);
+                getFragmentManager().beginTransaction().remove(fragobj).commit();
                 new GetSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
             }
         });

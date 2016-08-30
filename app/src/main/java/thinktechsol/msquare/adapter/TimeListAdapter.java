@@ -25,6 +25,7 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
 import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
+import thinktechsol.msquare.model.Buyer.BuyerGetStaffTimeMode;
 import thinktechsol.msquare.model.Buyer.TimeListItemModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
@@ -34,7 +35,7 @@ import thinktechsol.msquare.utils.Constant;
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
+public class TimeListAdapter extends ArrayAdapter<BuyerGetStaffTimeMode> {
 
     private static final int _row = 0;
     private static final String TAG = "TimeListAdapter";
@@ -46,10 +47,10 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
-    private ArrayList<TimeListItemModel> list;
+    private ArrayList<BuyerGetStaffTimeMode> list;
 
 
-    public TimeListAdapter(Context context, BuyerReservationActivity ActivityContext, int textViewResourceId, ArrayList<TimeListItemModel> list) {
+    public TimeListAdapter(Context context, BuyerReservationActivity ActivityContext, int textViewResourceId, ArrayList<BuyerGetStaffTimeMode> list) {
         super(context, textViewResourceId, list);
         this.list = list;
         this.context = context;
@@ -86,15 +87,15 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
-                    final TimeListItemModel myItem = list.get(position);
+                    final BuyerGetStaffTimeMode myItem = list.get(position);
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 //                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
 //                            context.startActivity(serviceSellerActivity);
                             //Toast.makeText(context, "hi=" + myItem.products.get(0).id + "&" + myItem.products.get(0).sellerId, Toast.LENGTH_SHORT).show();
-                            if (myItem.time != "" && myItem.time != " ")
-                                ActivityContext.changeSelectedTime(myItem.time);
+                            if (myItem.datetime != "" && myItem.datetime != " ")
+                                ActivityContext.changeSelectedTime(myItem.datetime);
 
 //                            if (myItem.selected == false) {
 //                                myItem.selected = true;
@@ -109,7 +110,7 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
 
                     if (myItem != null) {
                         if (holder.timeString != null) {
-                            holder.timeString.setText(myItem.time);
+                            holder.timeString.setText(myItem.datetime);
                         }
                     }
 
@@ -167,10 +168,10 @@ public class TimeListAdapter extends ArrayAdapter<TimeListItemModel> {
         public RelativeLayout outterLayout;
     }
 
-    public void makeItemUnSelected(View v) {
-        for (int i = 0; i < list.size(); i++) {
-            final TimeListItemModel myItem = list.get(i);
-            myItem.selected = false;
-        }
-    }
+//    public void makeItemUnSelected(View v) {
+//        for (int i = 0; i < list.size(); i++) {
+//            final TimeListItemModel myItem = list.get(i);
+//            myItem.selected = false;
+//        }
+//    }
 }

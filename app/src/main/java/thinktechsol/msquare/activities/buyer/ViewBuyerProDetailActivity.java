@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,22 +17,16 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.ecommerce.Product;
-
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerProReviewsAdapter;
-import thinktechsol.msquare.adapter.ChangeServiceProviderListAdapter;
-import thinktechsol.msquare.adapter.ImgSwiperAdapterProDetail;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterProDetailBuyer;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.AddToWishListRequestModel;
 import thinktechsol.msquare.model.Buyer.BuyerProReviewsModel;
-import thinktechsol.msquare.model.Buyer.ChangeServiceProviderListItemModel;
 import thinktechsol.msquare.model.Buyer.ProductImages;
 import thinktechsol.msquare.model.Buyer.Products;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.services.buyer.AddToWishListBuyerService;
 import thinktechsol.msquare.utils.Constant;
 

@@ -141,7 +141,7 @@ public class AddToFavouriteBuyerService {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
                 String post_data = URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(buyerId, "UTF-8")
-                        + "&" + URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(sellerId, "UTF-8");
+                        + "&" + URLEncoder.encode("selectedStaffid", "UTF-8") + "=" + URLEncoder.encode(sellerId, "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();

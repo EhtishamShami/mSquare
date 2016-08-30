@@ -29,6 +29,7 @@ import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.*;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -65,6 +66,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 0;
     private boolean mIntentInProgress;
+    boolean signInBySocialMedia = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
         AppEventsLogger.activateApp(this);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
+       // mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
 
         //getting app key hashes for the facebook sdk requirements
@@ -121,7 +123,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         two_btn.setLayoutParams(AppLayoutParam(10f, 80f, 0, -2, 0, 0, btn_fb));
         btn_twitter.setLayoutParams(AppLayoutParam2(10f, 39f, 0, 0, 1, 0, 0));
 
-        googlePluseLogin();
+       // googlePluseLogin();
         btn_google.setLayoutParams(AppLayoutParam2(10f, 39f, 1, 0, 0, 0, R.id.btn_twitter));
 //        btn_google.setSize(SignInButton.SIZE_STANDARD);
 //        btn_google.setScopes(gso.getScopeArray());
@@ -218,28 +220,15 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
 
+                    signInBySocialMedia = true;
                     Constant.logInAs = "google";
-//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//                    startActivityForResult(signInIntent, RC_SIGN_IN);
+                    googlePluseLogin();
 
-//                    if(mGoogleApiClient!=null){
-//                        mGoogleApiClient.disconnect();
-//                    }
-//
-//                    mGoogleApiClient = new GoogleApiClient.Builder(BuyerLoginActivity.this)
-//                            .addConnectionCallbacks(BuyerLoginActivity.this)
-//                            .addOnConnectionFailedListener(BuyerLoginActivity.this)
-//                            .addApi(Plus.API)
-//                            .addScope(Plus.SCOPE_PLUS_LOGIN)
-//                            .addScope(Plus.SCOPE_PLUS_PROFILE)
-//                            .build();
-//                    mGoogleApiClient.connect();
 
                     if (!mGoogleApiClient.isConnecting()) {
                         signedInUser = true;
                         resolveSignInError();
                     }
-
 
                     Constant.makeImageAlphLowOrHigh(btn_google, 1f);
                     return true;
@@ -332,9 +321,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                 mGoogleApiClient.connect();
             }
         } else {
-            if (callbackManager != null) {
-                callbackManager.onActivityResult(requestCode, resultCode, data);
-                Log.e("data", data.toString());
+            try {
+                if (callbackManager != null) {
+                    callbackManager.onActivityResult(requestCode, resultCode, data);
+                    Log.e("BuyerLoginActivyt", "plus login=" + data.toString());
+                }
+            } catch (Exception e) {
             }
         }
     }
@@ -362,9 +354,17 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
-                        Profile profile = Profile.getCurrentProfile();
-                        Log.e("BuyerLoginActivity", "link of profile=" + profile.getProfilePictureUri(100, 100));
-                        profile.getName();
+                        try {
+                            Profile profile = Profile.getCurrentProfile();
+                            Log.e("BuyerLoginActivity", "link of profile=" + profile.getProfilePictureUri(100, 100));
+                            profile.getName();
+
+                            Constant.logInAs = "facebook";
+                            startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+
+                        } catch (Exception e) {
+
+                        }
 
                     }
 
@@ -384,6 +384,28 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     GoogleSignInOptions gso;
 
     public void googlePluseLogin() {
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+
+//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
 
 //        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
 //            if (mGoogleApiClient == null) {
@@ -454,9 +476,13 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 //        Log.e("BuyerLoginActivity", "sign in onConnected:" + bundle.size());
-        signedInUser = false;
-        Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-        getProfileInformation();
+        if (signInBySocialMedia) {
+            signedInUser = false;
+            Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+            getProfileInformation();
+            Constant.logInAs = "googleplus";
+            startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+        }
     }
 
     @Override
@@ -467,14 +493,14 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+//        mGoogleApiClient.connect();
     }
 
     protected void onStop() {
         super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
     }
 
     private void resolveSignInError() {

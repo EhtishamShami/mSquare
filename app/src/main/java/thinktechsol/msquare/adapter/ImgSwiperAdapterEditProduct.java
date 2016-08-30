@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -41,7 +42,6 @@ public class ImgSwiperAdapterEditProduct extends PagerAdapter {
     UploadImgInterfaceEditPro clicked;
 
 
-
     public ImgSwiperAdapterEditProduct(EditProActivity activity,
                                        ViewPager viewPager, ArrayList<ProductImages> productImagesList) {
         this._activity = activity;
@@ -49,13 +49,13 @@ public class ImgSwiperAdapterEditProduct extends PagerAdapter {
         clicked = activity;
         Log.e(TAG, "productImagesList size=" + productImagesList.size());
 
-        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + _activity.getPackageName() + "/drawable/" + "upload_img_bg");
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
-            bitmapList.add(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + _activity.getPackageName() + "/drawable/" + "upload_img_bg");
+//        try {
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
+//            bitmapList.add(bitmap);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         this.viewPager = viewPager;
     }
@@ -73,10 +73,13 @@ public class ImgSwiperAdapterEditProduct extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+
         inflater = (LayoutInflater) _activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewLayout = inflater.inflate(R.layout.swiper_layout, container, false);
+
         mImaView = (ImageView) viewLayout.findViewById(R.id.imageView1);
+
         mImaView.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0));
         mImaView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +88,22 @@ public class ImgSwiperAdapterEditProduct extends PagerAdapter {
             }
         });
 //        mImaView.setImageBitmap(bitmapList.get(position));
+
         ProductImages myItem = this.productImagesList.get(position);
-        Picasso.with(_activity).load(myItem.image).into(mImaView);
+
+        try {
+
+
+            if (myItem.isLocalImg) {
+                Uri uri = Uri.fromFile(new File("" + myItem.image));
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(_activity.getContentResolver(), uri);
+                mImaView.setImageBitmap(bitmap);
+            } else
+                Picasso.with(_activity).load(myItem.image).into(mImaView);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         ((ViewPager) container).addView(viewLayout);
         PageListener pageListener = new PageListener();
@@ -104,7 +121,7 @@ public class ImgSwiperAdapterEditProduct extends PagerAdapter {
         ((ViewPager) container).removeView((RelativeLayout) object);
     }
 
-    public ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+    // public ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(

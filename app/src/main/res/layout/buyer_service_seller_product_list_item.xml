@@ -11,14 +11,25 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true">
 
-        <ImageView
+        <!--<ImageView-->
+            <!--android:id="@+id/lbl"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:src="@drawable/dummy_user" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/lbl"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:src="@drawable/dummy_user" />
+            android:src="@drawable/dummy_user"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -36,6 +47,7 @@
                 android:text="Glow Beauty Center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20sp"
+                android:textColor="@android:color/holo_blue_bright"
                 android:textStyle="bold" />
 
             <TextView
