@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -52,16 +54,24 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
     //    subItemClick click;
     private ArrayList<Products> productList;
     private ArrayList<String> imgLoadedIds;
+    boolean isProduct = false;
+    String isProductStr = "";
 
 
-    public BuyerServiceSellersProductListAdapter(Context context, SellersServiceFragment ActivityContext, int textViewResourceId, ArrayList<Products> productList) {
+    public BuyerServiceSellersProductListAdapter(Context context, SellersServiceFragment ActivityContext, int textViewResourceId, ArrayList<Products> productList, String isProductStr) {
         super(context, textViewResourceId, productList);
         this.productList = productList;
         this.context = context;
+        this.isProductStr = isProductStr;
         this.ActivityContext = ActivityContext;
         imgLoadedIds = new ArrayList<String>();
         selectedServicesIds = new ArrayList<String>();
         selectedProductsIds = new ArrayList<String>();
+
+        if (this.isProductStr.equals("1"))
+            isProduct = true;
+        else
+            isProduct = false;
     }
 
     @Override
@@ -92,15 +102,34 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         holder.description = (TextView) v.findViewById(R.id.time);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
                         holder.CheckBox = (CheckBox) v.findViewById(R.id.isChecked);
+                        holder.addQuant = (ImageButton) v.findViewById(R.id.addQuant);
+                        holder.decrQuant = (ImageButton) v.findViewById(R.id.decrQuant);
+                        holder.tvQuantity = (TextView) v.findViewById(R.id.tvQuantity);
+                        holder.tv_quantity = (TextView) v.findViewById(R.id.tv_quantity);
+
+                        if (isProduct) {
+                            holder.addQuant.setVisibility(View.VISIBLE);
+                            holder.decrQuant.setVisibility(View.VISIBLE);
+                            holder.tvQuantity.setVisibility(View.VISIBLE);
+                            holder.tv_quantity.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.addQuant.setVisibility(View.INVISIBLE);
+                            holder.decrQuant.setVisibility(View.INVISIBLE);
+                            holder.tvQuantity.setVisibility(View.INVISIBLE);
+                            holder.tv_quantity.setVisibility(View.INVISIBLE);
+                        }
 
                         v.setTag(holder);
                     } else {
                         holder = (ViewHolder) v.getTag();
                     }
+
+
                     final Products myItem = productList.get(position);
                     holder.companyName.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             globels.getGlobelRef().singleProductForBuyProDetail = myItem;
                             Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
                             context.startActivity(serviceSellerActivity);
@@ -112,36 +141,6 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         public void onClick(View v) {
 
                             globels.getGlobelRef().singleProductForBuyProDetail = myItem;
-//                            Intent serviceSellerActivity = new Intent(context, ViewBuyerProDetailActivity.class);
-//                            context.startActivity(serviceSellerActivity);
-//                            Toast.makeText(context, "hi=" + myItem.price, Toast.LENGTH_SHORT).show();
-//                            if (holder.CheckBox != null) {
-//
-//                                if (myItem.products.get(0).isChecked == true) {
-//                                    myItem.products.get(0).isChecked = false;
-//                                    itemCheckCounter -= 1;
-//
-//                                    if (SelectedServicesPrice != 0)
-//                                        SelectedServicesPrice -= Integer.parseInt(myItem.products.get(0).price);
-//                                } else {
-//                                    myItem.products.get(0).isChecked = true;
-//                                    itemCheckCounter += 1;
-//
-//                                    SelectedServicesPrice += Integer.parseInt(myItem.products.get(0).price);
-//                                }
-//
-//                                if (itemCheckCounter > 0) {
-////                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
-//                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
-//                                } else {
-////                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
-//                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
-//                                }
-////                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
-//
-//                                holder.CheckBox.setChecked(myItem.products.get(0).isChecked);
-//                            }
-
 
                             if (holder.CheckBox != null) {
 
@@ -159,16 +158,34 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                                 }
 
                                 if (itemCheckCounter > 0) {
-//                                    ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
                                     ActivityContext.showReservationButton(true, SelectedServicesPrice);
                                 } else {
-//                                    ActivityContext.reservationBtn.setVisibility(View.GONE);
                                     ActivityContext.showReservationButton(false, SelectedServicesPrice);
                                 }
-//                                Toast.makeText(context, "product list size=" + SelectedServicesPrice, Toast.LENGTH_SHORT).show();
 
                                 holder.CheckBox.setChecked(myItem.isChecked);
                             }
+                        }
+                    });
+
+                    holder.addQuant.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            int proQuantity = Integer.parseInt(holder.tvQuantity.getText().toString());
+                            proQuantity = proQuantity + 1;
+
+                            holder.tvQuantity.setText("" + proQuantity);
+                        }
+                    });
+
+                    holder.decrQuant.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int proQuantity = Integer.parseInt(holder.tvQuantity.getText().toString());
+                            if (proQuantity > 0)
+                                proQuantity = proQuantity - 1;
+                            holder.tvQuantity.setText("" + proQuantity);
                         }
                     });
 
@@ -259,6 +276,10 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
         public TextView description;
         public RatingBar rating;
         public CheckBox CheckBox;
+        public ImageButton addQuant;
+        public ImageButton decrQuant;
+        public TextView tvQuantity;
+        public TextView tv_quantity;
     }
 
 
@@ -297,5 +318,6 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 
         notifyDataSetInvalidated();
     }
+
 
 }

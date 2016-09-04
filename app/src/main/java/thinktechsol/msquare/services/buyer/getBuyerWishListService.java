@@ -154,8 +154,10 @@ public class getBuyerWishListService {
                                 rating = "not available";
                         }
 
-                        sellerDetailsObj = new SellerDetailsWL(rating, logo, status, tradeNo, documents, lName, fromTime, companyName, password, toTime,
+                        sellerDetailsObj = new SellerDetailsWL("not available", logo, status, tradeNo, documents, lName, fromTime, companyName, password, toTime,
                                 fName, idSD, phoneNo, email, address, description, activationCode, service, longitude, latitude, datetime, mobileNo);
+                    } else {
+                        sellerDetailsObj = new SellerDetailsWL("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
                     }
 
 

@@ -52,7 +52,7 @@ public class SellersServiceFragment extends Fragment {
 //        new getServiceSellersProduct(getActivity(),SellersServiceFragment.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
         Log.e("SellersServiceFrag", "list value 2=" + globels.getGlobelRef().productList2.size());
         listView = (ListView) v.findViewById(R.id.list);
-        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().productList2);
+        adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_product_list_item, globels.getGlobelRef().productList2, globels.getGlobelRef().productList.get(0).sellerInfo.categoryType);
         listView.setAdapter(adapter);
 
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));

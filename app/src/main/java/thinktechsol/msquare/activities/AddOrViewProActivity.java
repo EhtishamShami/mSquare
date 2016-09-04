@@ -48,7 +48,8 @@ import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
-import thinktechsol.msquare.services.GetSellerProducts;
+//import thinktechsol.msquare.services.GetSellerProducts;
+import thinktechsol.msquare.services.GetSellerProducts2;
 import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.utils.Constant;
 
@@ -125,7 +126,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         } else {
             add_product.setBackgroundResource(R.drawable.add_product_normal);
             view_product.setBackgroundResource(R.drawable.view_product_sel);
-            new GetSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
+            new GetSellerProducts2(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
             MakeItemSelected(VIEW_PRODUCT);
         }
 
@@ -190,7 +191,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //                view_product_layout.setVisibility(View.VISIBLE);
 //                add_product_layout.setVisibility(View.GONE);
                 getFragmentManager().beginTransaction().remove(fragobj).commit();
-                new GetSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
+                new GetSellerProducts2(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
             }
         });
 

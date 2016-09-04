@@ -31,7 +31,7 @@ import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class GetSellerProducts {
+public class getSellerProducts {
 
     private static final String TAG_SUCCESS = "success";
 
@@ -44,7 +44,7 @@ public class GetSellerProducts {
     private static final String TAG = "GetSellerProducts";
 
     //    globels.getGlobelRef().sellerlogin.id
-    public GetSellerProducts(final Context ctx, AddOrViewProActivity ref, String sellerId) {
+    public getSellerProducts(final Context ctx, AddOrViewProActivity ref, String sellerId) {
         this.ctx = ctx;
         this.ref = ref;
         this.sellerId = sellerId;

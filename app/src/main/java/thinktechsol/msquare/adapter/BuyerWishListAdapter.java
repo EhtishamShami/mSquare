@@ -35,7 +35,7 @@ import thinktechsol.msquare.utils.Constant;
 public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
 
     private static final int _row = 0;
-    private static final String TAG = "ServiceSellersListAdapter";
+    private static final String TAG = "ServiceSellersListAdp";
 
 
     Fragment_2_items TwoItemsFrag;
@@ -115,16 +115,16 @@ public class BuyerWishListAdapter extends ArrayAdapter<BuyerWishListModel> {
                             Picasso.with(context).load(myItem.productDetial.productImages.get(0).image).into(holder.lbl);
                         }
                         if (holder.name != null && myItem.productDetial != null) {
-                            holder.name.setText(myItem.productDetial.title);
+                            holder.name.setText("" + myItem.productDetial.title);
                         }
                         if (holder.companyName != null) {
-                            holder.companyName.setText(myItem.sellerDetial.companyName);
+                            holder.companyName.setText("" + myItem.sellerDetial.companyName);
                         }
 
 
-                        if (holder.rating != null) {
+                        if (holder.rating != null && myItem.productDetial!= null) {
 //                            holder.rating.setText(myItem.price);
-
+//                            Log.e(TAG, "BuyerRating wishlist=" + myItem.productDetial.productRating);
                             if (!myItem.productDetial.productRating.equals("not available")) {
                                 float ratingNum = Float.parseFloat(myItem.productDetial.productRating);
                                 Log.e("ViewSellPro", "rating 22222=" + (int) ratingNum);
