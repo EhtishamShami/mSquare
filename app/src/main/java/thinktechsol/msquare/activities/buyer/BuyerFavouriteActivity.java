@@ -17,12 +17,9 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerFavouriteListAdapter;
-import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerFavouriteListModel;
-import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.services.buyer.getBuyerFavouriteService;
-import thinktechsol.msquare.services.buyer.getBuyerWishListService;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerFavouriteActivity extends Activity {

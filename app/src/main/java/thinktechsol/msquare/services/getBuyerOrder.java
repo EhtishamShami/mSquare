@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
 import thinktechsol.msquare.model.Buyer.GetBuyersOrdersModel;
 import thinktechsol.msquare.model.BuyerDetailsForOrder;
-import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.model.SellerDetailsForOrder;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;

@@ -47,13 +47,13 @@ public class sellerLogIn {
         this.ctx = ctx;
         this.ref = ref;
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Searching Please wait...");
+        progressDialog.setMessage("Logingin Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage("Plesae try again! Internet problem or Wrong Code");
+        builder.setMessage("Plesae try again! Wrong Code or connection Error");
         builder.setTitle("Not Found");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -192,7 +192,9 @@ public class sellerLogIn {
                 parsedObject = returnParsedJsonObject(response);
                 if (parsedObject != null) {
                     globels.getGlobelRef().sellerlogin = parsedObject;
-                    ref.transation();
+//                    globels.getGlobelRef().sellerLoginId = parsedObject.id;
+//                    globels.getGlobelRef().loginAsBuyerOrSeller = "seller";
+                    ref.transation(parsedObject.id,parsedObject.service);
                     progressDialog.dismiss();
                 } else {
                     progressDialog.dismiss();

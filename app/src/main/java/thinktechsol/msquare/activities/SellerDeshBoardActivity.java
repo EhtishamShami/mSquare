@@ -12,11 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.fragments.SellerCustomerFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
 import thinktechsol.msquare.globels.globels;
@@ -69,7 +67,7 @@ public class SellerDeshBoardActivity extends Activity {
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
         backBtn = (ImageView) findViewById(R.id.backBtn);
-        backBtn.setTag(DeshBoardTagbackButton);
+        backBtn.setTag(""+DeshBoardTagbackButton);
         backBtn.setLayoutParams(AppLayoutParam2(10f, 10f, 0, 0, 0, 0));
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +192,12 @@ public class SellerDeshBoardActivity extends Activity {
             SellerDashBoardProductFragment fragobj = new SellerDashBoardProductFragment();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentLayout, fragobj).commit();
+        }
+
+        if (globels.getGlobelRef().isNotification.equals("Notification")) {
+            globels.getGlobelRef().isNotification = "null";
+            globels.getGlobelRef().orderType = "0";
+            startActivity(new Intent(SellerDeshBoardActivity.this, SellersOrdersActivity.class));
         }
     }
 

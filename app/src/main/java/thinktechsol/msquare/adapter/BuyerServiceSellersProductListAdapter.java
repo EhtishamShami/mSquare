@@ -17,9 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,8 +27,8 @@ import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
 import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.BuyerReservationListModel;
 import thinktechsol.msquare.model.Buyer.Products;
-import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -44,6 +42,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
     private static final String TAG = "ServiceSellersListAdapter";
     int itemCheckCounter = 0;
     public int SelectedServicesPrice = 0;
+    public int SelectedServicesTotalTime = 0;
 
 
     Fragment_2_items TwoItemsFrag;
@@ -67,6 +66,8 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
         imgLoadedIds = new ArrayList<String>();
         selectedServicesIds = new ArrayList<String>();
         selectedProductsIds = new ArrayList<String>();
+        selectedQuantityIds = new ArrayList<String>();
+
 
         if (this.isProductStr.equals("1"))
             isProduct = true;
@@ -99,24 +100,26 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.companyName = (TextView) v.findViewById(R.id.name);
-                        holder.description = (TextView) v.findViewById(R.id.time);
+                        holder.proPrice = (TextView) v.findViewById(R.id.proPrice);
                         holder.rating = (RatingBar) v.findViewById(R.id.rating);
                         holder.CheckBox = (CheckBox) v.findViewById(R.id.isChecked);
                         holder.addQuant = (ImageButton) v.findViewById(R.id.addQuant);
                         holder.decrQuant = (ImageButton) v.findViewById(R.id.decrQuant);
-                        holder.tvQuantity = (TextView) v.findViewById(R.id.tvQuantity);
-                        holder.tv_quantity = (TextView) v.findViewById(R.id.tv_quantity);
+                        holder.tv_quantity_or_servicetimelbl = (TextView) v.findViewById(R.id.tv_quantity_or_servicetimelbl);
+                        holder.tvQuantityOrServiceValue = (TextView) v.findViewById(R.id.tvQuantityOrServiceValue);
 
                         if (isProduct) {
                             holder.addQuant.setVisibility(View.VISIBLE);
                             holder.decrQuant.setVisibility(View.VISIBLE);
-                            holder.tvQuantity.setVisibility(View.VISIBLE);
-                            holder.tv_quantity.setVisibility(View.VISIBLE);
+//                            holder.tv_quantity_or_servicetimelbl.setVisibility(View.VISIBLE);
+//                            holder.tvQuantityOrServiceValue.setVisibility(View.VISIBLE);
+                            holder.tv_quantity_or_servicetimelbl.setText("Product Quantity : ");
                         } else {
                             holder.addQuant.setVisibility(View.INVISIBLE);
                             holder.decrQuant.setVisibility(View.INVISIBLE);
-                            holder.tvQuantity.setVisibility(View.INVISIBLE);
-                            holder.tv_quantity.setVisibility(View.INVISIBLE);
+//                            holder.tv_quantity_or_servicetimelbl.setVisibility(View.INVISIBLE);
+//                            holder.tvQuantityOrServiceValue.setVisibility(View.INVISIBLE);
+                            holder.tv_quantity_or_servicetimelbl.setText("Service Time : " + "Mins");
                         }
 
                         v.setTag(holder);
@@ -136,6 +139,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         }
                     });
 
+
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -150,17 +154,25 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 
                                     if (SelectedServicesPrice != 0)
                                         SelectedServicesPrice -= Integer.parseInt(myItem.price);
+
+                                    if (SelectedServicesTotalTime != 0 && myItem.deliveryTime != "" && myItem.deliveryTime != null)
+                                        SelectedServicesTotalTime -= Integer.parseInt(myItem.deliveryTime);
+
                                 } else {
                                     myItem.isChecked = true;
                                     itemCheckCounter += 1;
 
                                     SelectedServicesPrice += Integer.parseInt(myItem.price);
+
+                                    Log.e("ViewSellPro", "selected delivery time=" + myItem.deliveryTime);
+                                    if (myItem.deliveryTime != "" && !myItem.deliveryTime.equals("") && myItem.deliveryTime != null)
+                                        SelectedServicesTotalTime += Integer.parseInt(myItem.deliveryTime);
                                 }
 
                                 if (itemCheckCounter > 0) {
-                                    ActivityContext.showReservationButton(true, SelectedServicesPrice);
+                                    ActivityContext.showReservationButton(true, SelectedServicesPrice, SelectedServicesTotalTime);
                                 } else {
-                                    ActivityContext.showReservationButton(false, SelectedServicesPrice);
+                                    ActivityContext.showReservationButton(false, SelectedServicesPrice, SelectedServicesTotalTime);
                                 }
 
                                 holder.CheckBox.setChecked(myItem.isChecked);
@@ -172,20 +184,22 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         @Override
                         public void onClick(View v) {
 
-                            int proQuantity = Integer.parseInt(holder.tvQuantity.getText().toString());
+                            int proQuantity = Integer.parseInt(holder.tvQuantityOrServiceValue.getText().toString());
                             proQuantity = proQuantity + 1;
 
-                            holder.tvQuantity.setText("" + proQuantity);
+                            holder.tvQuantityOrServiceValue.setText("" + proQuantity);
+                            myItem.proQuantity = "" + proQuantity;
                         }
                     });
 
                     holder.decrQuant.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int proQuantity = Integer.parseInt(holder.tvQuantity.getText().toString());
+                            int proQuantity = Integer.parseInt(holder.tvQuantityOrServiceValue.getText().toString());
                             if (proQuantity > 0)
                                 proQuantity = proQuantity - 1;
-                            holder.tvQuantity.setText("" + proQuantity);
+                            holder.tvQuantityOrServiceValue.setText("" + proQuantity);
+                            myItem.proQuantity = "" + proQuantity;
                         }
                     });
 
@@ -204,8 +218,8 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         if (holder.companyName != null) {
                             holder.companyName.setText(myItem.title);
                         }
-                        if (holder.description != null) {
-                            holder.description.setText(myItem.description);
+                        if (holder.proPrice != null) {
+                            holder.proPrice.setText("Price : " + myItem.price + " AED");
                         }
                         if (holder.rating != null) {
 
@@ -217,6 +231,14 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                                 holder.rating.setRating((int) ratingNum);
                             }
                         }
+
+                        if (isProduct) {
+                            holder.tv_quantity_or_servicetimelbl.setText("Product Quantity : ");
+                        } else {
+                            holder.tv_quantity_or_servicetimelbl.setText("Service Time : ");
+                            holder.tvQuantityOrServiceValue.setText("" + myItem.deliveryTime + " Mins");
+                        }
+
                         if (holder.CheckBox != null) {
                             holder.CheckBox.setChecked(myItem.isChecked);
                         }
@@ -273,25 +295,31 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
     public static class ViewHolder {
         public ImageView lbl;
         public TextView companyName;
-        public TextView description;
+        public TextView proPrice;
         public RatingBar rating;
         public CheckBox CheckBox;
         public ImageButton addQuant;
         public ImageButton decrQuant;
-        public TextView tvQuantity;
-        public TextView tv_quantity;
+        public TextView tv_quantity_or_servicetimelbl;
+        public TextView tvQuantityOrServiceValue;
     }
 
 
     public String allSelectedServices;
     public ArrayList<String> selectedServicesIds;
     public ArrayList<String> selectedProductsIds;
+    public ArrayList<String> selectedQuantityIds;
 
-    public void addIdsToSelectedList() {
+    public ArrayList<BuyerReservationListModel> addIdsToSelectedList() {
+
+        ArrayList<BuyerReservationListModel> list = new ArrayList<BuyerReservationListModel>();
+        list.clear();
+
         allSelectedServices = "";
 
         selectedServicesIds.clear();
         selectedProductsIds.clear();
+        selectedQuantityIds.clear();
 
         for (int i = 0; i < productList.size(); i++) {
             final Products myItem = productList.get(i);
@@ -303,13 +331,21 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 
                 selectedServicesIds.add(myItem.serviceId);
                 selectedProductsIds.add(myItem.id);
+                selectedQuantityIds.add(myItem.proQuantity);
+
+                list.add(new BuyerReservationListModel(myItem.title, myItem.price + " AED", myItem.proQuantity));
+
+
             }
         }
+
+        return list;
     }
 
     public void updateList() {
         itemCheckCounter = 0;
         SelectedServicesPrice = 0;
+        SelectedServicesTotalTime = 0;
 
         for (int i = 0; i < globels.getGlobelRef().productList2.size(); i++) {
             final Products myItem = productList.get(i);

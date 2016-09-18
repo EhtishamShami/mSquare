@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,6 +69,7 @@ public class BuyerProReviewsAdapter extends ArrayAdapter<BuyerProReviewsModel> {
 
                         holder = new ViewHolder();
 
+                        holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.reviewTitle = (TextView) v.findViewById(R.id.pro_review_title);
                         holder.reviewDescription = (TextView) v.findViewById(R.id.pro_review_desc);
 
@@ -88,6 +90,10 @@ public class BuyerProReviewsAdapter extends ArrayAdapter<BuyerProReviewsModel> {
                     });
 
                     if (myItem != null) {
+
+                        if (!myItem.isLbl) {
+                            holder.lbl.setVisibility(View.GONE);
+                        }
 
                         if (myItem.reviewTitle != null) {
                             holder.reviewTitle.setText(myItem.reviewTitle);
@@ -140,6 +146,7 @@ public class BuyerProReviewsAdapter extends ArrayAdapter<BuyerProReviewsModel> {
     }
 
     public static class ViewHolder {
+        public ImageView lbl;
         public TextView reviewTitle;
         public TextView reviewDescription;
     }

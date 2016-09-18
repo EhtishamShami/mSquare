@@ -22,9 +22,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.EditProActivity;
-import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 

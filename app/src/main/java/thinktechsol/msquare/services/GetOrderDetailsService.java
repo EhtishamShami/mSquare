@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
 import thinktechsol.msquare.model.OrderDetails.BuyerDetails;
 import thinktechsol.msquare.model.OrderDetails.GetOrderDetails;
@@ -34,8 +33,6 @@ import thinktechsol.msquare.model.OrderDetails.ProductDetails;
 import thinktechsol.msquare.model.OrderDetails.ProductImagesOrd;
 import thinktechsol.msquare.model.OrderDetails.SellerDetails;
 import thinktechsol.msquare.model.OrderDetails.ServiceDetails;
-import thinktechsol.msquare.model.Response.ProductImages;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 
@@ -122,9 +119,8 @@ public class GetOrderDetailsService {
                 if (rating.contains("null"))
                     rating = "not available";
             }
+
             //getting seller ratting end
-
-
             String logo = JsonObjSellerDetails.getString("logo");
             String statusSD = JsonObjSellerDetails.getString("status");
             String tradeNo = JsonObjSellerDetails.getString("tradeNo");
@@ -178,68 +174,86 @@ public class GetOrderDetailsService {
                     phoneNoBD, houseNo, idBD, twitter, area, emailBD, facebook, streetNo, datetimeBD, thumb);
             //buyerDetails end//////////////////////////////////////////////////
 
+            ArrayList<OrderDetails> orderDetailsList = null;
 
             // OrderDetails start//////////////////////////////////////////////////
-            JSONArray JsonArrayOrder = childJSONObjDetails.getJSONArray("orderDetails");
-            ArrayList<OrderDetails> orderDetailsList = new ArrayList<OrderDetails>();
-            for (int i = 0; i < JsonArrayOrder.length(); i++) {
-                JSONObject jsonObjOrder = (JSONObject) JsonArrayOrder.get(i);
+            String orderString = childJSONObjDetails.getString("orderDetails");
+            if (!orderString.equals("false")) {
+                JSONArray JsonArrayOrder = childJSONObjDetails.getJSONArray("orderDetails");
+                orderDetailsList = new ArrayList<OrderDetails>();
+                for (int i = 0; i < JsonArrayOrder.length(); i++) {
+                    JSONObject jsonObjOrder = (JSONObject) JsonArrayOrder.get(i);
 
-                // Service details
-                JSONObject JsonObjServiceDetails = jsonObjOrder.getJSONObject("serviceDetails");
-                String idOD = JsonObjServiceDetails.getString("id");
-                String statusOD = JsonObjServiceDetails.getString("status");
-                String descriptionOD = JsonObjServiceDetails.getString("description");
-                String categoryType = JsonObjServiceDetails.getString("categoryType");
-                String name = JsonObjServiceDetails.getString("name");
-                String parent = JsonObjServiceDetails.getString("parent");
-                String thumbOD = JsonObjServiceDetails.getString("thumb");
-                ServiceDetails serviceDetail = new ServiceDetails(idOD, statusOD, descriptionOD, categoryType, name, parent, thumbOD);
+                    // Service details
+                    JSONObject JsonObjServiceDetails = jsonObjOrder.getJSONObject("serviceDetails");
+                    String idOD = JsonObjServiceDetails.getString("id");
+                    String statusOD = JsonObjServiceDetails.getString("status");
+                    String descriptionOD = JsonObjServiceDetails.getString("description");
+                    String categoryType = JsonObjServiceDetails.getString("categoryType");
+                    String name = JsonObjServiceDetails.getString("name");
+                    String parent = JsonObjServiceDetails.getString("parent");
+                    String thumbOD = JsonObjServiceDetails.getString("thumb");
+                    ServiceDetails serviceDetail = new ServiceDetails(idOD, statusOD, descriptionOD, categoryType, name, parent, thumbOD);
 
-                // Product details
-                JSONObject JsonObjProductDetails = jsonObjOrder.getJSONObject("productDetails");
-                String idPD = JsonObjProductDetails.getString("id");
-                String productRating = "0";//JsonObjProductDetails.getString("productRating");
-                String title = JsonObjProductDetails.getString("title");
-                String price = JsonObjProductDetails.getString("price");
-                String deliveryTime = JsonObjProductDetails.getString("deliveryTime");
-                String serviceId = JsonObjProductDetails.getString("serviceId");
-                String statusPD = JsonObjProductDetails.getString("status");
-                String dateTime = JsonObjProductDetails.getString("dateTime");
-                String descriptionPD = JsonObjProductDetails.getString("description");
-                String sellerIdPD = JsonObjProductDetails.getString("sellerId");
+                    // Product details
+                    JSONObject JsonObjProductDetails = jsonObjOrder.getJSONObject("productDetails");
+                    String idPD = JsonObjProductDetails.getString("id");
+                    String productRating = "0";//JsonObjProductDetails.getString("productRating");
 
-                String productImagesStr = JsonObjProductDetails.getString("productImages");
-                ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();
-                Log.e(TAG, "productImagesStr=" + productImagesStr);
-                if (!productImagesStr.equals("false")) {
-                    JSONArray JsonArrayProImages = JsonObjProductDetails.getJSONArray("productImages");
-                    Log.e(TAG, "productImagesStr length=" + JsonArrayProImages.length());
-                    for (int j = 0; j < JsonArrayProImages.length(); j++) {
-                        JSONObject jsonObjProImg = (JSONObject) JsonArrayProImages.get(j);
+                    //getting seller ratting start
+                    String ratingObj2 = "null";
+                    String rating2 = "not available";
+                    ratingObj2 = JsonObjProductDetails.getString("productRating");
+                    if (!ratingObj2.contains("null")) {
+                        JSONObject rateJsonObj = new JSONObject(ratingObj2);
+                        rating2 = rateJsonObj.getString("rating");
+                        if (rating2.contains("null"))
+                            rating2 = "not available";
+                    }
+                    //getting seller ratting end
 
-                        String idPIMG = jsonObjProImg.getString("id");
-                        String sellerProductId = jsonObjProImg.getString("sellerProductId");
-                        String image = jsonObjProImg.getString("image");
 
-                        ProductImagesOrd proImages = new ProductImagesOrd(idPIMG, sellerProductId, Constant.imgbaseUrl + image);
+                    String title = JsonObjProductDetails.getString("title");
+                    String price = JsonObjProductDetails.getString("price");
+                    String deliveryTime = JsonObjProductDetails.getString("deliveryTime");
+                    String serviceId = JsonObjProductDetails.getString("serviceId");
+                    String statusPD = JsonObjProductDetails.getString("status");
+                    String dateTime = JsonObjProductDetails.getString("dateTime");
+                    String descriptionPD = JsonObjProductDetails.getString("description");
+                    String sellerIdPD = JsonObjProductDetails.getString("sellerId");
+
+                    String productImagesStr = JsonObjProductDetails.getString("productImages");
+                    ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();
+                    Log.e(TAG, "productImagesStr=" + productImagesStr);
+                    if (!productImagesStr.equals("false")) {
+                        JSONArray JsonArrayProImages = JsonObjProductDetails.getJSONArray("productImages");
+                        Log.e(TAG, "productImagesStr length=" + JsonArrayProImages.length());
+                        for (int j = 0; j < JsonArrayProImages.length(); j++) {
+                            JSONObject jsonObjProImg = (JSONObject) JsonArrayProImages.get(j);
+
+                            String idPIMG = jsonObjProImg.getString("id");
+                            String sellerProductId = jsonObjProImg.getString("sellerProductId");
+                            String image = jsonObjProImg.getString("image");
+
+                            ProductImagesOrd proImages = new ProductImagesOrd(idPIMG, sellerProductId, Constant.imgbaseUrl + image);
+                            productImages.add(proImages);
+                        }
+                    } else {
+                        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ref.getPackageName() + "/drawable/" + "dummy_user");
+                        ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
                         productImages.add(proImages);
                     }
-                } else {
-                    Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + ref.getPackageName() + "/drawable/" + "dummy_user");
-                    ProductImagesOrd proImages = new ProductImagesOrd("000", "000", uri.toString());
-                    productImages.add(proImages);
+
+                    ProductDetails proDetail = new ProductDetails(idPD, rating2, productImages, title,
+                            price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);
+
+                    //3rd element quantity
+                    String quantity = jsonObjOrder.getString("quantity");
+
+                    OrderDetails orderObj = new OrderDetails(serviceDetail, proDetail, quantity);
+
+                    orderDetailsList.add(orderObj);
                 }
-
-                ProductDetails proDetail = new ProductDetails(idPD, productRating, productImages, title,
-                        price, deliveryTime, serviceId, statusPD, dateTime, descriptionPD, sellerIdPD);
-
-                //3rd element quantity
-                String quantity = jsonObjOrder.getString("quantity");
-
-                OrderDetails orderObj = new OrderDetails(serviceDetail, proDetail, quantity);
-
-                orderDetailsList.add(orderObj);
             }
             // OrderDetails end////////////////////////////////////////////////////
 

@@ -1,9 +1,5 @@
 package thinktechsol.msquare.model.Response;
 
-import android.graphics.Bitmap;
-
-import java.net.URI;
-
 /**
  * Created by Arshad Iqbal on 16/06/2016.
  */

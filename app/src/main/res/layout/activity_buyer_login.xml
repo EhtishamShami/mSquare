@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:background="@drawable/buyer_bg">
+    android:background="#01acec">
 
     <!--<ScrollView-->
     <!--android:layout_width="match_parent"-->
@@ -28,7 +28,7 @@
             android:layout_below="@+id/app_logo"
             android:layout_margin="10dp"
             android:background="@android:color/white"
-            android:text="arshad@gmail.com"
+            android:text=""
             android:hint="Email"
             android:paddingLeft="5dp"
             android:textSize="15sp" />
@@ -40,7 +40,8 @@
             android:layout_below="@+id/time"
             android:layout_margin="10dp"
             android:background="@android:color/white"
-            android:text="123456"
+            android:text=""
+            android:inputType="numberPassword"
             android:hint="Password"
             android:paddingLeft="5dp"
             android:textSize="15sp" />

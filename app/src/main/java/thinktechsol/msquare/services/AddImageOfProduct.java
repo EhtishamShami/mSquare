@@ -22,7 +22,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.io.IOException;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 

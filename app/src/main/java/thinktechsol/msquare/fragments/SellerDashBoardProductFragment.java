@@ -23,12 +23,15 @@ import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.adapter.ItemAdapter2;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.model.SellerDashBoardStatsModel;
+import thinktechsol.msquare.services.GetSellerDeshBoardStatsService;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardProductFragment extends Fragment {
 
     TextView title;
     RelativeLayout titlebarlayout, bottombarlayout;
+    static ListView simpleCustomeListView;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class SellerDashBoardProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
 
 
+        new GetSellerDeshBoardStatsService(getActivity(), SellerDashBoardProductFragment.this, globels.getGlobelRef().sellerLoginId);
+
+
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -51,7 +57,7 @@ public class SellerDashBoardProductFragment extends Fragment {
 //        //initialization
 //        titlebarlayout = (RelativeLayout) v.findViewById(R.id.titlebarlayout);
 //        title = (TextView) v.findViewById(R.id.title);
-        ListView simpleCustomeListView = (ListView) v.findViewById(R.id.listView);
+        simpleCustomeListView = (ListView) v.findViewById(R.id.listView);
 //
 //        //initialization of bottom views
 //        bottombarlayout = (RelativeLayout) v.findViewById(R.id.bottombarlayout);
@@ -79,10 +85,26 @@ public class SellerDashBoardProductFragment extends Fragment {
 
         ArrayList<Item> m_parts = new ArrayList<Item>();
 
-        m_parts.add(new Item(getResources().getString(R.string.lbl_message), 1, R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_customer), 1, R.drawable.customer, R.color.customerColor, R.drawable.customer_slide1, R.drawable.customer_slide2));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_order), 1, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_product), 1, R.drawable.product, R.color.productColor, R.drawable.product_slide1, R.drawable.product_slide2));
+        ArrayList<SellerDashBoardStatsModel> statsList = globels.getGlobelRef().SellerDashBoardStatsModel;
+
+        String MessageTotal = "6";//statsList.get(0).unReadMessages;
+        String Customers = "9";//statsList.get(0).customers;
+
+
+        int PEnabled = 6;
+        int PPending = 7;
+        int PDisabled = 8;
+        int PBlocked = 9;
+
+        int OCompleted = 0;
+        int OinProgress = 0;
+        int Orecent = 0;
+        int Odispute = 0;
+
+        m_parts.add(new Item(getResources().getString(R.string.lbl_message), Integer.parseInt(MessageTotal), R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
+        m_parts.add(new Item(getResources().getString(R.string.lbl_customer), Integer.parseInt(Customers), R.drawable.customer, R.color.customerColor, R.drawable.customer_slide1, R.drawable.customer_slide2));
+        m_parts.add(new Item(getResources().getString(R.string.lbl_order), OCompleted, OinProgress, Orecent, Odispute, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
+        m_parts.add(new Item(getResources().getString(R.string.lbl_product), PEnabled, PPending, PDisabled, PBlocked, R.drawable.product, R.color.productColor, R.drawable.product_slide1, R.drawable.product_slide2, true));
 
 
         try {
@@ -199,7 +221,6 @@ public class SellerDashBoardProductFragment extends Fragment {
                     getActivity().startActivity(add);
                 }
                 break;
-
         }
 
         if (frag != null) {
@@ -207,6 +228,58 @@ public class SellerDashBoardProductFragment extends Fragment {
             transaction.replace(R.id.fragmentLayout, frag);
             transaction.commit();
             SellerDeshBoardActivity.getContext().changeTitle(title);
+        }
+    }
+
+    public void updateStats() {
+
+       // simpleCustomeListView = (ListView) v.findViewById(R.id.listView);
+        ArrayList<Item> m_parts = new ArrayList<Item>();
+
+        ArrayList<SellerDashBoardStatsModel> statsList = globels.getGlobelRef().SellerDashBoardStatsModel;
+
+        Log.e("SellerDashBoarddProFrag","statsList="+statsList.size());
+
+        if(statsList.size()>0) {
+            String MessageTotal = statsList.get(0).unReadMessages;
+            String Customers = statsList.get(0).customers;
+
+            String PEnabled = statsList.get(0).Penable;
+            String PPending = statsList.get(0).Ppending;
+            String PDisabled = statsList.get(0).Pdisable;
+            String PBlocked = statsList.get(0).Pblocked;
+
+            String OCompleted = statsList.get(0).Ocomplete;
+            String OinProgress = statsList.get(0).OinProcess;
+            String Orecent = statsList.get(0).Orecent;
+            String Odispute = statsList.get(0).Odispute;
+
+            m_parts.add(new Item(getResources().getString(R.string.lbl_message), Integer.parseInt(MessageTotal), R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
+            m_parts.add(new Item(getResources().getString(R.string.lbl_customer), Integer.parseInt(Customers), R.drawable.customer, R.color.customerColor, R.drawable.customer_slide1, R.drawable.customer_slide2));
+            m_parts.add(new Item(getResources().getString(R.string.lbl_order), Integer.parseInt(OCompleted), Integer.parseInt(OinProgress), Integer.parseInt(Orecent),
+                    Integer.parseInt(Odispute), R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
+            m_parts.add(new Item(getResources().getString(R.string.lbl_product), Integer.parseInt(PEnabled), Integer.parseInt(PPending),
+                    Integer.parseInt(PDisabled), Integer.parseInt(PBlocked), R.drawable.product, R.color.productColor, R.drawable.product_slide1, R.drawable.product_slide2, true));
+
+            try {
+//                Log.e("SellerDashBoardActivity", "inside the adpater=");
+
+//                simpleCustomeListView.setListShown(false);
+//                simpleCustomeListView.setListAdapter(null);
+                simpleCustomeListView.setAdapter(null);
+                simpleCustomeListView.requestLayout();
+
+                ItemAdapter2 m_adapter = new ItemAdapter2(getActivity(), SellerDeshBoardActivity.getContext(), R.layout.dashboard_row_item1, m_parts, this);
+                simpleCustomeListView.setAdapter(m_adapter);
+
+                m_adapter.notifyDataSetChanged();
+
+                Log.e("SellerDashBoardActivity", "inside the adpater="+simpleCustomeListView.getAdapter());
+
+
+            } catch (Exception e) {
+                Log.e("SellerDashBoardActivity", "adapter=" + e);
+            }
         }
     }
 

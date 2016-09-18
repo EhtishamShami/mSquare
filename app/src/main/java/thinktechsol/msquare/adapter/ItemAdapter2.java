@@ -105,6 +105,10 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                         holder1.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder1.lbl_txt = (TextView) v.findViewById(R.id.lbl_txt);
                         holder1.counterTV = (TextView) v.findViewById(R.id.counterTV);
+                        holder1.counterTV3 = (TextView) v.findViewById(R.id.counterTV3);
+                        holder1.counterTV4 = (TextView) v.findViewById(R.id.counterTV4);
+                        holder1.counterTV5 = (TextView) v.findViewById(R.id.counterTV5);
+
 
                         //hidden items which shows on swipe
                         holder1.subItem1 = (ImageView) v.findViewById(R.id.subItem1);
@@ -131,9 +135,38 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                     Item myItem = objects.get(position);
 
                     if (myItem != null) {
-                        if (holder1.counterTV != null) {
-//                        holder1.counterTV.setText(myItem.counter);
+                        //Log.e("ItemAdapter2", "myItem!null="+position);
+//                        if (holder1.counterTV != null) {
+//                            holder1.counterTV.setText("" + myItem.counter);
+//                        }
+
+                        if (myItem.FourStats) {
+                            holder1.counterTV3.setVisibility(View.VISIBLE);
+                            holder1.counterTV4.setVisibility(View.VISIBLE);
+                            holder1.counterTV5.setVisibility(View.VISIBLE);
+
+                            holder1.counterTV.setText("Enabled " + myItem.counter);
+                            holder1.counterTV3.setText("Pending " + myItem.counter3);
+                            holder1.counterTV4.setText("Disabled " + myItem.counter4);
+                            holder1.counterTV5.setText("Blocked " + myItem.counter5);
+                        } else {
+                            holder1.counterTV3.setVisibility(View.GONE);
+                            holder1.counterTV4.setVisibility(View.GONE);
+                            holder1.counterTV5.setVisibility(View.GONE);
+                            holder1.counterTV.setText("" + myItem.counter);
                         }
+//                        if (holder1.counterTV3 != null) {
+//                            holder1.counterTV3.setText("" + myItem.counter3);
+//                        }
+//
+//                        if (holder1.counterTV4 != null) {
+//                            holder1.counterTV4.setText("" + myItem.counter4);
+//                        }
+//
+//                        if (holder1.counterTV5 != null) {
+//                            holder1.counterTV5.setText("" + myItem.counter5);
+//                        }
+
                         if (holder1.lbl_txt != null) {
                             holder1.lbl_txt.setText(myItem.label);
                         }
@@ -192,6 +225,9 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                         holder2.lbl = (ImageView) v2.findViewById(R.id.lbl);
                         holder2.lbl_txt = (TextView) v2.findViewById(R.id.lbl_txt);
                         holder2.counterTV = (TextView) v2.findViewById(R.id.counterTV2);
+                        holder2.counterTV3 = (TextView) v2.findViewById(R.id.counterTV3);
+                        holder2.counterTV4 = (TextView) v2.findViewById(R.id.counterTV4);
+                        holder2.counterTV5 = (TextView) v2.findViewById(R.id.counterTV5);
 
                         //hidden items which shows on swipe
                         holder2.subItem1 = (ImageView) v2.findViewById(R.id.subItem1);
@@ -222,7 +258,10 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
 
                     if (holder2 != null) {
                         if (holder2.counterTV != null) {
-//                        holder3.counterTV.setText(myItem3.counter);
+                            holder2.counterTV.setText("Completed " + myItem3.counter);
+                            holder2.counterTV3.setText("InProgress " + myItem3.counter3);
+                            holder2.counterTV4.setText("Recent " + myItem3.counter4);
+                            holder2.counterTV5.setText("Disputes " + myItem3.counter5);
                         }
                         if (holder2.lbl_txt != null) {
                             holder2.lbl_txt.setText(myItem3.label);
@@ -330,6 +369,9 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
         public ImageView lbl;
         public TextView lbl_txt;
         public TextView counterTV;
+        public TextView counterTV3;
+        public TextView counterTV4;
+        public TextView counterTV5;
         public ImageView subItem1;
         public ImageView subItem2;
     }
@@ -341,6 +383,9 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
         public ImageView lbl;
         public TextView lbl_txt;
         public TextView counterTV;
+        public TextView counterTV3;
+        public TextView counterTV4;
+        public TextView counterTV5;
         public ImageView subItem1;
         public ImageView subItem2;
         public ImageView subItem3;

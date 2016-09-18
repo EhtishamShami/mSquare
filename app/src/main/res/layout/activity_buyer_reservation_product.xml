@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/confrmBookingBtn"
+        android:layout_below="@+id/titlebar">
+
+
+        <RelativeLayout
+            android:id="@+id/row1Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/userImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:src="@drawable/dummy_user" />
+
+            <TextView
+                android:id="@+id/titleSeller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/userImg"
+                android:text="Al Madina Super Market"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#989898" />
+
+        </RelativeLayout>
+
+        <!--
+            <RelativeLayout
+                android:id="@+id/calenderOuterLayout"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/row1Layout"
+                android:background="#ffffff">
+
+                <RelativeLayout
+                    android:id="@+id/calenderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="#ffffff">
+
+
+                    <com.alamkanak.weekview.WeekView
+                        android:id="@+id/weekView"
+                        dayBackgroundColor="#05000000"
+                        eventTextColor="@android:color/white"
+                        headerColumnBackground="#ffffffff"
+                        headerColumnPadding="8dp"
+                        headerColumnTextColor="@color/addProductSelectorColor"
+                        headerRowBackgroundColor="@color/addProductSelectorColor"
+                        headerRowPadding="12dp"
+                        hourHeight="10dp"
+                        textSize="12sp"
+                        todayBackgroundColor="#1848adff"
+                        todayHeaderTextColor="@color/addProductSelectorColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/TitleDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:text="Today, "
+                            android:textStyle="normal|bold" />
+
+                        <TextView
+                            android:id="@+id/currentDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_toRightOf="@+id/TitleDate"
+                            android:text="tsasdkfdd"
+                            android:textStyle="normal|bold" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/lineView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/darker_gray"></View>
+            </RelativeLayout>
+        -->
+
+        <RelativeLayout
+            android:id="@+id/products_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/row1Layout">
+
+            <ListView
+                android:id="@+id/productslisview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:choiceMode="singleChoice"></ListView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:layout_below="@+id/timelisview"
+                android:background="@android:color/darker_gray"></View>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/scrollableLayoutoutSide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/reservationBtn"
+            android:layout_below="@+id/products_Layout"
+            android:background="#fafafa">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/reservationBtn"
+                android:scrollbars="none">
+
+
+                <RelativeLayout
+                    android:id="@+id/scrollableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/reservationBtn"
+                    android:layout_below="@+id/products_Layout"
+                    android:background="#fafafa">
+
+                    <RelativeLayout
+                        android:id="@+id/orderDetailLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:background="#fafafa">
+
+                        <TextView
+                            android:id="@+id/titleOrderSummary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/lbl_order_summary"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#989898" />
+
+                        <TextView
+                            android:id="@+id/labelTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/titleOrderSummary"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/lbl_total"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/totalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/titleOrderSummary"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="5dp"
+                            android:text="103 AED"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#989898" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@android:color/darker_gray"></View>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/addressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_below="@+id/orderDetailLayout"
+                        android:background="#fafafa">
+
+                        <TextView
+                            android:id="@+id/titleAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/lbl_adress"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#989898" />
+
+                        <TextView
+                            android:id="@+id/buyerAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/titleAddress"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Not Available"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#989898" />
+
+                        <ImageView
+                            android:id="@+id/btnUpdateAddress"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/titleAddress"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/arrow_head_right" />
+
+                        <TextView
+                            android:id="@+id/lblDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/buyerAddress"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/lbl_description"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="#555555" />
+
+                        <EditText
+                            android:id="@+id/etDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblDescription"
+                            android:layout_margin="15dp"
+                            android:background="#ece9ec"
+                            android:hint="Type Description here"
+                            android:lines="4"
+                            android:maxLines="4"
+                            android:padding="10dp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/confrmBookingBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#265e28"
+        android:text="@string/lbl_confirmbooking"
+        android:textColor="@android:color/white"
+        android:visibility="visible" />
+
+</RelativeLayout>

@@ -5,10 +5,12 @@ package thinktechsol.msquare.model.Buyer;
  */
 
 public class BuyerProReviewsModel {
+    public boolean isLbl;
     public String reviewTitle;
     public String reviewDescription;
 
-    public BuyerProReviewsModel(String reviewTitle, String reviewDescription) {
+    public BuyerProReviewsModel(String reviewTitle, String reviewDescription, boolean isLbl) {
+        this.isLbl = isLbl;
         this.reviewTitle = reviewTitle;
         this.reviewDescription = reviewDescription;
     }

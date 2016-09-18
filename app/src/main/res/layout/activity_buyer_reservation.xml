@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
             android:layout_toRightOf="@+id/userImg"
-            android:text="Yasir"
+            android:text="Optional"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#989898" />
 
@@ -263,7 +263,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/timeIcon"
-                        android:text="02:45"
+                        android:text=""
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="#555555" />
                 </RelativeLayout>
@@ -291,7 +291,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/providerIcon"
-                        android:text="With Yasir"
+                        android:text="Optional"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="#555555" />
                 </RelativeLayout>

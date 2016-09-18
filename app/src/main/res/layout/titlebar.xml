@@ -24,6 +24,22 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
 
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/backBtn"
+            android:layout_toLeftOf="@+id/btn_menu"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:queryHint="Search"
+            android:layout_margin="15dp"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:background="@drawable/bg_searchview"></SearchView>
+
         <ImageView
             android:id="@+id/btn_menu"
             android:layout_width="wrap_content"

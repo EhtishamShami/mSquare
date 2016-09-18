@@ -93,7 +93,7 @@ public class GetStaffService {
 
                     String id = childJsonObj.getString("id");
                     String name = childJsonObj.getString("name");
-                    String sellerId = childJsonObj.getString("selectedStaffid");
+                    String sellerId = childJsonObj.getString("sellerId");
 
                     staffList.add(new BuyerGetStaffModel(R.drawable.avatar, id, name, sellerId));
                 }

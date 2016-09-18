@@ -16,12 +16,11 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.AddProductItem;
+import thinktechsol.msquare.interfaceMine.SearchViewInterface;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
-import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
-public class BuyerServiceSellersList extends Fragment {
+public class BuyerServiceSellersList extends Fragment implements SearchViewInterface {
 
     ListView listView;
     BuyerServiceSellersListAdapter adapter;
@@ -34,7 +33,6 @@ public class BuyerServiceSellersList extends Fragment {
         View v = inflater.inflate(R.layout.fragment_buyer_service_seller_list, container, false);
 
 //        new getServiceSellers(getActivity(),BuyerServiceSellersList.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
-
 
         listView = (ListView) v.findViewById(R.id.list);
         if(globels.getGlobelRef().SellersProductDetailList!=null) {
@@ -87,5 +85,13 @@ public class BuyerServiceSellersList extends Fragment {
             x = (size / 100) * Constant.screenHeight;
         }
         return (int) x;
+    }
+
+    @Override
+    public void refersh(ArrayList<getServiceSellersModel> list) {
+        if(list!=null) {
+            adapter = new BuyerServiceSellersListAdapter(getActivity(), R.layout.buyer_service_seller_list_item, list);
+            listView.setAdapter(adapter);
+        }
     }
 }

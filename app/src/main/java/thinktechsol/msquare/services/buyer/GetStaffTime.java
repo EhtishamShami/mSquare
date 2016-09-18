@@ -22,9 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
-import thinktechsol.msquare.model.Buyer.BuyerGetStaffModel;
 import thinktechsol.msquare.model.Buyer.BuyerGetStaffTimeMode;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -159,7 +157,7 @@ public class GetStaffTime {
             if (response != null) {
                 ArrayList<BuyerGetStaffTimeMode> list = returnParsedJsonObject(response);
 //                returnParsedJsonObject(response);
-//                Log.e(TAG, "getServiceSellers list pr1212o" + list.size());
+                Log.e(TAG, "list size of time" + list.size());
                 ref.getStaffTime(list);
                 progressDialog.dismiss();
             } else {

@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.analytics.ecommerce.Product;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +29,6 @@ import thinktechsol.msquare.model.Buyer.ProductImages;
 import thinktechsol.msquare.model.Buyer.ProductReviews;
 import thinktechsol.msquare.model.Buyer.Products;
 import thinktechsol.msquare.model.Buyer.SellerInfo;
-import thinktechsol.msquare.model.Buyer.ServiceDetails;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -108,7 +105,7 @@ public class getServiceSellersProduct {
             String ratingObjSD = "not available";
             String ratingSD = "not available";
             ratingObjSD = JsonObjSellerDetails.getString("rating");
-            if (ratingSD.contains("null"))
+            if (ratingObjSD.contains("null"))
                 ratingSD = "not available";
             else
                 ratingSD = ratingObjSD;
@@ -221,8 +218,8 @@ public class getServiceSellersProduct {
                         if (rating.contains("null"))
                             rating = "not available";
                     }
-                    Log.e(TAG, "Review of each product ="+i+" == " + productReviewsListInsidePro.size());
-                    productsList.add(new Products(id, rating, productImagesList, title, price, deliveryTime, serviceId, status, dateTime, description, sellerId, false, productReviewsListInsidePro));
+                    Log.e(TAG, "Review of each product ="+i+" == " + rating);
+                    productsList.add(new Products(id, rating, productImagesList, title, price, deliveryTime, serviceId, status, dateTime, description, sellerId, false, productReviewsListInsidePro,"0"));
                 }
             }
 

@@ -25,17 +25,12 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerWishListActivity;
-import thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
 import thinktechsol.msquare.model.Buyer.ProductDetailsWL;
-import thinktechsol.msquare.model.Buyer.ProductImages;
 import thinktechsol.msquare.model.Buyer.ProductReviews;
-import thinktechsol.msquare.model.Buyer.Products;
 import thinktechsol.msquare.model.Buyer.SellerDetailsWL;
-import thinktechsol.msquare.model.Buyer.SellerInfo;
 import thinktechsol.msquare.model.Buyer.ServiceDetailsWL;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
-import thinktechsol.msquare.model.OrderDetails.ProductDetails;
 import thinktechsol.msquare.model.OrderDetails.ProductImagesOrd;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -201,7 +196,7 @@ public class getBuyerWishListService {
                         String statusPD = JsonObjProductDetails.getString("status");
                         String dateTime = JsonObjProductDetails.getString("dateTime");
                         String descriptionPD = JsonObjProductDetails.getString("description");
-                        String sellerIdPD = JsonObjProductDetails.getString("selectedStaffid");
+                        String sellerIdPD = JsonObjProductDetails.getString("sellerId");
 
                         String productImagesStr = JsonObjProductDetails.getString("productImages");
                         ArrayList<ProductImagesOrd> productImages = new ArrayList<ProductImagesOrd>();

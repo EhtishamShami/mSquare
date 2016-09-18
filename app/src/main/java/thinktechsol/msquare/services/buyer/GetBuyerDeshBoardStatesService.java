@@ -40,10 +40,11 @@ public class GetBuyerDeshBoardStatesService {
     ProgressDialog progressDialog;
     String buyerId;
     AlertDialog NotFoundDialog;
+    BuyerDeshBoardActivity ref;
 
-    public GetBuyerDeshBoardStatesService(final Context ctx, String buyerId) {
+    public GetBuyerDeshBoardStatesService(final Context ctx,BuyerDeshBoardActivity ref, String buyerId) {
         this.ctx = ctx;
-        // this.ref = ref;
+         this.ref = ref;
         this.buyerId = buyerId;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Fetching Please wait...");
@@ -162,8 +163,10 @@ public class GetBuyerDeshBoardStatesService {
         protected void onPostExecute(String response) {
             if (response != null) {
                 ArrayList<BuyerDeshBoardStatesModel> list = returnParsedJsonObject(response);
-                //ref.fill_data_to_adapter(list);
+
                 globels.getGlobelRef().buyerDeshBoardStatesList = list;
+                ref.fill_data_to_adapter(list);
+
                 //progressDialog.dismiss();
             } else {
                 //NotFoundDialog.show();

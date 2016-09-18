@@ -85,7 +85,7 @@ public class ChangeServiceProviderListAdapter extends ArrayAdapter<BuyerGetStaff
 //                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
 //                            context.startActivity(serviceSellerActivity);
                             if (myItem.name != "" && myItem.name != " ")
-                                ActivityContext.changeServiceProviderUser(myItem.name);
+                                ActivityContext.changeServiceProviderUser(myItem.name,myItem.id);
 //                            Toast.makeText(context, "hi=" +myItem.name , Toast.LENGTH_SHORT).show();
                         }
                     });

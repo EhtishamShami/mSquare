@@ -2,8 +2,10 @@ package thinktechsol.msquare.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.services.buyer.UpdateDeviceInfoService;
 import thinktechsol.msquare.services.sellerLogIn;
 import thinktechsol.msquare.utils.Constant;
 
@@ -23,6 +27,9 @@ public class SellerLoginActivity extends Activity {
     ImageView btn_submit;
     EditText et_login_code;
     sellerLogIn seller;
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -56,7 +63,7 @@ public class SellerLoginActivity extends Activity {
                 } else if (action == MotionEvent.ACTION_UP) {
                     Constant.makeImageAlphLowOrHigh(btn_submit, 1f);
 //                    transation();
-                    new sellerLogIn(SellerLoginActivity.this,SellerLoginActivity.this, et_login_code.getText().toString());
+                    new sellerLogIn(SellerLoginActivity.this, SellerLoginActivity.this, et_login_code.getText().toString());
 
 
 //                    Intent sellerDeshBoard=new Intent(SellerLoginActivity.this, ViewSellOrderDetailActivity.class);
@@ -69,6 +76,10 @@ public class SellerLoginActivity extends Activity {
                 return false;
             }
         });
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
@@ -92,7 +103,20 @@ public class SellerLoginActivity extends Activity {
         return (int) x;
     }
 
-    public void transation() {
+    public void transation(String id,String serviceId) {
+        globels.getGlobelRef().MessageType = "1";
+        globels.getGlobelRef().sellerLoginId = id;
+        globels.getGlobelRef().sellerLoginServiceId = serviceId;
+        globels.getGlobelRef().loginAsBuyerOrSeller = "seller";
+
+        editor.putString("sellerLoginId", id);
+        editor.putString("sellerLoginServiceId", serviceId);
+        editor.putBoolean("isSellerLogin", true);
+        editor.commit();
+
+        new UpdateDeviceInfoService(SellerLoginActivity.this, "seller", globels.getGlobelRef().sellerLoginId, globels.getGlobelRef().deviceToken);
+        //new GetSellerDeshBoardStatsService(SellerLoginActivity.this, globels.getGlobelRef().sellerlogin.id);
+
         Intent sellerDeshBoard = new Intent(SellerLoginActivity.this, SellerDeshBoardActivity.class);
         startActivity(sellerDeshBoard);
         overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);

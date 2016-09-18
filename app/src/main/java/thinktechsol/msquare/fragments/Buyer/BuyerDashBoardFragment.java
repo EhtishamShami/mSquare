@@ -13,25 +13,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddOrViewProActivity;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
-import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
 import thinktechsol.msquare.activities.buyer.BuyerFavouriteActivity;
 import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerWishListActivity;
 import thinktechsol.msquare.adapter.ItemAdapter_Buyer;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
-import thinktechsol.msquare.fragments.SellerCustomerFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerDashBoardAdapterItem;
 import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
-import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerDashBoardFragment extends Fragment {

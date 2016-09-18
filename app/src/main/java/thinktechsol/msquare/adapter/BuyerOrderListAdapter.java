@@ -18,14 +18,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
 import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.GetBuyersOrdersModel;
-import thinktechsol.msquare.model.GetSellerOrdersModel;
-import thinktechsol.msquare.services.UpdateOrderStatus;
 import thinktechsol.msquare.services.buyer.UpdateBuyerOrderStatus;
 import thinktechsol.msquare.utils.Constant;
 

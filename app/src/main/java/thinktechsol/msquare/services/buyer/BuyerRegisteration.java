@@ -23,10 +23,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
-import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
 import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -68,7 +66,7 @@ public class BuyerRegisteration {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-//        addToFavouriteList();
+//        updateDeviceInfo();
         new registerBuyer().execute();
     }
 

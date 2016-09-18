@@ -22,10 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.buyer.HomeActivity;
 import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.getConversationListSellerResModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -126,7 +124,7 @@ public class getConversationListSeller {
         protected String doInBackground(String... input) {
             try {
                 //String sellerId = input[0];
-                URL url = new URL(Constant.baseUrl + _url + globels.getGlobelRef().sellerlogin.id);
+                URL url = new URL(Constant.baseUrl + _url + globels.getGlobelRef().sellerLoginId);
                 Log.e(TAG, "getConversationList url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");

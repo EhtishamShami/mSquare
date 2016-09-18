@@ -1,7 +1,5 @@
 package thinktechsol.msquare.model.Buyer;
 
-import java.util.ArrayList;
-
 /**
  * Created by LENOVO on 7/19/2016.
  */

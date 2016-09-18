@@ -122,9 +122,9 @@ public class SellerAddProduct {
 //                        + "&" + URLEncoder.encode("price", "UTF-8") + "=" + URLEncoder.encode("122", "UTF-8")
 //                        + "&" + URLEncoder.encode("deliveryTime", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8");
 
-                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerlogin.id + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
+                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerLoginId + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
 
-                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().sellerlogin.id, "UTF-8")
+                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().sellerLoginId, "UTF-8")
                         + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(globels.getGlobelRef().IdForAddProduct, "UTF-8")
                         + "&" + URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode(productDetails[0], "UTF-8")
                         + "&" + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(productDetails[1], "UTF-8")

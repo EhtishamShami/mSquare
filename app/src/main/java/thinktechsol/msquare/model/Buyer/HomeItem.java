@@ -1,7 +1,5 @@
 package thinktechsol.msquare.model.Buyer;
 
-import thinktechsol.msquare.R;
-
 /**
  * Created by Arshad.Iqbal on 5/16/2016.
  */

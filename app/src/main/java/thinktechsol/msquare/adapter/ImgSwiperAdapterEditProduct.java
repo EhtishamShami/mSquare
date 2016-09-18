@@ -1,6 +1,5 @@
 package thinktechsol.msquare.adapter;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,13 +17,10 @@ import android.widget.RelativeLayout;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.EditProActivity;
-import thinktechsol.msquare.activities.ViewSellProDetailActivity;
-import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.interfaceMine.UploadImgInterfaceEditPro;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.utils.Constant;

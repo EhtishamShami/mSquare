@@ -1,8 +1,10 @@
 package thinktechsol.msquare.activities.buyer;
 
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 
 
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,7 +29,10 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Buyer.BuyerMapFragment;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.interfaceMine.SearchViewInterface;
+import thinktechsol.msquare.model.Buyer.FiltersModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.services.buyer.GetServiceSellersSearch;
 import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
@@ -39,6 +45,12 @@ public class SalonDetailsActivity extends FragmentActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+
+    SearchView searchView;
+    SearchViewInterface searchViewInterface;
+    BuyerServiceSellersList buyerServiceSellersListFragment;
+    BuyerMapFragment buyerServiceSellersMapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +65,26 @@ public class SalonDetailsActivity extends FragmentActivity {
 
         new getServiceSellers(this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249");
 
+        buyerServiceSellersListFragment = new BuyerServiceSellersList();
+        buyerServiceSellersMapFragment=new BuyerMapFragment();
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
         backBtn = (ImageView) findViewById(R.id.backBtn);
         btn_menu = (ImageView) findViewById(R.id.btn_menu);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setVisibility(View.VISIBLE);
+        btn_menu.setVisibility(View.VISIBLE);
+        title.setVisibility(View.GONE);
+
+        FloatingActionButton filterBtn = (FloatingActionButton) findViewById(R.id.filterBtn);
+
+        btn_menu.setBackgroundResource(R.drawable.btn_menu);
 
         // title bar
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
-        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
+
+        btn_menu.setLayoutParams(AppLayoutParam(6f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
 //        btn_menu.setVisibility(View.VISIBLE);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,29 +99,43 @@ public class SalonDetailsActivity extends FragmentActivity {
             }
         });
         title.setText("Saloon");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.sellerOrderDetailTitleBg));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbar.setTitleTextColor(Color.WHITE);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        searchView.setQueryHint("Type your text here");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-//        viewPager = (ViewPager) findViewById(R.id.viewpager);
-//        setupViewPager(viewPager);
-//
-//        tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        tabLayout.setupWithViewPager(viewPager);
-//        setupTabIcons();
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+
+                new GetServiceSellersSearch(SalonDetailsActivity.this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249", query, "", "", "", "", "", "");
+
+                return false;
+            }
+        });
+
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SalonDetailsActivity.this, BuyerFilterActivity.class));
+            }
+        });
 
 
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new BuyerMapFragment(), ""/*getResources().getString(R.string.lbl_tab1_text)*/);
-        adapter.addFrag(new BuyerServiceSellersList(), ""/* getResources().getString(R.string.lbl_tab2_text)*/);
+        adapter.addFrag(buyerServiceSellersMapFragment, ""/*getResources().getString(R.string.lbl_tab1_text)*/);
+        adapter.addFrag(buyerServiceSellersListFragment, ""/* getResources().getString(R.string.lbl_tab2_text)*/);
         viewPager.setAdapter(adapter);
     }
 
@@ -141,10 +178,6 @@ public class SalonDetailsActivity extends FragmentActivity {
 
     private void setupTabIcons() {
 
-
-//        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-//        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-
         view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
         view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
 
@@ -153,37 +186,6 @@ public class SalonDetailsActivity extends FragmentActivity {
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);
 
-
-//        View view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
-//        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_map_active);
-//        tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
-//
-//        View view2 = getLayoutInflater().inflate(R.layout.custom_tab, null);
-//        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.buyer_list_normal);
-//        tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
-
-
-        /*final TextView maps = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab2, null);
-        maps.setText(""*//*getResources().getString(R.string.lbl_tab1_text)*//*);
-        maps.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.buyer_map_active, 0, 0);
-//        maps.setTextColor(Color.BLACK);
-        tabLayout.getTabAt(0).setCustomView(maps);
-
-//        Drawable img = getResources().getDrawable( R.drawable.buyer_map_active );
-//        img.setBounds(0, 0, 230, 80);
-//        maps.setCompoundDrawables( img, null, null, null );
-
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-        final TextView list = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab2, null);
-        list.setText(""*//*getResources().getString(R.string.lbl_tab2_text)*//*);
-        list.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.buyer_list_normal, 0, 0);
-        tabLayout.getTabAt(1).setCustomView(list);*/
-
-//        Drawable img2 = getResources().getDrawable( R.drawable.buyer_list_normal );
-//        img.setBounds(0, 0, 230, 80);
-//        maps.setCompoundDrawables( img2, null, null, null );
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -283,5 +285,20 @@ public class SalonDetailsActivity extends FragmentActivity {
         }
         paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
         return paramName;
+    }
+
+    public void searchResult(ArrayList<getServiceSellersModel> list) {
+        searchViewInterface = buyerServiceSellersListFragment;
+        searchViewInterface.refersh(list);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(globels.getGlobelRef().filteration) {
+            globels.getGlobelRef().filteration=false;
+            FiltersModel obj = globels.getGlobelRef().filterdDateObj;
+            new GetServiceSellersSearch(SalonDetailsActivity.this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249", "", obj.distance, obj.priceFrom, obj.priceTo, obj.fromTime, obj.toTime, obj.categories);
+        }
     }
 }

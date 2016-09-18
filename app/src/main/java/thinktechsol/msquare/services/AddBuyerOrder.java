@@ -15,24 +15,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
-import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -47,10 +37,10 @@ public class AddBuyerOrder {
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
     String keywords, city;
-    BuyerReservationActivity ActivityContext;
+    Context ActivityContext;
     ConfirmBookingModel dataObj;
 
-    public AddBuyerOrder(final Context ctx, BuyerReservationActivity ActivityContext, ConfirmBookingModel dataObj) {
+    public AddBuyerOrder(final Context ctx, Context ActivityContext, ConfirmBookingModel dataObj) {
         this.ctx = ctx;
         this.ActivityContext = ActivityContext;
         this.dataObj = dataObj;
@@ -186,7 +176,8 @@ public class AddBuyerOrder {
                 for (int i = 0; i < dataObj.serviceId.size(); i++) {
                     nameValuePairs.add(new BasicNameValuePair("serviceId[]", dataObj.serviceId.get(i)));
                     nameValuePairs.add(new BasicNameValuePair("productId[]", dataObj.productId.get(i)));
-                    nameValuePairs.add(new BasicNameValuePair("quantity[]", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("quantity[]", dataObj.quantity.get(i)));
+//                    nameValuePairs.add(new BasicNameValuePair("quantity[]", dataObj.quantity.get(i)));
                 }
 
 //                nameValuePairs.add(new BasicNameValuePair("quantity[]", "0"));

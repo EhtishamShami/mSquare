@@ -53,6 +53,8 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
         this.context = context;
         this.ActivityContext = ActivityContext;
         imgLoadedIds = new ArrayList<String>();
+
+        Log.e(TAG, "inside the view product adapter class=" + productList.size());
     }
 
     @Override
@@ -106,6 +108,8 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
 
                     if (myItem != null) {
 
+
+                        Log.e(TAG, "imy item is not null=" + myItem.title);
 
                         if (holder1.productName != null) {
                             holder1.productName.setText(myItem.title);

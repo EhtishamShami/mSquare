@@ -22,8 +22,10 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
+import thinktechsol.msquare.activities.buyer.BuyerReservationActivityProduct;
 import thinktechsol.msquare.adapter.BuyerServiceSellersProductListAdapter;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.BuyerReservationListModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 
@@ -32,9 +34,10 @@ public class SellersServiceFragment extends Fragment {
     ListView listView;
     BuyerServiceSellersProductListAdapter adapter;
     ArrayList<getServiceSellersProductModel> productList;
-    RelativeLayout pro_name_rating_price_layout, pro_name_line_layout;
+    RelativeLayout pro_name_rating_price_layout, pro_name_line_layout,sellers_title_layout;
     RatingBar rating;
     TextView sellers_title;
+    boolean isProduct = false;
     public Button reservationBtn;
 
     @Override
@@ -44,6 +47,7 @@ public class SellersServiceFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_sellers_service, container, false);
 
         pro_name_rating_price_layout = (RelativeLayout) v.findViewById(R.id.sellers_detials_layout);
+        sellers_title_layout = (RelativeLayout) v.findViewById(R.id.sellers_title_layout);
         pro_name_line_layout = (RelativeLayout) v.findViewById(R.id.pro_name_line_layout);
         sellers_title = (TextView) v.findViewById(R.id.sellers_title);
         rating = (RatingBar) v.findViewById(R.id.rating);
@@ -55,6 +59,8 @@ public class SellersServiceFragment extends Fragment {
         adapter = new BuyerServiceSellersProductListAdapter(getActivity(), SellersServiceFragment.this, R.layout.buyer_service_seller_product_list_item, globels.getGlobelRef().productList2, globels.getGlobelRef().productList.get(0).sellerInfo.categoryType);
         listView.setAdapter(adapter);
 
+        sellers_title_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
+
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
         pro_name_line_layout.setLayoutParams(AppLayoutParam3(10.00f, 60f, 0, 0, 0, 0, null, 0));
 
@@ -62,7 +68,6 @@ public class SellersServiceFragment extends Fragment {
         stars.getDrawable(2).setColorFilter(getActivity().getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-
 
 
         sellers_title.setText(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
@@ -74,28 +79,36 @@ public class SellersServiceFragment extends Fragment {
             rating.setRating((int) ratingNum);
         }
 
+        String isProductStr = globels.getGlobelRef().productList.get(0).sellerInfo.categoryType;
+        if (isProductStr.equals("1"))
+            isProduct = true;
+        else
+            isProduct = false;
+
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getContext(), ""+, Toast.LENGTH_SHORT).show();
-                adapter.addIdsToSelectedList();
+                ArrayList<BuyerReservationListModel> selectedProductList = adapter.addIdsToSelectedList();
+                globels.getGlobelRef().selectedProductListReservation = selectedProductList;
 
                 if (globels.getGlobelRef().selectedServicesIds != null && globels.getGlobelRef().selectedProductsIds != null) {
                     globels.getGlobelRef().selectedServicesIds.clear();
                     globels.getGlobelRef().selectedProductsIds.clear();
+                    globels.getGlobelRef().selectedQuantityIds.clear();
                 }
 
-                globels.getGlobelRef().allSelectedServices = adapter.allSelectedServices;
-                globels.getGlobelRef().selectedServicesIds = adapter.selectedServicesIds;
-                globels.getGlobelRef().selectedProductsIds = adapter.selectedProductsIds;
-                //Toast.makeText(getContext(), "selected list size is=" + adapter.allSelectedServices, Toast.LENGTH_SHORT).show();
+                globels.getGlobelRef().allSelectedServices = adapter.allSelectedServices;//selected service for just showing
 
-                for (int i = 0; i < globels.getGlobelRef().selectedServicesIds.size(); i++) {
-                    Log.e("SellersServiceFragment", "selectedPPServices=" + globels.getGlobelRef().selectedServicesIds.get(i));
-                    Log.e("SellersServiceFragment", "selectedPPProductIds=" + globels.getGlobelRef().selectedProductsIds.get(i));
-                }
+                globels.getGlobelRef().selectedServicesIds = adapter.selectedServicesIds;//service ids
+                globels.getGlobelRef().selectedProductsIds = adapter.selectedProductsIds;//product ids
+                globels.getGlobelRef().selectedQuantityIds = adapter.selectedQuantityIds;//quantity
 
-                startActivity(new Intent(getActivity(), BuyerReservationActivity.class));
+
+                if (isProduct)
+                    startActivity(new Intent(getActivity(), BuyerReservationActivityProduct.class));
+                else
+                    startActivity(new Intent(getActivity(), BuyerReservationActivity.class));
 
             }
         });
@@ -163,9 +176,10 @@ public class SellersServiceFragment extends Fragment {
         return (int) x;
     }
 
-    public void showReservationButton(boolean flag, int price) {
+    public void showReservationButton(boolean flag, int price, int totalServiceTime) {
 
         globels.getGlobelRef().SelectedServicesPrice = price;
+        globels.getGlobelRef().SelectedServicesDeliveryTime = String.valueOf(totalServiceTime);
 
         if (flag)
             reservationBtn.setVisibility(View.VISIBLE);

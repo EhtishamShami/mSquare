@@ -15,9 +15,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
-
-
 public class GetLocation implements LocationListener {
     LocationManager locationManager;
     String provider;

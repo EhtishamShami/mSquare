@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e0dfe1">
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/serviceDetLayout"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/lbl_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/lbl_service_timing" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="20dp"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true">
+
+                    <TextView
+                        android:id="@+id/startTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="@string/lbl_start"
+                        android:textColor="@android:color/holo_red_light" />
+
+                    <TextView
+                        android:id="@+id/startTimeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/startTV"
+                        android:padding="3dp"
+                        android:text="10:00 AM"
+                        android:textColor="@android:color/black" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:id="@+id/endTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="@string/lbl_end"
+                        android:textColor="@android:color/holo_red_light" />
+
+                    <TextView
+                        android:id="@+id/endTimeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/endTV"
+                        android:padding="3dp"
+                        android:text="10:00 AM"
+                        android:textColor="@android:color/black" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/distanceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_below="@+id/serviceDetLayout"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/lbl_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/lbl_distance" />
+
+            <TextView
+                android:id="@+id/distanceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_distance"
+                android:layout_centerHorizontal="true"
+                android:text="10 km" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lbl_distance"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp">
+
+                <com.appyvet.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/distanceRangebar"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    custom:connectingLineColor="#ff6b5c"
+                    custom:pinColor="#aaaaaa"
+                    custom:pinRadius="14dp"
+                    custom:rangeBar="false"
+                    custom:selectorColor="#d5d5d5"
+
+                    custom:selectorSize="10dp"
+                    custom:tickColor="#aaaaaa"
+                    custom:tickEnd="100"
+                    custom:tickStart="0" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/priceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_below="@+id/distanceLayout"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/lbl_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/lbl_price_range" />
+
+            <TextView
+                android:id="@+id/startPriceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lbl_price"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+                android:text="5 AED" />
+
+            <TextView
+                android:id="@+id/endPriceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/lbl_price"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="1000 AED" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/startPriceTV"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp">
+
+                <com.appyvet.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/priceSeekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:padding="10dp"
+
+                    custom:connectingLineColor="#ff6b5c"
+                    custom:pinColor="#aaaaaa"
+                    custom:pinRadius="14dp"
+                    custom:selectorColor="#d5d5d5"
+                    custom:selectorSize="10dp"
+                    custom:tickColor="#aaaaaa"
+                    custom:tickEnd="1000"
+                    custom:tickInterval="1"
+                    custom:tickStart="1" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/categoryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_below="@+id/priceLayout"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/lbl_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/lbl_cat_select" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_category"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:id="@+id/categoryLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/grid_view"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:columnWidth="90dp"
+                        android:gravity="center"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="5dp">
+
+                    </GridView>
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/softDrinkTV"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginRight="2dp"-->
+                    <!--android:background="@drawable/bg_tv_categories"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="@string/lbl_cat_softdrink"-->
+                    <!--android:textColor="@android:color/holo_red_light" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/fruitsVegTV"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="2dp"-->
+                    <!--android:background="@drawable/bg_tv_categories"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="@string/lbl_cat_fruites_veg"-->
+                    <!--android:textColor="@android:color/holo_red_light" />-->
+                </LinearLayout>
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_below="@+id/categoryLayout1"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/dairyEggsTV"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="2dp"-->
+                <!--android:background="@drawable/bg_tv_categories"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="@string/lbl_cat_dairy_eggs"-->
+                <!--android:textColor="@android:color/holo_red_light" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/bakeryTV"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="2dp"-->
+                <!--android:background="@drawable/bg_tv_categories"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="@string/lbl_cat_bakery"-->
+                <!--android:textColor="@android:color/holo_red_light" />-->
+
+                <!--</LinearLayout>-->
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -18,8 +18,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import thinktechsol.msquare.activities.EditProActivity;
-import thinktechsol.msquare.activities.SellerLoginActivity;
-import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 

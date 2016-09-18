@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.SellerOrdersListAdapter;
 import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardSettingFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.services.getSellersOrder;
@@ -168,7 +167,7 @@ public class SellersOrdersActivity extends Activity {
         orders_list = (ListView) findViewById(R.id.orders_list);
 
 
-        new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, globels.getGlobelRef().orderType);
+        new getSellersOrder(this, this, globels.getGlobelRef().sellerLoginId, globels.getGlobelRef().orderType);
 
         order_recent.setBackgroundResource(R.drawable.seller_recent_order);
         order_complete.setBackgroundResource(R.drawable.seller_complete_order);
@@ -261,7 +260,7 @@ public class SellersOrdersActivity extends Activity {
 //                order_recent.setColorFilter(btnSelectorColor);
                 globels.getGlobelRef().orderType="0";
                 title.setText("Recent Orders");
-                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "0");
+                new getSellersOrder(this, this, globels.getGlobelRef().sellerLoginId, "0");
                 order_recent.setBackgroundResource(R.drawable.seller_recent_order_active);
                 break;
 
@@ -269,7 +268,7 @@ public class SellersOrdersActivity extends Activity {
 //                order_complete.setColorFilter(btnSelectorColor);
                 globels.getGlobelRef().orderType="3";
                 title.setText("Complete Orders");
-                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "3");
+                new getSellersOrder(this, this, globels.getGlobelRef().sellerLoginId, "3");
                 order_complete.setBackgroundResource(R.drawable.seller_complete_order_active);
                 break;
 
@@ -277,7 +276,7 @@ public class SellersOrdersActivity extends Activity {
 //                order_inprocess.setColorFilter(btnSelectorColor);
                 globels.getGlobelRef().orderType="1";
                 title.setText("In Process Orders");
-                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "1");
+                new getSellersOrder(this, this, globels.getGlobelRef().sellerLoginId, "1");
                 order_inprocess.setBackgroundResource(R.drawable.seller_inprocess_order_active);
                 break;
 
@@ -285,7 +284,7 @@ public class SellersOrdersActivity extends Activity {
 //                order_dispute.setColorFilter(btnSelectorColor);
                 globels.getGlobelRef().orderType="4";
                 title.setText("Dispute Orders");
-                new getSellersOrder(this, this, globels.getGlobelRef().sellerlogin.id, "4");
+                new getSellersOrder(this, this, globels.getGlobelRef().sellerLoginId, "4");
                 order_dispute.setBackgroundResource(R.drawable.seller_dispute_order_active);
                 break;
         }

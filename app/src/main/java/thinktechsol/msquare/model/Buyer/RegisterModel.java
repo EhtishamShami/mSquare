@@ -1,7 +1,5 @@
 package thinktechsol.msquare.model.Buyer;
 
-import java.util.ArrayList;
-
 /**
  * Created by LENOVO on 7/19/2016.
  */
@@ -9,7 +7,7 @@ import java.util.ArrayList;
 public class RegisterModel {
     public String location;
     public String status;
-    public String linkedin;
+    public String googlePlus;
     public String state;
     public String lName;
     public String udid;
@@ -27,10 +25,10 @@ public class RegisterModel {
     public String datetime;
     public String thumb;
 
-    public RegisterModel(String location, String status, String linkedin, String state, String lName, String udid, String password, String fName, String phoneNo, String houseNo, String id, String twitter, String area, String email, String facebook, String streetNo, String account, String datetime, String thumb) {
+    public RegisterModel(String location, String status, String googlePlus, String state, String lName, String udid, String password, String fName, String phoneNo, String houseNo, String id, String twitter, String area, String email, String facebook, String streetNo, String account, String datetime, String thumb) {
         this.location = location;
         this.status = status;
-        this.linkedin = linkedin;
+        this.googlePlus = googlePlus;
         this.state = state;
         this.lName = lName;
         this.udid = udid;

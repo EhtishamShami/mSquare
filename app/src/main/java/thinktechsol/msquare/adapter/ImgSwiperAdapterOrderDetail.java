@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
-import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.model.OrderDetails.ProductImagesOrd;
-import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.utils.Constant;
 
 public class ImgSwiperAdapterOrderDetail extends PagerAdapter {

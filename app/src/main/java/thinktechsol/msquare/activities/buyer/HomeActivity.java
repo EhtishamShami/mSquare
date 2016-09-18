@@ -19,13 +19,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.HomeAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
-import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.Buyer.HomeItem;
-import thinktechsol.msquare.services.buyer.GetBuyerDeshBoardStatesService;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -56,7 +53,7 @@ public class HomeActivity extends Activity {
 
         setContentView(R.layout.activity_home);
 
-        new GetBuyerDeshBoardStatesService(HomeActivity.this, globels.getGlobelRef().buyerLoginId);
+        //new GetBuyerDeshBoardStatesService(HomeActivity.this, globels.getGlobelRef().buyerLoginId);
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
 
         title = (TextView) findViewById(R.id.title);
@@ -68,7 +65,14 @@ public class HomeActivity extends Activity {
         // title bar
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
         btn_menu.setLayoutParams(AppLayoutParam(6f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
-        btn_menu.setVisibility(View.VISIBLE);
+
+        try {
+            if (!(Constant.logInAs.equals("guest")))
+                btn_menu.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+
+        }
+
         btn_menu.setBackgroundResource(R.drawable.btn_menu);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +120,7 @@ public class HomeActivity extends Activity {
 //        } catch (Exception e) {
 //            Log.e("HomeActivity", "adapter=" + e);
 //        }
+
 
     }
 

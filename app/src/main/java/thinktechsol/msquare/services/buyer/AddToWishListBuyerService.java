@@ -23,11 +23,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
 import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
 import thinktechsol.msquare.model.Buyer.AddToWishListRequestModel;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
-import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -153,7 +151,7 @@ public class AddToWishListBuyerService {
 
 //                Log.e("sellerLogIn", "input data is=" + globels.getGlobelRef().sellerlogin.id + " , " + globels.getGlobelRef().IdForAddProduct + " , " + productDetails[0] + " , " + productDetails[1] + " , " + productDetails[2] + " , " + productDetails[3]);
 
-                String post_data = URLEncoder.encode("selectedStaffid", "UTF-8") + "=" + URLEncoder.encode(requestModel.sellerId, "UTF-8")
+                String post_data = URLEncoder.encode("sellerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.sellerId, "UTF-8")
                         + "&" + URLEncoder.encode("serviceId", "UTF-8") + "=" + URLEncoder.encode(requestModel.serviceId, "UTF-8")
                         + "&" + URLEncoder.encode("productId", "UTF-8") + "=" + URLEncoder.encode(requestModel.productId, "UTF-8")
                         + "&" + URLEncoder.encode("buyerId", "UTF-8") + "=" + URLEncoder.encode(requestModel.buyerId, "UTF-8");

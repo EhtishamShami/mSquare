@@ -1,8 +1,6 @@
 package thinktechsol.msquare.fragments;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +11,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
@@ -46,7 +39,8 @@ public class SellerAddProductFragment extends Fragment {
 //        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
 
 
-        new SellerProductList(getActivity(), SellerAddProductFragment.this, globels.getGlobelRef().sellerlogin.service);
+        new SellerProductList(getActivity(), SellerAddProductFragment.this, globels.getGlobelRef().sellerLoginServiceId);
+
 
         listView = (ListView) v.findViewById(R.id.listView);
 //        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
@@ -110,7 +104,7 @@ public class SellerAddProductFragment extends Fragment {
         }
 
         try {
-            AddProductAdapter m_adapter = new AddProductAdapter(getActivity(), R.layout.dashboard_row_item1, m_parts);
+            AddProductAdapter m_adapter = new AddProductAdapter(getActivity(),SellerAddProductFragment.this, R.layout.dashboard_row_item1, m_parts);
             listView.setAdapter(m_adapter);
         } catch (Exception e) {
             Log.e("SellerAddProduct", "adapter=" + e);

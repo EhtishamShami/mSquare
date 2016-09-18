@@ -1,16 +1,21 @@
 package thinktechsol.msquare.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ConversationAdapter;
@@ -29,10 +33,12 @@ import thinktechsol.msquare.adapter.ImgSwiperAdapterOrderDetail;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.OrderDetails.GetOrderDetails;
 import thinktechsol.msquare.model.OrderDetails.ProductImagesOrd;
+import thinktechsol.msquare.model.OrderDetails.SellerDetails;
 import thinktechsol.msquare.model.Response.ConversationItem;
-import thinktechsol.msquare.model.Response.ProductImages;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.services.GetOrderDetailsService;
+import thinktechsol.msquare.services.buyer.AddOrderMessageService;
+import thinktechsol.msquare.services.buyer.BuyerAddRatingService;
+import thinktechsol.msquare.services.buyer.BuyerAddReviewService;
 import thinktechsol.msquare.utils.Constant;
 
 public class ViewSellOrderDetailActivity extends Activity {
@@ -50,11 +56,14 @@ public class ViewSellOrderDetailActivity extends Activity {
     ArrayList<String> selectedImagePath;
     RatingBar rating;
     //    ImageView add_product, view_product;
-    TextView pro_name, pro_pricee, sendMessageBtn, pro_price, pro_quantity, sellers_title, sellers_description;
+    TextView pro_name, review, pro_pricee, sendMessageBtn, pro_price, pro_quantity, sellers_title, sellers_description;
     ListView conversation_list;
     ConversationAdapter conversationAdapter;
     ArrayList<ProductImagesOrd> productImagesList;
     EditText messageET;
+    //    getSellerProductsResponse singleProduct;
+//    ProductDetails singleProduct;
+    int orderPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,7 @@ public class ViewSellOrderDetailActivity extends Activity {
         setContentView(R.layout.activity_view_sell_order_detail);
 
 //        seller product single
-        getSellerProductsResponse singleProduct = Constant.singleProduct;
+//         singleProduct = Constant.singleProduct;
 
 
         new GetOrderDetailsService(ViewSellOrderDetailActivity.this, ViewSellOrderDetailActivity.this, globels.getGlobelRef().orderId_for_ordr_info);
@@ -87,6 +96,7 @@ public class ViewSellOrderDetailActivity extends Activity {
         pro_price_layout = (RelativeLayout) findViewById(R.id.rating_layout);
         typing_layout = (RelativeLayout) findViewById(R.id.typing_layout);
         pro_name = (TextView) findViewById(R.id.sellers_title);
+        review = (TextView) findViewById(R.id.review);
 
         messageET = (EditText) findViewById(R.id.messageET);
 
@@ -94,7 +104,7 @@ public class ViewSellOrderDetailActivity extends Activity {
 
 
         pro_name = (TextView) findViewById(R.id.pro_name);
-        pro_price = (TextView) findViewById(R.id.pro_price);
+        pro_price = (TextView) findViewById(R.id.proPrice);
         pro_quantity = (TextView) findViewById(R.id.pro_quantity);
 
         sellers_title = (TextView) findViewById(R.id.sellers_title);
@@ -136,9 +146,17 @@ public class ViewSellOrderDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (sendMessageBtn.getText().length() > 0) {
-                    Toast.makeText(ViewSellOrderDetailActivity.this, "Message Sent", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ViewSellOrderDetailActivity.this, "Message Sent", Toast.LENGTH_SHORT).show();
                     String newMessage = messageET.getText().toString();
-                    sendNewMessage(newMessage);
+
+                    if (globels.getGlobelRef().loginAsBuyerOrSeller.equals("seller")) {
+                        sendNewMessage(newMessage, list.get(0).sellerDetails.fName);
+                    } else {
+                        sendNewMessage(newMessage, list.get(0).buyerDetails.fName);
+                    }
+
+                    new AddOrderMessageService(ViewSellOrderDetailActivity.this, ViewSellOrderDetailActivity.this, list.get(0).id, globels.getGlobelRef().MessageType, newMessage);
+
                     messageET.setText("");
                     messageET.clearFocus();
                     makeKeyboardInvisible();
@@ -174,6 +192,8 @@ public class ViewSellOrderDetailActivity extends Activity {
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
+
 //        if (!singleProduct.productRating.equals("not available")) {
 //            float ratingNum = Float.parseFloat(singleProduct.productRating);
 //            Log.e("ViewSellPro", "rating 2=" + (int)ratingNum);
@@ -182,13 +202,43 @@ public class ViewSellOrderDetailActivity extends Activity {
 //        }
         messageET.clearFocus();
         makeKeyboardInvisible();
+
+
+        review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReviewOfBuyer();
+            }
+        });
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float ratingg,
+                                        boolean fromUser) {
+
+                if (fromUser) {
+                    rating.setRating((int) ratingg);
+                    Toast.makeText(ViewSellOrderDetailActivity.this, "" + fromUser, Toast.LENGTH_SHORT).show();
+
+                    new BuyerAddRatingService(ViewSellOrderDetailActivity.this, singleSeller.id, globels.getGlobelRef().buyerLoginId,
+                            list.get(0).orderDetails.get(orderPosition).productDetails.serviceId
+                            , list.get(0).orderDetails.get(orderPosition).productDetails.id,
+                            String.valueOf((int) ratingg));
+                }
+            }
+        });
     }
+
+    SellerDetails singleSeller;
 
     ArrayList<GetOrderDetails> list;
     ArrayList<ConversationItem> messageList;
 
-    public void fillProductListWithData(ArrayList<GetOrderDetails> list) {
-        this.list = list;
+    public void fillProductListWithData(ArrayList<GetOrderDetails> listOrder) {
+        this.list = listOrder;
+
+//        singleProduct = listOrder.get(0).orderDetails.get(0).productDetails;
+        singleSeller = listOrder.get(0).sellerDetails;
+
 
         //Log.e("ViewSellOrderDetail","size of sms list is="+list.get(0).messages.size());
         //message list in adapter
@@ -210,25 +260,30 @@ public class ViewSellOrderDetailActivity extends Activity {
 
 
         ///////////////
-        pro_name.setText(list.get(0).orderDetails.get(0).productDetails.title);
-        if (list.get(0).orderDetails.get(0).serviceDetails.categoryType.equals("0")) {
-            pro_quantity.setText(list.get(0).orderDetails.get(0).productDetails.deliveryTime);
-        } else {
-            pro_quantity.setText(list.get(0).orderDetails.get(0).quantity);
-        }
-
-        pro_price.setText(list.get(0).orderDetails.get(0).productDetails.price + " AED");
         sellers_title.setText(list.get(0).sellerDetails.companyName);
         sellers_description.setText(list.get(0).sellerDetails.description);
-        String proRating = list.get(0).sellerDetails.sellerRatings;
-        Log.e("ViewSellOrderAct", "product rating=" + proRating);
-        if (!proRating.equals("not available") || proRating.equals("0")) {
-            float ratingNum = Float.parseFloat(proRating);
-            rating.setRating(1);
-            rating.setRating((int) ratingNum);
+        if (list.get(0).orderDetails != null) {
+            pro_name.setText(list.get(0).orderDetails.get(0).productDetails.title);
+            if (list.get(0).orderDetails.get(0).serviceDetails.categoryType.equals("0")) {
+                pro_quantity.setText(list.get(0).orderDetails.get(0).productDetails.deliveryTime);
+            } else {
+                pro_quantity.setText(list.get(0).orderDetails.get(0).quantity);
+            }
+
+            pro_price.setText(list.get(0).orderDetails.get(0).productDetails.price + " AED");
+
+//        String proRating = list.get(0).sellerDetails.sellerRatings;
+            String proRating = list.get(0).orderDetails.get(orderPosition).productDetails.productRating;
+            Log.e("ViewSellOrderAct", "product rating fill data=" + proRating);
+            if (!proRating.equals("not available") || proRating.equals("0")) {
+                float ratingNum = Float.parseFloat(proRating);
+                rating.setRating(1);
+                rating.setRating((int) ratingNum);
+            }
+
+            showImagesOnTopSwiper();
         }
 
-        showImagesOnTopSwiper();
     }
 
     public void showImagesOnTopSwiper() {
@@ -249,9 +304,9 @@ public class ViewSellOrderDetailActivity extends Activity {
         setAndShowDotsOnPager();
     }
 
-    public void sendNewMessage(String messageBody) {
+    public void sendNewMessage(String messageBody, String name) {
 //        ConversationItem item = new ConversationItem("empty", list.get(0).sellerDetails.fName, list.get(0).messages.get(0).dated, messageBody);
-        ConversationItem item = new ConversationItem("empty", "seller new", "date", messageBody);
+        ConversationItem item = new ConversationItem("empty", name, "date", messageBody);
         messageList.add(item);
 
         conversationAdapter = new ConversationAdapter(ViewSellOrderDetailActivity.this,
@@ -309,13 +364,16 @@ public class ViewSellOrderDetailActivity extends Activity {
 
         @Override
         public void onPageSelected(int position) {
+
+            orderPosition = position;
+
             for (int i = 0; i < dotsCount; i++) {
                 dots[i].setTextColor(getResources().getColor(android.R.color.darker_gray));
             }
             dots[position].setTextColor(getResources().getColor(R.color.whiteColor));
 
             //change order name,price,quantity
-            Log.e("ViewSellOrderAct", "order images page no=" + position);
+
             pro_name.setText(list.get(0).orderDetails.get(position).productDetails.title);
             if (list.get(0).orderDetails.get(position).serviceDetails.categoryType.equals("0")) {
                 pro_quantity.setText(list.get(0).orderDetails.get(position).productDetails.deliveryTime);
@@ -323,7 +381,15 @@ public class ViewSellOrderDetailActivity extends Activity {
                 pro_quantity.setText(list.get(0).orderDetails.get(position).quantity);
             }
             pro_price.setText(list.get(0).orderDetails.get(position).productDetails.price + " AED");
-            //change order name,price,quantity
+
+            String proRating = list.get(0).orderDetails.get(position).productDetails.productRating;
+            Log.e("ViewSellOrderAct", "product rating viewpager=" + proRating);
+            if (!proRating.equals("not available") || proRating.equals("0")) {
+                float ratingNum = Float.parseFloat(proRating);
+                rating.setRating(1);
+                rating.setRating((int) ratingNum);
+            }
+
         }
 
         @Override
@@ -381,5 +447,53 @@ public class ViewSellOrderDetailActivity extends Activity {
             paramName.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
         return paramName;
+    }
+
+    public void addReviewOfBuyer() {
+        final Dialog addReviewDialog = new Dialog(ViewSellOrderDetailActivity.this);
+        addReviewDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        addReviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        addReviewDialog.setCancelable(false);
+
+        LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
+        View customView = inflater.inflate(R.layout.dialog_add_review_buyer, null);
+
+        addReviewDialog.setContentView(customView);
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.6);
+        addReviewDialog.getWindow().setLayout(width, height);
+
+        final ImageView cross_btn_review = (ImageView) addReviewDialog.findViewById(R.id.cross_btn_review);
+        final EditText title_et = (EditText) addReviewDialog.findViewById(R.id.title_et);
+        final EditText description_et = (EditText) addReviewDialog.findViewById(R.id.description_et);
+
+        cross_btn_review.bringToFront();
+
+        Button OkBtn = (Button) addReviewDialog.findViewById(R.id.savebtn);
+        OkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReviewDialog.dismiss();
+//                new BuyerAddReviewService(ViewBuyerProDetailActivity.this, globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId,
+//                        globels.getGlobelRef().productList.get(0).products.get(0).serviceId, globels.getGlobelRef().productList.get(0).products.get(0).id,
+//                        title_et.getText().toString().trim(), description_et.getText().toString().trim());
+
+                new BuyerAddReviewService(ViewSellOrderDetailActivity.this, singleSeller.id, globels.getGlobelRef().buyerLoginId,
+                        list.get(0).orderDetails.get(orderPosition).productDetails.serviceId
+                        , list.get(0).orderDetails.get(orderPosition).productDetails.id,
+                        title_et.getText().toString().trim(), description_et.getText().toString().trim());
+            }
+        });
+
+
+        cross_btn_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addReviewDialog.dismiss();
+            }
+        });
+
+        addReviewDialog.show();
     }
 }

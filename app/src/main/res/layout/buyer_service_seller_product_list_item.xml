@@ -34,12 +34,13 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/lbl"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            >
+            android:layout_toLeftOf="@+id/layout_right_btn"
+            android:gravity="left">
 
             <TextView
                 android:id="@+id/name"
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:layout_alignParentLeft="true"
                 android:text="Glow Beauty Center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@android:color/holo_blue_bright"
@@ -54,14 +56,16 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/time"
-                android:layout_width="230dp"
+                android:id="@+id/proPrice"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum has been the"
+                android:layout_alignParentLeft="true"
+                android:text="Price : 10 AED"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp"></TextView>
 
@@ -70,68 +74,72 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/time"
+                android:layout_below="@id/proPrice"
                 android:layout_marginTop="3dp"
                 android:max="5"
+                android:layout_alignParentLeft="true"
                 android:numStars="5"
                 android:rating="0" />
 
             <TextView
-                android:id="@+id/tv_quantity"
+                android:id="@+id/tv_quantity_or_servicetimelbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rating"
                 android:layout_marginTop="2dp"
+                android:layout_alignParentLeft="true"
                 android:text="Product Quantity: "
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp"></TextView>
+
             <TextView
-                android:id="@+id/tvQuantity"
+                android:id="@+id/tvQuantityOrServiceValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rating"
                 android:layout_marginTop="2dp"
+                android:layout_toRightOf="@+id/tv_quantity_or_servicetimelbl"
                 android:text="0"
-                android:layout_toRightOf="@+id/tv_quantity"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp"></TextView>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout_right_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+        <RelativeLayout
+            android:id="@+id/layout_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/addQuant"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/plus_btn"
-                    android:paddingRight="4dp"
-                    android:visibility="invisible"/>
+            <ImageButton
+                android:id="@+id/addQuant"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/plus_btn"
+                android:paddingRight="4dp"
+                android:visibility="invisible" />
 
-                <CheckBox
-                    android:id="@+id/isChecked"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_below="@+id/addQuant"
-                    android:button="@drawable/product_item_selector" />
+            <CheckBox
+                android:id="@+id/isChecked"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/addQuant"
+                android:button="@drawable/product_item_selector"
+                android:gravity="center"
+                android:checked="false"
+                android:clickable="false"
+                android:enabled="true" />
 
-                <ImageButton
-                    android:id="@+id/decrQuant"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_below="@+id/isChecked"
-                    android:visibility="invisible"
-                    android:background="@drawable/minus_btn" />
-
-            </RelativeLayout>
-
+            <ImageButton
+                android:id="@+id/decrQuant"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/isChecked"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/minus_btn"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "716486474878",
+    "firebase_url": "https://msquare-1360.firebaseio.com",
+    "project_id": "msquare-1360",
+    "storage_bucket": "msquare-1360.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716486474878:android:ee1e7a0648df7eb9",
+        "android_client_info": {
+          "package_name": "thinktechsol.msquare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716486474878-pjq7gerobqq09p8nefosd9pog012pe1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thinktechsol.msquare",
+            "certificate_hash": "65A8A37E9252E090C4C06D291228895AD979A461"
+          }
+        },
+        {
+          "client_id": "716486474878-9bmao1jpd0vm2nrgbgiqefnkjfs0ouge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgP-PsEJXB1LPF6auXyGDbKUwZZHO3tu0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716486474878-9bmao1jpd0vm2nrgbgiqefnkjfs0ouge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

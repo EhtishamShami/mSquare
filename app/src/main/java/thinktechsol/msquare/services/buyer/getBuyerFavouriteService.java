@@ -23,12 +23,9 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerFavouriteActivity;
-import thinktechsol.msquare.activities.buyer.BuyerWishListActivity;
 import thinktechsol.msquare.model.Buyer.BuyerFavouriteListModel;
-import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
 import thinktechsol.msquare.model.Buyer.ProductReviews;
 import thinktechsol.msquare.model.Buyer.SellerDetailsFav;
-import thinktechsol.msquare.model.Buyer.SellerDetailsWL;
 import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;

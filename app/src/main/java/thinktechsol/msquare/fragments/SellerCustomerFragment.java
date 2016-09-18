@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.SellerCustomerListAdapter;
-import thinktechsol.msquare.adapter.SellerOrdersListAdapter;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.model.SellerCustomerModel;
 import thinktechsol.msquare.services.GetSellerCustomerList;
 import thinktechsol.msquare.utils.Constant;
@@ -39,7 +37,7 @@ public class SellerCustomerFragment extends Fragment {
         SellerDeshBoardActivity.getContext().MakeItemSelected(SellerDeshBoardActivity.CUSTOMER);
 //        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
 
-        new GetSellerCustomerList(getActivity(), SellerCustomerFragment.this, globels.getGlobelRef().sellerlogin.id);
+        new GetSellerCustomerList(getActivity(), SellerCustomerFragment.this, globels.getGlobelRef().sellerLoginId);
 
         customerList = (ListView) v.findViewById(R.id.listView);
 //        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();

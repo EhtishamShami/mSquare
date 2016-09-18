@@ -1,33 +1,21 @@
 package thinktechsol.msquare.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
-import thinktechsol.msquare.fragments.Buyer.SellersServiceFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.model.Buyer.BuyerGetStaffTimeMode;
-import thinktechsol.msquare.model.Buyer.TimeListItemModel;
-import thinktechsol.msquare.model.Buyer.getServiceSellersProductModel;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;
@@ -94,8 +82,11 @@ public class TimeListAdapter extends ArrayAdapter<BuyerGetStaffTimeMode> {
 //                            Intent serviceSellerActivity=new Intent(context, ServiceSellerDetailActivity.class);
 //                            context.startActivity(serviceSellerActivity);
                             //Toast.makeText(context, "hi=" + myItem.products.get(0).id + "&" + myItem.products.get(0).sellerId, Toast.LENGTH_SHORT).show();
-                            if (myItem.datetime != "" && myItem.datetime != " ")
-                                ActivityContext.changeSelectedTime(myItem.datetime);
+                            if (myItem.datetime != "" && myItem.datetime != " ") {
+                                String[] spliter = myItem.datetime.split("\\s+");
+
+                                ActivityContext.changeSelectedTime(spliter[1]);
+                            }
 
 //                            if (myItem.selected == false) {
 //                                myItem.selected = true;
@@ -110,7 +101,10 @@ public class TimeListAdapter extends ArrayAdapter<BuyerGetStaffTimeMode> {
 
                     if (myItem != null) {
                         if (holder.timeString != null) {
-                            holder.timeString.setText(myItem.datetime);
+
+                            String[] spliter = myItem.datetime.split("\\s+");
+
+                            holder.timeString.setText(spliter[1]);
                         }
                     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp">
+
+    <RelativeLayout
+        android:id="@+id/main_layout_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+
+            <TextView
+                android:id="@+id/item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:padding="2dp"
+                android:lines="1"
+                android:gravity="center"
+                android:textColor="@android:color/holo_red_light"
+                android:text="Maroof Saloon"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:background="@drawable/bg_tv_categories"
+                android:textSize="15sp"></TextView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

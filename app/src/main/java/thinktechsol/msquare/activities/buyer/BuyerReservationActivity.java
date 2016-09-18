@@ -38,7 +38,6 @@ import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerGetStaffModel;
 import thinktechsol.msquare.model.Buyer.BuyerGetStaffTimeMode;
 import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
-import thinktechsol.msquare.model.Buyer.TimeListItemModel;
 import thinktechsol.msquare.services.AddBuyerOrder;
 import thinktechsol.msquare.services.buyer.GetStaffService;
 import thinktechsol.msquare.services.buyer.GetStaffTime;
@@ -61,6 +60,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
     TextView userName, changeUser, tvDate, tvTime, tvServiceProvider, sellersTitle, tvPrice, serviceNames, currentDate;
     Button confrmBookingBtn;
     EditText etDescription;
+    String StaffId = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         setContentView(R.layout.activity_buyer_reservation);
 
         new GetStaffService(BuyerReservationActivity.this, BuyerReservationActivity.this, globels.getGlobelRef().serviceSellerId);
+
 
         list = new ArrayList<BuyerGetStaffTimeMode>();
         staffList = new ArrayList<BuyerGetStaffModel>();
@@ -192,6 +193,8 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         PopUpForChangeServiceProvider();
 
         getCurrentDateAndShowOnView();
+
+
         changeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,21 +205,20 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         confrmBookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BuyerReservationActivity.this, "Confirm booking is clicked", Toast.LENGTH_SHORT).show();
+                if (tvTime.getText().toString().trim() != null && tvTime.getText().toString().trim().length() > 0) {
 
-                String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
-                String buyerId = globels.getGlobelRef().buyerLoginId;
-                String extraRemarks = etDescription.getText().toString();
-                String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
-                String staffId = "1";
+                    String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
+                    String buyerId = globels.getGlobelRef().buyerLoginId;
+                    String extraRemarks = etDescription.getText().toString();
+                    String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
+                    String staffId = StaffId;
 
-                int[] serviceId = new int[globels.getGlobelRef().selectedServicesIds.size()];
-                int[] productId = new int[globels.getGlobelRef().selectedServicesIds.size()];
-                int[] quantity = new int[1];
+                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
 
-                ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, null);
-
-                new AddBuyerOrder(BuyerReservationActivity.this, BuyerReservationActivity.this, obj);
+                    new AddBuyerOrder(BuyerReservationActivity.this, BuyerReservationActivity.this, obj);
+                } else {
+                    Toast.makeText(BuyerReservationActivity.this, "Select Time First", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -399,8 +401,10 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         tvDate.setText(new SimpleDateFormat("yyyy MMM dd").format(time.getTime()));
         selectedDateForPostingToService = dateFormatForPosting.format(time.getTime());
 
+        tvTime.setText("");
 //        new GetStaffTime(this, BuyerReservationActivity.this, "1", "30", selectedDateForPostingToService);
-        new GetStaffTime(this, BuyerReservationActivity.this, "1", "30", "2016-07-15");
+        new GetStaffTime(this, BuyerReservationActivity.this, StaffId, globels.getGlobelRef().SelectedServicesDeliveryTime, selectedDateForPostingToService);
+
     }
 
     DateFormat dateFormatForPosting;
@@ -428,10 +432,13 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 //        changeStaff.show();
     }
 
-    public void changeServiceProviderUser(String name) {
+    public void changeServiceProviderUser(String name, String StaffId) {
+        tvTime.setText("");
+        this.StaffId = StaffId;
         userName.setText(name);
         tvServiceProvider.setText("With " + name);
         changeStaff.dismiss();
+        new GetStaffTime(this, BuyerReservationActivity.this, StaffId, globels.getGlobelRef().SelectedServicesDeliveryTime, selectedDateForPostingToService);
     }
 
     public void changeSelectedTime(String time) {
@@ -472,14 +479,27 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         currentDate.setText(dateFormat.format(cal.getTime()));
 
         tvDate.setText(dateFormat2.format(cal.getTime()));
-        tvTime.setText(dateFormat3.format(cal.getTime()));
+        //tvTime.setText(dateFormat3.format(cal.getTime()));
 
         if (dateFormatForPosting != null)
             selectedDateForPostingToService = dateFormatForPosting.format(cal.getTime());
         selectedTimeForPostingToService = dateFormat3.format(cal.getTime());
+
+
+        dateFormatForPosting = new SimpleDateFormat("yyyy-MM-dd");
+        selectedDateForPostingToService = dateFormatForPosting.format(cal.getTime());
+
+        new GetStaffTime(this, BuyerReservationActivity.this, StaffId, globels.getGlobelRef().SelectedServicesDeliveryTime, selectedDateForPostingToService);
+
     }
 
     public void fillProductListWithData(ArrayList<BuyerGetStaffModel> list) {
+
+        if (list.size() > 0) {
+            changeUser.setVisibility(View.VISIBLE);
+        } else
+            changeUser.setVisibility(View.GONE)
+                    ;
         ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, list);
         staffListView.setAdapter(adapter);
     }
@@ -490,7 +510,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 //        list.add(new TimeListItemModel("3", "01:30 AM", false));
 //        list.add(new TimeListItemModel("4", "01:45 AM", false));
 
-        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
+        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, staffTimeList);
         timelisview.setAdapter(adapter);
     }
 }

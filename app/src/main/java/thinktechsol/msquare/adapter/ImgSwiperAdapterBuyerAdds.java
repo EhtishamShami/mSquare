@@ -15,15 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.squareup.picasso.Picasso;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.activities.buyer.HomeActivity;
-import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.utils.Constant;
 
 public class ImgSwiperAdapterBuyerAdds extends PagerAdapter {

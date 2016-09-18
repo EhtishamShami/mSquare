@@ -4,15 +4,11 @@ package thinktechsol.msquare.activities.buyer;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,11 +16,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.adapter.BuyerServiceSellersListAdapter;
 import thinktechsol.msquare.adapter.BuyerWishListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
-import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.services.buyer.getBuyerWishListService;
 import thinktechsol.msquare.utils.Constant;
 

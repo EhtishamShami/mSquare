@@ -2,8 +2,6 @@ package thinktechsol.msquare.model.Buyer;
 
 import java.util.ArrayList;
 
-import thinktechsol.msquare.globels.globels;
-
 /**
  * Created by LENOVO on 7/19/2016.
  */

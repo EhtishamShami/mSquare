@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
 import thinktechsol.msquare.model.Buyer.ProductImages;
 import thinktechsol.msquare.utils.Constant;

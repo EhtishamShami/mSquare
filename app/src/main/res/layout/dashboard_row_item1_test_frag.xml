@@ -92,16 +92,58 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/counterTV"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:gravity="left"
+                    >
+
+                    <TextView
+                        android:id="@+id/counterTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enabled:"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/counterTV3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pending "
+                        android:visibility="gone"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/counterTV4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disabled "
+                        android:visibility="gone"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/counterTV5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Blocked"
+                        android:visibility="gone"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!--<TextView-->
+                    <!--android:id="@+id/counterTV"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="0"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textStyle="bold" />-->
             </LinearLayout>
 
         <!--first showing items-->

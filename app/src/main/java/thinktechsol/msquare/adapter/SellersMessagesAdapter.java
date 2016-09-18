@@ -12,17 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.AddOrViewProActivity;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.ViewSellOrderDetailActivity;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.getConversationListSellerResModel;
 import thinktechsol.msquare.utils.Constant;
 

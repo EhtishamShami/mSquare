@@ -24,10 +24,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
-import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
 import thinktechsol.msquare.model.Buyer.BuyerLogin;
-import thinktechsol.msquare.model.Buyer.RegisterModel;
-import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
@@ -52,13 +49,13 @@ public class BuyerCustomLogin {
         this.email = email;
         this.password = password;
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Saving Please wait...");
+        progressDialog.setMessage("Logingin Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
+        builder.setMessage("Plesae try again! Wrong UserName or Password Or Connection Error");
         builder.setTitle("Not Found");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -92,7 +89,7 @@ public class BuyerCustomLogin {
 
                 String location = childJSonObj.getString("location");
                 String status = childJSonObj.getString("status");
-                String linkedin = childJSonObj.getString("googlePlus");
+                String googlePlus = childJSonObj.getString("googlePlus");
                 String lName = childJSonObj.getString("lName");
                 String udid = childJSonObj.getString("udid");
                 String password = childJSonObj.getString("password");
@@ -103,9 +100,17 @@ public class BuyerCustomLogin {
                 String facebook = childJSonObj.getString("facebook");
                 String datetime = childJSonObj.getString("datetime");
                 String thumb = childJSonObj.getString("thumb");
+                String state = childJSonObj.getString("state");
+                String phoneNo = childJSonObj.getString("phoneNo");
+                String houseNo = childJSonObj.getString("houseNo");
+                String area = childJSonObj.getString("area");
+                String deviceType = childJSonObj.getString("deviceType");
+                String deviceToken = childJSonObj.getString("deviceToken");
+                String streetNo = childJSonObj.getString("streetNo");
 
                 Log.e("BuyerRegistration", "BuyerRegistration Response Is=" + response);
-                BuyerLogin loginModel = new BuyerLogin(location, status, linkedin, lName, udid, password, fName, id, twitter, email, facebook, datetime, thumb);
+                //BuyerLogin loginModel = new BuyerLogin(location, status, linkedin, lName, udid, password, fName, id, twitter, email, facebook, datetime, thumb);
+                BuyerLogin loginModel = new BuyerLogin( location,  status,  state,  lName,  udid,  password,  googlePlus,  fName,  phoneNo,  houseNo,  id,  twitter,  area,  email,  deviceType,  deviceToken,  facebook,  streetNo,  datetime,  thumb);
                 logInResponseList.add(loginModel);
             } else {
                 return null;

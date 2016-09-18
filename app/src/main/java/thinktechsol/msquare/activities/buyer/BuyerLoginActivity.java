@@ -2,11 +2,13 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -48,7 +50,12 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerLogin;
+import thinktechsol.msquare.model.Buyer.RegisterModel;
+import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
 import thinktechsol.msquare.services.buyer.BuyerCustomLogin;
+import thinktechsol.msquare.services.buyer.BuyerRegisteration;
+import thinktechsol.msquare.services.buyer.BuyerRegisterationForSocialMedia;
+import thinktechsol.msquare.services.buyer.UpdateDeviceInfoService;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerLoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -68,6 +75,9 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     private boolean mIntentInProgress;
     boolean signInBySocialMedia = false;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +89,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_buyer_login);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+
         AppEventsLogger.activateApp(this);
 
-       // mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
+        // mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
 
         //getting app key hashes for the facebook sdk requirements
@@ -123,7 +136,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         two_btn.setLayoutParams(AppLayoutParam(10f, 80f, 0, -2, 0, 0, btn_fb));
         btn_twitter.setLayoutParams(AppLayoutParam2(10f, 39f, 0, 0, 1, 0, 0));
 
-       // googlePluseLogin();
+        // googlePluseLogin();
         btn_google.setLayoutParams(AppLayoutParam2(10f, 39f, 1, 0, 0, 0, R.id.btn_twitter));
 //        btn_google.setSize(SignInButton.SIZE_STANDARD);
 //        btn_google.setScopes(gso.getScopeArray());
@@ -324,7 +337,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
             try {
                 if (callbackManager != null) {
                     callbackManager.onActivityResult(requestCode, resultCode, data);
-                    Log.e("BuyerLoginActivyt", "plus login=" + data.toString());
+                    Log.e("BuyerLoginActivyt", "fb login=" + data.toString());
                 }
             } catch (Exception e) {
             }
@@ -356,15 +369,23 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
                         try {
                             Profile profile = Profile.getCurrentProfile();
-                            Log.e("BuyerLoginActivity", "link of profile=" + profile.getProfilePictureUri(100, 100));
+//                            Log.e("BuyerLoginActivity", "link of profile=" + profile.getName());
+//                            Log.e("BuyerLoginActivity", "link of profile img=" + profile.getProfilePictureUri(500,500));
+//                            Log.e("BuyerLoginActivity", "link of profile img=" +);
                             profile.getName();
 
+
+                            RegisterRequestModel requestModel = new RegisterRequestModel(profile.getFirstName().toString(), profile.getLastName().toString(), "", "", "facebook", "", "1");
+                            new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
+
                             Constant.logInAs = "facebook";
-                            startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+
 
                         } catch (Exception e) {
-
+                            Log.e("BuyerLoginActivity", "catching the exception=" + e);
                         }
+
+                        //startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
 
                     }
 
@@ -540,8 +561,34 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     }
 
     public void onLoginCompleted(ArrayList<BuyerLogin> list) {
+
+        globels.getGlobelRef().MessageType = "2";
         globels.getGlobelRef().buyerLoginId = list.get(0).id;
+        globels.getGlobelRef().buyerLoginResponse = list;
+
+        globels.getGlobelRef().loginAsBuyerOrSeller = "buyer";
+
+
+        editor.putString("houseNo", list.get(0).houseNo);
+        editor.putString("streetNo", list.get(0).streetNo);
+        editor.putString("area", list.get(0).area);
+        editor.putString("state", list.get(0).state);
+        editor.putString("phoneNo", list.get(0).phoneNo);
+
+
+        editor.putString("buyerLoginId", list.get(0).id);
+        editor.putBoolean("isBuyerLogin", true);
+        editor.commit();
+
+
+        new UpdateDeviceInfoService(BuyerLoginActivity.this, "buyer", globels.getGlobelRef().buyerLoginId, globels.getGlobelRef().deviceToken);
+
+
         Constant.logInAs = "customeLogin";
         startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+    }
+
+    public void onRegistrationCompletedOfSocialMed(ArrayList<RegisterModel> list) {
+
     }
 }

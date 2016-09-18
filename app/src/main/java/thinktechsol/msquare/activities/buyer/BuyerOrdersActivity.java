@@ -2,8 +2,10 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,14 +19,10 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerOrderListAdapter;
-import thinktechsol.msquare.adapter.SellerOrdersListAdapter;
 import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.GetBuyersOrdersModel;
-import thinktechsol.msquare.model.GetSellerOrdersModel;
 import thinktechsol.msquare.services.getBuyerOrder;
-import thinktechsol.msquare.services.getSellersOrder;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerOrdersActivity extends Activity {
@@ -49,6 +47,9 @@ public class BuyerOrdersActivity extends Activity {
     int btnSelectorColor;
     ListView orders_list;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     public static BuyerOrdersActivity getContext() {
         return ContextOfActivity;
     }
@@ -64,6 +65,8 @@ public class BuyerOrdersActivity extends Activity {
 
         setContentView(R.layout.activity_buyer_order);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
 
         btnSelectorColor = getResources().getColor(R.color.buttonSelectorColor);
 
@@ -186,7 +189,8 @@ public class BuyerOrdersActivity extends Activity {
         orders_list = (ListView) findViewById(R.id.orders_list);
 
 
-        new getBuyerOrder(this, this, globels.getGlobelRef().buyerLoginId, globels.getGlobelRef().orderType);
+//        new getBuyerOrder(this, this, globels.getGlobelRef().buyerLoginId, globels.getGlobelRef().orderType);
+        new getBuyerOrder(this, this, preferences.getString("buyerLoginId", ""), globels.getGlobelRef().orderType);
 
         order_recent.setBackgroundResource(R.drawable.seller_recent_order);
         order_complete.setBackgroundResource(R.drawable.seller_complete_order);

@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardMessageFragment;
-import thinktechsol.msquare.fragments.SellerDashBoardMessageFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.getConversationListSellerResModel;
 import thinktechsol.msquare.utils.Constant;

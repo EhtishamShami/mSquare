@@ -24,7 +24,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity;
-import thinktechsol.msquare.model.Buyer.AddToWishListRequestModel;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;

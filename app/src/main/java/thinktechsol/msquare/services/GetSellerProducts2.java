@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.SellerLogInResponse;

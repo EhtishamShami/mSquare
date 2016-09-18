@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -20,10 +19,8 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
 import thinktechsol.msquare.fragments.Buyer.BuyerDashBoardFragment;
 import thinktechsol.msquare.fragments.Fragment_2_items;
-import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.subItemClick;
 import thinktechsol.msquare.model.Buyer.BuyerDashBoardAdapterItem;
-import thinktechsol.msquare.model.Item;
 import thinktechsol.msquare.utils.Constant;
 
 //import com.daimajia.swipe.SwipeLayout;

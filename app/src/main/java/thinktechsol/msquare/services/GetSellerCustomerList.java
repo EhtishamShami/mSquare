@@ -22,13 +22,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.fragments.SellerCustomerFragment;
 import thinktechsol.msquare.model.SellerCustomerModel;
 import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 

@@ -25,7 +25,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.SellerLogInResponse;

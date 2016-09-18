@@ -2,8 +2,6 @@ package thinktechsol.msquare.model.OrderDetails;
 
 import java.util.ArrayList;
 
-import thinktechsol.msquare.model.Response.ProductImages;
-
 /**
  * Created by Arshad Iqbal on 8/15/2016.
  */

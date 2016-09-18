@@ -12,11 +12,13 @@
     <color name="sellerOrderDetailTitleBg">#0068a5</color>
     <color name="bottomBarColor">#f9f9f9</color>
     <color name="whiteColor">#ffffff</color>
+    <color name="color_filter_title_bar">#f6f6f8</color>
 
     <!--add product title bar color-->
     <color name="addProductTitleBarColor">#daa400</color>
     <color name="buyerHomeActivityTitleBarColor">#000000</color>
     <color name="color_userLayout">#fafafa</color>
+    <color name="color_view_staff">#f7f7f7</color>
 
 
     <color name="addProductSelectorColor">#daa400</color>

@@ -140,7 +140,7 @@ public class BuyerRegisterationActivity extends Activity {
                             ) {
                         RegisterRequestModel requestModel = new RegisterRequestModel(fname.getText().toString(), lname.getText().toString(), email.getText().toString(), password.getText().toString(), "googlePlus", location.getCurrentLatLng(), "1");
                         new BuyerRegisteration(BuyerRegisterationActivity.this, BuyerRegisterationActivity.this, requestModel);
-                    }else {
+                    } else {
                         Toast.makeText(BuyerRegisterationActivity.this, "Please Enter the Values first", Toast.LENGTH_SHORT).show();
                     }
 
@@ -230,6 +230,7 @@ public class BuyerRegisterationActivity extends Activity {
 
     public void onRegistrationCompleted(ArrayList<RegisterModel> list) {
         Log.e("BuyerRegistration", "fname=" + list.get(0).fName);
+        finish();
     }
 
     @Override

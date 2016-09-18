@@ -1,124 +1,206 @@
 package thinktechsol.msquare.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.adapter.ItemAdapter;
-import thinktechsol.msquare.model.Item;
+import thinktechsol.msquare.activities.SellerViewStaffActivity;
+import thinktechsol.msquare.activities.UserTypeActivity;
+import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.SellerDetailsByIdModel;
+import thinktechsol.msquare.services.GetSellerDetailsById;
+import thinktechsol.msquare.services.buyer.UpdateDeviceInfoService;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardSettingFragment extends Fragment {
 
-    TextView title;
-    RelativeLayout titlebarlayout, bottombarlayout;
+    TextView seller_title, staffText, phoneText, addressText, logoutText, emailText;
+    RelativeLayout titlebarlayout, seller_detials_layout, seller_title_layout, ratinglayout, staff_layout, seller_email_layout, phone_layout, address_layout, seller_logout_layout;
+    RatingBar rating;
+    ImageView userImage, btnViewStaff,logoutImg;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
+        View v = inflater.inflate(R.layout.fragment_sellerdashboard_setting, container, false);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editor = preferences.edit();
+
+        new GetSellerDetailsById(getActivity(), SellerDashBoardSettingFragment.this, globels.getGlobelRef().sellerLoginId);
+
+        RelativeLayout imgs = (RelativeLayout) v.findViewById(R.id.imgs);
+        imgs.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
+
+        userImage = (ImageView) v.findViewById(R.id.userImage);
+
+        seller_detials_layout = (RelativeLayout) v.findViewById(R.id.seller_detials_layout);
+        seller_detials_layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, imgs));
+
+        seller_title_layout = (RelativeLayout) v.findViewById(R.id.seller_title_layout);
+        seller_title_layout.setLayoutParams(AppLayoutParam3(10.00f, 70f, 0, 0, 0, 0, null, 0));
+
+        ratinglayout = (RelativeLayout) v.findViewById(R.id.ratinglayout);
+        ratinglayout.setLayoutParams(AppLayoutParam3(10.00f, 30f, 0, 0, 0, 0, null, R.id.seller_title_layout));
+
+        staff_layout = (RelativeLayout) v.findViewById(R.id.staff_layout);
+        staff_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 2, 0, 0, 0, null));
+
+        seller_email_layout = (RelativeLayout) v.findViewById(R.id.seller_email_layout);
+        seller_email_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 2, 0, 0, 0, staff_layout));
+
+        phone_layout = (RelativeLayout) v.findViewById(R.id.phone_layout);
+        phone_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 2, 0, 0, 0, seller_email_layout));
+
+        address_layout = (RelativeLayout) v.findViewById(R.id.address_layout);
+        address_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 2, 0, 0, 0, phone_layout));
 
 
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-//        setContentView(R.layout.fragment_sellerdashboard_product);
-
-//        //initialization
-//        titlebarlayout = (RelativeLayout) v.findViewById(R.id.titlebarlayout);
-//        title = (TextView) v.findViewById(R.id.title);
-        ListView simpleCustomeListView = (ListView) v.findViewById(R.id.listView);
-        simpleCustomeListView.setVisibility(View.GONE);
-//
-//        //initialization of bottom views
-//        bottombarlayout = (RelativeLayout) v.findViewById(R.id.bottombarlayout);
-//        ImageView product = (ImageView) v.findViewById(R.id.product);
-//        ImageView customer = (ImageView) v.findViewById(R.id.customer);
-//        ImageView order = (ImageView) v.findViewById(R.id.order);
-//        ImageView message = (ImageView) v.findViewById(R.id.message);
-//        ImageView setting = (ImageView) v.findViewById(R.id.setting);
-//
-//
-//        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.sellerDashBoardTitleBg));
-//        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
-//
-//        title.setText("DashBoard");
-//
-//        bottombarlayout.setBackgroundColor(this.getResources().getColor(R.color.bottomBarColor));
-//        //setting the height and width of the views by percent of the screen
-//        bottombarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, simpleCustomeListView));
-//        product.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
-//        customer.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
-//        order.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
-//        message.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
-//        setting.setLayoutParams(AppLayoutParamLinearLayout(4.75f, 8.29f, 0, 0, 0, 0));
+        seller_logout_layout = (RelativeLayout) v.findViewById(R.id.seller_logout_layout);
+        seller_logout_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 2, 0, 0, 0, address_layout));
 
 
+        btnViewStaff = (ImageView) v.findViewById(R.id.btnViewStaff);
+        seller_title = (TextView) v.findViewById(R.id.seller_title);
+        staffText = (TextView) v.findViewById(R.id.staffText);
+        emailText = (TextView) v.findViewById(R.id.emailText);
+        phoneText = (TextView) v.findViewById(R.id.phoneText);
+        addressText = (TextView) v.findViewById(R.id.addressText);
+        logoutText = (TextView) v.findViewById(R.id.logoutText);
+        logoutImg = (ImageView) v.findViewById(R.id.logoutImg);
 
-        ArrayList<Item> m_parts = new ArrayList<Item>();
-        m_parts.add(new Item(getResources().getString(R.string.lbl_message), 1, R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_customer), 1, R.drawable.customer, R.color.customerColor, R.drawable.customer_slide1, R.drawable.customer_slide2));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_order), 1, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
-        m_parts.add(new Item(getResources().getString(R.string.lbl_product), 1, R.drawable.product, R.color.productColor, R.drawable.product_slide1, R.drawable.product_slide2));
+
+        rating = (RatingBar) v.findViewById(R.id.rating);
+        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getActivity().getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
 
-        try {
-            ItemAdapter m_adapter = new ItemAdapter(getActivity(), R.layout.dashboard_row_item1, m_parts);
-            simpleCustomeListView.setAdapter(m_adapter);
-        } catch (Exception e) {
-            Log.e("SellerDashBoardActivity", "adapter=" + e);
-        }
+        btnViewStaff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SellerViewStaffActivity.class));
+            }
+        });
+
+        logoutText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new UpdateDeviceInfoService(getActivity(), "seller", globels.getGlobelRef().sellerLoginId, globels.getGlobelRef().deviceToken);
+
+                editor.putString("sellerLoginId", "");
+                editor.putBoolean("isSellerLogin", false);
+                editor.putString("token", "");
+                editor.commit();
+
+                globels.getGlobelRef().deviceToken="";
+
+                Intent i = new Intent(getActivity(),
+                        UserTypeActivity.class);
+                startActivity(i);
+                getActivity().finish();
+
+
+            }
+        });
+        logoutImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new UpdateDeviceInfoService(getActivity(), "seller", globels.getGlobelRef().sellerLoginId, globels.getGlobelRef().deviceToken);
+
+                editor.putString("sellerLoginId", "");
+                editor.putBoolean("isSellerLogin", false);
+                editor.putString("token", "");
+                editor.commit();
+
+                globels.getGlobelRef().deviceToken="";
+
+                Intent i = new Intent(getActivity(),
+                        UserTypeActivity.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
 
         return v;
     }
 
-    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
-        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
-                getSize("w", width),
-                getSize("h", height));
-        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        if (below != null)
-            paramName.addRule(RelativeLayout.BELOW, below.getId());
-        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
-        return paramName;
+    public void fillProductListWithData(ArrayList<SellerDetailsByIdModel> SellerDetail) {
+        seller_title.setText("" + SellerDetail.get(0).fName + " " + SellerDetail.get(0).lName);
+        //staffText.setText(""+SellerDetail.get(0));
+        emailText.setText("" + SellerDetail.get(0).email);
+        phoneText.setText("" + SellerDetail.get(0).phoneNo);
+        addressText.setText("" + SellerDetail.get(0).address);
+
+        Picasso.with(getActivity()).load(Constant.imgbaseUrl + SellerDetail.get(0).logo).into(userImage);
+
+        if (!SellerDetail.get(0).sellerRatings.equals("not available") && !SellerDetail.get(0).sellerRatings.equals("null")) {
+            float ratingNum = Float.parseFloat(SellerDetail.get(0).sellerRatings);
+            rating.setRating((int) ratingNum);
+        }
     }
-    public LinearLayout.LayoutParams AppLayoutParamLinearLayout(float height, float width, float mL, float mT, float mR, float mB) {
-        LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
-                getSize("w", width),
-                getSize("h", height));
-//        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-//        if (below != null)
-//            paramName.addRule(RelativeLayout.BELOW, below.getId());
-        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
+
+    public RelativeLayout.LayoutParams AppLayoutParam2(float height, float width, float mL, float mT, float mR, float mB, String leftOrRight) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                Constant.getSize("w", width),
+                Constant.getSize("h", height));
+        if (leftOrRight.equals("right"))
+            paramName.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        paramName.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+
+        paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
         return paramName;
     }
 
-    public int getSize(String dimension, float size) {
-        float x = 0;
-        if (dimension.equals("w")) {
-            x = (size / 100) * Constant.screenWidth;
-        } else {
-            x = (size / 100) * Constant.screenHeight;
-        }
-        return (int) x;
+    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                Constant.getSize("w", width),
+                Constant.getSize("h", height));
+        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        if (below != null)
+            paramName.addRule(RelativeLayout.BELOW, below.getId());
+        paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
+        return paramName;
     }
+
+    public RelativeLayout.LayoutParams AppLayoutParam3(float height, float width, float mL, float mT, float mR, float mB, View below, int toRightView) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                Constant.getSize("w", width),
+                Constant.getSize("h", height));
+        paramName.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+
+        if (toRightView != 0)
+            paramName.addRule(RelativeLayout.RIGHT_OF, toRightView);
+
+        if (below != null)
+            paramName.addRule(RelativeLayout.BELOW, below.getId());
+        paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
+        return paramName;
+    }
+
 
 }

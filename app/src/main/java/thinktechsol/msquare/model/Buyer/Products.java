@@ -19,9 +19,10 @@ public class Products {
     public String description;
     public String sellerId;
     public boolean isChecked;
+    public String proQuantity;
     public ArrayList<ProductReviews> productReviews;
 
-    public Products(String id, String productRating, ArrayList<ProductImages> productImages, String title, String price, String deliveryTime, String serviceId, String status, String dateTime, String description, String sellerId, boolean isChecked, ArrayList<ProductReviews> productReviews) {
+    public Products(String id, String productRating, ArrayList<ProductImages> productImages, String title, String price, String deliveryTime, String serviceId, String status, String dateTime, String description, String sellerId, boolean isChecked, ArrayList<ProductReviews> productReviews, String proQuantity) {
         this.id = id;
         this.productRating = productRating;
         this.productImages = productImages;
@@ -35,5 +36,6 @@ public class Products {
         this.sellerId = sellerId;
         this.isChecked = isChecked;
         this.productReviews = productReviews;
+        this.proQuantity = proQuantity;
     }
 }

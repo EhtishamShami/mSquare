@@ -2,10 +2,8 @@ package thinktechsol.msquare.services;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,12 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.buyer.HomeActivity;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
-import thinktechsol.msquare.model.Response.ProductImages;
-import thinktechsol.msquare.model.Response.getSellerProductsResponse;
-import thinktechsol.msquare.model.SellerLogInResponse;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 

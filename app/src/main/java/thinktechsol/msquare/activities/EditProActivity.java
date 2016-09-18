@@ -30,19 +30,16 @@ import com.wefika.horizontalpicker.HorizontalPicker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapterEditProduct;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.interfaceMine.UploadImgInterfaceEditPro;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.services.DeleteImageService;
-import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.services.SellerAddProductForEditImg;
 import thinktechsol.msquare.utils.Constant;
 
@@ -231,7 +228,7 @@ public class EditProActivity extends Activity implements UploadImgInterfaceEditP
                 productDetails[1] = pro_desc_et.getText().toString();
                 productDetails[2] = pro_price_et.getText().toString();
                 productDetails[3] = String.valueOf(selectedTimeIndex);
-                Log.e("EditProd", "update btn is clicked=" + globels.getGlobelRef().sellerlogin.id);
+                Log.e("EditProd", "update btn is clicked=" + globels.getGlobelRef().sellerLoginId);
                 if (pro_title_et.getText().toString().trim().length() > 0 && pro_desc_et.getText().toString().trim().length() > 0
                         && pro_price_et.getText().toString().trim().length() > 0 && (selectedImagePath.size() > 0 || productImagesList.size() > 0)) {
                     new SellerAddProductForEditImg(EditProActivity.this, EditProActivity.this, productDetails, selectedImagePath);

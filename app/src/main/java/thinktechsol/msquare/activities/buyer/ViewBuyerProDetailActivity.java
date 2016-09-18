@@ -76,7 +76,7 @@ public class ViewBuyerProDetailActivity extends Activity {
         pro_name_rating_layout = (RelativeLayout) findViewById(R.id.sellers_title_layout);
         pro_price_layout = (RelativeLayout) findViewById(R.id.rating_layout);
         pro_name = (TextView) findViewById(R.id.sellers_title);
-        pro_price = (TextView) findViewById(R.id.pro_price);
+        pro_price = (TextView) findViewById(R.id.proPrice);
         pro_description = (TextView) findViewById(R.id.pro_description);
         rating = (RatingBar) findViewById(R.id.rating);
 //        btnAddToFavorite = (Button) findViewById(R.id.btnAddToFavorite);
@@ -137,6 +137,7 @@ public class ViewBuyerProDetailActivity extends Activity {
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        Log.e("ViewBuyerPro", "rating pro detail=" + selectedProduct.productRating);
         if (!selectedProduct.productRating.equals("not available")) {
             float ratingNum = Float.parseFloat(selectedProduct.productRating);
             Log.e("ViewSellPro", "rating 2=" + (int) ratingNum);
@@ -155,10 +156,10 @@ public class ViewBuyerProDetailActivity extends Activity {
 
         ArrayList<BuyerProReviewsModel> reviews_list = new ArrayList<BuyerProReviewsModel>();
         reviews_list.clear();
-        reviews_list.add(new BuyerProReviewsModel("", selectedProduct.description));
+        reviews_list.add(new BuyerProReviewsModel("", selectedProduct.description, false));
 
         for (int i = 0; i < selectedProduct.productReviews.size(); i++) {
-            reviews_list.add(new BuyerProReviewsModel(selectedProduct.productReviews.get(i).reviewTitle, selectedProduct.productReviews.get(i).reviewDescription));
+            reviews_list.add(new BuyerProReviewsModel(selectedProduct.productReviews.get(i).reviewTitle, selectedProduct.productReviews.get(i).reviewDescription, true));
         }
 //        reviews_list.add(new BuyerProReviewsModel("Title1", "Yasir Ahmed"));
 //        reviews_list.add(new BuyerProReviewsModel("Title2", "Bilal"));
@@ -168,11 +169,17 @@ public class ViewBuyerProDetailActivity extends Activity {
 
         BuyerProReviewsAdapter adapter = new BuyerProReviewsAdapter(this, ViewBuyerProDetailActivity.this, R.layout.buyer_pro_review_list_item, reviews_list);
         pro_reviews_list.setAdapter(adapter);
+
+
+        pro_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //addReviewOfBuyer();
+            }
+        });
     }
 
-    public void addToWishListServiceResponse() {
 
-    }
 
     private void setAndShowDotsOnPager() {
         dotsLayout = (LinearLayout) findViewById(R.id.viewPagerCountDots);
@@ -251,4 +258,51 @@ public class ViewBuyerProDetailActivity extends Activity {
         paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
         return paramName;
     }
+
+//    public void addReviewOfBuyer() {
+//        final Dialog addReviewDialog = new Dialog(ViewBuyerProDetailActivity.this);
+//        addReviewDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        addReviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        addReviewDialog.setCancelable(false);
+//
+//        LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
+//        View customView = inflater.inflate(R.layout.dialog_add_review_buyer, null);
+//
+//        addReviewDialog.setContentView(customView);
+//
+//        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
+//        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.6);
+//        addReviewDialog.getWindow().setLayout(width, height);
+//
+//        final ImageView cross_btn_review = (ImageView) addReviewDialog.findViewById(R.id.cross_btn_review);
+//        final EditText title_et = (EditText) addReviewDialog.findViewById(R.id.title_et);
+//        final EditText description_et = (EditText) addReviewDialog.findViewById(R.id.description_et);
+//
+//        cross_btn_review.bringToFront();
+//
+//        Button OkBtn = (Button) addReviewDialog.findViewById(R.id.savebtn);
+//        OkBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addReviewDialog.dismiss();
+////                new BuyerAddReviewService(ViewBuyerProDetailActivity.this, globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId,
+////                        globels.getGlobelRef().productList.get(0).products.get(0).serviceId, globels.getGlobelRef().productList.get(0).products.get(0).id,
+////                        title_et.getText().toString().trim(), description_et.getText().toString().trim());
+//
+//                new BuyerAddReviewService(ViewBuyerProDetailActivity.this, globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId,
+//                        selectedProduct.serviceId, selectedProduct.id,
+//                        title_et.getText().toString().trim(), description_et.getText().toString().trim());
+//            }
+//        });
+//
+//
+//        cross_btn_review.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addReviewDialog.dismiss();
+//            }
+//        });
+//
+//        addReviewDialog.show();
+//    }
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/titlebar">
+
+        <EditText
+            android:id="@+id/houseET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_houseET"
+            android:padding="10dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            />
+
+        <EditText
+            android:id="@+id/streetAddresET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_stAddressET"
+            android:padding="10dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:layout_below="@+id/houseET"/>
+
+        <EditText
+            android:id="@+id/areaET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_areaET"
+            android:padding="10dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:layout_below="@+id/streetAddresET"/>
+
+        <EditText
+            android:id="@+id/stateET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_stateET"
+            android:padding="10dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:layout_below="@+id/areaET"/>
+
+
+        <EditText
+            android:id="@+id/phoneET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_phoneET"
+            android:padding="10dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_below="@+id/stateET"/>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:background="@android:color/holo_red_light"
+            android:layout_below="@+id/phoneET"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

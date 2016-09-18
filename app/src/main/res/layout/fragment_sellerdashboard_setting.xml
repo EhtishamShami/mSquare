@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/seller_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f2f2f2">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@android:color/white">
+
+            <RelativeLayout
+                android:id="@+id/imgs"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/avatar" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#949391" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/seller_detials_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/imgs">
+
+                <RelativeLayout
+                    android:id="@+id/seller_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff">
+
+                    <TextView
+                        android:id="@+id/seller_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:text="Seller Name"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="15sp" />
+                    <View
+                        android:id="@+id/line3"
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:background="#949391" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ratinglayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/seller_title_layout">
+
+                    <RatingBar
+                        android:id="@+id/rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:max="5"
+                        android:numStars="5"
+                        android:rating="0"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/line4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#949391" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/seller_description_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seller_detials_layout">
+
+                <RelativeLayout
+                    android:id="@+id/staff_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/staffImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/staff_img" />
+
+                    <TextView
+                        android:id="@+id/staffText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/staffImg"
+                        android:text="Staff"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnViewStaff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_head_right"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"/>
+
+                    <View
+                        android:id="@+id/lineStaff"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#949391" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/seller_email_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/staff_layout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/emailImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/email_img" />
+
+                    <TextView
+                        android:id="@+id/emailText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/emailImg"
+                        android:text="arslan@gmail.com"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/lineEmail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#949391" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/phone_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/seller_email_layout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/phoneImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/phone_img" />
+
+                    <TextView
+                        android:id="@+id/phoneText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/phoneImg"
+                        android:text="123456789"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/linePhone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#949391" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/address_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/phone_layout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/addressImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/location_img" />
+
+                    <TextView
+                        android:id="@+id/addressText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/addressImg"
+                        android:text="123456789"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/lineAddress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#949391" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/seller_logout_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/address_layout"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/logoutImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/logout_img" />
+
+                    <TextView
+                        android:id="@+id/logoutText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/logoutImg"
+                        android:text="Logout"
+                        android:textSize="16sp" />
+
+                    <!--<View-->
+                        <!--android:id="@+id/linelogout"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="0.3dp"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:background="#949391" />-->
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
