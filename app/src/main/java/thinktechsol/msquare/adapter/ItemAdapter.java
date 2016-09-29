@@ -34,8 +34,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private static final int Layout_4_sub_items = 1;
 
     private static int rowHeight = 80 / 4;
-    private static float swiperSubItemWidth = 16.66f;
-    private static float swiperSubItemHeight = 12.5f;
+    private static float swiperSubItemWidth = 10.66f;
+    private static float swiperSubItemHeight = 8.5f;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;

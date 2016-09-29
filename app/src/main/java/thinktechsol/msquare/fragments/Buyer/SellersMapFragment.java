@@ -1,8 +1,13 @@
 package thinktechsol.msquare.fragments.Buyer;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -60,7 +66,8 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 if (testLatLng != null) {
                     Marker testMarker = mMap.addMarker(new MarkerOptions().
-                            position(testLatLng).title("Address"));
+                            position(testLatLng).title(""+ globels.getGlobelRef().productList.get(0).sellerInfo.companyName).
+                    snippet(""+ globels.getGlobelRef().productList.get(0).sellerInfo.fName));
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
                     mMap.animateCamera(cameraUpdate);
                 }
@@ -110,6 +117,7 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -117,10 +125,27 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
 
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         Marker testMarker = mMap.addMarker(new MarkerOptions().
-                position(testLatLng).title("Address"));
+                position(testLatLng).title(""+ globels.getGlobelRef().productList.get(0).sellerInfo.companyName)
+                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
+                .snippet(""+ globels.getGlobelRef().productList.get(0).sellerInfo.fName)
+        );
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
         mMap.animateCamera(cameraUpdate);
     }
+    // Convert a view to bitmap
+    public static Bitmap createDrawableFromView(Context context, View view) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
+    }
 
 }

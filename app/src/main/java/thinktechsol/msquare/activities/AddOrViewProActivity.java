@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wefika.horizontalpicker.HorizontalPicker;
 
 import java.io.ByteArrayOutputStream;
@@ -51,7 +54,7 @@ import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.services.getSellerProducts;
 import thinktechsol.msquare.utils.Constant;
 
-public class AddOrViewProActivity extends Activity implements UploadImgInterface, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked {
+public class AddOrViewProActivity extends Activity implements UploadImgInterface, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked, TimePickerDialog.OnTimeSetListener {
 
     public static final String ADD_PRODUCT = "addproduct";
     public static final String VIEW_PRODUCT = "viewproduct";
@@ -64,12 +67,12 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     private TextView[] dots;
     static TextView title;
     public static ImageView backBtn, btn_menu;
-    RelativeLayout titlebarlayout, bottombarlayout, add_product_layout, view_product_layout,fragmentLayout;
+    RelativeLayout titlebarlayout, bottombarlayout, add_product_layout, view_product_layout, fragmentLayout;
     ImageView add_product, view_product, add_product_save;
     ArrayList<String> selectedImagePath;
     EditText pro_title_et, pro_desc_et, pro_price_et, pro_time_et;
     ListView product_list;
-//    ArrayList<ProductImages> productImagesList;
+    //    ArrayList<ProductImages> productImagesList;
     LinearLayout scroler_textview;
     ProgressDialog progressDialog;
     HorizontalPicker picker;
@@ -166,11 +169,11 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //                view_product_layout.setVisibility(View.GONE);
 
 //                if(globels.getGlobelRef().IdForAddProduct!=null){
-                    Constant.addOrViewProduct = true;
-                    fragobj = new SellerAddProductFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentLayout, fragobj);
-                    transaction.commit();
+                Constant.addOrViewProduct = true;
+                fragobj = new SellerAddProductFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentLayout, fragobj);
+                transaction.commit();
 
 
 //                }else {
@@ -276,6 +279,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                                     }
                                 });
                         alertDialog.show();
+
                     }
 //                if (productDetails[0].trim() != null && productDetails[1].trim() != null && productDetails[2].trim() != null && productDetails[3].trim() != null) {
 
@@ -291,6 +295,8 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                                 }
                             });
                     alertDialog.show();
+
+
                 }
             }
         });
@@ -606,5 +612,39 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         pro_title_et.setText("");
         pro_desc_et.setText("");
         pro_price_et.setText("");
+    }
+
+    public static final String TIMERANGEPICKER_TAG = "timerangepicker";
+    Calendar calendar;
+    TimePickerDialog timePickerDialog;
+    int CalendarHour, CalendarMinute;
+
+    public void show_Time_range() {
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog tpd = TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        );
+        tpd.setTitle("TimePicker Title");
+        tpd.setMaxTime(6, 59, 0);
+        tpd.setMinTime(0, 10, 0);
+        tpd.setStartTime(0, 15);
+
+        tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                Log.d("TimePicker", "Dialog was cancelled");
+            }
+        });
+        tpd.show(getFragmentManager(), "Timepickerdialog");
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        int time = hourOfDay * 60 + minute;
+        selectedTimeIndex = time;
+        Log.e("AddOrViewProActivity", "first path=" + time);
     }
 }

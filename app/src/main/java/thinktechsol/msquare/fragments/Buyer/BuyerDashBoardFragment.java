@@ -91,7 +91,7 @@ public class BuyerDashBoardFragment extends Fragment {
         String WishTotal = statesList.get(0).wishlist;
         String FavouriteTotal = statesList.get(0).favourites;
 
-        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_order), OrdersTotal, R.drawable.order, R.color.orderColor, R.drawable.order_slide1, R.drawable.order_slide2, R.drawable.order_slide3, R.drawable.order_slide4));
+        m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_order), OrdersTotal, R.drawable.order, R.color.orderColor, R.drawable.buyer_recent_orders, R.drawable.buyer_complete_order, R.drawable.buyer_inprocess_order, R.drawable.buyer_dispute_order));
         m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_message), Integer.parseInt(MessageTotal), R.drawable.messages, R.color.messageColor, R.drawable.message_slide1, R.drawable.message_slide2));
         m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_wishlist), Integer.parseInt(WishTotal), R.drawable.order, R.color.customerColor, 0, 0));
         m_parts.add(new BuyerDashBoardAdapterItem(getResources().getString(R.string.lbl_favourite), Integer.parseInt(FavouriteTotal), R.drawable.product, R.color.productColor, 0, 0));

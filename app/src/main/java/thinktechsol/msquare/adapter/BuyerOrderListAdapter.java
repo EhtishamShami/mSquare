@@ -85,6 +85,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.name = (TextView) v.findViewById(R.id.name);
+                        holder.selectedServiceLbl = (TextView) v.findViewById(R.id.selectedServiceLbl);
                         holder._selected_services = (TextView) v.findViewById(R.id._selected_services);
                         holder._total_price = (TextView) v.findViewById(R.id._total_price);
                         holder.order_reject = (ImageView) v.findViewById(R.id.order_reject);
@@ -139,6 +140,12 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
                         }
                         if (holder._selected_services != null) {
                             //holder._selected_services.setText(myItem.products.get(0).description);
+                            if (myItem.categoryType.equals("1"))
+                                holder.selectedServiceLbl.setText("Selected Product");
+                            else
+                                holder.selectedServiceLbl.setText("Selected Services");
+
+
                             holder._selected_services.setText(myItem.noOfServices);
                         }
                         if (holder._total_price != null) {
@@ -246,6 +253,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
     public static class ViewHolder {
         public ImageView lbl;
         public TextView name;
+        public TextView selectedServiceLbl;
         public TextView _selected_services;
         public TextView _total_price;
         public ImageView order_reject;

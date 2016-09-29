@@ -38,8 +38,8 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
     private static final int Layout_4_sub_items = 1;
 
     private static int rowHeight = 80 / 4;
-    private static float swiperSubItemWidth = 16.66f;
-    private static float swiperSubItemHeight = 12.5f;
+    private static float swiperSubItemWidth = 10.66f;
+    private static float swiperSubItemHeight = 8.5f;
     Fragment_2_items TwoItemsFrag;
     SellerDeshBoardActivity ActivityContext;
     SellerDashBoardProductFragment fragContext;
@@ -92,7 +92,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.dashboard_row_item1_test_frag, parent, false);
+                        v = vi.inflate(R.layout.dashboard_row_item1_test_frag2, parent, false);
 
 
                         holder1 = new Type1Holder();
@@ -214,7 +214,7 @@ public class ItemAdapter2 extends ArrayAdapter<Item> {
                     View v2 = convertView;
                     if (v2 == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v2 = vi.inflate(R.layout.dashboard_row_item2, parent, false);
+                        v2 = vi.inflate(R.layout.dashboard_row_item2_seller_item2, parent, false);
 
                         holder2 = new Type2Holder();
                         holder2.bglayout = (RelativeLayout) v2.findViewById(R.id.bglayout);

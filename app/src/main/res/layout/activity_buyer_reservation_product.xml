@@ -20,14 +20,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <!--<ImageView-->
+                <!--android:id="@+id/userImg"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:src="@drawable/avatar" />-->
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/userImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="5dp"
-                android:src="@drawable/dummy_user" />
+                android:src="@drawable/avatar"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="0dp" />
 
             <TextView
                 android:id="@+id/titleSeller"
@@ -226,6 +237,9 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
                             android:text="Not Available"
+                            android:layout_marginRight="10dp"
+                            android:layout_toLeftOf="@+id/btnUpdateAddress"
+                            android:layout_alignParentLeft="true"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="#989898" />
 

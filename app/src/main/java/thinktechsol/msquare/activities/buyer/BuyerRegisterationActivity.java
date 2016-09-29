@@ -2,11 +2,13 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -30,9 +32,12 @@ import thinktechsol.msquare.Location.GetLocation;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.model.Buyer.BuyerLogin;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
 import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
+import thinktechsol.msquare.services.buyer.BuyerCustomLogin;
 import thinktechsol.msquare.services.buyer.BuyerRegisteration;
+import thinktechsol.msquare.services.buyer.UpdateDeviceInfoService;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerRegisterationActivity extends Activity {
@@ -45,6 +50,9 @@ public class BuyerRegisterationActivity extends Activity {
     TextView title;
     ImageView backBtn, btn_menu;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,9 @@ public class BuyerRegisterationActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_buyer_registeration);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
 
         AppEventsLogger.activateApp(this);
         //getting app key hashes for the facebook sdk requirements
@@ -113,10 +124,10 @@ public class BuyerRegisterationActivity extends Activity {
 
         //setting the sizes of the views
         app_logo.setLayoutParams(AppLayoutParam(20.83f, 45.00f, 0, 10, 0, 5, titlebarlayout));
-        fname.setLayoutParams(AppLayoutParam(5f, 80f, 0, 1.5f, 3, 0, app_logo));
-        lname.setLayoutParams(AppLayoutParam(5f, 80f, 0, 1.5f, 3, 0, fname));
-        email.setLayoutParams(AppLayoutParam(5f, 80f, 0, 1.5f, 3, 0, lname));
-        password.setLayoutParams(AppLayoutParam(5f, 80f, 0, 1.5f, 0, 0, email));
+        fname.setLayoutParams(AppLayoutParam(5f, 80f, 0, 2.2f, 3, 0, app_logo));
+        lname.setLayoutParams(AppLayoutParam(5f, 80f, 0, 2.2f, 3, 0, fname));
+        email.setLayoutParams(AppLayoutParam(5f, 80f, 0, 2.2f, 3, 0, lname));
+        password.setLayoutParams(AppLayoutParam(5f, 80f, 0, 2.2f, 0, 0, email));
         btn_registration.setLayoutParams(AppLayoutParam(6f, 45.20f, 0, 5, 0, 0, password));
 
 
@@ -134,15 +145,24 @@ public class BuyerRegisterationActivity extends Activity {
                     GetLocation location = new GetLocation(BuyerRegisterationActivity.this);
 //                    location.getCurrentLatLng();
 //                    Toast.makeText(BuyerRegisterationActivity.this, "latlng=" + location.getCurrentLatLng(), Toast.LENGTH_SHORT).show();
-                    if (fname.getText().toString().length() > 0 && lname.getText().toString().length() > 0
-                            && email.getText().toString().length() > 0
-                            && password.getText().toString().length() > 0
-                            ) {
-                        RegisterRequestModel requestModel = new RegisterRequestModel(fname.getText().toString(), lname.getText().toString(), email.getText().toString(), password.getText().toString(), "googlePlus", location.getCurrentLatLng(), "1");
-                        new BuyerRegisteration(BuyerRegisterationActivity.this, BuyerRegisterationActivity.this, requestModel);
+
+
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
+                        email.setError("Invalid Email");
+                        email.setFocusable(true);
+                        email.requestFocus();
                     } else {
-                        Toast.makeText(BuyerRegisterationActivity.this, "Please Enter the Values first", Toast.LENGTH_SHORT).show();
+                        if (fname.getText().toString().length() > 0 && lname.getText().toString().length() > 0
+                                && email.getText().toString().length() > 0
+                                && password.getText().toString().length() > 0
+                                ) {
+                            RegisterRequestModel requestModel = new RegisterRequestModel(fname.getText().toString(), lname.getText().toString(), email.getText().toString(), password.getText().toString(), "customelogin", location.getCurrentLatLng(), "1");
+                            new BuyerRegisteration(BuyerRegisterationActivity.this, BuyerRegisterationActivity.this, requestModel);
+                        } else {
+                            Toast.makeText(BuyerRegisterationActivity.this, "Please Enter the Values first", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
 
                     return true;
                 }
@@ -230,8 +250,39 @@ public class BuyerRegisterationActivity extends Activity {
 
     public void onRegistrationCompleted(ArrayList<RegisterModel> list) {
         Log.e("BuyerRegistration", "fname=" + list.get(0).fName);
+
+
+        ////////////
+        globels.getGlobelRef().MessageType = "2";
+        globels.getGlobelRef().buyerLoginId = list.get(0).id;
+
+        ArrayList<BuyerLogin> listBuyLogInResp = new ArrayList<BuyerLogin>();
+        BuyerLogin obj = new BuyerLogin(list.get(0).location, list.get(0).status, list.get(0).state, list.get(0).lName, list.get(0).udid, list.get(0).password, list.get(0).googlePlus,
+                list.get(0).fName, list.get(0).phoneNo, list.get(0).houseNo, list.get(0).id, list.get(0).twitter, list.get(0).area, list.get(0).email,
+                "", "", list.get(0).facebook, list.get(0).streetNo, list.get(0).datetime, list.get(0).thumb);
+        listBuyLogInResp.add(obj);
+
+        globels.getGlobelRef().buyerLoginResponse = listBuyLogInResp;
+
+        globels.getGlobelRef().loginAsBuyerOrSeller = "buyer";
+
+        editor.putString("houseNo", list.get(0).houseNo);
+        editor.putString("streetNo", list.get(0).streetNo);
+        editor.putString("area", list.get(0).area);
+        editor.putString("state", list.get(0).state);
+        editor.putString("phoneNo", list.get(0).phoneNo);
+        editor.putString("buyerLoginId", list.get(0).id);
+        editor.putBoolean("isBuyerLogin", true);
+        editor.commit();
+
+        new UpdateDeviceInfoService(BuyerRegisterationActivity.this, "buyer", globels.getGlobelRef().buyerLoginId, globels.getGlobelRef().deviceToken);
+        Constant.logInAs = "customeLogin";
+        startActivity(new Intent(BuyerRegisterationActivity.this, HomeActivity.class));
+        //////////////
+
         finish();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -254,6 +305,6 @@ public class BuyerRegisterationActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        System.exit(0);
+        finish();
     }
 }

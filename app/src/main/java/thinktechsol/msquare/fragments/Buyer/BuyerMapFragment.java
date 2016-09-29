@@ -1,19 +1,26 @@
 package thinktechsol.msquare.fragments.Buyer;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -116,14 +123,46 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
 
             try {
 
+                View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
+
                 Marker testMarker = mMap.addMarker(new MarkerOptions().
-                        position(testLatLng).title("TestAddress"));
+                        position(testLatLng).title(""+ globels.getGlobelRef().SellersProductDetailList.get(i).companyName)
+                        .snippet(""+ globels.getGlobelRef().SellersProductDetailList.get(i).fName)
+                        .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
+                );
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
                 mMap.animateCamera(cameraUpdate);
+
+
+
+                //TextView numTxt = (TextView) marker.findViewById(R.id.num_txt);
+                //numTxt.setText("27");
+
+//                customMarker = mMap.addMarker(new MarkerOptions()
+//                        .position(markerLatLng)
+//                        .title("Title")
+//                        .snippet("Description")
+//                        .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker))));
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    // Convert a view to bitmap
+    public static Bitmap createDrawableFromView(Context context, View view) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
     }
 }

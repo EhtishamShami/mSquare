@@ -34,6 +34,7 @@ public class HomeActivity extends Activity {
 
     //viewPager items
     RelativeLayout pager_layout;
+
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
     private ImgSwiperAdapterBuyerAdds adapter;
@@ -351,5 +352,17 @@ public class HomeActivity extends Activity {
             x = (size / 100) * Constant.screenHeight;
         }
         return (int) x;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        try {
+            if (!(Constant.logInAs.equals("guest")))
+                btn_menu.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+
+        }
     }
 }

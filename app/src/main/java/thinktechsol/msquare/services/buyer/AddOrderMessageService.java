@@ -51,7 +51,7 @@ public class AddOrderMessageService {
         this.text = text;
 
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Saving Please wait...");
+        progressDialog.setMessage("Sending Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();

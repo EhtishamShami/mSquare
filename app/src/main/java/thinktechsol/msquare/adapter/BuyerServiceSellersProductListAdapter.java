@@ -149,6 +149,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                             if (holder.CheckBox != null) {
 
                                 if (myItem.isChecked == true) {
+                                    //holder.tvQuantityOrServiceValue.setText("0");
                                     myItem.isChecked = false;
                                     itemCheckCounter -= 1;
 
@@ -158,7 +159,14 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                                     if (SelectedServicesTotalTime != 0 && myItem.deliveryTime != "" && myItem.deliveryTime != null)
                                         SelectedServicesTotalTime -= Integer.parseInt(myItem.deliveryTime);
 
+                                    if (isProduct) {
+                                        int proQuantity = Integer.parseInt(holder.tvQuantityOrServiceValue.getText().toString());
+                                        myItem.proQuantity = "" + proQuantity;
+                                    }
+
                                 } else {
+                                    if (holder.tvQuantityOrServiceValue.getText().equals("0"))
+                                        holder.tvQuantityOrServiceValue.setText("1");
                                     myItem.isChecked = true;
                                     itemCheckCounter += 1;
 
@@ -167,6 +175,11 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                                     Log.e("ViewSellPro", "selected delivery time=" + myItem.deliveryTime);
                                     if (myItem.deliveryTime != "" && !myItem.deliveryTime.equals("") && myItem.deliveryTime != null)
                                         SelectedServicesTotalTime += Integer.parseInt(myItem.deliveryTime);
+
+                                    if (isProduct) {
+                                        int proQuantity = Integer.parseInt(holder.tvQuantityOrServiceValue.getText().toString());
+                                        myItem.proQuantity = "" + proQuantity;
+                                    }
                                 }
 
                                 if (itemCheckCounter > 0) {
@@ -176,6 +189,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                                 }
 
                                 holder.CheckBox.setChecked(myItem.isChecked);
+
                             }
                         }
                     });
@@ -189,6 +203,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
 
                             holder.tvQuantityOrServiceValue.setText("" + proQuantity);
                             myItem.proQuantity = "" + proQuantity;
+
                         }
                     });
 
@@ -196,10 +211,16 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                         @Override
                         public void onClick(View v) {
                             int proQuantity = Integer.parseInt(holder.tvQuantityOrServiceValue.getText().toString());
-                            if (proQuantity > 0)
+                            if (proQuantity > 0 && proQuantity != 1)
                                 proQuantity = proQuantity - 1;
                             holder.tvQuantityOrServiceValue.setText("" + proQuantity);
                             myItem.proQuantity = "" + proQuantity;
+
+                            if (itemCheckCounter > 0) {
+                                ActivityContext.reservationBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                ActivityContext.reservationBtn.setVisibility(View.GONE);
+                            }
                         }
                     });
 
@@ -260,7 +281,8 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
     }
 
 
-    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
+    public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL,
+                                                      float mT, float mR, float mB, View below) {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
                 getSize("w", width),
                 getSize("h", height));
@@ -271,7 +293,8 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
         return paramName;
     }
 
-    public LinearLayout.LayoutParams AppLayoutParamSubItems(float height, float width, float mL, float mT, float mR, float mB, View below) {
+    public LinearLayout.LayoutParams AppLayoutParamSubItems(float height, float width,
+                                                            float mL, float mT, float mR, float mB, View below) {
         LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
                 getSize("w", width),
                 getSize("h", height));
@@ -320,6 +343,7 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
         selectedServicesIds.clear();
         selectedProductsIds.clear();
         selectedQuantityIds.clear();
+        totalPriceValue = 0;
 
         for (int i = 0; i < productList.size(); i++) {
             final Products myItem = productList.get(i);
@@ -333,14 +357,21 @@ public class BuyerServiceSellersProductListAdapter extends ArrayAdapter<Products
                 selectedProductsIds.add(myItem.id);
                 selectedQuantityIds.add(myItem.proQuantity);
 
+                totalPriceValue += Integer.parseInt(myItem.price) * Integer.parseInt(myItem.proQuantity);
+
+                Log.e("BuyerService", "selected items rr=" + myItem.title + " , " + myItem.price + " AED , " + myItem.proQuantity);
                 list.add(new BuyerReservationListModel(myItem.title, myItem.price + " AED", myItem.proQuantity));
 
 
             }
         }
 
+        globels.getGlobelRef().SelectedServicesPriceNew = totalPriceValue;
+
         return list;
     }
+
+    int totalPriceValue;
 
     public void updateList() {
         itemCheckCounter = 0;

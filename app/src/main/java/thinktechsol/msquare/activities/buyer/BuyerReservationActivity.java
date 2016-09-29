@@ -2,6 +2,7 @@ package thinktechsol.msquare.activities.buyer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -102,10 +103,13 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
+        try {
+            setSellersTitle(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+            setTotalServicesPrice(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
+            setSelectedServicesName(String.valueOf(globels.getGlobelRef().allSelectedServices));
+        } catch (Exception e) {
 
-        setSellersTitle(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
-        setTotalServicesPrice(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
-        setSelectedServicesName(String.valueOf(globels.getGlobelRef().allSelectedServices));
+        }
 
         timelisview = (ListView) findViewById(R.id.timelisview);
 
@@ -207,15 +211,21 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
             public void onClick(View v) {
                 if (tvTime.getText().toString().trim() != null && tvTime.getText().toString().trim().length() > 0) {
 
-                    String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
-                    String buyerId = globels.getGlobelRef().buyerLoginId;
-                    String extraRemarks = etDescription.getText().toString();
-                    String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
-                    String staffId = StaffId;
+                    if (!(Constant.logInAs.equals("guest"))) {
 
-                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
+                        String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
+                        String buyerId = globels.getGlobelRef().buyerLoginId;
+                        String extraRemarks = etDescription.getText().toString();
+                        String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
+                        String staffId = StaffId;
 
-                    new AddBuyerOrder(BuyerReservationActivity.this, BuyerReservationActivity.this, obj);
+                        ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
+
+                        new AddBuyerOrder(BuyerReservationActivity.this, null, BuyerReservationActivity.this, BuyerReservationActivity.this, obj);
+                    } else {
+                        Toast.makeText(BuyerReservationActivity.this, "Your Selection is Save! But You have to Login First", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(BuyerReservationActivity.this, BuyerLoginActivityGuest.class));
+                    }
                 } else {
                     Toast.makeText(BuyerReservationActivity.this, "Select Time First", Toast.LENGTH_SHORT).show();
                 }
@@ -231,6 +241,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 //            return events;
 //        }
 //    };
+
 
     /*
     *

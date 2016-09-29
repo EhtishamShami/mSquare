@@ -41,7 +41,7 @@ public class UpdateDeviceInfoService {
         this.udid = udid;
 
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Saving Please wait...");
+        progressDialog.setMessage("Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
 //        progressDialog.show();

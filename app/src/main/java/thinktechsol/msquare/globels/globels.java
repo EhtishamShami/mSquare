@@ -37,6 +37,7 @@ public class globels {
     public static Products singleProductForBuyProDetail;
     public static String serviceSellerId;
     public int SelectedServicesPrice;
+    public int SelectedServicesPriceNew;
     public String SelectedServicesDeliveryTime = "0";
     public String allSelectedServices = "";
     public ArrayList<String> selectedServicesIds;

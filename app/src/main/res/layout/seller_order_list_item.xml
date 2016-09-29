@@ -51,7 +51,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/selectedServiceLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
@@ -69,7 +69,7 @@
                 android:layout_below="@+id/name"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="3dp"
-                android:layout_toRightOf="@id/time"
+                android:layout_toRightOf="@id/selectedServiceLbl"
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="3"
@@ -80,7 +80,7 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/time"
+                android:layout_below="@id/selectedServiceLbl"
                 android:layout_marginTop="1dp"
                 android:text="Total Price:"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -90,7 +90,7 @@
                 android:id="@+id/_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/time"
+                android:layout_below="@id/selectedServiceLbl"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="1dp"
                 android:layout_toRightOf="@id/address"

@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+
+
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
 import thinktechsol.msquare.gcm.GCMRegistrationService;
@@ -216,6 +218,8 @@ public class UserTypeActivity extends Activity {
                 new IntentFilter(GCMRegistrationService.REGISTRATION_SUCCESS));
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(GCMRegistrationService.REGISTRATION_ERROR));
+
+
     }
 
 
@@ -226,5 +230,4 @@ public class UserTypeActivity extends Activity {
         Log.w("MainActivity", "onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
-
 }

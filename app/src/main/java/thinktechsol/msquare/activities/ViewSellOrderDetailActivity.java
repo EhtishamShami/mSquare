@@ -25,7 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ConversationAdapter;
@@ -64,6 +67,7 @@ public class ViewSellOrderDetailActivity extends Activity {
     //    getSellerProductsResponse singleProduct;
 //    ProductDetails singleProduct;
     int orderPosition = 0;
+    DateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,8 @@ public class ViewSellOrderDetailActivity extends Activity {
 
 //        seller product single
 //         singleProduct = Constant.singleProduct;
+
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
         new GetOrderDetailsService(ViewSellOrderDetailActivity.this, ViewSellOrderDetailActivity.this, globels.getGlobelRef().orderId_for_ordr_info);
@@ -265,9 +271,9 @@ public class ViewSellOrderDetailActivity extends Activity {
         if (list.get(0).orderDetails != null) {
             pro_name.setText(list.get(0).orderDetails.get(0).productDetails.title);
             if (list.get(0).orderDetails.get(0).serviceDetails.categoryType.equals("0")) {
-                pro_quantity.setText(list.get(0).orderDetails.get(0).productDetails.deliveryTime);
+                pro_quantity.setText(list.get(0).orderDetails.get(0).productDetails.deliveryTime + " Time");
             } else {
-                pro_quantity.setText(list.get(0).orderDetails.get(0).quantity);
+                pro_quantity.setText(list.get(0).orderDetails.get(0).quantity + " Quantity");
             }
 
             pro_price.setText(list.get(0).orderDetails.get(0).productDetails.price + " AED");
@@ -305,8 +311,10 @@ public class ViewSellOrderDetailActivity extends Activity {
     }
 
     public void sendNewMessage(String messageBody, String name) {
+        Date date = new Date();
+        String currDate = dateFormat.format(date);
 //        ConversationItem item = new ConversationItem("empty", list.get(0).sellerDetails.fName, list.get(0).messages.get(0).dated, messageBody);
-        ConversationItem item = new ConversationItem("empty", name, "date", messageBody);
+        ConversationItem item = new ConversationItem("empty", name, ""+currDate, messageBody);
         messageList.add(item);
 
         conversationAdapter = new ConversationAdapter(ViewSellOrderDetailActivity.this,
@@ -375,11 +383,13 @@ public class ViewSellOrderDetailActivity extends Activity {
             //change order name,price,quantity
 
             pro_name.setText(list.get(0).orderDetails.get(position).productDetails.title);
+
             if (list.get(0).orderDetails.get(position).serviceDetails.categoryType.equals("0")) {
-                pro_quantity.setText(list.get(0).orderDetails.get(position).productDetails.deliveryTime);
+                pro_quantity.setText(list.get(0).orderDetails.get(position).productDetails.deliveryTime + " Time");
             } else {
-                pro_quantity.setText(list.get(0).orderDetails.get(position).quantity);
+                pro_quantity.setText(list.get(0).orderDetails.get(position).quantity + " Quantity");
             }
+
             pro_price.setText(list.get(0).orderDetails.get(position).productDetails.price + " AED");
 
             String proRating = list.get(0).orderDetails.get(position).productDetails.productRating;

@@ -39,8 +39,8 @@ public class ItemAdapter_Buyer extends ArrayAdapter<BuyerDashBoardAdapterItem> {
     private static final int Layout_4_sub_items = 1;
 
     private static int rowHeight = 80 / 4;
-    private static float swiperSubItemWidth = 16.66f;
-    private static float swiperSubItemHeight = 12.5f;
+    private static float swiperSubItemWidth = 10.66f;
+    private static float swiperSubItemHeight = 8.5f;
     Fragment_2_items TwoItemsFrag;
     BuyerDeshBoardActivity ActivityContext;
     BuyerDashBoardFragment fragContext;

@@ -34,7 +34,7 @@ public class SellerDashBoardSettingFragment extends Fragment {
     TextView seller_title, staffText, phoneText, addressText, logoutText, emailText;
     RelativeLayout titlebarlayout, seller_detials_layout, seller_title_layout, ratinglayout, staff_layout, seller_email_layout, phone_layout, address_layout, seller_logout_layout;
     RatingBar rating;
-    ImageView userImage, btnViewStaff,logoutImg;
+    ImageView userImage, btnViewStaff, logoutImg;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -116,7 +116,7 @@ public class SellerDashBoardSettingFragment extends Fragment {
                 editor.putString("token", "");
                 editor.commit();
 
-                globels.getGlobelRef().deviceToken="";
+                globels.getGlobelRef().deviceToken = "";
 
                 Intent i = new Intent(getActivity(),
                         UserTypeActivity.class);
@@ -137,7 +137,7 @@ public class SellerDashBoardSettingFragment extends Fragment {
                 editor.putString("token", "");
                 editor.commit();
 
-                globels.getGlobelRef().deviceToken="";
+                globels.getGlobelRef().deviceToken = "";
 
                 Intent i = new Intent(getActivity(),
                         UserTypeActivity.class);
@@ -150,17 +150,23 @@ public class SellerDashBoardSettingFragment extends Fragment {
     }
 
     public void fillProductListWithData(ArrayList<SellerDetailsByIdModel> SellerDetail) {
-        seller_title.setText("" + SellerDetail.get(0).fName + " " + SellerDetail.get(0).lName);
-        //staffText.setText(""+SellerDetail.get(0));
-        emailText.setText("" + SellerDetail.get(0).email);
-        phoneText.setText("" + SellerDetail.get(0).phoneNo);
-        addressText.setText("" + SellerDetail.get(0).address);
+        try {
 
-        Picasso.with(getActivity()).load(Constant.imgbaseUrl + SellerDetail.get(0).logo).into(userImage);
+            seller_title.setText("" + SellerDetail.get(0).fName + " " + SellerDetail.get(0).lName);
+            //staffText.setText(""+SellerDetail.get(0));
+            emailText.setText("" + SellerDetail.get(0).email);
+            phoneText.setText("" + SellerDetail.get(0).phoneNo);
+            addressText.setText("" + SellerDetail.get(0).address);
 
-        if (!SellerDetail.get(0).sellerRatings.equals("not available") && !SellerDetail.get(0).sellerRatings.equals("null")) {
-            float ratingNum = Float.parseFloat(SellerDetail.get(0).sellerRatings);
-            rating.setRating((int) ratingNum);
+            Picasso.with(getActivity()).load(Constant.imgbaseUrl + SellerDetail.get(0).logo).into(userImage);
+
+            if (!SellerDetail.get(0).sellerRatings.equals("not available") && !SellerDetail.get(0).sellerRatings.equals("null")) {
+                float ratingNum = Float.parseFloat(SellerDetail.get(0).sellerRatings);
+                rating.setRating((int) ratingNum);
+            }
+
+        } catch (Exception e) {
+
         }
     }
 

@@ -9,18 +9,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <!--push notification permission-->
+    <!-- push notification permission -->
     <permission
         android:name="com.github.hathibelagal.pn.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.github.hathibelagal.pn.permission.C2D_MESSAGE" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--push notification permission-->
+    <!-- push notification permission -->
+
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name="thinktechsol.msquare.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,26 +46,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="thinktechsol.msquare.activities.UserTypeActivity"
+            android:name=".activities.UserTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="thinktechsol.msquare.activities.SellerLoginActivity"
+            android:name=".activities.SellerLoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name="thinktechsol.msquare.activities.buyer.BuyerLoginActivity"
+            android:name=".activities.buyer.BuyerLoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name="thinktechsol.msquare.activities.SellerDeshBoardActivity" />
-        <activity android:name="thinktechsol.msquare.activities.SellerViewStaffActivity" />
+        <activity android:name=".activities.SellerDeshBoardActivity" />
+        <activity android:name=".activities.SellerViewStaffActivity" />
         <activity
-            android:name="thinktechsol.msquare.activities.AddOrViewProActivity"
+            android:name=".activities.AddOrViewProActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name="thinktechsol.msquare.activities.ViewSellProDetailActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.HomeActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.SalonDetailsActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.ServiceSellerDetailActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity" />
-
+        <activity android:name=".activities.ViewSellProDetailActivity" />
+        <activity android:name=".activities.buyer.HomeActivity" />
+        <activity android:name=".activities.buyer.SalonDetailsActivity" />
+        <activity android:name=".activities.buyer.ServiceSellerDetailActivity" />
+        <activity android:name=".activities.buyer.BuyerRegisterationActivity" />
 
         <!-- facebook integration metadata -->
         <meta-data
@@ -76,7 +75,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -93,19 +92,21 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerReservationActivity"></activity>
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerReservationActivityProduct"></activity>
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerSettingDeshBoardActivity"></activity>
-        <activity android:name="thinktechsol.msquare.activities.SellersOrdersActivity" />
-        <activity android:name="thinktechsol.msquare.activities.ViewSellOrderDetailActivity" />
-        <activity android:name="thinktechsol.msquare.activities.EditProActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.ViewBuyerProDetailActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerOrdersActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerWishListActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerFavouriteActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerBookingAddressActivity" />
-        <activity android:name="thinktechsol.msquare.activities.buyer.BuyerFilterActivity" />
+        <activity android:name=".activities.buyer.BuyerReservationActivity" />
+        <activity android:name=".activities.buyer.BuyerReservationActivityProduct" />
+        <activity android:name=".activities.buyer.BuyerSettingDeshBoardActivity" />
+        <activity android:name=".activities.SellersOrdersActivity" />
+        <activity android:name=".activities.ViewSellOrderDetailActivity" />
+        <activity android:name=".activities.EditProActivity" />
+        <activity android:name=".activities.buyer.ViewBuyerProDetailActivity" />
+        <activity android:name=".activities.buyer.BuyerDeshBoardActivity" />
+        <activity android:name=".activities.buyer.BuyerOrdersActivity" />
+        <activity android:name=".activities.buyer.BuyerWishListActivity" />
+        <activity android:name=".activities.buyer.BuyerFavouriteActivity" />
+        <activity android:name=".activities.buyer.BuyerBookingAddressActivity" />
+        <activity android:name=".activities.buyer.BuyerFilterActivity" />
+        <activity android:name=".activities.buyer.BuyerLoginActivityGuest" />
+        <activity android:name=".activities.buyer.BuyerRegisterationActivityGuest" />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -113,38 +114,38 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.github.hathibelagal.pn" />
             </intent-filter>
         </receiver>
-        <!--<service-->
-        <!--android:name="thinktechsol.msquare.gcm.GCMPushReceiverServicevice"-->
-        <!--android:exported="false" >-->
-        <!--<intent-filter>-->
-        <!--<action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
+        <!-- <service -->
+        <!-- android:name="thinktechsol.msquare.gcm.GCMPushReceiverServicevice" -->
+        <!-- android:exported="false" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.android.c2dm.intent.RECEIVE" /> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
 
-        <!--<service-->
-        <!--android:name="thinktechsol.msquare.gcm.GCMTokenRefreshListenerServicece"-->
-        <!--android:exported="false">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="com.google.android.gms.iid.InstanceID"/>-->
-        <!--</intent-filter>-->
-        <!--</service>-->
+
+        <!-- <service -->
+        <!-- android:name="thinktechsol.msquare.gcm.GCMTokenRefreshListenerServicece" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.android.gms.iid.InstanceID"/> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
 
         <service
-            android:name="thinktechsol.msquare.gcm.GCMPushReceiverService"
+            android:name=".gcm.GCMPushReceiverService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
 
-        <!--
-            GCM Registration Intent Service
-        -->
+        <!-- GCM Registration Intent Service -->
         <service
-            android:name="thinktechsol.msquare.gcm.GCMRegistrationService"
+            android:name=".gcm.GCMRegistrationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />

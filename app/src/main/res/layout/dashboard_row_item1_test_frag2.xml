@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/bglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0068a5">
+
+        <!--<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/simple1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="130dp">-->
+        <!--show items when user slides-->
+        <LinearLayout
+            android:id="@+id/fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_wrapper_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="right|center_vertical">
+
+            <LinearLayout
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/subItem1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="65dp"
+                android:layout_height="match_parent"
+                android:background="#aaaaaa"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/subItem2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--show items when user slides end-->
+
+        <!--first showing items-->
+        <LinearLayout
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:id="@+id/lbl_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|left"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left">
+
+                <ImageView
+                    android:id="@+id/lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/lbl_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbl"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:layout_marginLeft="100dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/counterTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enabled:"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                     />
+
+                <TextView
+                    android:id="@+id/counterTV3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pending "
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/counterTV4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Disabled "
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/counterTV5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blocked"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!--<TextView-->
+            <!--android:id="@+id/counterTV"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="0"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textStyle="bold" />-->
+        </LinearLayout>
+
+        <!--first showing items-->
+
+        <!--</com.daimajia.swipe.SwipeLayout>-->
+
+    </RelativeLayout>
+
+</RelativeLayout>

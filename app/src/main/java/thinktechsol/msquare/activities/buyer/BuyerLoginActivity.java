@@ -27,6 +27,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.*;
@@ -40,6 +42,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -330,8 +335,10 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         if (resultCode == RC_SIGN_IN) {
             signedInUser = false;
             mIntentInProgress = false;
-            if (!mGoogleApiClient.isConnecting()) {
-                mGoogleApiClient.connect();
+            if(mGoogleApiClient!=null) {
+                if (!mGoogleApiClient.isConnecting()) {
+                    mGoogleApiClient.connect();
+                }
             }
         } else {
             try {
@@ -357,7 +364,10 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         AppEventsLogger.deactivateApp(this);
     }
 
+    String emailOfFbLogin = null;
+
     public void fb_login() {
+
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
@@ -368,20 +378,50 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     public void onSuccess(LoginResult loginResult) {
 
                         try {
-                            Profile profile = Profile.getCurrentProfile();
+                            final Profile profile = Profile.getCurrentProfile();
 //                            Log.e("BuyerLoginActivity", "link of profile=" + profile.getName());
 //                            Log.e("BuyerLoginActivity", "link of profile img=" + profile.getProfilePictureUri(500,500));
 //                            Log.e("BuyerLoginActivity", "link of profile img=" +);
                             profile.getName();
 
 
-                            RegisterRequestModel requestModel = new RegisterRequestModel(profile.getFirstName().toString(), profile.getLastName().toString(), "", "", "facebook", "", "1");
-                            new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
+                            // Facebook Email address
+                            GraphRequest request = GraphRequest.newMeRequest(
+                                    loginResult.getAccessToken(),
+                                    new GraphRequest.GraphJSONObjectCallback() {
+                                        @Override
+                                        public void onCompleted(
+                                                JSONObject object,
+                                                GraphResponse response) {
+                                            Log.v("LoginActivity Response ", response.toString());
+
+                                            try {
+                                                //Name = object.getString("name");
+
+                                                emailOfFbLogin = object.getString("email");
+//                                                Log.e("Buyerlogin", "Email =" + email);
+                                                Log.e("LoginActivity= ", "email of fb login is=" + emailOfFbLogin);
+//                                                Toast.makeText(getApplicationContext(), "email " + email, Toast.LENGTH_LONG).show();
+
+                                                RegisterRequestModel requestModel = new RegisterRequestModel(profile.getFirstName().toString(), profile.getLastName().toString(), emailOfFbLogin, "", "facebook", "", "1");
+                                                new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
+
+
+                                            } catch (JSONException e) {
+                                                Toast.makeText(BuyerLoginActivity.this, "Login Failed Please try again", Toast.LENGTH_SHORT).show();
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "id,name,email,gender, birthday");
+                            request.setParameters(parameters);
+                            request.executeAsync();
 
                             Constant.logInAs = "facebook";
 
-
                         } catch (Exception e) {
+                            Toast.makeText(BuyerLoginActivity.this, "Login Failed Please try again", Toast.LENGTH_SHORT).show();
                             Log.e("BuyerLoginActivity", "catching the exception=" + e);
                         }
 
@@ -457,7 +497,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
     @Override
     public void onBackPressed() {
-        System.exit(0);
+        finish();
     }
 
     @Override
@@ -503,6 +543,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
             getProfileInformation();
             Constant.logInAs = "googleplus";
             startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
+            finish();
         }
     }
 
@@ -517,12 +558,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 //        mGoogleApiClient.connect();
     }
 
-    protected void onStop() {
-        super.onStop();
-//        if (mGoogleApiClient.isConnected()) {
-//            mGoogleApiClient.disconnect();
-//        }
-    }
+//    protected void onStop() {
+//        super.onStop();
+////        if (mGoogleApiClient.isConnected()) {
+////            mGoogleApiClient.disconnect();
+////        }
+//    }
 
     private void resolveSignInError() {
         if (mConnectionResult != null) {

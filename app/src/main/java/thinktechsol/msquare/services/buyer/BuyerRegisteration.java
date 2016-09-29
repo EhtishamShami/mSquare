@@ -36,6 +36,7 @@ public class BuyerRegisteration {
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
+    AlertDialog alreadyRegisterDialog;
     BuyerRegisterationActivity ref;
     ArrayList<String> selectedImagePath;
     RegisterRequestModel requestModel;
@@ -66,6 +67,21 @@ public class BuyerRegisteration {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
+        //already found dialog
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(ctx);
+        builder2.setMessage("Email is already Registered! Please Try Different Email");
+        builder2.setTitle("Account Already Exist");
+        builder2.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alreadyRegisterDialog = builder2.create();
+//        alreadyRegisterDialog.show();
+
 //        updateDeviceInfo();
         new registerBuyer().execute();
     }
@@ -84,28 +100,35 @@ public class BuyerRegisteration {
             Log.e("BuyerRegistration", "BuyerRegistration childJSonObj=" + childJSonObj);
 
             String location = childJSonObj.getString("location");
-            String status= childJSonObj.getString("status");
-            String googlePlus= childJSonObj.getString("googlePlus");
-            String state= childJSonObj.getString("state");
-            String lName= childJSonObj.getString("lName");
-            String udid= childJSonObj.getString("udid");
-            String password= childJSonObj.getString("password");
-            String fName= childJSonObj.getString("fName");
-            String phoneNo= childJSonObj.getString("phoneNo");
-            String houseNo= childJSonObj.getString("houseNo");
-            String id= childJSonObj.getString("id");
-            String twitter= childJSonObj.getString("twitter");
-            String area= childJSonObj.getString("area");
-            String email= childJSonObj.getString("email");
-            String facebook= childJSonObj.getString("facebook");
-            String streetNo= childJSonObj.getString("streetNo");
+            String status = childJSonObj.getString("status");
+            String googlePlus = childJSonObj.getString("googlePlus");
+            String state = childJSonObj.getString("state");
+            String lName = childJSonObj.getString("lName");
+            String udid = childJSonObj.getString("udid");
+            String password = childJSonObj.getString("password");
+            String fName = childJSonObj.getString("fName");
+            String phoneNo = childJSonObj.getString("phoneNo");
+            String houseNo = childJSonObj.getString("houseNo");
+            String id = childJSonObj.getString("id");
+            String twitter = childJSonObj.getString("twitter");
+            String area = childJSonObj.getString("area");
+            String email = childJSonObj.getString("email");
+            String facebook = childJSonObj.getString("facebook");
+            String streetNo = childJSonObj.getString("streetNo");
 
-            String account= childJSonObj.getString("account");
-            String datetime= childJSonObj.getString("datetime");
-            String thumb= childJSonObj.getString("thumb");
+            String account = childJSonObj.getString("account");
+            String datetime = childJSonObj.getString("datetime");
+            String thumb = childJSonObj.getString("thumb");
 
             Log.e("BuyerRegistration", "BuyerRegistration Response Is=" + response);
-            RegisterModel registerModel=new RegisterModel(location,  status,  googlePlus,  state,  lName,  udid,  password,  fName,  phoneNo,  houseNo,  id,  twitter,  area,  email,  facebook,  streetNo,  account,  datetime,  thumb);
+//            NotFoundDialog.setMessage("Email Already Exist");
+
+            if (response.equals("already")) {
+                alreadyRegisterDialog.show();
+                return null;
+            }
+
+            RegisterModel registerModel = new RegisterModel(location, status, googlePlus, state, lName, udid, password, fName, phoneNo, houseNo, id, twitter, area, email, facebook, streetNo, account, datetime, thumb);
             registerationResponseList.add(registerModel);
 
         } catch (JSONException e) {
@@ -132,6 +155,7 @@ public class BuyerRegisteration {
 
                 URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "url is=" + url);
+                Log.e(TAG, "fname and lname are=" + requestModel.fName + " , " + requestModel.lName + " , " + requestModel.email + " , " + requestModel.password);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
 //                httpURLConnection.setDoInput(true);
@@ -153,15 +177,14 @@ public class BuyerRegisteration {
                         + "&" + URLEncoder.encode("lName", "UTF-8") + "=" + URLEncoder.encode(requestModel.lName, "UTF-8")
                         + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(requestModel.email, "UTF-8")
                         + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(requestModel.password, "UTF-8")
-                        + "&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(requestModel.type, "UTF-8")
-                        + "&" + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(requestModel.location, "UTF-8")
-                        + "&" + URLEncoder.encode("udid", "UTF-8") + "=" + URLEncoder.encode(requestModel.udid, "UTF-8");
+                        + "&" + URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8")
+                        + "&" + URLEncoder.encode("udid", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();
                 outputStream.close();
 
-                Log.e(TAG, "data save result is=" + httpURLConnection.getResponseMessage());
+//                Log.e(TAG, "data save result is=" + httpURLConnection.getResponseMessage());
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
@@ -188,10 +211,12 @@ public class BuyerRegisteration {
         }
 
         protected void onPostExecute(String response) {
+            Log.e(TAG, "response result of registratoin is=" + response);
             if (response != null) {
                 ArrayList<RegisterModel> list = returnParsedJsonObject(response);
                 progressDialog.dismiss();
-                ref.onRegistrationCompleted(list);
+                if (list != null)
+                    ref.onRegistrationCompleted(list);
 
             } else {
                 NotFoundDialog.show();

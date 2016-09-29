@@ -31,7 +31,10 @@ import java.util.Calendar;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
+import thinktechsol.msquare.model.Buyer.CategoryModel;
 import thinktechsol.msquare.model.Buyer.FiltersModel;
+import thinktechsol.msquare.model.Buyer.GetBuyersOrdersModel;
+import thinktechsol.msquare.services.buyer.GetBuyerFilterationCategory;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerFilterActivity extends Activity implements TimePickerDialog.OnTimeSetListener {
@@ -41,7 +44,8 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
     RelativeLayout serviceDetLayout, distanceLayout, priceLayout, categoryLayout;
     TextView title, startTimeTv, endTimeTv;
     ImageView backBtn, btn_menu;
-    String distance, priceFrom, priceTo, fromTime, toTime, categories;
+    String distance, priceFrom, priceTo, fromTime, toTime;
+    static String categories;
     TextView startTV, endTV;
     String TimeClickedView;
     TextView distanceTV, startPriceTV, endPriceTV;
@@ -58,7 +62,7 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
 
         setContentView(R.layout.activity_buyer_filter);
 
-        //new getBuyerWishListService(BuyerBookingAddressActivity.this, BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId);
+        new GetBuyerFilterationCategory(BuyerFilterActivity.this, BuyerFilterActivity.this, Constant.sellerServiceId);
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
@@ -127,7 +131,7 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
         categoryLayout = (RelativeLayout) findViewById(R.id.categoryLayout);
 
 
-        serviceDetLayout.setLayoutParams(AppLayoutParam(15.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+        serviceDetLayout.setLayoutParams(AppLayoutParam(17.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
         distanceLayout.setLayoutParams(AppLayoutParam(17.00f, 100f, 0, 2, 0, 0, serviceDetLayout, "hor", 0, "null"));
         priceLayout.setLayoutParams(AppLayoutParam(20.00f, 100f, 0, 2, 0, 0, distanceLayout, "hor", 0, "null"));
         categoryLayout.setLayoutParams(AppLayoutParam(19.00f, 100f, 0, 2, 0, 0, priceLayout, "hor", 0, "null"));
@@ -193,18 +197,19 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
         toTime = endTimeTv.getText().toString();
 
 
-        final GridView grid = (GridView) findViewById(R.id.grid_view);
-        final ArrayList<String> items = new ArrayList<String>();
-        items.add("Hello12");
-        items.add("Hello22");
-        items.add("Hello22");
-        items.add("Hello22");
-        items.add("Hello22");
-        grid.setAdapter(new GridAdapter(items));
-
-        grid.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        grid = (GridView) findViewById(R.id.grid_view);
+//        final ArrayList<String> items = new ArrayList<String>();
+//        items.add("Hello12");
+//        items.add("Hello22");
+//        items.add("Hello22");
+//        items.add("Hello22");
+//        items.add("Hello22");
+//        grid.setAdapter(new GridAdapter(items));
+//
+//        grid.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
     }
 
+    GridView grid;
 
     public void show_time_picker(View v) {
 
@@ -218,8 +223,12 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
 
     }
 
-    public void fillProductListWithData(ArrayList<BuyerWishListModel> list) {
+    public void fillProductListWithData(ArrayList<CategoryModel> list) {
+        Log.e("categoryModel", "categoryModel=" + list.size());
 
+        grid.setAdapter(new GridAdapter(list));
+
+        grid.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
     }
 
     @Override
@@ -288,7 +297,7 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
 
     private static final class GridAdapter extends BaseAdapter {
 
-        final ArrayList<String> mItems;
+        final ArrayList<CategoryModel> mItems;
         final int mCount;
 
         /**
@@ -296,7 +305,7 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
          *
          * @param items to fill data to
          */
-        private GridAdapter(final ArrayList<String> items) {
+        private GridAdapter(final ArrayList<CategoryModel> items) {
 
             mCount = items.size();
             //mItems = new ArrayList<String>();
@@ -321,7 +330,7 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
         @Override
         public View getView(final int position, final View convertView, final ViewGroup parent) {
 
-             View view = convertView;
+            View view = convertView;
             TextView text = null;
 
             if (view == null) {
@@ -330,14 +339,18 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
                 text = (TextView) view.findViewById(R.id.item);
             }
 
+            final CategoryModel myItem = mItems.get(position);
+
             if (text != null)
-                text.setText(mItems.get(position));
+                text.setText(myItem.name);
+            //text.setText(mItems.get(position));
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //view.setItemChecked(position, true);
-                    Toast.makeText(parent.getContext(), ""+position, Toast.LENGTH_SHORT).show();
+                    categories = myItem.id;
+                    //Toast.makeText(parent.getContext(), "" + myItem.id, Toast.LENGTH_SHORT).show();
                 }
             });
 

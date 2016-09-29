@@ -50,7 +50,7 @@ public class GetBuyerDeshBoardStatesService {
         progressDialog.setMessage("Fetching Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
-//        progressDialog.show();
+        progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
@@ -151,11 +151,11 @@ public class GetBuyerDeshBoardStatesService {
 
             } catch (MalformedURLException e) {
                 Log.e("sellerLogIn", "MalformedURLException=" + e);
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 return null;
             } catch (Exception e) {
                 Log.e("sellerLogIn", "exception Exception=" + e);
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 return null;
             }
         }
@@ -167,9 +167,9 @@ public class GetBuyerDeshBoardStatesService {
                 globels.getGlobelRef().buyerDeshBoardStatesList = list;
                 ref.fill_data_to_adapter(list);
 
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
             } else {
-                //NotFoundDialog.show();
+                NotFoundDialog.show();
             }
         }
     }

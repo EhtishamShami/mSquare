@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,6 +24,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
+import thinktechsol.msquare.activities.buyer.BuyerReservationActivityProduct;
 import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -31,7 +34,7 @@ public class AddBuyerOrder {
 
     private static final String TAG_SUCCESS = "success";
 
-//    String _url = "http://smartit.ae/api/addBuyerOrder";
+    //    String _url = "http://smartit.ae/api/addBuyerOrder";
     String _url = "addBuyerOrder/";
     Context ctx;
     ProgressDialog progressDialog;
@@ -40,9 +43,19 @@ public class AddBuyerOrder {
     Context ActivityContext;
     ConfirmBookingModel dataObj;
 
-    public AddBuyerOrder(final Context ctx, Context ActivityContext, ConfirmBookingModel dataObj) {
+    BuyerReservationActivity resSerCtx;
+    BuyerReservationActivityProduct resProCtx;
+
+    public AddBuyerOrder(final Context ctx, BuyerReservationActivityProduct resProCtx, BuyerReservationActivity resSerCtx, Context ActivityContext, ConfirmBookingModel dataObj) {
         this.ctx = ctx;
         this.ActivityContext = ActivityContext;
+
+        if (resSerCtx != null)
+            this.resSerCtx = resSerCtx;
+        if (resProCtx != null)
+            this.resProCtx = resProCtx;
+
+
         this.dataObj = dataObj;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Confirming Please wait...");
@@ -71,9 +84,8 @@ public class AddBuyerOrder {
 //        public ArrayList<String> serviceId;
 //        public ArrayList<String> productId;
 //        public ArrayList<String> quantity;
-        Log.e("AddBuyerOrder", "post data is=" + dataObj.sellerId+" , "+dataObj.buyerId+" , "+dataObj.extraRemarks+" , "+dataObj.serviceRequestTime+" , "+
-                dataObj.staffId+" , "+dataObj.serviceId+" , "+dataObj.productId+" , "+dataObj.quantity);
-
+        Log.e("AddBuyerOrder", "post data is=" + dataObj.sellerId + " , " + dataObj.buyerId + " , " + dataObj.extraRemarks + " , " + dataObj.serviceRequestTime + " , " +
+                dataObj.staffId + " , " + dataObj.serviceId + " , " + dataObj.productId + " , " + dataObj.quantity);
 
 
         new postOrderAsync().execute(keywords, city);
@@ -230,6 +242,13 @@ public class AddBuyerOrder {
 //                myAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
 //                jobsAct.makeKeyboardInvisible();
+                if (resSerCtx != null) {
+                    Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
+                    resSerCtx.finish();
+                }else {
+                    Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
+                    resProCtx.finish();
+                }
             } else {
                 NotFoundDialog.show();
             }

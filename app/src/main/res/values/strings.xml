@@ -29,23 +29,23 @@
     <string name="lbl_time_pro">00:00</string>
 
 
-    <string name="facebook_app_id">733055416833817</string>
+    <string name="facebook_app_id">1697047040615850</string>
 
-        <string-array name="values">
-            <item>1</item>
-            <item>2</item>
-            <item>3</item>
-            <item>4</item>
-            <item>5</item>
-            <item>6</item>
-            <item>8</item>
-            <item>9</item>
-            <item>10</item>
-            <item>11</item>
-            <item>12</item>
-            <item>13</item>
-            <item>14</item>
-        </string-array>
+    <string-array name="values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+    </string-array>
 
     <string name="lbl_tab1_text">Map</string>
     <string name="lbl_tab2_text">List</string>
@@ -78,8 +78,8 @@
     <string name="hint_messageET">Write a comment...</string>
 
 
-    <string name="hint_houseET">House</string>
-    <string name="hint_stAddressET">Street Address</string>
+    <string name="hint_houseET">House no.</string>
+    <string name="hint_stAddressET">Street</string>
     <string name="hint_areaET">Area</string>
     <string name="hint_stateET">State</string>
     <string name="hint_phoneET">Phone Number</string>

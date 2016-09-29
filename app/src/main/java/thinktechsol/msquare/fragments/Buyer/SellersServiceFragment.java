@@ -34,7 +34,7 @@ public class SellersServiceFragment extends Fragment {
     ListView listView;
     BuyerServiceSellersProductListAdapter adapter;
     ArrayList<getServiceSellersProductModel> productList;
-    RelativeLayout pro_name_rating_price_layout, pro_name_line_layout,sellers_title_layout;
+    RelativeLayout pro_name_rating_price_layout, pro_name_line_layout, sellers_title_layout;
     RatingBar rating;
     TextView sellers_title;
     boolean isProduct = false;
@@ -88,15 +88,19 @@ public class SellersServiceFragment extends Fragment {
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getContext(), ""+, Toast.LENGTH_SHORT).show();
                 ArrayList<BuyerReservationListModel> selectedProductList = adapter.addIdsToSelectedList();
+
+                if (globels.getGlobelRef().selectedProductListReservation != null)
+                    globels.getGlobelRef().selectedProductListReservation.clear();
+
+//                Log.e("BuyerService", "selected items 2=" + selectedProductList.get(0).proQuantity);
                 globels.getGlobelRef().selectedProductListReservation = selectedProductList;
 
-                if (globels.getGlobelRef().selectedServicesIds != null && globels.getGlobelRef().selectedProductsIds != null) {
-                    globels.getGlobelRef().selectedServicesIds.clear();
-                    globels.getGlobelRef().selectedProductsIds.clear();
-                    globels.getGlobelRef().selectedQuantityIds.clear();
-                }
+//                if (globels.getGlobelRef().selectedServicesIds != null && globels.getGlobelRef().selectedProductsIds != null) {
+//                    globels.getGlobelRef().selectedServicesIds.clear();
+//                    globels.getGlobelRef().selectedProductsIds.clear();
+//                    globels.getGlobelRef().selectedQuantityIds.clear();
+//                }
 
                 globels.getGlobelRef().allSelectedServices = adapter.allSelectedServices;//selected service for just showing
 
@@ -104,6 +108,9 @@ public class SellersServiceFragment extends Fragment {
                 globels.getGlobelRef().selectedProductsIds = adapter.selectedProductsIds;//product ids
                 globels.getGlobelRef().selectedQuantityIds = adapter.selectedQuantityIds;//quantity
 
+                for (int i = 0; i < globels.getGlobelRef().selectedQuantityIds.size(); i++) {
+
+                }
 
                 if (isProduct)
                     startActivity(new Intent(getActivity(), BuyerReservationActivityProduct.class));

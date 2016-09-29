@@ -72,8 +72,7 @@
                 android:id="@+id/pro_detail_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/imgs"
-                >
+                android:layout_below="@+id/imgs">
 
 
                 <RelativeLayout
@@ -169,10 +168,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
-                        android:text="Review"
                         android:paddingRight="5dp"
-                        android:textColor="@android:color/holo_blue_light"
+                        android:text="Review"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@android:color/holo_blue_light"
                         android:textSize="15sp" />
 
                     <View
@@ -198,11 +197,10 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dp"
-                        android:max="5"
-                        android:stepSize="1"
                         android:isIndicator="false"
+                        android:max="5"
                         android:numStars="5"
-                         />
+                        android:stepSize="1" />
                 </RelativeLayout>
 
                 <View
@@ -274,25 +272,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="7dp"
-                    android:background="@drawable/bg_edittext"
                     android:layout_weight="9"
+                    android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_messageET"
+                    android:imeOptions="actionNext"
                     android:padding="5dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:paddingLeft="10dp"/>
+                    android:paddingLeft="10dp" />
 
                 <TextView
                     android:id="@+id/sendMessageBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Send"
-                    android:layout_gravity="center"
-                    android:textStyle="normal|bold"
-                    android:textSize="23sp"
+                    android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textAlignment="center" />
+                    android:textSize="23sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
         </RelativeLayout>
 

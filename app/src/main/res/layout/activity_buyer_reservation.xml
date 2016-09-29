@@ -316,6 +316,7 @@
                     android:background="#ece9ec"
                     android:hint="Type Description here"
                     android:lines="4"
+                    android:imeOptions="actionGo"
                     android:maxLines="4"
                     android:padding="10dp" />
             </RelativeLayout>

@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -109,6 +110,7 @@ public class BuyerDashBoardSettingFragment extends Fragment {
                         UserTypeActivity.class);
                 startActivity(i);
                 getActivity().finish();
+                Toast.makeText(getActivity(), "You have successfully logged out!", Toast.LENGTH_SHORT).show();
             }
         });
         logoutImg.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +130,7 @@ public class BuyerDashBoardSettingFragment extends Fragment {
                         UserTypeActivity.class);
                 startActivity(i);
                 getActivity().finish();
+                Toast.makeText(getActivity(), "You have successfully logged out!", Toast.LENGTH_SHORT).show();
             }
         });
 

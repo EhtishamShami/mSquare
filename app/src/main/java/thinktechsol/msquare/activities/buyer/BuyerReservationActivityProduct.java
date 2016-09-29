@@ -37,8 +37,7 @@ public class BuyerReservationActivityProduct extends Activity {
     ImageView backBtn, btn_menu;
 
     RelativeLayout row1Layout, products_Layout, orderDetailLayout, addressLayout, mainLayout;
-    ListView productslisview;
-
+    static ListView productslisview;
 
     WeekView mWeekView;
     private static ArrayList<WeekViewEvent> mNewEvents;
@@ -58,147 +57,113 @@ public class BuyerReservationActivityProduct extends Activity {
 
         setContentView(R.layout.activity_buyer_reservation_product);
 
+        try {
+            populateData();
+        } catch (Exception e) {
+            Log.e("BuyerReservation", "error in populating the data=" + e);
+        }
+
+
         //new GetStaffService(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, globels.getGlobelRef().serviceSellerId);
 
 //        list = new ArrayList<BuyerGetStaffTimeMode>();
 //        staffList = new ArrayList<BuyerGetStaffModel>();
 
-        titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
-        titleSeller = (TextView) findViewById(R.id.titleSeller);
-        titleSeller.setText("" + globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
-
-        backBtn = (ImageView) findViewById(R.id.backBtn);
-        btn_menu = (ImageView) findViewById(R.id.btn_menu);
-
-        row1Layout = (RelativeLayout) findViewById(R.id.row1Layout);
-        userName = (TextView) findViewById(R.id.userName);
-        title = (TextView) findViewById(R.id.title);
-
-        products_Layout = (RelativeLayout) findViewById(R.id.products_Layout);
-        productslisview = (ListView) findViewById(R.id.productslisview);
-
-        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
-
-//        ArrayList<BuyerReservationListModel> list = new ArrayList<BuyerReservationListModel>();
-//        list.add(new BuyerReservationListModel("Test 1", "300" + " AED", "3"));
-//        list.add(new BuyerReservationListModel("Test 1", "300" + " AED", "3"));
-//        list.add(new BuyerReservationListModel("Test 1", "300" + " AED", "3"));
-
-        ProductListAdapterReservation adapter = new ProductListAdapterReservation(this, BuyerReservationActivityProduct.this, R.layout.product_list_adapter_item_reservation, globels.getGlobelRef().selectedProductListReservation);
-        productslisview.setAdapter(adapter);
-
-        orderDetailLayout = (RelativeLayout) findViewById(R.id.orderDetailLayout);
-        totalPrice = (TextView) findViewById(R.id.totalPrice);
-        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
-
-        addressLayout = (RelativeLayout) findViewById(R.id.addressLayout);
-        buyerAddress = (TextView) findViewById(R.id.buyerAddress);
-        btnUpdateAddress = (ImageView) findViewById(R.id.btnUpdateAddress);
-
-//        buyerAddress.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).houseNo
-//                + "" + globels.getGlobelRef().buyerLoginResponse.get(0).streetNo +
-//                "" + globels.getGlobelRef().buyerLoginResponse.get(0).area +
-//                "" + globels.getGlobelRef().buyerLoginResponse.get(0).state +
-//                "" + globels.getGlobelRef().buyerLoginResponse.get(0).phoneNo
+//        titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
+//        titleSeller = (TextView) findViewById(R.id.titleSeller);
+//        titleSeller.setText("" + globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+//
+//        backBtn = (ImageView) findViewById(R.id.backBtn);
+//        btn_menu = (ImageView) findViewById(R.id.btn_menu);
+//
+//        row1Layout = (RelativeLayout) findViewById(R.id.row1Layout);
+//        userName = (TextView) findViewById(R.id.userName);
+//        title = (TextView) findViewById(R.id.title);
+//
+//        products_Layout = (RelativeLayout) findViewById(R.id.products_Layout);
+//        productslisview = (ListView) findViewById(R.id.productslisview);
+//
+//        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+//
+//        ProductListAdapterReservation adapter = new ProductListAdapterReservation(this, BuyerReservationActivityProduct.this, R.layout.product_list_adapter_item_reservation, globels.getGlobelRef().selectedProductListReservation);
+//        productslisview.setAdapter(adapter);
+//
+//        orderDetailLayout = (RelativeLayout) findViewById(R.id.orderDetailLayout);
+//        totalPrice = (TextView) findViewById(R.id.totalPrice);
+//        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
+//
+//        addressLayout = (RelativeLayout) findViewById(R.id.addressLayout);
+//        buyerAddress = (TextView) findViewById(R.id.buyerAddress);
+//        btnUpdateAddress = (ImageView) findViewById(R.id.btnUpdateAddress);
+//
+//        buyerAddress.setText("" +
+//                globels.getGlobelRef().houseNo + "" +
+//                globels.getGlobelRef().streetNo + "" +
+//                globels.getGlobelRef().area + "" +
+//                globels.getGlobelRef().state + "" +
+//                globels.getGlobelRef().phoneNo
 //        );
+//
+//        confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
+//        etDescription = (EditText) findViewById(R.id.etDescription);
+//
+//        // title bar
+//        backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
+//        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
+////        btn_menu.setVisibility(View.VISIBLE);
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                globels.getGlobelRef().allSelectedServices = "";
+//                globels.getGlobelRef().SelectedServicesPrice = 0;
+//                finish();
+//            }
+//        });
+//
+//        title.setText("Book Service");
+//        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+//        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
+//        // title bar end
+//
+//        mainLayout.setLayoutParams(AppLayoutParam(80.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+//        confrmBookingBtn.setLayoutParams(AppLayoutParam(11.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
+//
+//        row1Layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
+//        row1Layout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
+//
+//        products_Layout.setLayoutParams(AppLayoutParam(23.00f, 100f, 0, 0, 0, -1, row1Layout, "hor", 0, "null"));
+//
+//        btnUpdateAddress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
+//            }
+//        });
+//
+//        confrmBookingBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (!(Constant.logInAs.equals("guest"))) {
+//
+//                    String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
+//                    String buyerId = globels.getGlobelRef().buyerLoginId;
+//                    String extraRemarks = etDescription.getText().toString();
+//                    String serviceRequestTime = "";
+//                    String staffId = "";
+//
+//                    Log.e("BuyerReservationAct", "idsssss sel serId=" + globels.getGlobelRef().selectedServicesIds);
+//                    Log.e("BuyerReservationAct", "idsssss sel proId=" + globels.getGlobelRef().selectedProductsIds);
+//                    Log.e("BuyerReservationAct", "idsssss sel proQuan=" + globels.getGlobelRef().selectedQuantityIds);
+//
+//                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
+//                    new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, obj);
+//                } else {
+//                    startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerLoginActivityGuest.class));
+//                }
+//            }
+//        });
 
-        buyerAddress.setText("" +
-                globels.getGlobelRef().houseNo + "" +
-                globels.getGlobelRef().streetNo + "" +
-                globels.getGlobelRef().area + "" +
-                globels.getGlobelRef().state + "" +
-                globels.getGlobelRef().phoneNo
-        );
-
-        confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
-        etDescription = (EditText) findViewById(R.id.etDescription);
-
-
-//        setSellersTitle(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
-//        setTotalServicesPrice(String.valueOf(globels.getGlobelRef().SelectedServicesPrice));
-//        setSelectedServicesName(String.valueOf(globels.gbuyerAddressetGlobelRef().allSelectedServices));
-
-
-        // title bar
-        backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
-        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
-//        btn_menu.setVisibility(View.VISIBLE);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                globels.getGlobelRef().allSelectedServices = "";
-                globels.getGlobelRef().SelectedServicesPrice = 0;
-                finish();
-            }
-        });
-
-        title.setText("Book Service");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
-        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
-        // title bar end
-
-        mainLayout.setLayoutParams(AppLayoutParam(80.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
-        confrmBookingBtn.setLayoutParams(AppLayoutParam(11.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
-
-        row1Layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
-        row1Layout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
-
-
-        //calenderOuterLayout.setLayoutParams(AppLayoutParam(15.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
-//        calenderOuterLayout.setLayoutParams(AppLayoutParam(20.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
-        products_Layout.setLayoutParams(AppLayoutParam(23.00f, 100f, 0, 0, 0, -1, row1Layout, "hor", 0, "null"));
-//        serviceDetailLayout.setLayoutParams(AppLayoutParam(17.00f, 100f, 0, 0, 0, 0, timeLayout, "hor", 0, "null"));
-//        sellersDetailLayout.setLayoutParams(AppLayoutParam(58f, 100f, 0, 0, 0, 0, serviceDetailLayout, "hor", 0, "null"));
-
-
-        //list.add(new BuyerGetStaffTimeMode("01:00 AM"));
-//        list.add(new BuyerGetStaffTimeMode("2", "01:15 AM", false));
-//        list.add(new TimeListItemModel("3", "01:30 AM", false));
-//        list.add(new TimeListItemModel("4", "01:45 AM", false));
-//        TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, list);
-//        timelisview.setAdapter(adapter);
-
-//        timelisview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-//        timelisview.setSelector(android.R.color.darker_gray);
-
-        btnUpdateAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
-            }
-        });
-
-        confrmBookingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!(Constant.logInAs.equals("guest"))) {
-                    // Toast.makeText(BuyerReservationActivityProduct.this, "Confirm booking is clicked", Toast.LENGTH_SHORT).show();
-
-//                String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
-//                String buyerId = globels.getGlobelRef().buyerLoginId;
-//                String extraRemarks = etDescription.getText().toString();
-//                String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
-//                String staffId = "1";
-//                ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, null);
-
-                    String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
-                    String buyerId = globels.getGlobelRef().buyerLoginId;
-                    String extraRemarks = etDescription.getText().toString();
-                    String serviceRequestTime = "";
-                    String staffId = "";
-
-                    Log.e("BuyerReservationAct", "idsssss sel serId=" + globels.getGlobelRef().selectedServicesIds);
-                    Log.e("BuyerReservationAct", "idsssss sel proId=" + globels.getGlobelRef().selectedProductsIds);
-                    Log.e("BuyerReservationAct", "idsssss sel proQuan=" + globels.getGlobelRef().selectedQuantityIds);
-
-                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
-                    new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, obj);
-                } else {
-
-                }
-            }
-        });
     }
 
 
@@ -306,6 +271,109 @@ public class BuyerReservationActivityProduct extends Activity {
         if (buyerAddress != null) {
             buyerAddress.setText("" + globels.getGlobelRef().address);
         }
+    }
 
+
+    public void populateData() {
+        titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
+        titleSeller = (TextView) findViewById(R.id.titleSeller);
+        titleSeller.setText("" + globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+
+        backBtn = (ImageView) findViewById(R.id.backBtn);
+        btn_menu = (ImageView) findViewById(R.id.btn_menu);
+
+        row1Layout = (RelativeLayout) findViewById(R.id.row1Layout);
+        userName = (TextView) findViewById(R.id.userName);
+        title = (TextView) findViewById(R.id.title);
+
+        products_Layout = (RelativeLayout) findViewById(R.id.products_Layout);
+        productslisview = (ListView) findViewById(R.id.productslisview);
+
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+
+        for (int i = 0; i < globels.getGlobelRef().selectedProductListReservation.size(); i++) {
+            Log.e("BuyerService", "selected items 3=" + globels.getGlobelRef().selectedProductListReservation.get(i).proQuantity);
+        }
+
+        ProductListAdapterReservation adapter = new ProductListAdapterReservation(this, BuyerReservationActivityProduct.this, R.layout.product_list_adapter_item_reservation, globels.getGlobelRef().selectedProductListReservation);
+        productslisview.setAdapter(adapter);
+
+        orderDetailLayout = (RelativeLayout) findViewById(R.id.orderDetailLayout);
+        totalPrice = (TextView) findViewById(R.id.totalPrice);
+        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPriceNew));
+
+        addressLayout = (RelativeLayout) findViewById(R.id.addressLayout);
+        buyerAddress = (TextView) findViewById(R.id.buyerAddress);
+        btnUpdateAddress = (ImageView) findViewById(R.id.btnUpdateAddress);
+
+        buyerAddress.setText("" +
+                globels.getGlobelRef().houseNo + "" +
+                globels.getGlobelRef().streetNo + "" +
+                globels.getGlobelRef().area + "" +
+                globels.getGlobelRef().state + "" +
+                globels.getGlobelRef().phoneNo
+        );
+
+        confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
+        etDescription = (EditText) findViewById(R.id.etDescription);
+
+        // title bar
+        backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
+        btn_menu.setLayoutParams(AppLayoutParam(12f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
+//        btn_menu.setVisibility(View.VISIBLE);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                globels.getGlobelRef().allSelectedServices = "";
+                globels.getGlobelRef().SelectedServicesPrice = 0;
+                globels.getGlobelRef().SelectedServicesPriceNew = 0;
+                finish();
+            }
+        });
+
+        title.setText("Book Service");
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
+        // title bar end
+
+        mainLayout.setLayoutParams(AppLayoutParam(80.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+        confrmBookingBtn.setLayoutParams(AppLayoutParam(11.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
+
+        row1Layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
+        row1Layout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
+
+        products_Layout.setLayoutParams(AppLayoutParam(23.00f, 100f, 0, 0, 0, -1, row1Layout, "hor", 0, "null"));
+
+        btnUpdateAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
+            }
+        });
+
+        confrmBookingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!(Constant.logInAs.equals("guest"))) {
+
+                    String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
+                    String buyerId = globels.getGlobelRef().buyerLoginId;
+                    String extraRemarks = etDescription.getText().toString();
+                    String serviceRequestTime = "";
+                    String staffId = "";
+
+                    Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedServicesIds);
+                    Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedProductsIds);
+                    Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedQuantityIds);
+
+                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
+                    new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, null, BuyerReservationActivityProduct.this, obj);
+                } else {
+                    Toast.makeText(BuyerReservationActivityProduct.this, "Your Selection is Save! But You have to Login First", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerLoginActivityGuest.class));
+                }
+            }
+        });
     }
 }

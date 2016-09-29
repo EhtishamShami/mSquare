@@ -23,7 +23,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
-import thinktechsol.msquare.activities.buyer.BuyerRegisterationActivity;
 import thinktechsol.msquare.model.Buyer.BuyerLogin;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
 import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
@@ -134,7 +133,7 @@ public class BuyerRegisterationForSocialMedia {
 
                 URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "url is=" + url);
-                Log.e(TAG, "fname and lname are=" + requestModel.fName+" , "+requestModel.lName);
+                Log.e(TAG, "fname and lname are=" + requestModel.fName+" , "+requestModel.lName+" , "+requestModel.email);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
 //                httpURLConnection.setDoInput(true);
