@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="messageColor">#0068a5</color>
+    <color name="search">#6b0f32</color>
     <color name="customerColor">#2688ad</color>
     <color name="orderColor">#82b421</color>
     <color name="productColor">#daa400</color>
@@ -48,4 +49,6 @@
 
     <color name="selected_tab_text_color">#2688ad</color>
     <color name="unselected_tab_text_color">#bfbfbf</color>
+
+    <color name="pro_ser_them_color">#de7112</color>
 </resources>

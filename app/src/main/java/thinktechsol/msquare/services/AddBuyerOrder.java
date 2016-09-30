@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import thinktechsol.msquare.activities.buyer.BuyerOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivity;
 import thinktechsol.msquare.activities.buyer.BuyerReservationActivityProduct;
 import thinktechsol.msquare.model.Buyer.ConfirmBookingModel;
@@ -244,9 +246,11 @@ public class AddBuyerOrder {
 //                jobsAct.makeKeyboardInvisible();
                 if (resSerCtx != null) {
                     Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
+                    resSerCtx.startActivity(new Intent(resSerCtx, BuyerOrdersActivity.class));
                     resSerCtx.finish();
                 }else {
                     Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
+                    resProCtx.startActivity(new Intent(resProCtx, BuyerOrdersActivity.class));
                     resProCtx.finish();
                 }
             } else {

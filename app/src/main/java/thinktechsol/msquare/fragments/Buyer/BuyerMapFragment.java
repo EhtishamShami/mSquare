@@ -32,7 +32,7 @@ import thinktechsol.msquare.utils.Constant;
 public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    static final LatLng testLatLng = new LatLng(24.433904943494827,54.41303014755249);
+    static final LatLng testLatLng = new LatLng(24.433904943494827, 54.41303014755249);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +67,6 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
 //                e.printStackTrace();
 //            }
 //        }
-
-
 
 
         return v;
@@ -117,36 +115,38 @@ public class BuyerMapFragment extends Fragment implements OnMapReadyCallback {
 
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
-        for(int i=0;i<globels.getGlobelRef().SellersProductDetailList.size();i++){
-            LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().SellersProductDetailList.get(i).latitude),
-                    Double.parseDouble( globels.getGlobelRef().SellersProductDetailList.get(i).longitude));
+        try {
+            for (int i = 0; i < globels.getGlobelRef().SellersProductDetailList.size(); i++) {
+                LatLng testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().SellersProductDetailList.get(i).latitude),
+                        Double.parseDouble(globels.getGlobelRef().SellersProductDetailList.get(i).longitude));
 
-            try {
+                try {
 
-                View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
+                    View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
 
-                Marker testMarker = mMap.addMarker(new MarkerOptions().
-                        position(testLatLng).title(""+ globels.getGlobelRef().SellersProductDetailList.get(i).companyName)
-                        .snippet(""+ globels.getGlobelRef().SellersProductDetailList.get(i).fName)
-                        .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
-                );
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
-                mMap.animateCamera(cameraUpdate);
+                    Marker testMarker = mMap.addMarker(new MarkerOptions().
+                            position(testLatLng).title("" + globels.getGlobelRef().SellersProductDetailList.get(i).companyName)
+                            .snippet("" + globels.getGlobelRef().SellersProductDetailList.get(i).fName)
+                            .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
+                    );
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+                    mMap.animateCamera(cameraUpdate);
 
 
-
-                //TextView numTxt = (TextView) marker.findViewById(R.id.num_txt);
-                //numTxt.setText("27");
+                    //TextView numTxt = (TextView) marker.findViewById(R.id.num_txt);
+                    //numTxt.setText("27");
 
 //                customMarker = mMap.addMarker(new MarkerOptions()
 //                        .position(markerLatLng)
 //                        .title("Title")
 //                        .snippet("Description")
 //                        .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker))));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

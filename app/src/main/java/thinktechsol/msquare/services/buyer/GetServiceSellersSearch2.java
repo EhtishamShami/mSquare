@@ -28,7 +28,7 @@ import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class GetServiceSellersSearch {
+public class GetServiceSellersSearch2 {
 
     private static final String TAG_SUCCESS = "success";
 
@@ -45,8 +45,8 @@ public class GetServiceSellersSearch {
     String searchStr, distance, priceFrom, priceTo, fromTime, toTime, categories;
 
     //    globels.getGlobelRef().sellerlogin.id
-    public GetServiceSellersSearch(final Context ctx, SalonDetailsActivity ref, String sellerServiceId, String latitude, String longitude, String searchStrings,
-                                   String distance, String priceFrom, String priceTo, String fromTime, String toTime, String categories) {
+    public GetServiceSellersSearch2(final Context ctx, SalonDetailsActivity ref, String sellerServiceId, String latitude, String longitude, String searchStrings,
+                                    String distance, String priceFrom, String priceTo, String fromTime, String toTime, String categories) {
         this.ctx = ctx;
         this.ref = ref;
         this.distance = distance;
@@ -178,7 +178,8 @@ public class GetServiceSellersSearch {
         protected String doInBackground(String... input) {
             try {
                 //String sellerId = input[0];
-                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + latitude + "/" + longitude);
+//                URL url = new URL(Constant.baseUrl + _url + sellerServiceId + "/" + latitude + "/" + longitude);
+                URL url = new URL(Constant.baseUrl + _url + sellerServiceId+ "/" + latitude + "/" + longitude);
                 Log.e(TAG, "getServiceSellersSearch Search url=" + url);
                 Log.e(TAG, "search parameters are=" + searchStrings + " , " + distance + " , " + priceFrom + " , " + priceTo + " , " + fromTime + " , " + toTime + " , " + categories);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -189,24 +190,24 @@ public class GetServiceSellersSearch {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String post_data;
-                if (searchStrings.length() > 0) {
-                    post_data =
-                            URLEncoder.encode("search", "UTF-8") + "=" + URLEncoder.encode(searchStrings, "UTF-8")
-                    ;
-                } else {
-                    post_data =
-
-                            URLEncoder.encode("distance", "UTF-8") + "=" + URLEncoder.encode(distance, "UTF-8")
-                                    + "&" + URLEncoder.encode("priceFrom", "UTF-8") + "=" + URLEncoder.encode(priceFrom, "UTF-8")
-                                    + "&" + URLEncoder.encode("priceTo", "UTF-8") + "=" + URLEncoder.encode(priceTo, "UTF-8")
-                                    + "&" + URLEncoder.encode("toTime", "UTF-8") + "=" + URLEncoder.encode(toTime, "UTF-8")
-                                    + "&" + URLEncoder.encode("fromTime", "UTF-8") + "=" + URLEncoder.encode(fromTime, "UTF-8")
-                    // + "&" + URLEncoder.encode("categories", "UTF-8") + "=" + URLEncoder.encode(categories, "UTF-8")
-                    ;
-                }
-
-                bufferedWriter.write(post_data);
+//                String post_data;
+//                if (searchStrings.length() > 0) {
+//                    post_data =
+//                            URLEncoder.encode("search", "UTF-8") + "=" + URLEncoder.encode(searchStrings, "UTF-8")
+//                    ;
+//                } else {
+//                    post_data =
+//
+//                            URLEncoder.encode("distance", "UTF-8") + "=" + URLEncoder.encode(distance, "UTF-8")
+//                                    + "&" + URLEncoder.encode("priceFrom", "UTF-8") + "=" + URLEncoder.encode(priceFrom, "UTF-8")
+//                                    + "&" + URLEncoder.encode("priceTo", "UTF-8") + "=" + URLEncoder.encode(priceTo, "UTF-8")
+//                                    + "&" + URLEncoder.encode("toTime", "UTF-8") + "=" + URLEncoder.encode(toTime, "UTF-8")
+//                                    + "&" + URLEncoder.encode("fromTime", "UTF-8") + "=" + URLEncoder.encode(fromTime, "UTF-8")
+//                    // + "&" + URLEncoder.encode("categories", "UTF-8") + "=" + URLEncoder.encode(categories, "UTF-8")
+//                    ;
+//                }
+//
+//                bufferedWriter.write(post_data);
 
                 bufferedWriter.close();
                 outputStream.close();
@@ -237,7 +238,7 @@ public class GetServiceSellersSearch {
 
         protected void onPostExecute(String response) {
             Log.e(TAG, "arshad post execute" + response);
-            Log.e(TAG, "arshad post execute" + response);
+            Log.e(TAG, "arshad post execute" + Constant.baseUrl + _url + sellerServiceId + "/" + latitude + "/" + longitude);
             if (response != null) {
                 ArrayList<getServiceSellersModel> list = returnParsedJsonObject(response);
                 Log.e(TAG, "getServiceSellersSearch list size" + list.size());

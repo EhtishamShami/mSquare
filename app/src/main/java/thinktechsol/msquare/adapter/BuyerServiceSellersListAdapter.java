@@ -120,6 +120,9 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                         }
                         if (holder.distance != null) {
                             holder.distance.setText(myItem.distance);
+
+                            int b = (int) (Math.round(Float.parseFloat(myItem.distance)));
+                            holder.distance.setText("" + b);
                         }
                         if (holder.rating != null) {
 //                            holder.rating.setText(myItem.price);

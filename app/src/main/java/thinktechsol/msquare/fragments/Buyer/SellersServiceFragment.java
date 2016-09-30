@@ -52,6 +52,8 @@ public class SellersServiceFragment extends Fragment {
         sellers_title = (TextView) v.findViewById(R.id.sellers_title);
         rating = (RatingBar) v.findViewById(R.id.rating);
         reservationBtn = (Button) v.findViewById(R.id.reservationBtn);
+        reservationBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
+
 
 //        new getServiceSellersProduct(getActivity(),SellersServiceFragment.this,Constant.sellerServiceId,"24.433904943494827","54.41303014755249");
         Log.e("SellersServiceFrag", "list value 2=" + globels.getGlobelRef().productList2.size());

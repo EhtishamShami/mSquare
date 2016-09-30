@@ -11,40 +11,41 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.SearchFilterBYPROActivity;
 import thinktechsol.msquare.activities.buyer.SalonDetailsActivity;
+import thinktechsol.msquare.fragments.SellerAddProductFragment;
+//import thinktechsol.msquare.fragments.SellerAddProductFragment2;
 import thinktechsol.msquare.globels.globels;
-import thinktechsol.msquare.model.Buyer.HomeItem;
+import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.utils.Constant;
 
 
 /**
  * Created by Arshad.Iqbal on 2/28/2016.
  */
-public class HomeAdapter extends ArrayAdapter<HomeItem> {
+public class AddProductAdapter2 extends ArrayAdapter<AddProductItem> {
 
     private static final int Layout_items = 0;
 
     private static int rowHeight = 80 / 4;
-    SellerDeshBoardActivity ActivityContext;
+    SearchFilterBYPROActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
-    private ArrayList<HomeItem> objects;
+    private ArrayList<AddProductItem> objects;
 
-    public HomeAdapter(Context context, int textViewResourceId, ArrayList<HomeItem> objects) {
+    public AddProductAdapter2(Context context, SearchFilterBYPROActivity ActivityContext, int textViewResourceId, ArrayList<AddProductItem> objects) {
         super(context, textViewResourceId, objects);
         this.objects = objects;
         this.context = context;
         this.ActivityContext = ActivityContext;
-        Log.e("HomeAdapter", "HomeAdapter object size=" + objects.size());
     }
 
     @Override
@@ -77,20 +78,16 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                     View v = convertView;
                     if (v == null) {
                         LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        v = vi.inflate(R.layout.home_row_item, parent, false);
+                        v = vi.inflate(R.layout.add_product_row_item, parent, false);
 
                         holder1 = new Type1Holder();
 
                         holder1.bglayout = (RelativeLayout) v.findViewById(R.id.bglayout);
 
                         holder1.item1 = (RelativeLayout) v.findViewById(R.id.item1);
-                        holder1.item2 = (RelativeLayout) v.findViewById(R.id.item2);
 
                         holder1.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder1.lbl_txt = (TextView) v.findViewById(R.id.lbl_txt);
-
-                        holder1.lbl2 = (ImageView) v.findViewById(R.id.lbl2);
-                        holder1.lbl_txt2 = (TextView) v.findViewById(R.id.lbl_txt2);
 
 
                         v.setTag(holder1);
@@ -98,72 +95,37 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                         holder1 = (Type1Holder) v.getTag();
                     }
 
-                    holder1.item1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //getSellerProductsResponse myItem = productList.get(position);
-                            HomeItem myItem = objects.get(position);
-
-                            Toast.makeText(context, "" + position + ": " + myItem.id, Toast.LENGTH_SHORT).show();
-                            Constant.sellerServiceId = myItem.id;
-
-
-                            globels.getGlobelRef().them_color = myItem.bgColor;
-                            globels.getGlobelRef().them_color2 = String.valueOf(myItem.bgColor);
-
-                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
-                            context.startActivity(viewProductDetails);
-                        }
-                    });
-                    holder1.item2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //getSellerProductsResponse myItem = productList.get(position);
-                            HomeItem myItem = objects.get(position);
-
-                            Toast.makeText(context, "" + position + ": " + myItem.id2, Toast.LENGTH_SHORT).show();
-                            Constant.sellerServiceId = myItem.id2;
-
-                            globels.getGlobelRef().them_color = myItem.bgColor2;
-                            globels.getGlobelRef().them_color2 = String.valueOf(myItem.bgColor2);
-
-                            Intent viewProductDetails = new Intent(context, SalonDetailsActivity.class);
-                            context.startActivity(viewProductDetails);
-                        }
-                    });
-
-                    HomeItem myItem = objects.get(position);
+                    final AddProductItem myItem = objects.get(position);
                     if (myItem != null) {
                         //1st item
                         if (holder1.lbl_txt != null) {
-                            holder1.lbl_txt.setText(myItem.name);
+                            holder1.lbl_txt.setText(myItem.label);
                         }
                         if (holder1.lbl != null) {
                             holder1.lbl.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                            Picasso.with(context).load(myItem.thumb).into(holder1.lbl);
+                            Picasso.with(context).load(myItem.imgUrl).into(holder1.lbl);
                         }
                         if (holder1.item1 != null) {
-                            holder1.item1.setLayoutParams(AppLayoutParam2(rowHeight, myItem.width, 0, 0, 0, 0, null));
+                            holder1.item1.setLayoutParams(AppLayoutParam2(rowHeight, 100, 0, 0, 0, 0, null));
                             holder1.item1.setBackgroundColor(context.getResources().getColor(myItem.bgColor));
                         }
-
-                        //2nd item
-                        if (holder1.lbl_txt2 != null) {
-                            holder1.lbl_txt2.setText(myItem.name2);
-                        }
-
-                        if (holder1.lbl2 != null) {
-
-                            //if (!myItem.icon2.equals("empty")) {
-                            holder1.lbl2.setLayoutParams(AppLayoutParam(9.625f, 19.79f, 0, 0, 0, 0, null));
-                            Picasso.with(context).load(myItem.thumb2).into(holder1.lbl2);
-                            //}
-                        }
-                        if (holder1.item2 != null) {
-                            holder1.item2.setLayoutParams(AppLayoutParam2(rowHeight, 100 - myItem.width, 0, 0, 0, 0, holder1.item1));
-                            holder1.item2.setBackgroundColor(context.getResources().getColor(myItem.bgColor2));
-                        }
                     }
+
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            Toast.makeText(context, "" + myItem.id, Toast.LENGTH_SHORT).show();
+//                            globels.getGlobelRef().IdForAddProduct = myItem.id;
+
+                            globels.getGlobelRef().filteration2 = true;
+                            globels.getGlobelRef().IDFORSEARCH = myItem.id;
+
+                            ActivityContext.finish();
+//                            Intent add = new Intent(context, AddOrViewProActivity.class);
+//                            context.startActivity(add);
+                        }
+                    });
+
                     return v;
                 default:
                     return null;
@@ -188,9 +150,11 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
         RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
                 getSize("w", width),
                 getSize("h", height));
-        if (toRight != null)
-            paramName.addRule(RelativeLayout.RIGHT_OF, toRight.getId());
-        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
+        paramName.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        paramName.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//        if (toRight != null)
+//            paramName.addRule(RelativeLayout.RIGHT_OF, toRight.getId());
+//        paramName.setMargins(getSize("h", mL), getSize("h", mT), getSize("h", mR), getSize("h", mB));
         return paramName;
     }
 
@@ -218,9 +182,5 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
         public RelativeLayout item1;
         public ImageView lbl;
         public TextView lbl_txt;
-
-        public RelativeLayout item2;
-        public ImageView lbl2;
-        public TextView lbl_txt2;
     }
 }

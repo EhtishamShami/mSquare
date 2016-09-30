@@ -79,7 +79,7 @@ public class ServiceSellerDetailActivity extends FragmentActivity {
             }
         });
         title.setText("Services");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 

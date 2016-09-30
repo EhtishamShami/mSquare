@@ -1,8 +1,14 @@
 package thinktechsol.msquare.activities.buyer;
 
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -17,7 +23,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -26,13 +34,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.SearchFilterBYPROActivity;
+import thinktechsol.msquare.adapter.AddProductAdapter2;
 import thinktechsol.msquare.fragments.Buyer.BuyerServiceSellersList;
 import thinktechsol.msquare.fragments.Buyer.BuyerMapFragment;
+//import thinktechsol.msquare.fragments.SellerAddProductFragment2;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.SearchViewInterface;
+import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.Buyer.FiltersModel;
 import thinktechsol.msquare.model.Buyer.getServiceSellersModel;
+import thinktechsol.msquare.model.SellerProductItem;
+import thinktechsol.msquare.services.SellerProductListForSearch;
 import thinktechsol.msquare.services.buyer.GetServiceSellersSearch;
+import thinktechsol.msquare.services.buyer.GetServiceSellersSearch2;
+import thinktechsol.msquare.services.buyer.GetServiceSellersSearch3;
 import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
@@ -66,7 +82,7 @@ public class SalonDetailsActivity extends FragmentActivity {
         new getServiceSellers(this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249");
 
         buyerServiceSellersListFragment = new BuyerServiceSellersList();
-        buyerServiceSellersMapFragment=new BuyerMapFragment();
+        buyerServiceSellersMapFragment = new BuyerMapFragment();
 
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
         title = (TextView) findViewById(R.id.title);
@@ -77,7 +93,16 @@ public class SalonDetailsActivity extends FragmentActivity {
         btn_menu.setVisibility(View.VISIBLE);
         title.setVisibility(View.GONE);
 
+//        searchView.setBackgroundColor(this.getResources().getColor(R.color.search));
+
         FloatingActionButton filterBtn = (FloatingActionButton) findViewById(R.id.filterBtn);
+//        filterBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
+//        filterBtn.setBackgroundColor(Color.parseColor(globels.getGlobelRef().them_color2));
+//        filterBtn.setBackgroundTintList(ColorStateList.valueOf(globels.getGlobelRef().them_color2));
+        filterBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(globels.getGlobelRef().them_color)));
+
+//        filterBtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(globels.getGlobelRef().them_color2)));
+//        filterBtn.setBackgroundDrawable(new ColorDrawable(Color.parseColor(globels.getGlobelRef().them_color2)));
 
         btn_menu.setBackgroundResource(R.drawable.btn_menu);
 
@@ -85,7 +110,6 @@ public class SalonDetailsActivity extends FragmentActivity {
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
 
         btn_menu.setLayoutParams(AppLayoutParam(6f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));
-//        btn_menu.setVisibility(View.VISIBLE);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,11 +119,20 @@ public class SalonDetailsActivity extends FragmentActivity {
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                SellerAddProductFragment2 fragobj = new SellerAddProductFragment2();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
 
+//                showDialogu(SalonDetailsActivity.this);
+                startActivity(new Intent(SalonDetailsActivity.this, SearchFilterBYPROActivity.class));
             }
         });
         title.setText("Saloon");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.sellerOrderDetailTitleBg));
+
+//        int them_color = R.color.sellerOrderDetailTitleBg;
+
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 
@@ -288,17 +321,64 @@ public class SalonDetailsActivity extends FragmentActivity {
     }
 
     public void searchResult(ArrayList<getServiceSellersModel> list) {
+        Log.e("HomeActivity", "belowing is ddddddddd=" + list);
         searchViewInterface = buyerServiceSellersListFragment;
         searchViewInterface.refersh(list);
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(globels.getGlobelRef().filteration) {
-            globels.getGlobelRef().filteration=false;
+        if (globels.getGlobelRef().filteration2) {
+            globels.getGlobelRef().filteration2 = false;
+            new GetServiceSellersSearch2(SalonDetailsActivity.this, SalonDetailsActivity.this, globels.getGlobelRef().IDFORSEARCH, "24.433904943494827", "54.41303014755249", "", "", "", "", "", "", "");
+        } else if (globels.getGlobelRef().filteration) {
+            globels.getGlobelRef().filteration = false;
+//            if (globels.getGlobelRef().filteration2) {
+//                globels.getGlobelRef().filteration2 = false;
+//                new GetServiceSellersSearch(SalonDetailsActivity.this, SalonDetailsActivity.this, globels.getGlobelRef().IDFORSEARCH, "", "", "", "", "", "", "", "", "");
+//            } else {
             FiltersModel obj = globels.getGlobelRef().filterdDateObj;
-            new GetServiceSellersSearch(SalonDetailsActivity.this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249", "", obj.distance, obj.priceFrom, obj.priceTo, obj.fromTime, obj.toTime, obj.categories);
+            new GetServiceSellersSearch3(SalonDetailsActivity.this, SalonDetailsActivity.this, Constant.sellerServiceId, "24.433904943494827", "54.41303014755249", "", obj.distance, obj.priceFrom, obj.priceTo, obj.fromTime, obj.toTime, obj.categories);
+//            }
+
+//            new GetServiceSellersSearch(SalonDetailsActivity.this, SalonDetailsActivity.this, Constant.sellerServiceId, "", "", "","", "","","", "", "");
         }
     }
+
+//    public void showDialogu(Activity activity) {
+//        final Dialog dialog = new Dialog(activity);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setCancelable(false);
+//        dialog.addContentView(new View(this), (new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT)));
+//
+//        dialog.setContentView(R.layout.searchcustomedailog);
+//
+//        new SellerProductListForSearch(this, SalonDetailsActivity.this,  Constant.sellerServiceId);
+//
+//        listu = (ListView) dialog.findViewById(R.id.list);
+//
+//        dialog.show();
+//
+//    }
+//    ListView listu;
+
+//    public void fill_data_to_adapter(ArrayList<SellerProductItem> list) {
+//        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
+//        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
+//
+//        int colorId = 0;
+//        for (int i = 0; i < list.size(); i++) {
+//            m_parts.add(new AddProductItem(list.get(i).id, list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
+//            colorId = (colorId < 3) ? colorId += 1 : 0;
+//        }
+//
+//        try {
+//            AddProductAdapter2 m_adapter = new AddProductAdapter2(SalonDetailsActivity.this,SalonDetailsActivity.this, R.layout.dashboard_row_item1, m_parts);
+//            listu.setAdapter(m_adapter);
+//
+//        } catch (Exception e) {
+//            Log.e("SellerAddProduct", "adapter=" + e);
+//        }
+//    }
 }

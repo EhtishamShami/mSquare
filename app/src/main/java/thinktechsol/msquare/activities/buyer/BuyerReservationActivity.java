@@ -101,6 +101,10 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         serviceNames = (TextView) findViewById(R.id.serviceNames);
         currentDate = (TextView) findViewById(R.id.currentDate);
         confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
+
+        confrmBookingBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
+
+
         etDescription = (EditText) findViewById(R.id.etDescription);
 
         try {
@@ -132,7 +136,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
             }
         });
         title.setText("Book Service");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 

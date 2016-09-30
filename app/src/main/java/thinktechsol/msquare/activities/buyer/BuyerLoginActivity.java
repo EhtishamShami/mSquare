@@ -609,6 +609,8 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
         globels.getGlobelRef().loginAsBuyerOrSeller = "buyer";
 
+        String address = list.get(0).houseNo + " " + list.get(0).streetNo + " " + list.get(0).area + " " + list.get(0).state + " " + list.get(0).phoneNo;
+        Log.e("BuyerLoginActivity","address="+address);
 
         editor.putString("houseNo", list.get(0).houseNo);
         editor.putString("streetNo", list.get(0).streetNo);

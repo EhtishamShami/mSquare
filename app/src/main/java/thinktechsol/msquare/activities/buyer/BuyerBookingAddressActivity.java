@@ -2,8 +2,10 @@ package thinktechsol.msquare.activities.buyer;
 
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -21,6 +23,7 @@ import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerWishListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
+import thinktechsol.msquare.services.buyer.UpdateBuyerAddressService;
 import thinktechsol.msquare.utils.Constant;
 
 public class BuyerBookingAddressActivity extends Activity {
@@ -45,6 +48,8 @@ public class BuyerBookingAddressActivity extends Activity {
 
         setContentView(R.layout.activity_buyer_booking_address);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
         //new getBuyerWishListService(BuyerBookingAddressActivity.this, BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId);
 
 
@@ -94,18 +99,26 @@ public class BuyerBookingAddressActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                editor.putString("houseNo", houseET.getText().toString());
+                editor.putString("streetNo", streetAddresET.getText().toString());
+                editor.putString("area", areaET.getText().toString());
+                editor.putString("state", stateET.getText().toString());
+                editor.putString("phoneNo", phoneET.getText().toString());
+
                 address = houseET.getText().toString() + " " + streetAddresET.getText().toString() + " " + areaET.getText().toString() + " " + stateET.getText().toString() + " " + phoneET.getText().toString();
 
                 globels.getGlobelRef().address = address;
                 finish();
-//                new UpdateBuyerAddressService(BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId, houseET.getText().toString(),
-//                        streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString());
+                new UpdateBuyerAddressService(BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId, houseET.getText().toString(),
+                        streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString(),globels.getGlobelRef().buyerLoginResponse.get(0).email);
             }
         });
 //        adapter = new BuyerServiceSellersListAdapter(BuyerWishListActivity.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
 //        listView.setAdapter(adapter);
     }
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     String address;
 
     public void addressUpdateSuccessfully() {

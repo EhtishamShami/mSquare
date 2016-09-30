@@ -6,6 +6,7 @@ package thinktechsol.msquare.globels;
 
 import java.util.ArrayList;
 
+import thinktechsol.msquare.R;
 import thinktechsol.msquare.model.Buyer.BuyerDeshBoardStatesModel;
 import thinktechsol.msquare.model.Buyer.BuyerLogin;
 import thinktechsol.msquare.model.Buyer.BuyerReservationListModel;
@@ -24,8 +25,9 @@ public class globels {
         return globelObject;
     }
 
-    public SellerLogInResponse sellerlogin;
+    public static SellerLogInResponse sellerlogin;
     public String IdForAddProduct;
+    public String IDFORSEARCH;
 
     //seller product list
     public static ArrayList<getServiceSellersModel> SellersProductDetailList;
@@ -64,7 +66,6 @@ public class globels {
     public static String phoneNo;
 
 
-
     public static ArrayList<BuyerDeshBoardStatesModel> buyerDeshBoardStatesList;
     public static ArrayList<BuyerReservationListModel> selectedProductListReservation;
     public ArrayList<SellerDashBoardStatsModel> SellerDashBoardStatsModel;
@@ -74,8 +75,11 @@ public class globels {
     public static String address = "";
     public static FiltersModel filterdDateObj;
     public boolean filteration = false;
+    public boolean filteration2 = false;
     public static String deviceToken = "";
     public static String loginAsBuyerOrSeller = "";
     public static String isNotification = "Empty";
+    public static int them_color = R.color.sellerOrderDetailTitleBg;
+    public static String them_color2;
 
 }

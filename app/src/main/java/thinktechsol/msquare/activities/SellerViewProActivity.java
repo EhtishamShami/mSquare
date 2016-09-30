@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -30,18 +29,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wefika.horizontalpicker.HorizontalPicker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.ImgSwiperAdapter;
@@ -50,13 +46,14 @@ import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
-//import thinktechsol.msquare.services.GetSellerProducts;
 import thinktechsol.msquare.services.GetSellerProducts2;
 import thinktechsol.msquare.services.SellerAddProduct;
 import thinktechsol.msquare.services.getSellerProducts;
 import thinktechsol.msquare.utils.Constant;
 
-public class AddOrViewProActivity extends Activity implements UploadImgInterface, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked, TimePickerDialog.OnTimeSetListener {
+//import thinktechsol.msquare.services.GetSellerProducts;
+
+public class SellerViewProActivity extends Activity implements UploadImgInterface, HorizontalPicker.OnItemSelected, HorizontalPicker.OnItemClicked, TimePickerDialog.OnTimeSetListener {
 
     public static final String ADD_PRODUCT = "addproduct";
     public static final String VIEW_PRODUCT = "viewproduct";
@@ -77,9 +74,8 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     //    ArrayList<ProductImages> productImagesList;
     LinearLayout scroler_textview;
     ProgressDialog progressDialog;
-    //    HorizontalPicker picker;
-    SellerAddProductFragment fragobj;
-    TextView select_time;
+    HorizontalPicker picker;
+//    SellerAddProductFragment fragobj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +86,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_add_pro);
+        setContentView(R.layout.activity_seller_view_product);
         btnSelectorColor = getResources().getColor(R.color.addProductSelectorColor);
 //        Constant.addOrViewProduct = true;
 
@@ -98,47 +94,41 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         add_product = (ImageView) findViewById(R.id.add_product);
         view_product = (ImageView) findViewById(R.id.view_product);
-        add_product_save = (ImageView) findViewById(R.id.add_product_save);
-        select_time = (TextView) findViewById(R.id.select_time);
-        select_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                show_Time_range();
-            }
-        });
+//        add_product_save = (ImageView) findViewById(R.id.add_product_save);
 
-        pro_title_et = (EditText) findViewById(R.id.pro_title_et);
-        pro_desc_et = (EditText) findViewById(R.id.pro_desc_et);
-        pro_price_et = (EditText) findViewById(R.id.pro_price_et);
+//        pro_title_et = (EditText) findViewById(R.id.pro_title_et);
+//        pro_desc_et = (EditText) findViewById(R.id.pro_desc_et);
+//        pro_price_et = (EditText) findViewById(R.id.pro_price_et);
 //        pro_time_et = (EditText) findViewById(R.id.pro_time_et);
 
-        RelativeLayout fields1 = (RelativeLayout) findViewById(R.id.fields1);
-        RelativeLayout fields = (RelativeLayout) findViewById(R.id.fields);
-        RelativeLayout imgs = (RelativeLayout) findViewById(R.id.imgs);
+//        RelativeLayout fields1 = (RelativeLayout) findViewById(R.id.fields1);
+//        RelativeLayout fields = (RelativeLayout) findViewById(R.id.fields);
+//        RelativeLayout imgs = (RelativeLayout) findViewById(R.id.imgs);
 //        scroler_textview = (LinearLayout) findViewById(R.id.scroler_textview);
-        add_product_save.setLayoutParams(AppLayoutParam(8.5f, 32.58f, 0, 3, 0, 0, fields));
+        //add_product_save.setLayoutParams(AppLayoutParam(8.5f, 32.58f, 0, 3, 0, 0, fields));
 
 
         bottombarlayout = (RelativeLayout) findViewById(R.id.bottombarlayout);
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
         fragmentLayout = (RelativeLayout) findViewById(R.id.fragmentLayout);
-        add_product_layout = (RelativeLayout) findViewById(R.id.add_product_layout);
+//        add_product_layout = (RelativeLayout) findViewById(R.id.add_product_layout);
         view_product_layout = (RelativeLayout) findViewById(R.id.view_product_layout);
         backBtn = (ImageView) findViewById(R.id.backBtn);
         btn_menu = (ImageView) findViewById(R.id.btn_menu);
         title = (TextView) findViewById(R.id.title);
 
 
-        //if (Constant.addOrViewProduct) {
-        add_product.setBackgroundResource(R.drawable.add_product_sel);
-        view_product.setBackgroundResource(R.drawable.view_product_normal);
+//        if (Constant.addOrViewProduct) {
+        add_product.setBackgroundResource(R.drawable.add_product_normal);
+        view_product.setBackgroundResource(R.drawable.view_product_sel);
 
-        MakeItemSelected(ADD_PRODUCT);
+        MakeItemSelected(VIEW_PRODUCT);
+        new getSellerProducts(SellerViewProActivity.this, SellerViewProActivity.this, globels.getGlobelRef().sellerLoginId);
 //        } else {
 //            add_product.setBackgroundResource(R.drawable.add_product_normal);
 //            view_product.setBackgroundResource(R.drawable.view_product_sel);
 ////            new GetSellerProducts2(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerlogin.id);
-//            //new getSellerProducts(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerLoginId);
+//            new getSellerProducts(SellerViewProActivity.this, SellerViewProActivity.this, globels.getGlobelRef().sellerLoginId);
 //            MakeItemSelected(VIEW_PRODUCT);
 //        }
 
@@ -160,20 +150,24 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         product_list = (ListView) findViewById(R.id.product_list);
 
         // swiper at top of the screen showing images and next image by swiping
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
-        imgs.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
-        adapter = new ImgSwiperAdapter(AddOrViewProActivity.this,
-                getFilePaths(), viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-        setAndShowDotsOnPager();
+        //viewPager = (ViewPager) findViewById(R.id.pager);
+        //viewPager.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
+        //imgs.setLayoutParams(AppLayoutParam(30.00f, 100f, 0, 0, 0, 0, null));
+//        adapter = new ImgSwiperAdapter(SellerViewProActivity.this,
+//                getFilePaths(), viewPager);
+//        viewPager.setAdapter(adapter);
+//        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+//        setAndShowDotsOnPager();
 
-        fields1.setLayoutParams(AppLayoutParam(40.0f, 100f, 0, 5, 0, 0, imgs));
+//        fields1.setLayoutParams(AppLayoutParam(40.0f, 100f, 0, 5, 0, 0, imgs));
 
-//        add_product.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(SellerViewProActivity.this, AddOrViewProActivity.class));
+                finish();
+
 //                MakeItemSelected(ADD_PRODUCT);
 ////                add_product_layout.setVisibility(View.VISIBLE);
 ////                view_product_layout.setVisibility(View.GONE);
@@ -184,32 +178,30 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //                transaction.replace(R.id.fragmentLayout, fragobj);
 //                transaction.commit();
+
+
+//                }else {
 //
-//
-////                }else {
-////
-////                }
-////                Constant.addOrViewProduct = true;
-////                SellerAddProductFragment fragobj = new SellerAddProductFragment();
-////                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-////                transaction.replace(R.id.fragmentLayout, fragobj);
-////                transaction.commit();
-//            }
-//        });
+//                }
+//                Constant.addOrViewProduct = true;
+//                SellerAddProductFragment fragobj = new SellerAddProductFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
+            }
+        });
         view_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddOrViewProActivity.this, SellerViewProActivity.class));
-                finish();
-//                MakeItemSelected(VIEW_PRODUCT);
-////                view_product_layout.setVisibility(View.VISIBLE);
-////                add_product_layout.setVisibility(View.GONE);
+                MakeItemSelected(VIEW_PRODUCT);
+//                view_product_layout.setVisibility(View.VISIBLE);
+//                add_product_layout.setVisibility(View.GONE);
 //                getFragmentManager().beginTransaction().remove(fragobj).commit();
-//                new GetSellerProducts2(AddOrViewProActivity.this, AddOrViewProActivity.this, globels.getGlobelRef().sellerLoginId);
+                new GetSellerProducts2(SellerViewProActivity.this, SellerViewProActivity.this, globels.getGlobelRef().sellerLoginId);
             }
         });
 
-        progressDialog = new ProgressDialog(AddOrViewProActivity.this);
+        progressDialog = new ProgressDialog(SellerViewProActivity.this);
         progressDialog.setMessage("Loading Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(true);
@@ -261,57 +253,57 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //            }
 //        });
 
-        add_product_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.e("AddOrViewProActivity", "first path=" + selectedImagePath.size());
-//                Toast.makeText(AddOrViewProActivity.this, "btn pressed=" + adapter.bitmapList.get(1), Toast.LENGTH_SHORT).show();
-//                new AddImageOfProduct(AddOrViewProActivity.this, AddOrViewProActivity.this, selectedImagePath);
-                String productDetails[] = new String[4];
-                productDetails[0] = pro_title_et.getText().toString();
-                productDetails[1] = pro_desc_et.getText().toString();
-                productDetails[2] = pro_price_et.getText().toString();
-                productDetails[3] = String.valueOf(selectedTimeIndex);
-//                productDetails[3] = pro_time_et.getText().toString();
-
-                if (pro_title_et.getText().toString().trim().length() > 0 && pro_desc_et.getText().toString().trim().length() > 0
-                        && pro_price_et.getText().toString().trim().length() > 0 && selectedImagePath.size() > 0 &&
-                        !pro_price_et.getText().toString().equals("0")) {
-                    if (!pro_price_et.getText().toString().equals("0")) {
-                        new SellerAddProduct(AddOrViewProActivity.this, AddOrViewProActivity.this, productDetails, selectedImagePath);
-                    } else {
-                        AlertDialog alertDialog = new AlertDialog.Builder(AddOrViewProActivity.this).create();
-                        //alertDialog.setTitle("Alert");
-                        alertDialog.setMessage("0 is not acceptable price");
-                        alertDialog.setCancelable(false);
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-
-                    }
-//                if (productDetails[0].trim() != null && productDetails[1].trim() != null && productDetails[2].trim() != null && productDetails[3].trim() != null) {
-
-                } else {
-                    AlertDialog alertDialog = new AlertDialog.Builder(AddOrViewProActivity.this).create();
-                    //alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Please Complete the fields first");
-                    alertDialog.setCancelable(false);
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-
-
-                }
-            }
-        });
+//        add_product_save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Log.e("AddOrViewProActivity", "first path=" + selectedImagePath.size());
+////                Toast.makeText(AddOrViewProActivity.this, "btn pressed=" + adapter.bitmapList.get(1), Toast.LENGTH_SHORT).show();
+////                new AddImageOfProduct(AddOrViewProActivity.this, AddOrViewProActivity.this, selectedImagePath);
+//                String productDetails[] = new String[4];
+//                productDetails[0] = pro_title_et.getText().toString();
+//                productDetails[1] = pro_desc_et.getText().toString();
+//                productDetails[2] = pro_price_et.getText().toString();
+//                productDetails[3] = String.valueOf(selectedTimeIndex);
+////                productDetails[3] = pro_time_et.getText().toString();
+//
+//                if (pro_title_et.getText().toString().trim().length() > 0 && pro_desc_et.getText().toString().trim().length() > 0
+//                        && pro_price_et.getText().toString().trim().length() > 0 && selectedImagePath.size() > 0 &&
+//                        !pro_price_et.getText().toString().equals("0")) {
+//                    if (!pro_price_et.getText().toString().equals("0")) {
+//                        new SellerAddProduct(SellerViewProActivity.this, SellerViewProActivity.this, productDetails, selectedImagePath);
+//                    } else {
+//                        AlertDialog alertDialog = new AlertDialog.Builder(SellerViewProActivity.this).create();
+//                        //alertDialog.setTitle("Alert");
+//                        alertDialog.setMessage("0 is not acceptable price");
+//                        alertDialog.setCancelable(false);
+//                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                });
+//                        alertDialog.show();
+//
+//                    }
+////                if (productDetails[0].trim() != null && productDetails[1].trim() != null && productDetails[2].trim() != null && productDetails[3].trim() != null) {
+//
+//                } else {
+//                    AlertDialog alertDialog = new AlertDialog.Builder(SellerViewProActivity.this).create();
+//                    //alertDialog.setTitle("Alert");
+//                    alertDialog.setMessage("Please Complete the fields first");
+//                    alertDialog.setCancelable(false);
+//                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                    alertDialog.show();
+//
+//
+//                }
+//            }
+//        });
 
 
     }
@@ -319,33 +311,33 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     TextView TextViewArray[] = new TextView[100];
 //    int i = 0;
 
-    public void load_timer_text() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                for (int i = 0; i < 100; i++) {
-                    TextViewArray[i] = new TextView(AddOrViewProActivity.this);
-                    TextViewArray[i].setText(" " + i);
-                    TextViewArray[i].setTag(i);
-                    LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    textViewLayoutParams.setMargins(Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2));
-                    scroler_textview.addView(TextViewArray[i], textViewLayoutParams);
-                    TextViewArray[i].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            for (int j = 0; j < 100; j++) {
-                                TextViewArray[j].setTypeface(null, Typeface.NORMAL);
-                            }
-                            TextViewArray[Integer.parseInt(v.getTag().toString())].setTypeface(null, Typeface.BOLD_ITALIC);
-
-                            //Toast.makeText(AddOrViewProActivity.this, ""+v.getTag(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                    dismissDailog();
-                }
-            }
-        }, 1000);
-    }
+//    public void load_timer_text() {
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                for (int i = 0; i < 100; i++) {
+//                    TextViewArray[i] = new TextView(SellerViewProActivity.this);
+//                    TextViewArray[i].setText(" " + i);
+//                    TextViewArray[i].setTag(i);
+//                    LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    textViewLayoutParams.setMargins(Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2), Constant.getSize("h", 2));
+//                    scroler_textview.addView(TextViewArray[i], textViewLayoutParams);
+//                    TextViewArray[i].setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            for (int j = 0; j < 100; j++) {
+//                                TextViewArray[j].setTypeface(null, Typeface.NORMAL);
+//                            }
+//                            TextViewArray[Integer.parseInt(v.getTag().toString())].setTypeface(null, Typeface.BOLD_ITALIC);
+//
+//                            //Toast.makeText(AddOrViewProActivity.this, ""+v.getTag(), Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    });
+//                    dismissDailog();
+//                }
+//            }
+//        }, 1000);
+//    }
 
     public void dismissDailog() {
         new Handler().postDelayed(new Runnable() {
@@ -393,7 +385,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddOrViewProActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SellerViewProActivity.this);
 //        builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -459,68 +451,34 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     };
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        Log.e("AddOrViewProActivity", "Gallery oooooooooooo=====>>>" + requestCode);
-
-        switch (requestCode) {
-
-            case 1:
-                Log.e("AddOrViewProActivity", "Gallery RESULT_OK=====>>>" + RESULT_OK);
-                try {
-                    if (resultCode == RESULT_OK) {
-                        Uri photoUri = data.getData();
-                        if (photoUri != null) {
-                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                            Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
-                            cursor.moveToFirst();
-                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            String filePath = cursor.getString(columnIndex);
-                            cursor.close();
-                            Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + filePath);
-
-                            AddImgToViewPager(filePath);
-                        }
-                    }
-                } catch (Exception e) {
-
-                }
-
-                break;
-            case 2:
-                if (resultCode == RESULT_OK) {
-                    AddImgToViewPager(path);
-                }
-                break;
-//            case 3:
-//                Log.e("AddOrViewProActivity", "Gallery hhhhhhhhhhh data=====>>>" + data);
-//                final File file = getTempFile(this);
-//                try {
-//                    Uri uri = Uri.fromFile(file);
-//                    Bitmap captureBmp = MediaStore.Images.Media.getBitmap(getContentResolver(),
-//                            uri);
-//                    //image.setImageBitmap(captureBmp);
-//                   // AddImgToViewPager(captureBmp);
-//                    Log.e("AddOrViewProActivity", "Gallery hhhhhhhhhhh=====>>>" + captureBmp);
-//                } catch (Exception e) {
-//                    Log.e("AddOrViewProActivity", "Gallery hhhhhhhhhhh 333333=====>>>" + e);
-//                    e.printStackTrace();
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//        switch (requestCode) {
+//            case 1:
+//                if (resultCode == RESULT_OK) {
+//                    Uri photoUri = data.getData();
+//                    if (photoUri != null) {
+//                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//                        Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
+//                        cursor.moveToFirst();
+//                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                        String filePath = cursor.getString(columnIndex);
+//                        cursor.close();
+//                        Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + filePath);
+//
+//                        AddImgToViewPager(filePath);
+//                    }
 //                }
-
+//
 //                break;
-
-        }
-    }
-
-    private File getTempFile(Context context) {
-        final File path = new File(Environment.getExternalStorageDirectory(),
-                context.getPackageName());
-        if (!path.exists()) {
-            path.mkdir();
-        }
-        return new File(path, "myImage.png");
-    }
+//            case 2:
+//                if (resultCode == RESULT_OK) {
+//                    AddImgToViewPager(path);
+//                }
+//                break;
+//        }
+//    }
 
     public void AddImgToViewPager(String ImgPath) {
         try {
@@ -550,15 +508,15 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     @Override
     public void onResume() {
         super.onResume();
-        if (Constant.addOrViewProduct) {
-            add_product.setBackgroundResource(R.drawable.add_product_sel);
-            view_product.setBackgroundResource(R.drawable.view_product_normal);
-            MakeItemSelected(ADD_PRODUCT);
-        } else {
-            add_product.setBackgroundResource(R.drawable.add_product_normal);
-            view_product.setBackgroundResource(R.drawable.view_product_sel);
-            MakeItemSelected(VIEW_PRODUCT);
-        }
+//        if (Constant.addOrViewProduct) {
+//            add_product.setBackgroundResource(R.drawable.add_product_sel);
+//            view_product.setBackgroundResource(R.drawable.view_product_normal);
+//            MakeItemSelected(ADD_PRODUCT);
+//        } else {
+//            add_product.setBackgroundResource(R.drawable.add_product_normal);
+//            view_product.setBackgroundResource(R.drawable.view_product_sel);
+//            MakeItemSelected(VIEW_PRODUCT);
+//        }
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam2(float height, float width, float mL, float mT, float mR, float mB) {
@@ -593,17 +551,21 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         switch (btnName) {
             case ADD_PRODUCT:
-                add_product.setBackgroundResource(R.drawable.add_product_sel);
-                title.setText("Add Product");
-                add_product_layout.setVisibility(View.VISIBLE);
-                view_product_layout.setVisibility(View.GONE);
+//                add_product.setBackgroundResource(R.drawable.add_product_sel);
+//                title.setText("Add Product");
+//                add_product_layout.setVisibility(View.VISIBLE);
+//                view_product_layout.setVisibility(View.GONE);
+
+//                startActivity(new Intent(SellerViewProActivity.this, SellerViewProActivity.class));
+//                finish();
+
                 break;
 
             case VIEW_PRODUCT:
                 view_product.setBackgroundResource(R.drawable.view_product_sel);
                 title.setText("Products");
-                view_product_layout.setVisibility(View.VISIBLE);
-                add_product_layout.setVisibility(View.GONE);
+                //view_product_layout.setVisibility(View.VISIBLE);
+                //add_product_layout.setVisibility(View.GONE);
                 break;
         }
     }
@@ -633,8 +595,8 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 
         Constant.productList = list;
         try {
-            //ViewProductListAdapter m_adapter = new ViewProductListAdapter(AddOrViewProActivity.this, AddOrViewProActivity.this, R.layout.view_product_list_item, list);
-            //product_list.setAdapter(m_adapter);
+            ViewProductListAdapter m_adapter = new ViewProductListAdapter(SellerViewProActivity.this, SellerViewProActivity.this, R.layout.view_product_list_item, list);
+            product_list.setAdapter(m_adapter);
         } catch (Exception e) {
             Log.e("SellerDashBoardActivity", "adapter=" + e);
         }
@@ -691,7 +653,6 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
         int time = hourOfDay * 60 + minute;
         selectedTimeIndex = time;
-        select_time.setText("" + selectedTimeIndex);
         Log.e("AddOrViewProActivity", "first path=" + time);
     }
 }

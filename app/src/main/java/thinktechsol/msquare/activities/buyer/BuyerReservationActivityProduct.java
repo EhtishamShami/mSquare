@@ -306,15 +306,20 @@ public class BuyerReservationActivityProduct extends Activity {
         buyerAddress = (TextView) findViewById(R.id.buyerAddress);
         btnUpdateAddress = (ImageView) findViewById(R.id.btnUpdateAddress);
 
-        buyerAddress.setText("" +
-                globels.getGlobelRef().houseNo + "" +
-                globels.getGlobelRef().streetNo + "" +
-                globels.getGlobelRef().area + "" +
-                globels.getGlobelRef().state + "" +
-                globels.getGlobelRef().phoneNo
-        );
+        try {
+            buyerAddress.setText("" +
+                    globels.getGlobelRef().buyerLoginResponse.get(0).houseNo + "" +
+                    globels.getGlobelRef().buyerLoginResponse.get(0).streetNo + "" +
+                    globels.getGlobelRef().buyerLoginResponse.get(0).area + "" +
+                    globels.getGlobelRef().buyerLoginResponse.get(0).state + "" +
+                    globels.getGlobelRef().buyerLoginResponse.get(0).phoneNo
+            );
+        } catch (Exception e) {
+            Log.e("BuyerReservation", "" + e);
+        }
 
         confrmBookingBtn = (Button) findViewById(R.id.confrmBookingBtn);
+        confrmBookingBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         etDescription = (EditText) findViewById(R.id.etDescription);
 
         // title bar
@@ -332,12 +337,14 @@ public class BuyerReservationActivityProduct extends Activity {
         });
 
         title.setText("Book Service");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+//        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 
         mainLayout.setLayoutParams(AppLayoutParam(80.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
         confrmBookingBtn.setLayoutParams(AppLayoutParam(11.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
+        confrmBookingBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
 
         row1Layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         row1Layout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
@@ -367,9 +374,14 @@ public class BuyerReservationActivityProduct extends Activity {
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedProductsIds);
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedQuantityIds);
 
-                    ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
-                    new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, null, BuyerReservationActivityProduct.this, obj);
-                } else {
+                    if(buyerAddress.getText().toString()!=null || buyerAddress.getText().toString().length()<=0){
+                        Toast.makeText(BuyerReservationActivityProduct.this, "Please Enter the address first", Toast.LENGTH_LONG).show();
+                    }else {
+                        ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
+                        new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, null, BuyerReservationActivityProduct.this, obj);
+
+                    }
+                                   } else {
                     Toast.makeText(BuyerReservationActivityProduct.this, "Your Selection is Save! But You have to Login First", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerLoginActivityGuest.class));
                 }

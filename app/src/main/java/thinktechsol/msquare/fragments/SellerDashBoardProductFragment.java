@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddOrViewProActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.activities.SellerViewProActivity;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.adapter.ItemAdapter2;
 import thinktechsol.msquare.globels.globels;
@@ -43,9 +44,11 @@ public class SellerDashBoardProductFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
 
+        try {
+            new GetSellerDeshBoardStatsService(getActivity(), SellerDashBoardProductFragment.this, globels.getGlobelRef().sellerLoginId);
+        } catch (Exception e) {
 
-        new GetSellerDeshBoardStatsService(getActivity(), SellerDashBoardProductFragment.this, globels.getGlobelRef().sellerLoginId);
-
+        }
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -211,13 +214,14 @@ public class SellerDashBoardProductFragment extends Fragment {
                     title = "Add Product";
                     frag = fragobj;
                 } else {
-                    Constant.addOrViewProduct = false;
+                    // Constant.addOrViewProduct = false;
 //                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
 //                    title = "Add Product";
 //                    frag = fragobj;
 //                    globels.getGlobelRef().IdForAddProduct = myItem.id;
 
-                    Intent add = new Intent(getActivity(), AddOrViewProActivity.class);
+//                    Intent add = new Intent(getActivity(), AddOrViewProActivity.class);
+                    Intent add = new Intent(getActivity(), SellerViewProActivity.class);
                     getActivity().startActivity(add);
                 }
                 break;

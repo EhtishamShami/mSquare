@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.SellerViewProActivity;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 import thinktechsol.msquare.model.SellerLogInResponse;
@@ -40,11 +41,11 @@ public class getSellerProducts {
     ProgressDialog progressDialog;
     String sellerId;
     AlertDialog NotFoundDialog;
-    AddOrViewProActivity ref;
+    SellerViewProActivity ref;
     private static final String TAG = "GetSellerProducts";
 
     //    globels.getGlobelRef().sellerlogin.id
-    public getSellerProducts(final Context ctx, AddOrViewProActivity ref, String sellerId) {
+    public getSellerProducts(final Context ctx, SellerViewProActivity ref, String sellerId) {
         this.ctx = ctx;
         this.ref = ref;
         this.sellerId = sellerId;

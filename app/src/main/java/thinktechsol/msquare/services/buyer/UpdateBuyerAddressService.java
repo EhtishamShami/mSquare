@@ -40,9 +40,9 @@ public class UpdateBuyerAddressService {
     String sellerId;
     String buyerId;
     String productDetails[];
-    String houseNo, streetNo, area, state, phoneNo;
+    String houseNo, streetNo, area, state, phoneNo, email;
 
-    public UpdateBuyerAddressService(BuyerBookingAddressActivity ctx, String buyerId, String houseNo, String streetNo, String area, String state, String phoneNo) {
+    public UpdateBuyerAddressService(BuyerBookingAddressActivity ctx, String buyerId, String houseNo, String streetNo, String area, String state, String phoneNo, String email) {
         this.ctx = ctx;
 
         this.buyerId = buyerId;
@@ -52,6 +52,7 @@ public class UpdateBuyerAddressService {
         this.area = area;
         this.state = state;
         this.phoneNo = phoneNo;
+        this.email = email;
 
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Saving Please wait...");
@@ -150,7 +151,9 @@ public class UpdateBuyerAddressService {
                         + "&" + URLEncoder.encode("streetNo", "UTF-8") + "=" + URLEncoder.encode(streetNo, "UTF-8")
                         + "&" + URLEncoder.encode("area", "UTF-8") + "=" + URLEncoder.encode(area, "UTF-8")
                         + "&" + URLEncoder.encode("state", "UTF-8") + "=" + URLEncoder.encode(state, "UTF-8")
-                        + "&" + URLEncoder.encode("phoneNo", "UTF-8") + "=" + URLEncoder.encode(phoneNo, "UTF-8");
+                        + "&" + URLEncoder.encode("phoneNo", "UTF-8") + "=" + URLEncoder.encode(phoneNo, "UTF-8")
+                        + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.close();

@@ -48,6 +48,9 @@ public class SellersAboutFragment extends Fragment {
         lbl_address_detail = (TextView) v.findViewById(R.id.lbl_address_detail);
         btnAddToFavorite = (Button) v.findViewById(R.id.btnAddToFavorite);
 
+        btnAddToFavorite.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
+
+
 
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getActivity().getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);

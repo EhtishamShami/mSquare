@@ -256,25 +256,34 @@ public class BuyerDashBoardSettingFragment extends Fragment {
 
         switch (requestCode) {
             case 1:
+
                 if (resultCode == Activity.RESULT_OK) {
-                    Uri photoUri = data.getData();
-                    if (photoUri != null) {
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        Cursor cursor = getActivity().getContentResolver().query(photoUri, filePathColumn, null, null, null);
-                        cursor.moveToFirst();
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        String filePath = cursor.getString(columnIndex);
-                        cursor.close();
-                        Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + filePath);
+
+                    try {
 
 
-                        Bitmap bmp = BitmapFactory.decodeFile(filePath);
-                        userImage.setImageBitmap(bmp);
+                        Uri photoUri = data.getData();
+                        if (photoUri != null) {
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            Cursor cursor = getActivity().getContentResolver().query(photoUri, filePathColumn, null, null, null);
+                            cursor.moveToFirst();
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            String filePath = cursor.getString(columnIndex);
+                            cursor.close();
+                            Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + filePath);
 
-                        new BuyerAddImageSetting(getActivity(), BuyerDashBoardSettingFragment.this, filePath, emailText.getText().toString().trim());
+
+                            Bitmap bmp = BitmapFactory.decodeFile(filePath);
+                            userImage.setImageBitmap(bmp);
+
+                            new BuyerAddImageSetting(getActivity(), BuyerDashBoardSettingFragment.this, filePath, emailText.getText().toString().trim());
 //                        AddImgToViewPager(filePath);
+                        }
+                    } catch (Exception e) {
+
                     }
                 }
+
 
                 break;
             case 2:

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.SellerViewProActivity;
 import thinktechsol.msquare.activities.ViewSellProDetailActivity;
 import thinktechsol.msquare.fragments.Fragment_2_items;
 import thinktechsol.msquare.interfaceMine.subItemClick;
@@ -38,7 +39,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
 
 
     Fragment_2_items TwoItemsFrag;
-    AddOrViewProActivity ActivityContext;
+    SellerViewProActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
@@ -47,7 +48,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
     private ArrayList<String> imgLoadedIds;
 
 
-    public ViewProductListAdapter(Context context, AddOrViewProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
+    public ViewProductListAdapter(Context context, SellerViewProActivity ActivityContext, int textViewResourceId, ArrayList<getSellerProductsResponse> productList) {
         super(context, textViewResourceId, productList);
         this.productList = productList;
         this.context = context;
