@@ -526,7 +526,7 @@ public class EditProActivity extends Activity implements UploadImgInterfaceEditP
     @Override
     public void onItemSelected(int index) {
         selectedTimeIndex = index + 1;
-        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
     }
 
     @Override

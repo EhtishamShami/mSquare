@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,31 +52,37 @@ public class SellersAboutFragment extends Fragment {
         btnAddToFavorite.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
 
 
-
-        LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(getActivity().getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
-        stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
-        stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        try {
 
 
-        lbl_name_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
-
-        if (!globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("not available") && !globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("null")) {
-            float ratingNum = Float.parseFloat(globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating);
-            rating.setRating((int) ratingNum);
-        }
-
-        lbl_contact_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.mobileNo);
-        lbl_email_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.email);
-        lbl_address_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.address);
+            LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(getActivity().getResources().getColor(R.color.rating_color), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(0).setColorFilter(Color.parseColor("#d5d5d5"), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
 
-        btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AddToFavouriteBuyerService(getActivity(), globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId);
+            lbl_name_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.companyName);
+
+            if (!globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("not available") && !globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating.equals("null")) {
+                float ratingNum = Float.parseFloat(globels.getGlobelRef().productList.get(0).sellerInfo.sellerRating);
+                rating.setRating((int) ratingNum);
             }
-        });
+
+            lbl_contact_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.mobileNo);
+            lbl_email_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.email);
+            lbl_address_detail.setText(globels.getGlobelRef().productList.get(0).sellerInfo.address);
+
+
+            btnAddToFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AddToFavouriteBuyerService(getActivity(), globels.getGlobelRef().productList.get(0).sellerInfo.id, globels.getGlobelRef().buyerLoginId);
+                }
+            });
+
+        } catch (Exception e) {
+            Log.e("SellersAbout","Exception="+e);
+        }
 
         return v;
     }

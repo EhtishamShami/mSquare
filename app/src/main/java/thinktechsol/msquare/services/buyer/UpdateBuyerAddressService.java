@@ -136,7 +136,7 @@ public class UpdateBuyerAddressService {
         protected String doInBackground(String... input) {
             try {
 
-                URL url = new URL(Constant.baseUrl + _url + buyerId);
+                URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "url is=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -189,9 +189,9 @@ public class UpdateBuyerAddressService {
             if (response != null) {
                 //ArrayList<RegisterModel> list = returnParsedJsonObject(response);
                 Log.e(TAG, "Add to favourite list response is=" + response);
-                progressDialog.dismiss();
-                ctx.addressUpdateSuccessfully();
+               // progressDialog.dismiss();
                 Toast.makeText(ctx, "Address Updated", Toast.LENGTH_SHORT).show();
+                ctx.addressUpdateSuccessfully();
 
             } else {
                 NotFoundDialog.show();

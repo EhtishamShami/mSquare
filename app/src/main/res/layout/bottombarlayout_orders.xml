@@ -41,7 +41,7 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/order_complete"
+                android:id="@+id/order_inprocess"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true" />
@@ -54,11 +54,13 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/order_inprocess"
+                android:id="@+id/order_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"

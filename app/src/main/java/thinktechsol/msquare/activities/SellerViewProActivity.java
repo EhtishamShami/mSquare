@@ -612,7 +612,7 @@ public class SellerViewProActivity extends Activity implements UploadImgInterfac
     @Override
     public void onItemSelected(int index) {
         selectedTimeIndex = index + 1;
-        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
     }
 
     public void productAdditionCompleted() {

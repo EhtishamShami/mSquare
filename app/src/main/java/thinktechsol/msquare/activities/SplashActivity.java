@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.HomeActivity;
 import thinktechsol.msquare.globels.globels;
+import thinktechsol.msquare.services.buyer.GetBuyerDetails2;
 import thinktechsol.msquare.utils.Constant;
 
 public class SplashActivity extends Activity {
@@ -106,11 +107,13 @@ public class SplashActivity extends Activity {
             globels.getGlobelRef().buyerLoginId = preferences.getString("buyerLoginId", "");
 
 
-            globels.getGlobelRef().houseNo = preferences.getString("houseNo", "");
-            globels.getGlobelRef().streetNo = preferences.getString("streetNo", "");
-            globels.getGlobelRef().area = preferences.getString("area", "");
-            globels.getGlobelRef().state = preferences.getString("state", "");
-            globels.getGlobelRef().phoneNo = preferences.getString("phoneNo", "");
+//            globels.getGlobelRef().houseNo = preferences.getString("houseNo", "");
+//            globels.getGlobelRef().streetNo = preferences.getString("streetNo", "");
+//            globels.getGlobelRef().area = preferences.getString("area", "");
+//            globels.getGlobelRef().state = preferences.getString("state", "");
+//            globels.getGlobelRef().phoneNo = preferences.getString("phoneNo", "");
+
+            new GetBuyerDetails2(SplashActivity.this, globels.getGlobelRef().buyerLoginId);
 
             Constant.logInAs = "customeLogin";
 

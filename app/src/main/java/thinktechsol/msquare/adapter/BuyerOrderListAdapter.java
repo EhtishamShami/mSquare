@@ -112,7 +112,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
 //                            new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
 //                            ordersList.remove(position);
 //                            notifyDataSetChanged();
@@ -168,7 +168,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
                                     } else if (globels.getGlobelRef().orderType == "2") {
 
                                     } else if (globels.getGlobelRef().orderType == "3") {
-                                        Toast.makeText(context, "order_reject of Complete=", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(context, "order_reject of Complete=", Toast.LENGTH_SHORT).show();
                                         new UpdateBuyerOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().BuyerRejectOrder, position);
                                         ordersList.remove(position);
                                         notifyDataSetChanged();
@@ -197,7 +197,7 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
                                     } else if (globels.getGlobelRef().orderType == "3") {
 
                                     } else if (globels.getGlobelRef().orderType == "4") {
-                                        Toast.makeText(context, "order_approve of dispute=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_approve of dispute=", Toast.LENGTH_SHORT).show();
                                         new UpdateBuyerOrderStatus(context, ActivityContext, myItem.id, "3", position);
                                         ordersList.remove(position);
                                         notifyDataSetChanged();

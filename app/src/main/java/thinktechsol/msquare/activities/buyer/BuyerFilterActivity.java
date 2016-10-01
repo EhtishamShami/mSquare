@@ -85,6 +85,9 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
         btn_menu.setVisibility(View.VISIBLE);
         backBtn.setImageResource(0);
         btn_menu.setBackgroundResource(R.drawable.menu_apply);
+
+        backBtn.setBackground(null);
+
         backBtn.setBackgroundResource(R.drawable.cross_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,8 +196,11 @@ public class BuyerFilterActivity extends Activity implements TimePickerDialog.On
             }
         });
 
-        fromTime = startTimeTv.getText().toString();
-        toTime = endTimeTv.getText().toString();
+//        fromTime = startTimeTv.getText().toString();
+//        toTime = endTimeTv.getText().toString();
+
+//        fromTime = startTimeTv.getText().toString();
+//        toTime = endTimeTv.getText().toString();
 
 
         grid = (GridView) findViewById(R.id.grid_view);

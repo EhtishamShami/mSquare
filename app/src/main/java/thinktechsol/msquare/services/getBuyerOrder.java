@@ -184,8 +184,9 @@ public class getBuyerOrder {
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONExc ParsedJsonObject=" + e);
-            e.printStackTrace();
-            NotFoundDialog.show();
+//            e.printStackTrace();
+//            NotFoundDialog.show();
+
         }
         return sellerOrdersList;
     }

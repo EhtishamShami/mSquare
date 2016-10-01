@@ -188,7 +188,7 @@ public class ViewSellOrderDetailActivity extends Activity {
         pro_name_rating_price_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 0, 0, 0, 0, pro_detail_layout1));
         pro_name_rating_layout.setLayoutParams(AppLayoutParam3(8.00f, 70f, 0, 0, 0, 0, null, 0));
         pro_price_layout.setLayoutParams(AppLayoutParam3(8.00f, 30f, 0, 0, 0, 0, null, R.id.sellers_title_layout));
-        typing_layout.setLayoutParams(AppLayoutParam4(10.00f, 100f, 0, 0, 0, 0, true));
+        typing_layout.setLayoutParams(AppLayoutParam4(8.00f, 100f, 0, 0, 0, 0, true));
 
 
 //        pro_name.setText(singleProduct.title);
@@ -223,7 +223,7 @@ public class ViewSellOrderDetailActivity extends Activity {
 
                 if (fromUser) {
                     rating.setRating((int) ratingg);
-                    Toast.makeText(ViewSellOrderDetailActivity.this, "" + fromUser, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ViewSellOrderDetailActivity.this, "" + fromUser, Toast.LENGTH_SHORT).show();
 
                     new BuyerAddRatingService(ViewSellOrderDetailActivity.this, singleSeller.id, globels.getGlobelRef().buyerLoginId,
                             list.get(0).orderDetails.get(orderPosition).productDetails.serviceId

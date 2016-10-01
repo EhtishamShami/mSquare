@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -44,6 +45,7 @@ public class SearchFilterBYPROActivity extends Activity {
     int btnSelectorColor;
     protected PowerManager.WakeLock mWakeLock;
     ListView listu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,13 @@ public class SearchFilterBYPROActivity extends Activity {
 
         setContentView(R.layout.searchcustomedailog);
         listu = (ListView) findViewById(R.id.listing);
+        RelativeLayout bg = (RelativeLayout) findViewById(R.id.bg);
+//        bg.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
 
-        new SellerProductListForSearch(this, SearchFilterBYPROActivity.this,  Constant.sellerServiceId);
+//        bg.setBackgroundColor(getResources().getColor(globels.getGlobelRef().them_color));
+
+
+        new SellerProductListForSearch(this, SearchFilterBYPROActivity.this, Constant.sellerServiceId);
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
@@ -89,6 +96,7 @@ public class SearchFilterBYPROActivity extends Activity {
         }
         return (int) x;
     }
+
     public void fill_data_to_adapter(ArrayList<SellerProductItem> list) {
         ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
         int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
@@ -100,7 +108,7 @@ public class SearchFilterBYPROActivity extends Activity {
         }
 
         try {
-            AddProductAdapter2 m_adapter = new AddProductAdapter2(SearchFilterBYPROActivity.this,SearchFilterBYPROActivity.this, R.layout.dashboard_row_item1, m_parts);
+            AddProductAdapter2 m_adapter = new AddProductAdapter2(SearchFilterBYPROActivity.this, SearchFilterBYPROActivity.this, R.layout.dashboard_row_item1, m_parts);
             listu.setAdapter(m_adapter);
 
         } catch (Exception e) {

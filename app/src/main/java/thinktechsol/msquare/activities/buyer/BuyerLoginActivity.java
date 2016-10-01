@@ -620,6 +620,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
 
         editor.putString("buyerLoginId", list.get(0).id);
+        editor.putString("buyeremailaddress", list.get(0).email);
         editor.putBoolean("isBuyerLogin", true);
         editor.commit();
 

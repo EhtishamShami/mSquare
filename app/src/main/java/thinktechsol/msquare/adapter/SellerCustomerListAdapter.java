@@ -90,7 +90,7 @@ public class SellerCustomerListAdapter extends ArrayAdapter<SellerCustomerModel>
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "hi=" + myItem.email, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "hi=" + myItem.email, Toast.LENGTH_SHORT).show();
                         }
                     });
 

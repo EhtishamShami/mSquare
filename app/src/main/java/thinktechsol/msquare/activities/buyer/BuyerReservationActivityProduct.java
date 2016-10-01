@@ -300,20 +300,39 @@ public class BuyerReservationActivityProduct extends Activity {
 
         orderDetailLayout = (RelativeLayout) findViewById(R.id.orderDetailLayout);
         totalPrice = (TextView) findViewById(R.id.totalPrice);
-        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPriceNew));
+        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPriceNew+" AED"));
 
         addressLayout = (RelativeLayout) findViewById(R.id.addressLayout);
         buyerAddress = (TextView) findViewById(R.id.buyerAddress);
         btnUpdateAddress = (ImageView) findViewById(R.id.btnUpdateAddress);
 
+//        try {
+//            buyerAddress.setText("" +
+//                    globels.getGlobelRef().buyerLoginResponse.get(0).houseNo + "" +
+//                    globels.getGlobelRef().buyerLoginResponse.get(0).streetNo + "" +
+//                    globels.getGlobelRef().buyerLoginResponse.get(0).area + "" +
+//                    globels.getGlobelRef().buyerLoginResponse.get(0).state + "" +
+//                    globels.getGlobelRef().buyerLoginResponse.get(0).phoneNo
+//            );
+//        } catch (Exception e) {
+//            Log.e("BuyerReservation", "" + e);
+//        }
+
+
         try {
-            buyerAddress.setText("" +
-                    globels.getGlobelRef().buyerLoginResponse.get(0).houseNo + "" +
-                    globels.getGlobelRef().buyerLoginResponse.get(0).streetNo + "" +
-                    globels.getGlobelRef().buyerLoginResponse.get(0).area + "" +
-                    globels.getGlobelRef().buyerLoginResponse.get(0).state + "" +
-                    globels.getGlobelRef().buyerLoginResponse.get(0).phoneNo
-            );
+//            globels.getGlobelRef().address = globels.getGlobelRef().houseNo + "" +
+//                    globels.getGlobelRef().streetNo + "" +
+//                    globels.getGlobelRef() + "" +
+//                    globels.getGlobelRef() + "" +
+//                    globels.getGlobelRef().phoneNo;
+            buyerAddress.setText("" +globels.getGlobelRef().address);
+//            buyerAddress.setText("" +
+//                    globels.getGlobelRef().houseNo + "" +
+//                    globels.getGlobelRef().streetNo + "" +
+//                    globels.getGlobelRef() + "" +
+//                    globels.getGlobelRef() + "" +
+//                    globels.getGlobelRef().phoneNo
+//            );
         } catch (Exception e) {
             Log.e("BuyerReservation", "" + e);
         }
@@ -342,19 +361,20 @@ public class BuyerReservationActivityProduct extends Activity {
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 
-        mainLayout.setLayoutParams(AppLayoutParam(80.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
-        confrmBookingBtn.setLayoutParams(AppLayoutParam(11.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
+        mainLayout.setLayoutParams(AppLayoutParam(83.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+        confrmBookingBtn.setLayoutParams(AppLayoutParam(8.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
         confrmBookingBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
 
         row1Layout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         row1Layout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
 
-        products_Layout.setLayoutParams(AppLayoutParam(23.00f, 100f, 0, 0, 0, -1, row1Layout, "hor", 0, "null"));
+        products_Layout.setLayoutParams(AppLayoutParam(28.00f, 100f, 0, 0, 0, -1, row1Layout, "hor", 0, "null"));
 
         btnUpdateAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
+//                finish();
             }
         });
 
@@ -374,14 +394,15 @@ public class BuyerReservationActivityProduct extends Activity {
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedProductsIds);
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedQuantityIds);
 
-                    if(buyerAddress.getText().toString()!=null || buyerAddress.getText().toString().length()<=0){
-                        Toast.makeText(BuyerReservationActivityProduct.this, "Please Enter the address first", Toast.LENGTH_LONG).show();
-                    }else {
+                    if (buyerAddress.getText().toString() != null || buyerAddress.getText().toString().length() <= 0) {
                         ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
                         new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, null, BuyerReservationActivityProduct.this, obj);
 
+                    } else {
+                        Toast.makeText(BuyerReservationActivityProduct.this, "Please Enter the address first", Toast.LENGTH_LONG).show();
+
                     }
-                                   } else {
+                } else {
                     Toast.makeText(BuyerReservationActivityProduct.this, "Your Selection is Save! But You have to Login First", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerLoginActivityGuest.class));
                 }

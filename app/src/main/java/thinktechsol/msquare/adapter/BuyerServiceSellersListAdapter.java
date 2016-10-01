@@ -116,13 +116,13 @@ public class BuyerServiceSellersListAdapter extends ArrayAdapter<getServiceSelle
                             holder.companyName.setText(myItem.companyName);
                         }
                         if (holder.description != null) {
-                            holder.description.setText(myItem.description);
+                            holder.description.setText(myItem.address);
                         }
                         if (holder.distance != null) {
                             holder.distance.setText(myItem.distance);
 
                             int b = (int) (Math.round(Float.parseFloat(myItem.distance)));
-                            holder.distance.setText("" + b);
+                            holder.distance.setText("" + b+" km");
                         }
                         if (holder.rating != null) {
 //                            holder.rating.setText(myItem.price);

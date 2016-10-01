@@ -16,6 +16,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
+import thinktechsol.msquare.activities.SellersOrdersActivity;
 import thinktechsol.msquare.activities.buyer.BuyerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
 
@@ -32,11 +33,12 @@ public class GCMPushReceiverService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        Log.e("GCMPushReceiver", "gmc receiver is=" + data);
         //Getting the message from the bundle
-        String message = data.getString("message");
+        String message = data.getString("alert");
         //Displaying a notiffication with the message
 
-        Log.e("GCMPushReceiver", "message is=" + data);
+        Log.e("GCMPushReceiver", "message is=" + message);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -52,10 +54,10 @@ public class GCMPushReceiverService extends GcmListenerService {
 
         globels.getGlobelRef().isNotification = "Notification";
         Intent intent = null;
-        if(isBuyerLogedIn) {
-             intent = new Intent(this, BuyerDeshBoardActivity.class);
-        }else {
-            intent = new Intent(this, SellerDeshBoardActivity.class);
+        if (isBuyerLogedIn) {
+            intent = new Intent(this, BuyerDeshBoardActivity.class);
+        } else {
+            intent = new Intent(this, SellersOrdersActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         int requestCode = 0;
@@ -69,6 +71,7 @@ public class GCMPushReceiverService extends GcmListenerService {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setContentTitle("Servue Order Alert")
                 .setContentIntent(pendingIntent);
 
         //Toast.makeText(GCMPushReceiverService.this, "gcm message: "+message, Toast.LENGTH_SHORT).show();

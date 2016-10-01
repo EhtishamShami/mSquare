@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">Servue</string>
+    <string name="app_name">Servue سيرفيو</string>
     <string name="lbl_enter_code">Enter Your Code</string>
     <string name="title_activity_seller_dash_board">SellerDashBoardActivity</string>
     <string name="lbl_message">Messages</string>
@@ -66,7 +66,7 @@
 
     <string name="btn_reservation">Reservation</string>
     <string name="lbl_service_details">Service Details</string>
-    <string name="lbl_description">Description</string>
+    <string name="lbl_description">Special Request</string>
     <string name="lbl_confirmbooking">CONFIRM BOOKING</string>
     <string name="lbl_order_summary">Order Summary</string>
     <string name="lbl_total">Total</string>
@@ -78,11 +78,11 @@
     <string name="hint_messageET">Write a comment...</string>
 
 
-    <string name="hint_houseET">House no.</string>
-    <string name="hint_stAddressET">Street</string>
+    <string name="hint_houseET">House #</string>
+    <string name="hint_stAddressET">Street #</string>
     <string name="hint_areaET">Area</string>
     <string name="hint_stateET">State</string>
-    <string name="hint_phoneET">Phone Number</string>
+    <string name="hint_phoneET">Phone #</string>
     <string name="lbl_service_timing">Service Timings</string>
     <string name="lbl_start">START</string>
     <string name="lbl_end">END</string>

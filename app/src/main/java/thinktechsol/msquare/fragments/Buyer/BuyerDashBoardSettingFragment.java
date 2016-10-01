@@ -1,10 +1,13 @@
 package thinktechsol.msquare.fragments.Buyer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +16,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,8 +31,14 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.UserTypeActivity;
@@ -56,6 +67,10 @@ public class BuyerDashBoardSettingFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_buyer_deshboard_setting, container, false);
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = preferences.edit();
@@ -235,20 +250,46 @@ public class BuyerDashBoardSettingFragment extends Fragment {
     }
 
     String path;
+    Uri file;
 
     public void takePhoto() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        File folder = new File(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage);
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        File folder = new File(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage);
+//
+//        if (!folder.exists()) {
+//            folder.mkdir();
+//        }
+//        final Calendar c = Calendar.getInstance();
+//        String new_Date = c.get(Calendar.DAY_OF_MONTH) + "-" + ((c.get(Calendar.MONTH)) + 1) + "-" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND);
+//        path = String.format(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage + "/%s.png", "Product(" + new_Date + ")");
+//        File photo = new File(path);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+//        startActivityForResult(intent, 2);
 
-        if (!folder.exists()) {
-            folder.mkdir();
+
+//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(takePictureIntent, 3);
+
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+         file = Uri.fromFile(getOutputMediaFile());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+        startActivityForResult(intent, 100);
+    }
+
+    private static File getOutputMediaFile() {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "CameraDemo");
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
         }
-        final Calendar c = Calendar.getInstance();
-        String new_Date = c.get(Calendar.DAY_OF_MONTH) + "-" + ((c.get(Calendar.MONTH)) + 1) + "-" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR) + "-" + c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND);
-        path = String.format(Environment.getExternalStorageDirectory() + "/" + Constant.folderNameForCapturedImage + "/%s.png", "Product(" + new_Date + ")");
-        File photo = new File(path);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        startActivityForResult(intent, 2);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_" + timeStamp + ".jpg");
     }
 
     @Override
@@ -260,8 +301,6 @@ public class BuyerDashBoardSettingFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
 
                     try {
-
-
                         Uri photoUri = data.getData();
                         if (photoUri != null) {
                             String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -272,8 +311,8 @@ public class BuyerDashBoardSettingFragment extends Fragment {
                             cursor.close();
                             Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + filePath);
 
-
                             Bitmap bmp = BitmapFactory.decodeFile(filePath);
+                            Log.e("AddOrViewProActivity", "Gallery File Path=====>>>" + bmp);
                             userImage.setImageBitmap(bmp);
 
                             new BuyerAddImageSetting(getActivity(), BuyerDashBoardSettingFragment.this, filePath, emailText.getText().toString().trim());
@@ -291,6 +330,73 @@ public class BuyerDashBoardSettingFragment extends Fragment {
 //                    AddImgToViewPager(path);
                 }
                 break;
+
+            case 3:
+                if (resultCode == Activity.RESULT_OK) {
+                    Log.e("AddOrViewProActivity", "camera File Path 1=====>>>" + data.getData());
+                    Uri selectedImage = data.getData();
+                    // ImageView photo = (ImageView) findViewById(R.id.add_contact_label_photo);
+
+
+                    if (selectedImage != null) {
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        String filePath = cursor.getString(columnIndex);
+                        cursor.close();
+
+
+                        Bitmap bmp = BitmapFactory.decodeFile(filePath);
+//                        Log.e("AddOrViewProActivity", "Camera File Path=====>>>" + bmp);
+                        userImage.setImageBitmap(bmp);
+//                        try {
+//                            InputStream inputStream = null;
+//
+////                            bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(mCurrentPhotoPath));
+////                            mImageView.setImageBitmap(bmp);
+//
+//                            inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
+//                            Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+//                            userImage.setImageBitmap(bmp);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+
+//                    Bitmap mBitmap = null;
+//                    try
+//                    {
+//                        mBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+//                        Log.e("AddOrViewProActivity", "camera File Path=====>>>" + mBitmap);
+//                        userImage.setImageBitmap(mBitmap);
+//                    }
+//                    catch (IOException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+                }
+                break;
+
+            case 100:
+                userImage.setImageURI(file);
+//                userImage.setImageURI(file);
+        }
+    }
+
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
     }
 }

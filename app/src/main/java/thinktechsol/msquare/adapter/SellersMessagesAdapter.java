@@ -90,7 +90,7 @@ public class SellersMessagesAdapter extends ArrayAdapter<getConversationListSell
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "" + myItem.orderId, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "" + myItem.orderId, Toast.LENGTH_SHORT).show();
                             globels.getGlobelRef().orderId_for_ordr_info = myItem.orderId;
                             Intent orderDetails = new Intent(context, ViewSellOrderDetailActivity.class);
                             context.startActivity(orderDetails);

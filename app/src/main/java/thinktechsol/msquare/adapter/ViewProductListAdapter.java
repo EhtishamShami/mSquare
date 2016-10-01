@@ -97,7 +97,7 @@ public class ViewProductListAdapter extends ArrayAdapter<getSellerProductsRespon
                             getSellerProductsResponse myItem = productList.get(position);
 
                             Constant.singleProduct = myItem;
-                            Toast.makeText(context, "" + position + ": " + myItem , Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "" + position + ": " + myItem , Toast.LENGTH_SHORT).show();
 
                             Constant.productImagesList = myItem.productImagesList;
                             Intent viewProductDetails = new Intent(context, ViewSellProDetailActivity.class);

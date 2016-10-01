@@ -104,7 +104,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                             //getSellerProductsResponse myItem = productList.get(position);
                             HomeItem myItem = objects.get(position);
 
-                            Toast.makeText(context, "" + position + ": " + myItem.id, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "" + position + ": " + myItem.id, Toast.LENGTH_SHORT).show();
                             Constant.sellerServiceId = myItem.id;
 
 
@@ -121,7 +121,7 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
                             //getSellerProductsResponse myItem = productList.get(position);
                             HomeItem myItem = objects.get(position);
 
-                            Toast.makeText(context, "" + position + ": " + myItem.id2, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "" + position + ": " + myItem.id2, Toast.LENGTH_SHORT).show();
                             Constant.sellerServiceId = myItem.id2;
 
                             globels.getGlobelRef().them_color = myItem.bgColor2;

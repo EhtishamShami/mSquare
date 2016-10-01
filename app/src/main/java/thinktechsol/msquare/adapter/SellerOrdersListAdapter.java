@@ -108,7 +108,7 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
 //                            new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
 //                            ordersList.remove(position);
 //                            notifyDataSetChanged();
@@ -149,16 +149,16 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                                 public void onClick(View v) {
 
                                     if (globels.getGlobelRef().orderType == "0") {
-                                        Toast.makeText(context, "order_reject of Recent=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_reject of Recent=", Toast.LENGTH_SHORT).show();
                                         new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().rejectOrder, position);
                                         ordersList.remove(position);
                                         notifyDataSetChanged();
                                     } else if (globels.getGlobelRef().orderType == "1") {
-                                        Toast.makeText(context, "order_reject of In Process=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_reject of In Process=", Toast.LENGTH_SHORT).show();
                                     } else if (globels.getGlobelRef().orderType == "2") {
-                                        Toast.makeText(context, "order_reject of Dispute=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_reject of Dispute=", Toast.LENGTH_SHORT).show();
                                     } else if (globels.getGlobelRef().orderType == "3") {
-                                        Toast.makeText(context, "order_reject of Complete=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_reject of Complete=", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -170,19 +170,19 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                                 public void onClick(View v) {
 
                                     if (globels.getGlobelRef().orderType == "0") {
-                                        Toast.makeText(context, "order_approve of Recent=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_approve of Recent=", Toast.LENGTH_SHORT).show();
                                         new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
                                         ordersList.remove(position);
                                         notifyDataSetChanged();
                                     } else if (globels.getGlobelRef().orderType == "1") {
-                                        Toast.makeText(context, "order_approve of In Process=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_approve of In Process=", Toast.LENGTH_SHORT).show();
                                         new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveInProcessOrder, position);
                                         ordersList.remove(position);
                                         notifyDataSetChanged();
                                     } else if (globels.getGlobelRef().orderType == "2") {
-                                        Toast.makeText(context, "order_approve of Dispute=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_approve of Dispute=", Toast.LENGTH_SHORT).show();
                                     } else if (globels.getGlobelRef().orderType == "3") {
-                                        Toast.makeText(context, "order_approve of Complete=", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(context, "order_approve of Complete=", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }

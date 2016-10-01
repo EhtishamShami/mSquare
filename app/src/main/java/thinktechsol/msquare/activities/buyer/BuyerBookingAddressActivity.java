@@ -36,6 +36,7 @@ public class BuyerBookingAddressActivity extends Activity {
     ImageView backBtn, btn_menu;
     EditText houseET, streetAddresET, areaET, stateET, phoneET;
     Button saveBtn;
+    String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class BuyerBookingAddressActivity extends Activity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
+        email = preferences.getString("buyeremailaddress", "null");
+//        editor.putString("buyeremailaddress", list.get(0).email);
         //new getBuyerWishListService(BuyerBookingAddressActivity.this, BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId);
 
 
@@ -76,7 +79,8 @@ public class BuyerBookingAddressActivity extends Activity {
             }
         });
         title.setText("Book Product");
-        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+//        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
         titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
 
         houseET = (EditText) findViewById(R.id.houseET);
@@ -87,11 +91,11 @@ public class BuyerBookingAddressActivity extends Activity {
 
 
         try {
-            houseET.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).houseNo);
-            streetAddresET.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).streetNo);
-            areaET.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).area);
-            stateET.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).state);
-            phoneET.setText("" + globels.getGlobelRef().buyerLoginResponse.get(0).phoneNo);
+            houseET.setText("" + globels.getGlobelRef().houseNo);
+            streetAddresET.setText("" + globels.getGlobelRef().streetNo);
+            areaET.setText("" + globels.getGlobelRef().area);
+            stateET.setText("" + globels.getGlobelRef().state);
+            phoneET.setText("" + globels.getGlobelRef().phoneNo);
         } catch (Exception e) {
 
         }
@@ -108,9 +112,14 @@ public class BuyerBookingAddressActivity extends Activity {
                 address = houseET.getText().toString() + " " + streetAddresET.getText().toString() + " " + areaET.getText().toString() + " " + stateET.getText().toString() + " " + phoneET.getText().toString();
 
                 globels.getGlobelRef().address = address;
-                finish();
+
+                Log.e("BuyerBooking", "email issssssssssss=" + email);
+                Log.e("BuyerBooking", "email issssssssssss=" + globels.getGlobelRef().buyerEmailId);
+//                ,globels.getGlobelRef().buyerLoginResponse.get(0).email
+
                 new UpdateBuyerAddressService(BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId, houseET.getText().toString(),
-                        streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString(),globels.getGlobelRef().buyerLoginResponse.get(0).email);
+                        streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString(), globels.getGlobelRef().buyerEmailId);
+                finish();
             }
         });
 //        adapter = new BuyerServiceSellersListAdapter(BuyerWishListActivity.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
@@ -123,7 +132,8 @@ public class BuyerBookingAddressActivity extends Activity {
 
     public void addressUpdateSuccessfully() {
         //globels.getGlobelRef().address = address;
-        System.exit(0);
+        //System.exit(0);
+        finish();
     }
 
     public void fillProductListWithData(ArrayList<BuyerWishListModel> list) {

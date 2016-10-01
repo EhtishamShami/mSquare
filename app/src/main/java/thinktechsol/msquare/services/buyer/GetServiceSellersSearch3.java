@@ -190,6 +190,7 @@ public class GetServiceSellersSearch3 {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
+                Log.e(TAG, "getServiceSellersSearch Search url=" + distance);
                 String post_data;
 //                if (searchStrings.length() > 0) {
 //                    post_data =
@@ -200,14 +201,14 @@ public class GetServiceSellersSearch3 {
 
                             URLEncoder.encode("distance", "UTF-8") + "=" + URLEncoder.encode(""+distance, "UTF-8")
                                     + "&" + URLEncoder.encode("priceFrom", "UTF-8") + "=" + URLEncoder.encode(""+priceFrom, "UTF-8")
-                                    + "&" + URLEncoder.encode("priceTo", "UTF-8") + "=" + URLEncoder.encode(""+priceTo, "UTF-8")
+                                    + "&" + URLEncoder.encode("toPrice", "UTF-8") + "=" + URLEncoder.encode(""+priceTo, "UTF-8")
                                     + "&" + URLEncoder.encode("toTime", "UTF-8") + "=" + URLEncoder.encode(""+toTime, "UTF-8")
                                     + "&" + URLEncoder.encode("fromTime", "UTF-8") + "=" + URLEncoder.encode(""+fromTime, "UTF-8")
                                      + "&" + URLEncoder.encode("categories", "UTF-8") + "=" + URLEncoder.encode(""+categories, "UTF-8")
                     ;
 //                }
 //
-//                bufferedWriter.write(post_data);
+                bufferedWriter.write(post_data);
 
                 bufferedWriter.close();
                 outputStream.close();

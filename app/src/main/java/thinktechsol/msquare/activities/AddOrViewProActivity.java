@@ -650,7 +650,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
     @Override
     public void onItemSelected(int index) {
         selectedTimeIndex = index + 1;
-        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Item selected" + selectedTimeIndex, Toast.LENGTH_SHORT).show();
     }
 
     public void productAdditionCompleted() {

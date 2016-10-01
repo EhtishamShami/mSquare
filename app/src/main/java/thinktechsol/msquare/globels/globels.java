@@ -81,5 +81,6 @@ public class globels {
     public static String isNotification = "Empty";
     public static int them_color = R.color.sellerOrderDetailTitleBg;
     public static String them_color2;
+    public static String buyerEmailId;
 
 }
