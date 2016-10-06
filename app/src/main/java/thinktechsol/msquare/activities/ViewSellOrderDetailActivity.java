@@ -267,7 +267,7 @@ public class ViewSellOrderDetailActivity extends Activity {
 
         ///////////////
         sellers_title.setText(list.get(0).sellerDetails.companyName);
-        sellers_description.setText(list.get(0).sellerDetails.description);
+        sellers_description.setText(list.get(0).extraRemarks);
         if (list.get(0).orderDetails != null) {
             pro_name.setText(list.get(0).orderDetails.get(0).productDetails.title);
             if (list.get(0).orderDetails.get(0).serviceDetails.categoryType.equals("0")) {

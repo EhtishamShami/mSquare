@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -97,7 +98,10 @@ public class SellerViewStaffActivity extends Activity {
                 OkBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new AddSellerStaffService(SellerViewStaffActivity.this, SellerViewStaffActivity.this, globels.getGlobelRef().sellerLoginId, staffET.getText().toString().trim());
+                        if (staffET.getText().toString().length() > 0)
+                            new AddSellerStaffService(SellerViewStaffActivity.this, SellerViewStaffActivity.this, globels.getGlobelRef().sellerLoginId, staffET.getText().toString().trim());
+                        else
+                            Toast.makeText(SellerViewStaffActivity.this, "Please Enter The Staff Name First", Toast.LENGTH_SHORT).show();
                     }
                 });
 

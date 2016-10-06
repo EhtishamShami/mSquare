@@ -24,7 +24,6 @@ import thinktechsol.msquare.adapter.ImgSwiperAdapterBuyerAdds;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.GetServicesModel;
 import thinktechsol.msquare.model.Buyer.HomeItem;
-import thinktechsol.msquare.services.buyer.GetBuyerDetails2;
 import thinktechsol.msquare.services.getServices;
 import thinktechsol.msquare.utils.Constant;
 
@@ -65,7 +64,7 @@ public class HomeActivity extends Activity {
         listview = (ListView) findViewById(R.id.listView);
 
         new getServices(HomeActivity.this, HomeActivity.this);
-        new GetBuyerDetails2(HomeActivity.this, globels.getGlobelRef().buyerLoginId);
+        //new GetBuyerDetails2(HomeActivity.this, globels.getGlobelRef().buyerLoginId);
         // title bar
         backBtn.setLayoutParams(AppLayoutParam(10f, 10f, 0, 0, 0, 0, null, "ver", 0, "null"));
         btn_menu.setLayoutParams(AppLayoutParam(6f, 8f, 0, 0, 2, 0, null, "ver", 0, "right"));

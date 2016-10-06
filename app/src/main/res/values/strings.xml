@@ -93,5 +93,7 @@
     <string name="lbl_cat_fruites_veg">Fruites and Veg...</string>
     <string name="lbl_cat_dairy_eggs">Dairy and Eggs</string>
     <string name="lbl_cat_bakery">Bakery</string>
+    <string name="lbl_forgot_password">Forgot Password</string>
+    <string name="lbl_not_charge">We are just linking u up with Seller, We will not charge you anything for our Servue</string>
 
 </resources>

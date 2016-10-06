@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,41 +43,31 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         if (v == null) {
             v = inflater.inflate(R.layout.fragment_seller_map, container, false);
 
+            if (mMap == null) {
+                ((MapFragment) getActivity().getFragmentManager().
+                        findFragmentById(R.id.map)).getMapAsync(this);
 
-            try {
-                if (mMap == null) {
-//                    mMap = ((MapFragment) getActivity().getFragmentManager().
-//                            findFragmentById(R.id.map)).getMap();
 
-                    if (globels.getGlobelRef().productList.get(0).sellerInfo.latitude != null &&
-                            globels.getGlobelRef().productList.get(0).sellerInfo.longitude != null) {
-                        testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.latitude),
-                                Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.longitude));
-                    }
-
-                    ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+//                    ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
 
 //                    ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(
 //                            R.id.map)).getMapAsync(this);
-                }
-                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                if (testLatLng != null) {
-                    Marker testMarker = mMap.addMarker(new MarkerOptions().
-                            position(testLatLng).title(""+ globels.getGlobelRef().productList.get(0).sellerInfo.companyName).
-                    snippet(""+ globels.getGlobelRef().productList.get(0).sellerInfo.fName));
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
-                    mMap.animateCamera(cameraUpdate);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+
+//                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+//                Log.e("SellersMapFrag", "map showing" + testLatLng);
+//                if (testLatLng != null) {
+//
+//                    Marker testMarker = mMap.addMarker(new MarkerOptions().
+//                            position(testLatLng).title("" + globels.getGlobelRef().productList.get(0).sellerInfo.companyName).
+//                            snippet("" + globels.getGlobelRef().productList.get(0).sellerInfo.fName));
+//                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+//                    mMap.animateCamera(cameraUpdate);
+//                }
             }
         }
-
-
         return v;
     }
 
@@ -116,22 +107,31 @@ public class SellersMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        Marker testMarker = mMap.addMarker(new MarkerOptions().
-                position(testLatLng).title(""+ globels.getGlobelRef().productList.get(0).sellerInfo.companyName)
-                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
-                .snippet(""+ globels.getGlobelRef().productList.get(0).sellerInfo.fName)
-        );
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
-        mMap.animateCamera(cameraUpdate);
+
+//        if (globels.getGlobelRef().productList.get(0).sellerInfo.latitude != null &&
+//                globels.getGlobelRef().productList.get(0).sellerInfo.longitude != null) {
+            testLatLng = new LatLng(Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.latitude),
+                    Double.parseDouble(globels.getGlobelRef().productList.get(0).sellerInfo.longitude));
+//        }
+
+        Log.e("SellersMapFrag", "map showing 2" + testLatLng);
+
+        try {
+            View marker = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout, null);
+
+            Marker testMarker = mMap.addMarker(new MarkerOptions().
+                    position(testLatLng).title("" + globels.getGlobelRef().productList.get(0).sellerInfo.companyName)
+                    .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker)))
+                    .snippet("" + globels.getGlobelRef().productList.get(0).sellerInfo.fName)
+            );
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(testLatLng, 10);
+            mMap.animateCamera(cameraUpdate);
+        }catch (Exception e){
+            Log.e("SellersMapFrag","google map exception="+e);
+        }
     }
+
     // Convert a view to bitmap
     public static Bitmap createDrawableFromView(Context context, View view) {
         DisplayMetrics displayMetrics = new DisplayMetrics();

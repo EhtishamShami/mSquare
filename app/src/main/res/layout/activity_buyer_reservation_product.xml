@@ -8,11 +8,27 @@
         layout="@layout/titlebar" />
 
     <RelativeLayout
+        android:id="@+id/lbl_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titlebar">
+
+        <TextView
+            android:id="@+id/testlbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="@string/lbl_not_charge"
+            android:textColor="@android:color/holo_red_dark" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/confrmBookingBtn"
-        android:layout_below="@+id/titlebar">
+        android:layout_below="@+id/lbl_layout">
 
 
         <RelativeLayout
@@ -225,6 +241,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:layout_below="@+id/orderDetailLayout"
+
                         android:background="#fafafa">
 
                         <RelativeLayout
@@ -295,7 +312,7 @@
                             android:layout_margin="15dp"
                             android:background="#fffcfc"
                             android:hint="Enter here...."
-                            android:lines="12"
+                            android:lines="2"
                             android:maxLines="12"
                             android:gravity="top"
                             android:padding="10dp" />

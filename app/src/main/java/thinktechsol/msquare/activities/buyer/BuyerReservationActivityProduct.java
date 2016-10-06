@@ -36,7 +36,7 @@ public class BuyerReservationActivityProduct extends Activity {
     TextView title, titleSeller;
     ImageView backBtn, btn_menu;
 
-    RelativeLayout row1Layout, products_Layout, orderDetailLayout, addressLayout, mainLayout;
+    RelativeLayout row1Layout, products_Layout, orderDetailLayout, addressLayout, mainLayout, lbl_layout;
     static ListView productslisview;
 
     WeekView mWeekView;
@@ -288,6 +288,7 @@ public class BuyerReservationActivityProduct extends Activity {
 
         products_Layout = (RelativeLayout) findViewById(R.id.products_Layout);
         productslisview = (ListView) findViewById(R.id.productslisview);
+        lbl_layout = (RelativeLayout) findViewById(R.id.lbl_layout);
 
         mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
 
@@ -300,7 +301,7 @@ public class BuyerReservationActivityProduct extends Activity {
 
         orderDetailLayout = (RelativeLayout) findViewById(R.id.orderDetailLayout);
         totalPrice = (TextView) findViewById(R.id.totalPrice);
-        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPriceNew+" AED"));
+        totalPrice.setText(String.valueOf(globels.getGlobelRef().SelectedServicesPriceNew + " AED"));
 
         addressLayout = (RelativeLayout) findViewById(R.id.addressLayout);
         buyerAddress = (TextView) findViewById(R.id.buyerAddress);
@@ -325,7 +326,7 @@ public class BuyerReservationActivityProduct extends Activity {
 //                    globels.getGlobelRef() + "" +
 //                    globels.getGlobelRef() + "" +
 //                    globels.getGlobelRef().phoneNo;
-            buyerAddress.setText("" +globels.getGlobelRef().address);
+            buyerAddress.setText("" + globels.getGlobelRef().address);
 //            buyerAddress.setText("" +
 //                    globels.getGlobelRef().houseNo + "" +
 //                    globels.getGlobelRef().streetNo + "" +
@@ -358,10 +359,12 @@ public class BuyerReservationActivityProduct extends Activity {
         title.setText("Book Service");
 //        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
         titlebarlayout.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
-        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
+        titlebarlayout.setLayoutParams(AppLayoutParam(8.00f, 100f, 0, 0, 0, 0, null, "hor", 0, "null"));
         // title bar end
 
-        mainLayout.setLayoutParams(AppLayoutParam(83.00f, 100, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+        lbl_layout.setLayoutParams(AppLayoutParam(8.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+
+        mainLayout.setLayoutParams(AppLayoutParam(78.00f, 100, 0, 0, 0, 0, lbl_layout, "hor", 0, "null"));
         confrmBookingBtn.setLayoutParams(AppLayoutParam(8.00f, 100f, 0, 0, 0, 0, mainLayout, "hor", 0, "null"));
         confrmBookingBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
 

@@ -132,10 +132,45 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/buyer_logout_layout"
+                    android:id="@+id/buyer_changepassword_layout"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/buyer_email_layout"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/changePasswordImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/mail_password" />
+
+                    <TextView
+                        android:id="@+id/change_password_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/changePasswordImg"
+                        android:text="Change Password"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/lineforgotpass"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#949391" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/buyer_logout_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/buyer_changepassword_layout"
                     android:layout_marginLeft="10dp">
 
                     <ImageView

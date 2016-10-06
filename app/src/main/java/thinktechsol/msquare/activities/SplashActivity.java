@@ -5,16 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.buyer.HomeActivity;
@@ -24,12 +35,19 @@ import thinktechsol.msquare.utils.Constant;
 
 public class SplashActivity extends Activity {
 
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "6pCyVWGMEFUAOeh9sxrrfYs7r";
+    private static final String TWITTER_SECRET = "9rzvyyBAGapc9tFFBdqKwohCEykmsQAmh6cfMwS9hmH5qvSnCE";
+
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -126,6 +144,21 @@ public class SplashActivity extends Activity {
             }, 3 * 1000);
 
         }
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("thinktechsol.msquare", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashCode  = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                System.out.println("Print the hashKey for Facebook :"+hashCode);
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
     }
 
     private boolean isFirstTime() {

@@ -51,7 +51,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
     TextView title;
     ImageView backBtn, btn_menu;
 
-    RelativeLayout peopleLayout, calenderOuterLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout;
+    RelativeLayout peopleLayout, calenderOuterLayout, calenderLayout, timeLayout, serviceDetailLayout, sellersDetailLayout, lbl_layout;
     ListView timelisview;
     ArrayList<BuyerGetStaffTimeMode> list;
     ArrayList<BuyerGetStaffModel> staffList;
@@ -88,6 +88,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         peopleLayout = (RelativeLayout) findViewById(R.id.peopleLayout);
         calenderLayout = (RelativeLayout) findViewById(R.id.calenderLayout);
         calenderOuterLayout = (RelativeLayout) findViewById(R.id.calenderOuterLayout);
+        lbl_layout = (RelativeLayout) findViewById(R.id.lbl_layout);
         timeLayout = (RelativeLayout) findViewById(R.id.timeLayout);
         serviceDetailLayout = (RelativeLayout) findViewById(R.id.serviceDetailLayout);
         sellersDetailLayout = (RelativeLayout) findViewById(R.id.sellersDetailLayout);
@@ -141,7 +142,9 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         // title bar end
 
 
-        peopleLayout.setLayoutParams(AppLayoutParam(7.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+        lbl_layout.setLayoutParams(AppLayoutParam(7.00f, 100f, 0, 0, 0, 0, titlebarlayout, "hor", 0, "null"));
+
+        peopleLayout.setLayoutParams(AppLayoutParam(7.00f, 100f, 0, 0, 0, 0, lbl_layout, "hor", 0, "null"));
         peopleLayout.setBackgroundColor(this.getResources().getColor(R.color.color_userLayout));
 
         calenderOuterLayout.setLayoutParams(AppLayoutParam(15.00f, 100f, 0, 0, 0, 0, peopleLayout, "hor", 0, "null"));
@@ -510,11 +513,11 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     public void fillProductListWithData(ArrayList<BuyerGetStaffModel> list) {
 
-        if (list.size() > 0) {
-            changeUser.setVisibility(View.VISIBLE);
-        } else
-            changeUser.setVisibility(View.GONE)
-                    ;
+//        if (list.size() > 0) {
+        changeUser.setVisibility(View.VISIBLE);
+//        } else
+//            changeUser.setVisibility(View.GONE)
+        ;
         ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, list);
         staffListView.setAdapter(adapter);
     }

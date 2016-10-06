@@ -8,10 +8,25 @@
         layout="@layout/titlebar" />
 
     <RelativeLayout
-        android:id="@+id/peopleLayout"
+        android:id="@+id/lbl_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titlebar">
+
+        <TextView
+            android:id="@+id/testlbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="@string/lbl_not_charge"
+            android:textColor="@android:color/holo_red_dark" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/peopleLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbl_layout">
 
         <ImageView
             android:id="@+id/userImg"
@@ -33,6 +48,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#989898" />
 
+        <ImageView
+            android:id="@+id/changeUser_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_user"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/changeUser"/>
+
         <TextView
             android:id="@+id/changeUser"
             android:layout_width="wrap_content"
@@ -41,7 +64,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
             android:layout_marginRight="10dp"
-            android:text="Change"
+            android:text="Select Staff"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/holo_red_dark" />
 
@@ -124,8 +147,8 @@
             android:id="@+id/timelisview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
-            android:background="#ffffff"></ListView>
+            android:background="#ffffff"
+            android:choiceMode="singleChoice"></ListView>
 
         <View
             android:layout_width="match_parent"
@@ -315,8 +338,8 @@
                     android:layout_margin="15dp"
                     android:background="#ece9ec"
                     android:hint="Type Description here"
-                    android:lines="4"
                     android:imeOptions="actionGo"
+                    android:lines="4"
                     android:maxLines="4"
                     android:padding="10dp" />
             </RelativeLayout>
