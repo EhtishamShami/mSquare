@@ -41,24 +41,39 @@
                 android:id="@+id/seller_detials_layout"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:layout_below="@+id/imgs">
 
                 <RelativeLayout
                     android:id="@+id/seller_title_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff">
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/ownerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="4dp"
+                        android:text="OWNER NAME:"
+                       android:layout_centerVertical="true"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/seller_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="5dp"
                         android:text="Seller Name"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ownerName"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="15sp" />
+                        android:textSize="13sp" />
                     <View
                         android:id="@+id/line3"
                         android:layout_width="1dp"

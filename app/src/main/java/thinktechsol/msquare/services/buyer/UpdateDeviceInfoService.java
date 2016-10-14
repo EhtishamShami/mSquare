@@ -123,7 +123,7 @@ public class UpdateDeviceInfoService {
             try {
 
                 URL url = new URL(Constant.baseUrl + _url + "/" + userType + "/" + buyerOrSellerId + "/" + udid + "/" + deviceType);
-                Log.e(TAG, "updateDeviceInfo url is=" + url);
+                Log.e(TAG, "android device UDID is=" + udid);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
 //                httpURLConnection.setDoInput(true);

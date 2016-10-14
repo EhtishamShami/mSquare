@@ -85,6 +85,7 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 
                         holder.lbl = (ImageView) v.findViewById(R.id.lbl);
                         holder.name = (TextView) v.findViewById(R.id.name);
+                        holder.selectedServiceLbl = (TextView) v.findViewById(R.id.selectedServiceLbl);
                         holder._selected_services = (TextView) v.findViewById(R.id._selected_services);
                         holder._total_price = (TextView) v.findViewById(R.id._total_price);
                         holder.order_reject = (ImageView) v.findViewById(R.id.order_reject);
@@ -113,7 +114,7 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
 //                            ordersList.remove(position);
 //                            notifyDataSetChanged();
                             globels.getGlobelRef().orderId_for_ordr_info = myItem.id;
-
+                            globels.getGlobelRef().isProductOrProduct = myItem.categoryType;
                             Intent orderDetails = new Intent(ActivityContext, ViewSellOrderDetailActivity.class);
                             ActivityContext.startActivity(orderDetails);
                         }
@@ -134,10 +135,22 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
                             //holder.name.setText(myItem.products.get(0).title);
                             holder.name.setText(myItem.buyerDetails.fName + " " + myItem.buyerDetails.lName);
                         }
+                        ////////////////////////////////
+                        //Log.e("SellerOrderList","order type="+myItem.categoryType);
                         if (holder._selected_services != null) {
                             //holder._selected_services.setText(myItem.products.get(0).description);
+                            if (myItem.categoryType.equals("1"))
+                                holder.selectedServiceLbl.setText("Selected Product");
+                            else
+                                holder.selectedServiceLbl.setText("Selected Services");
+
                             holder._selected_services.setText(myItem.noOfServices);
                         }
+                        ///////////////////////////////
+//                        if (holder._selected_services != null) {
+//                            //holder._selected_services.setText(myItem.products.get(0).description);
+//                            holder._selected_services.setText(myItem.noOfServices);
+//                        }
                         if (holder._total_price != null) {
 //                            holder._total_price.setText(myItem.products.get(0).description);
                             holder._total_price.setText(myItem.totalPrice);
@@ -233,8 +246,16 @@ public class SellerOrdersListAdapter extends ArrayAdapter<GetSellerOrdersModel> 
     }
 
     public static class ViewHolder {
+//        public ImageView lbl;
+//        public TextView name;
+//        public TextView _selected_services;
+//        public TextView _total_price;
+//        public ImageView order_reject;
+//        public ImageView order_approve;
+
         public ImageView lbl;
         public TextView name;
+        public TextView selectedServiceLbl;
         public TextView _selected_services;
         public TextView _total_price;
         public ImageView order_reject;

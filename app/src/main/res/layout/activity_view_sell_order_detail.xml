@@ -219,12 +219,61 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/sellers_description"
+                android:id="@+id/lbl_shiping_adress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sellers_detials_layout"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Shipping Address:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/shiping_adress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_shiping_adress"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:text="Shipping Address:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="11sp"
+                />
+
+            <TextView
+                android:id="@+id/lbl_tel_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shiping_adress"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:text="Tel:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tel_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shiping_adress"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:text="00"
+                android:layout_toRightOf="@+id/lbl_tel_no"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="11sp"
+                />
+
+            <TextView
+                android:id="@+id/sellers_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_tel_no"
                 android:layout_margin="8dp"
-                android:text="Description Descrp Descrp Descrp Descrp Descrip Descp Descrp Descript Descript Descript Descrp Descrp"
+                android:text="Description"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="13sp" />
 
@@ -271,16 +320,16 @@
                     android:id="@+id/messageET"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="9"
                     android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_messageET"
                     android:imeOptions="actionNext"
                     android:padding="5dp"
                     android:paddingLeft="10dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/sendMessageBtn"

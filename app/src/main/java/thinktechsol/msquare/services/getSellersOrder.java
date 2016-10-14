@@ -151,29 +151,31 @@ public class getSellersOrder {
 
                     // buyer details
                     String buyerDetails = childJsonObj.getString("buyerDetails");
-                    JSONObject buyerDetailsJsonObj = new JSONObject(buyerDetails);
+                    BuyerDetailsForOrder objBuyer = null;
+                    if (!buyerDetails.equals("false")) {
+                        JSONObject buyerDetailsJsonObj = new JSONObject(buyerDetails);
+                        String locationB = buyerDetailsJsonObj.getString("location");
+                        String statusB = buyerDetailsJsonObj.getString("status");
+                        String stateB = buyerDetailsJsonObj.getString("state");
+                        String lNameB = buyerDetailsJsonObj.getString("lName");
+                        String udidB = buyerDetailsJsonObj.getString("udid");
+                        String passwordB = buyerDetailsJsonObj.getString("password");
+                        String googlePlusB = buyerDetailsJsonObj.getString("googlePlus");
+                        String fNameB = buyerDetailsJsonObj.getString("fName");
+                        String phoneNoB = buyerDetailsJsonObj.getString("phoneNo");
+                        String houseNoB = buyerDetailsJsonObj.getString("houseNo");
+                        String idB = buyerDetailsJsonObj.getString("id");
+                        String twitterB = buyerDetailsJsonObj.getString("twitter");
+                        String areaB = buyerDetailsJsonObj.getString("area");
+                        String emailB = buyerDetailsJsonObj.getString("email");
+                        String facebookB = buyerDetailsJsonObj.getString("facebook");
+                        String streetNoB = buyerDetailsJsonObj.getString("streetNo");
+                        String datetimeB = buyerDetailsJsonObj.getString("datetime");
+                        String thumbB = buyerDetailsJsonObj.getString("thumb");
 
-                    String locationB = buyerDetailsJsonObj.getString("location");
-                    String statusB = buyerDetailsJsonObj.getString("status");
-                    String stateB = buyerDetailsJsonObj.getString("state");
-                    String lNameB = buyerDetailsJsonObj.getString("lName");
-                    String udidB = buyerDetailsJsonObj.getString("udid");
-                    String passwordB = buyerDetailsJsonObj.getString("password");
-                    String googlePlusB = buyerDetailsJsonObj.getString("googlePlus");
-                    String fNameB = buyerDetailsJsonObj.getString("fName");
-                    String phoneNoB = buyerDetailsJsonObj.getString("phoneNo");
-                    String houseNoB = buyerDetailsJsonObj.getString("houseNo");
-                    String idB = buyerDetailsJsonObj.getString("id");
-                    String twitterB = buyerDetailsJsonObj.getString("twitter");
-                    String areaB = buyerDetailsJsonObj.getString("area");
-                    String emailB = buyerDetailsJsonObj.getString("email");
-                    String facebookB = buyerDetailsJsonObj.getString("facebook");
-                    String streetNoB = buyerDetailsJsonObj.getString("streetNo");
-                    String datetimeB = buyerDetailsJsonObj.getString("datetime");
-                    String thumbB = buyerDetailsJsonObj.getString("thumb");
-
-                    BuyerDetailsForOrder objBuyer = new BuyerDetailsForOrder(locationB, statusB, stateB, lNameB, udidB, passwordB, googlePlusB, fNameB, phoneNoB, houseNoB, idB, twitterB, areaB, emailB, facebookB, streetNoB, datetimeB, thumbB);
-                    // buyer details
+                        objBuyer = new BuyerDetailsForOrder(locationB, statusB, stateB, lNameB, udidB, passwordB, googlePlusB, fNameB, phoneNoB, houseNoB, idB, twitterB, areaB, emailB, facebookB, streetNoB, datetimeB, thumbB);
+                        // buyer details
+                    }
 
                     GetSellerOrdersModel sellerOrder = new GetSellerOrdersModel(serviceRequestTime, staffId, lastModified, status, adminStatus, categoryType, dated, buyerId, id, sellerId, noOfServices, extraRemarks, totalPrice, objSeller, objBuyer);
                     sellerOrdersList.add(sellerOrder);

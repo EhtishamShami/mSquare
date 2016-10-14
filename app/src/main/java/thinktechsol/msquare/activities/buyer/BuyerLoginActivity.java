@@ -1,6 +1,7 @@
 package thinktechsol.msquare.activities.buyer;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -51,11 +52,25 @@ import com.google.android.gms.plus.model.people.Person;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.AccountService;
+
+//import com.twitter.sdk.android.Twitter;
+//import com.twitter.sdk.android.core.Callback;
+//import com.twitter.sdk.android.core.Result;
+//import com.twitter.sdk.android.core.TwitterAuthConfig;
+//import com.twitter.sdk.android.core.TwitterAuthToken;
+//import com.twitter.sdk.android.core.TwitterException;
+//import com.twitter.sdk.android.core.TwitterSession;
+//import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+//import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import io.fabric.sdk.android.Fabric;
+import retrofit2.Call;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.globels.globels;
@@ -98,6 +114,8 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
+    TwitterLoginButton loginButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +131,44 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_buyer_login);
+
+        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                // Toast.makeText(BuyerLoginActivity.this, "success=" + result.data.getUserName(), Toast.LENGTH_SHORT).show();
+                TwitterSession session = result.data;
+                Twitter twitter = Twitter.getInstance();
+                TwitterApiClient api = twitter.core.getApiClient(session);
+                AccountService service = api.getAccountService();
+                Call<User> user = service.verifyCredentials(true, true);
+
+                user.enqueue(new Callback<User>() {
+                    @Override
+                    public void success(Result<User> userResult) {
+                        String name = userResult.data.name;
+                        String email = userResult.data.email;
+
+                        //Toast.makeText(BuyerLoginActivity.this, "success=" + name, Toast.LENGTH_SHORT).show();
+                        //progressDialog.dismiss();
+                        if (progressDialog != null) {
+                            RegisterRequestModel requestModel = new RegisterRequestModel("" + name, "", "", "", "twitter", "", "1");
+                            new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
+                        }
+                    }
+
+                    @Override
+                    public void failure(TwitterException exc) {
+                        Log.d("TwitterKit", "Verify Credentials Failure", exc);
+                    }
+                });
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Toast.makeText(BuyerLoginActivity.this, "failure=" + exception, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         PopUpForForgotPassword();
 
@@ -147,6 +203,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
         }
 
+        progressDialog();
 
         app_logo = (ImageView) findViewById(R.id.app_logo);
         email = (EditText) findViewById(R.id.email);
@@ -238,7 +295,8 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                 } else if (action == MotionEvent.ACTION_UP) {
 
                     Constant.logInAs = "twitter";
-                    twitter_login();
+                    progressDialog.show();
+                    loginButton.performClick();
                     Constant.makeImageAlphLowOrHigh(btn_twitter, 1f);
                     return true;
                 }
@@ -277,6 +335,8 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
                     signInBySocialMedia = true;
                     Constant.logInAs = "google";
+
+//                    progressDialog.show();
                     googlePluseLogin();
 
 //                    if (!mGoogleApiClient.isConnecting()) {
@@ -301,6 +361,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     Constant.makeImageAlphLowOrHigh(btn_guest, 1f);
 
                     Constant.logInAs = "guest";
+                    globels.getGlobelRef().address = "";
                     startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
 //                    startActivity(new Intent(BuyerLoginActivity.this, SalonDetailsActivity.class));
 
@@ -380,12 +441,14 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
             try {
                 if (callbackManager != null) {
                     callbackManager.onActivityResult(requestCode, resultCode, data);
-                    Log.e("BuyerLoginActivyt", "fb login=" + data.toString());
+                    Log.e("BuyerLoginActivyt", "fb login onActivityResult=" + data.toString());
                 }
             } catch (Exception e) {
             }
         } else {
-            Log.e("BuyerLoginActivyt", "twitter login=" + data.getData());
+            Log.e("BuyerLoginActivyt", "twitter login onActivityResult=" + Constant.logInAs);
+//            Log.e("BuyerLoginActivyt", "twitter login=" + data.getData());
+            loginButton.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -488,45 +551,6 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                 });
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
-
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this, this)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
-
-//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-
-//        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-//            if (mGoogleApiClient == null) {
-//                Plus.PlusOptions plusOptions = new Plus.PlusOptions.Builder().addActivityTypes(
-//                        "http://schemas.google.com/AddActivity", "http://schemas.google.com/ReviewActivity").build();
-//                mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Games.API).addScope(Games.SCOPE_GAMES)
-//                        .addApi(Plus.API, plusOptions).addScope(Plus.SCOPE_PLUS_LOGIN)
-//                        .addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
-//            }
-//            mGoogleApiClient.connect();
-//        } else {
-//            Toast.makeText(this, "R.string.texteErreurGPlus", Toast.LENGTH_LONG).show();
-//        }
-
-//        // Configure sign-in to request the user's ID, email address, and basic
-//        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-//        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//
-//        // Build a GoogleApiClient with access to the Google Sign-In API and the
-//        // options specified by gso.
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
     }
 
     @Override
@@ -544,7 +568,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
             Log.e("BuyerLoginActivity", "google plus sign in successful:" + acct.getDisplayName());
 
             Log.e("LoginActivity= ", "email of gplus login is=" + acct.getEmail());
-//
+//            progressDialog.dismiss();
             RegisterRequestModel requestModel = new RegisterRequestModel(acct.getDisplayName(), "", acct.getEmail(), "", "google", "", "1");
             new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
 
@@ -603,11 +627,9 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     }
 
     public void onLoginCompleted(ArrayList<BuyerLogin> list) {
-
         globels.getGlobelRef().MessageType = "2";
         globels.getGlobelRef().buyerLoginId = list.get(0).id;
         globels.getGlobelRef().buyerLoginResponse = list;
-
         globels.getGlobelRef().loginAsBuyerOrSeller = "buyer";
 
         String address = list.get(0).houseNo + " " + list.get(0).streetNo + " " + list.get(0).area + " " + list.get(0).state + " " + list.get(0).phoneNo;
@@ -619,15 +641,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
         editor.putString("state", list.get(0).state);
         editor.putString("phoneNo", list.get(0).phoneNo);
 
-
         editor.putString("buyerLoginId", list.get(0).id);
         editor.putString("buyeremailaddress", list.get(0).email);
         editor.putBoolean("isBuyerLogin", true);
         editor.commit();
 
-
         new UpdateDeviceInfoService(BuyerLoginActivity.this, "buyer", globels.getGlobelRef().buyerLoginId, globels.getGlobelRef().deviceToken);
-
 
         Constant.logInAs = "customeLogin";
         startActivity(new Intent(BuyerLoginActivity.this, HomeActivity.class));
@@ -720,6 +739,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
     private TwitterAuthClient client;
 
     public void twitter_login() {
+//        progressDialog.show();
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
 
@@ -730,7 +750,6 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
 
 //        Log.e("BuyerLogin","token="+token);
 //        Log.e("BuyerLogin","secret="+secret);
-
 
 
         client = new TwitterAuthClient();
@@ -748,5 +767,15 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                 Toast.makeText(BuyerLoginActivity.this, "failure=" + e, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    ProgressDialog progressDialog;
+
+    public void progressDialog() {
+        progressDialog = new ProgressDialog(BuyerLoginActivity.this);
+        progressDialog.setMessage("Processing Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        //progressDialog.show();
     }
 }

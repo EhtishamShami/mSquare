@@ -69,6 +69,8 @@ public class ViewSellOrderDetailActivity extends Activity {
     int orderPosition = 0;
     DateFormat dateFormat;
 
+    TextView tel_no, shiping_adress, lbl_shiping_adress, lbl_tel_no;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +114,11 @@ public class ViewSellOrderDetailActivity extends Activity {
         pro_name = (TextView) findViewById(R.id.pro_name);
         pro_price = (TextView) findViewById(R.id.proPrice);
         pro_quantity = (TextView) findViewById(R.id.pro_quantity);
+
+        lbl_shiping_adress = (TextView) findViewById(R.id.lbl_shiping_adress);
+        lbl_tel_no = (TextView) findViewById(R.id.lbl_tel_no);
+        tel_no = (TextView) findViewById(R.id.tel_no);
+        shiping_adress = (TextView) findViewById(R.id.shiping_adress);
 
         sellers_title = (TextView) findViewById(R.id.sellers_title);
         sellers_description = (TextView) findViewById(R.id.sellers_description);
@@ -268,6 +275,32 @@ public class ViewSellOrderDetailActivity extends Activity {
         ///////////////
         sellers_title.setText(list.get(0).sellerDetails.companyName);
         sellers_description.setText(list.get(0).extraRemarks);
+
+        Toast.makeText(this, "category type=" + globels.getGlobelRef().isProductOrProduct, Toast.LENGTH_SHORT).show();
+
+        String isProductStr = globels.getGlobelRef().isProductOrProduct;
+        if (isProductStr.equals("1")) {
+            tel_no.setText("" + list.get(0).buyerDetails.phoneNo);
+            shiping_adress.setText("" + list.get(0).buyerDetails.houseNo + " " + list.get(0).buyerDetails.streetNo + " " + list.get(0).buyerDetails.area +
+                    " " + list.get(0).buyerDetails.state);
+        } else {
+            tel_no.setVisibility(View.GONE);
+            shiping_adress.setVisibility(View.GONE);
+            lbl_shiping_adress.setVisibility(View.GONE);
+            lbl_tel_no.setVisibility(View.GONE);
+        }
+
+
+//        if (service) {
+//            tel_no.setVisibility(View.GONE);
+//            shiping_adress.setVisibility(View.GONE);
+//        } else {
+//            tel_no.setText("" + list.get(0).buyerDetails.phoneNo);
+//            shiping_adress.setText("" + list.get(0).buyerDetails.houseNo + " " + list.get(0).buyerDetails.streetNo + " " + list.get(0).buyerDetails.area +
+//                    " " + list.get(0).buyerDetails.state);
+//        }
+
+
         if (list.get(0).orderDetails != null) {
             pro_name.setText(list.get(0).orderDetails.get(0).productDetails.title);
             if (list.get(0).orderDetails.get(0).serviceDetails.categoryType.equals("0")) {
@@ -314,7 +347,7 @@ public class ViewSellOrderDetailActivity extends Activity {
         Date date = new Date();
         String currDate = dateFormat.format(date);
 //        ConversationItem item = new ConversationItem("empty", list.get(0).sellerDetails.fName, list.get(0).messages.get(0).dated, messageBody);
-        ConversationItem item = new ConversationItem("empty", name, ""+currDate, messageBody);
+        ConversationItem item = new ConversationItem("empty", name, "" + currDate, messageBody);
         messageList.add(item);
 
         conversationAdapter = new ConversationAdapter(ViewSellOrderDetailActivity.this,

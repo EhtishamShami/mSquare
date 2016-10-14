@@ -112,11 +112,12 @@ public class BuyerOrderListAdapter extends ArrayAdapter<GetBuyersOrdersModel> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //Toast.makeText(context, "hi=" + myItem.id, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "hi=" +myItem.categoryType, Toast.LENGTH_SHORT).show();
 //                            new UpdateOrderStatus(context, ActivityContext, myItem.id, globels.getGlobelRef().approveRecentOrder, position);
 //                            ordersList.remove(position);
 //                            notifyDataSetChanged();
                             globels.getGlobelRef().orderId_for_ordr_info = myItem.id;
+                            globels.getGlobelRef().isProductOrProduct = myItem.categoryType;
                             Intent orderDetails = new Intent(ActivityContext, ViewSellOrderDetailActivity.class);
                             ActivityContext.startActivity(orderDetails);
                         }

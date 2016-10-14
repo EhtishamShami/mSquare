@@ -18,6 +18,10 @@
 
     <!--AIzaSyCsXBR2wQ9irVVwZkzm3dA1phNvgCMJ5tY-->
 <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDNlDofdPIz7fO3-Nk2xKW7kHEKM3adSeY
+
+    <!--AIzaSyAKxDPY2s_7eieyXXMBxojivwGDpsUH4OM-->
+     AIzaSyDyZ9EM8S-GHU7zmIQetcHRWl-64InEtQI
     </string>
+
+    <!--AIzaSyDNlDofdPIz7fO3-Nk2xKW7kHEKM3adSeY-->
 </resources>

@@ -23,13 +23,14 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
+import thinktechsol.msquare.activities.buyer.BuyerLoginActivityGuest;
 import thinktechsol.msquare.model.Buyer.BuyerLogin;
 import thinktechsol.msquare.model.Buyer.RegisterModel;
 import thinktechsol.msquare.model.Buyer.RegisterRequestModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class BuyerRegisterationForSocialMedia {
+public class BuyerRegisterationForSocialMediaForGuest {
 
     private static final String TAG = "BuyerRegistration";
 
@@ -37,13 +38,13 @@ public class BuyerRegisterationForSocialMedia {
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    BuyerLoginActivity ref;
+    BuyerLoginActivityGuest ref;
     ArrayList<String> selectedImagePath;
     RegisterRequestModel requestModel;
 
     String productDetails[];
 
-    public BuyerRegisterationForSocialMedia(final Context ctx, BuyerLoginActivity ref, RegisterRequestModel requestModel) {
+    public BuyerRegisterationForSocialMediaForGuest(final Context ctx, BuyerLoginActivityGuest ref, RegisterRequestModel requestModel) {
         this.ctx = ctx;
         this.ref = ref;
         this.requestModel = requestModel;
@@ -133,7 +134,7 @@ public class BuyerRegisterationForSocialMedia {
 
                 URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "url is=" + url);
-                Log.e(TAG, "fname and lname are=" + requestModel.fName+" , "+requestModel.lName+" , "+requestModel.type);
+                Log.e(TAG, "fname and lname are social media=" + requestModel.fName+" , "+requestModel.lName+" , "+requestModel.type);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
 //                httpURLConnection.setDoInput(true);

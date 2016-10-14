@@ -376,8 +376,12 @@ public class BuyerReservationActivityProduct extends Activity {
         btnUpdateAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
+                if (!(Constant.logInAs.equals("guest"))) {
+                    startActivity(new Intent(BuyerReservationActivityProduct.this, BuyerBookingAddressActivity.class));
 //                finish();
+                } else {
+                    Toast.makeText(BuyerReservationActivityProduct.this, "Please Login First", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -397,7 +401,7 @@ public class BuyerReservationActivityProduct extends Activity {
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedProductsIds);
                     Log.e("BuyerReservationAct", "selected items rr 2=" + globels.getGlobelRef().selectedQuantityIds);
 
-                    if (buyerAddress.getText().toString() != null || buyerAddress.getText().toString().length() <= 0) {
+                    if (buyerAddress.getText().toString().trim() != null && buyerAddress.getText().toString().trim().length() > 0) {
                         ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
                         new AddBuyerOrder(BuyerReservationActivityProduct.this, BuyerReservationActivityProduct.this, null, BuyerReservationActivityProduct.this, obj);
 

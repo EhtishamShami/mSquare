@@ -71,7 +71,7 @@ public class GCMPushReceiverService extends GcmListenerService {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentTitle("Servue Order Alert")
+                .setContentTitle("Servue Alert")
                 .setContentIntent(pendingIntent);
 
         //Toast.makeText(GCMPushReceiverService.this, "gcm message: "+message, Toast.LENGTH_SHORT).show();

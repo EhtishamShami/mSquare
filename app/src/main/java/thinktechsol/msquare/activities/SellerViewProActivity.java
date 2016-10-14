@@ -165,8 +165,18 @@ public class SellerViewProActivity extends Activity implements UploadImgInterfac
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(SellerViewProActivity.this, AddOrViewProActivity.class));
+                startActivity(new Intent(SellerViewProActivity.this, ProductCategoryActivity.class));
                 finish();
+
+//                Constant.addOrViewProduct = true;
+//                SellerAddProductFragment fragobj = new SellerAddProductFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.fragmentLayout, fragobj);
+//                transaction.commit();
+//                SellerDeshBoardActivity.getContext().changeTitle("Add Product");
+
+
+
 
 //                MakeItemSelected(ADD_PRODUCT);
 ////                add_product_layout.setVisibility(View.VISIBLE);

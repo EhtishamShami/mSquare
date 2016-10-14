@@ -46,6 +46,7 @@ public class globels {
     public ArrayList<String> selectedProductsIds;
     public ArrayList<String> selectedQuantityIds;
 
+    public static String isProductOrProduct = "0";
     public static String orderType = "0";
     public static String approveRecentOrder = "1";
     public static String approveInProcessOrder = "3";
@@ -59,11 +60,11 @@ public class globels {
     public static String sellerLoginId = null;
     public ArrayList<BuyerLogin> buyerLoginResponse;
     //buyer address details
-    public static String houseNo;
-    public static String streetNo;
-    public static String area;
-    public static String state;
-    public static String phoneNo;
+    public static String houseNo = "";
+    public static String streetNo = "";
+    public static String area = "";
+    public static String state = "";
+    public static String phoneNo = "";
 
 
     public static ArrayList<BuyerDeshBoardStatesModel> buyerDeshBoardStatesList;

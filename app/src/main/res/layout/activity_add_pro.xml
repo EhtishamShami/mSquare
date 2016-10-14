@@ -11,6 +11,21 @@
         layout="@layout/titlebar" />
 
 
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/listviewlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/titlebar">-->
+
+        <!--<ListView-->
+            <!--android:id="@+id/listView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:divider="@android:color/transparent"-->
+            <!--android:dividerHeight="0dp"-->
+            <!--android:scrollbars="none"></ListView>-->
+
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/add_product_layout"
@@ -104,8 +119,8 @@
                                 android:paddingBottom="3dp"
                                 android:paddingLeft="10dp"
                                 android:singleLine="true"
-                                android:textColorHint="#d8d8d8"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColorHint="#d8d8d8" />
 
                             <ImageView
                                 android:id="@+id/icon"
@@ -141,9 +156,9 @@
                                 android:lines="1"
                                 android:paddingBottom="3dp"
                                 android:paddingLeft="10dp"
-                                android:textColorHint="#d8d8d8"
                                 android:singleLine="true"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColorHint="#d8d8d8" />
 
                             <ImageView
                                 android:id="@+id/icon2"
@@ -178,11 +193,11 @@
                                 android:hint="@string/lbl_price_pro"
                                 android:lines="1"
                                 android:paddingBottom="3dp"
-                                android:textColorHint="#d8d8d8"
                                 android:paddingLeft="10dp"
                                 android:singleLine="true"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
 
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                                android:textColorHint="#d8d8d8" />
 
                             <ImageView
                                 android:id="@+id/icon3"
@@ -209,58 +224,56 @@
                             android:layout_marginRight="20dp">
 
                             <!--<EditText-->
-                                <!--android:id="@+id/pro_time_et"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="40dp"-->
-                                <!--android:layout_toRightOf="@+id/icon4"-->
-                                <!--android:background="@android:color/transparent"-->
-                                <!--android:hint="@string/lbl_time_pro"-->
-                                <!--android:inputType="number"-->
-                                <!--android:lines="1"-->
-                                <!--android:paddingBottom="3dp"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:singleLine="true"-->
-                                <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-                                <!--android:visibility="gone" />-->
+                            <!--android:id="@+id/pro_time_et"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="40dp"-->
+                            <!--android:layout_toRightOf="@+id/icon4"-->
+                            <!--android:background="@android:color/transparent"-->
+                            <!--android:hint="@string/lbl_time_pro"-->
+                            <!--android:inputType="number"-->
+                            <!--android:lines="1"-->
+                            <!--android:paddingBottom="3dp"-->
+                            <!--android:paddingLeft="10dp"-->
+                            <!--android:singleLine="true"-->
+                            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+                            <!--android:visibility="gone" />-->
 
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:orientation="vertical"
-                                android:layout_toRightOf="@+id/icon4"
                                 android:layout_gravity="center_vertical"
+                                android:layout_toRightOf="@+id/icon4"
                                 android:gravity="center_vertical"
-                                >
+                                android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/select_time"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/select_time"
-                                   android:layout_gravity="center_vertical"
-                                    android:gravity="center_vertical"
-                                    android:textColor="#d8d8d8"
-
-                                    android:textSize="13sp"
+                                    android:layout_gravity="center_vertical"
                                     android:layout_toRightOf="@+id/icon4"
-                                    android:text="Select Service Time"
-
                                     android:background="@android:color/transparent"
+
+                                    android:gravity="center_vertical"
                                     android:hint="@string/lbl_des_pro"
                                     android:lines="1"
+
                                     android:paddingBottom="3dp"
                                     android:paddingLeft="10dp"
+                                    android:text="Select Service Time"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="#d8d8d8"
 
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
+                                    android:textSize="13sp" />
 
 
                                 <!--<Button-->
-                                    <!--android:layout_width="50dp"-->
-                                    <!--android:layout_height="50dp"-->
-                                    <!--android:background="@drawable/arrow_up"-->
-                                    <!--android:layout_centerHorizontal="true"-->
-                                    <!--android:layout_gravity="center_horizontal"/>-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:background="@drawable/arrow_up"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--android:layout_gravity="center_horizontal"/>-->
 
                             </LinearLayout>
 
@@ -302,8 +315,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottombarlayout"
         android:layout_below="@+id/titlebar"
-        android:visibility="gone"
-        android:background="#f2f2f2">
+        android:background="#f2f2f2"
+        android:visibility="gone">
 
         <ListView
             android:id="@+id/product_list"

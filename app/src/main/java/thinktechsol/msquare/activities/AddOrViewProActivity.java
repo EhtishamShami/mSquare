@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,15 +45,19 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.adapter.AddProductAdapter;
 import thinktechsol.msquare.adapter.ImgSwiperAdapter;
 import thinktechsol.msquare.adapter.ViewProductListAdapter;
 import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.interfaceMine.UploadImgInterface;
+import thinktechsol.msquare.model.AddProductItem;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
 //import thinktechsol.msquare.services.GetSellerProducts;
+import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.services.GetSellerProducts2;
 import thinktechsol.msquare.services.SellerAddProduct;
+import thinktechsol.msquare.services.SellerProductList;
 import thinktechsol.msquare.services.getSellerProducts;
 import thinktechsol.msquare.utils.Constant;
 
@@ -91,6 +96,9 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_add_pro);
+
+
+
         btnSelectorColor = getResources().getColor(R.color.addProductSelectorColor);
 //        Constant.addOrViewProduct = true;
 
@@ -132,6 +140,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         //if (Constant.addOrViewProduct) {
         add_product.setBackgroundResource(R.drawable.add_product_sel);
         view_product.setBackgroundResource(R.drawable.view_product_normal);
+
 
         MakeItemSelected(ADD_PRODUCT);
 //        } else {
@@ -313,7 +322,8 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
             }
         });
 
-
+//        listViewlayout.setVisibility(View.VISIBLE);
+//        add_product_layout.setVisibility(View.GONE);
     }
 
     TextView TextViewArray[] = new TextView[100];
@@ -694,4 +704,33 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
         select_time.setText("" + selectedTimeIndex);
         Log.e("AddOrViewProActivity", "first path=" + time);
     }
+
+    ListView listView;
+    RelativeLayout listViewlayout;
+
+//    public void product_category() {
+//        new SellerProductList(this, AddOrViewProActivity.this, globels.getGlobelRef().sellerLoginServiceId);
+//        listView = (ListView) findViewById(R.id.listView);
+//        listViewlayout = (RelativeLayout) findViewById(R.id.listviewlayout);
+////        add_product_layout.setVisibility(View.VISIBLE);
+////        listViewlayout.setVisibility(View.VISIBLE);
+//
+//    }
+
+//    public void fill_data_to_adapter(ArrayList<SellerProductItem> list) {
+//        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
+//        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
+//
+//        int colorId = 0;
+//        for (int i = 0; i < list.size(); i++) {
+//            m_parts.add(new AddProductItem(list.get(i).id, list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
+//            colorId = (colorId < 3) ? colorId += 1 : 0;
+//        }
+//        try {
+//            AddProductAdapter m_adapter = new AddProductAdapter(this, AddOrViewProActivity.this, R.layout.dashboard_row_item1, m_parts);
+//            listView.setAdapter(m_adapter);
+//        } catch (Exception e) {
+//            Log.e("SellerAddProduct", "adapter=" + e);
+//        }
+//    }
 }

@@ -23,7 +23,7 @@
             <RelativeLayout
                 android:id="@+id/submitbg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_below="@+id/app_logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
@@ -55,13 +55,41 @@
 
                 <ImageView
                     android:id="@+id/btn_submit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/et_login_code"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/btn_submit" />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/registerSeller"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/submitbg"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@string/lbl_register_as_seller"
+                android:layout_centerHorizontal="true"
+                android:textSize="17sp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+
+
+            <TextView
+                android:id="@+id/forgot_code"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/registerSeller"
+                android:layout_margin="15dp"
+                android:gravity="right"
+                android:text="@string/lbl_forgot_code"
+                android:layout_alignParentRight="true"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
 
         </RelativeLayout>
     </ScrollView>

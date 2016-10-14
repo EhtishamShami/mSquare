@@ -1,5 +1,6 @@
 package thinktechsol.msquare.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.ProductCategoryActivity;
 import thinktechsol.msquare.fragments.SellerAddProductFragment;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
@@ -32,13 +34,13 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
     private static final int Layout_items = 0;
 
     private static int rowHeight = 80 / 4;
-    SellerAddProductFragment ActivityContext;
+    ProductCategoryActivity ActivityContext;
 
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     Context context;
     private ArrayList<AddProductItem> objects;
 
-    public AddProductAdapter(Context context, SellerAddProductFragment ActivityContext, int textViewResourceId, ArrayList<AddProductItem> objects) {
+    public AddProductAdapter(Context context, ProductCategoryActivity ActivityContext, int textViewResourceId, ArrayList<AddProductItem> objects) {
         super(context, textViewResourceId, objects);
         this.objects = objects;
         this.context = context;
@@ -116,7 +118,7 @@ public class AddProductAdapter extends ArrayAdapter<AddProductItem> {
 
                             Intent add = new Intent(context, AddOrViewProActivity.class);
                             context.startActivity(add);
-//                            ((Activity)context).finish();
+                            ((Activity) context).finish();
 //                            FragmentTransaction transaction = ActivityContext.getFragmentManager().beginTransaction();
 //                            transaction.remove(ActivityContext).commit();
                         }

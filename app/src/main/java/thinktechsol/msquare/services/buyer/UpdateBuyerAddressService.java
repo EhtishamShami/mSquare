@@ -54,6 +54,9 @@ public class UpdateBuyerAddressService {
         this.phoneNo = phoneNo;
         this.email = email;
 
+        if(!(email.trim().length()>0)){
+            email="test@gmail.com";
+        }
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Saving Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

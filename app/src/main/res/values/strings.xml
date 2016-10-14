@@ -94,6 +94,8 @@
     <string name="lbl_cat_dairy_eggs">Dairy and Eggs</string>
     <string name="lbl_cat_bakery">Bakery</string>
     <string name="lbl_forgot_password">Forgot Password</string>
+    <string name="lbl_register_as_seller">Register As Seller</string>
+    <string name="lbl_forgot_code">Forgot Code?</string>
     <string name="lbl_not_charge">We are just linking u up with Seller, We will not charge you anything for our Servue</string>
 
 </resources>

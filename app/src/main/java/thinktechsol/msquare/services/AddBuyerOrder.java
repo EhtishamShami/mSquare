@@ -246,11 +246,15 @@ public class AddBuyerOrder {
 //                jobsAct.makeKeyboardInvisible();
                 if (resSerCtx != null) {
                     Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
-                    resSerCtx.startActivity(new Intent(resSerCtx, BuyerOrdersActivity.class));
+                    Intent orderScreen =new Intent(resSerCtx, BuyerOrdersActivity.class);
+                    resSerCtx.startActivity(orderScreen);
+                    orderScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     resSerCtx.finish();
-                }else {
+                } else {
                     Toast.makeText(ctx, "Order completed", Toast.LENGTH_SHORT).show();
-                    resProCtx.startActivity(new Intent(resProCtx, BuyerOrdersActivity.class));
+                    Intent orderScreen = new Intent(resProCtx, BuyerOrdersActivity.class);
+                    resProCtx.startActivity(orderScreen);
+                    orderScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     resProCtx.finish();
                 }
             } else {

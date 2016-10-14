@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,40 +23,39 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import thinktechsol.msquare.activities.AddOrViewProActivity;
-import thinktechsol.msquare.activities.ProductCategoryActivity;
-import thinktechsol.msquare.fragments.SellerAddProductFragment;
-import thinktechsol.msquare.model.SellerLogInResponse;
-import thinktechsol.msquare.model.SellerProductItem;
+import thinktechsol.msquare.activities.SellerLoginActivity;
+import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
+import thinktechsol.msquare.model.GetSellerStaffModel;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class SellerProductList {
+public class ForgotPasswordServiceSeller {
 
     private static final String TAG_SUCCESS = "success";
 
-//    String _url = "GetServicesModel/";
-    String _url = "getServices/";
+    String _url = "forgotPassword/";
     Context ctx;
     ProgressDialog progressDialog;
-    String serviceid;
     AlertDialog NotFoundDialog;
-    ProductCategoryActivity ref;
+    SellerLoginActivity ref;
+    private static final String TAG = "AddSellerStaffService";
+    String email;
+    String name;
 
-    public SellerProductList(final Context ctx, ProductCategoryActivity ref, String serviceid) {
+    public ForgotPasswordServiceSeller(final Context ctx, SellerLoginActivity ref, String email) {
         this.ctx = ctx;
         this.ref = ref;
-        this.serviceid = serviceid;
+
+        this.email = email;
         progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage("Searching Please wait...");
+        progressDialog.setMessage("Processing Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage("Plesae try again! Internet problem Or Wrong keywords");
+        builder.setMessage("Plesae try again! Internet problem Or Unregistered Email address");
         builder.setTitle("Not Found");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -68,53 +68,58 @@ public class SellerProductList {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-        getSellerProductDetail(serviceid);
+
+        new AddStaffDetail().execute("0");
     }
 
-    public void getSellerProductDetail(String serviceid) {
-        this.serviceid = serviceid;
-        Log.e("sellerLogIn", "ImageId=" + serviceid);
-        new getSellerProductDetialAsync().execute(serviceid);
-    }
 
-    private ArrayList<SellerProductItem> returnParsedJsonObject(String result) {
+    private ArrayList<GetSellerStaffModel> returnParsedJsonObject(String result) {
 
-        List<SellerLogInResponse> jsonObject = new ArrayList<SellerLogInResponse>();
         JSONObject resultObject = null;
         JSONArray jsonArray = null;
-        SellerLogInResponse sellerLogInResponse = null;
-        ArrayList<SellerProductItem> product = new ArrayList<SellerProductItem>();
+
+        ArrayList<GetSellerStaffModel> StaffDetailsList = new ArrayList<GetSellerStaffModel>();
 
         try {
             JSONObject parentObject = new JSONObject(result);
 
-            JSONObject parentJSONObjDetails = parentObject.getJSONObject("results");
-            JSONArray productArray = parentJSONObjDetails.getJSONArray("data");
+            JSONObject parentJSONObj = parentObject.getJSONObject("results");
 
-            for (int i = 0; i < productArray.length(); i++) {
-                JSONObject feedObj = (JSONObject) productArray.get(i);
-                String id = feedObj.getString("id");
-                String status = feedObj.getString("status");
-                String description = feedObj.getString("description");
-                String name = feedObj.getString("name");
-                String parent = feedObj.getString("parent");
-                String thumb = feedObj.getString("thumb");
-                product.add(new SellerProductItem(id, status, description, name, parent, thumb));
+            boolean isResponse = parentJSONObj.getBoolean("response");
+            Log.e(TAG, "getSellerDetail reponse is=" + isResponse);
+
+            String JsonBuyerDetails = parentJSONObj.getString("data");
+
+            if (!JsonBuyerDetails.equals("false")) {
+
+//                JSONObject staffDetails = parentJSONObj.getJSONObject("data");
+
+                JSONArray staffDetailsArray = parentJSONObj.getJSONArray("data");
+
+                for (int i = 0; i < staffDetailsArray.length(); i++) {
+                    JSONObject staffDetailsJSONObj = (JSONObject) staffDetailsArray.get(i);
+
+                    String id = staffDetailsJSONObj.getString("id");
+                    String name = staffDetailsJSONObj.getString("name");
+                    String sellerId = staffDetailsJSONObj.getString("sellerId");
+
+                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name));
+                }
+
             }
-
         } catch (JSONException e) {
-            Log.e("sellerLogIn", "JSONExc ParsedJsonObject=" + e);
+            Log.e(TAG, "JSONExc getStaff_time=" + e);
             e.printStackTrace();
             NotFoundDialog.show();
         }
-        return product;
+        return StaffDetailsList;
     }
 
 
     /**
-     * Background Async Task to fetch all jobs
+     * Background Async Task to fetch all services
      */
-    class getSellerProductDetialAsync extends AsyncTask<String, String, String> {
+    class AddStaffDetail extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -123,9 +128,8 @@ public class SellerProductList {
 
         protected String doInBackground(String... input) {
             try {
-                String serviceid = input[0];
-                URL url = new URL(Constant.baseUrl + _url + serviceid + "");
-                Log.e("seller get product list", "url is=" + url);
+                URL url = new URL(Constant.baseUrl + _url);
+                Log.e(TAG, "Forgot Password url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -133,8 +137,12 @@ public class SellerProductList {
                 httpURLConnection.setReadTimeout(30000);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(serviceid, "UTF-8");
+
+                String post_data =
+                        URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+
                 bufferedWriter.write(post_data);
+
                 bufferedWriter.close();
                 outputStream.close();
 
@@ -148,26 +156,33 @@ public class SellerProductList {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e("sellerLogIn", "result is=" + result);
+                Log.e(TAG, "AddStaffDetail result=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
-                Log.e("sellerLogIn", "MalformedURLException=" + e);
+                Log.e(TAG, "MalformedURLException=" + e);
                 progressDialog.dismiss();
                 return null;
             } catch (Exception e) {
-                Log.e("sellerLogIn", "exception Exception=" + e);
+                Log.e(TAG, "exception Exception=" + e);
                 progressDialog.dismiss();
                 return null;
             }
         }
 
+
         protected void onPostExecute(String response) {
-            if (response != null) {
-                ArrayList<SellerProductItem> list = returnParsedJsonObject(response);
-                ref.fill_data_to_adapter(list);
+            Log.e(TAG, "forgot password list PostExec" + response);
+            if (response != null && response.contains("Password send to email")) {
+                //ArrayList<GetSellerStaffModel> StaffDetails = returnParsedJsonObject(response);
+//                returnParsedJsonObject(response);
+//                Log.e(TAG, "getServiceSellers list pr1212o" + list.size());
+                // ref.onStaffAdded(true);
+                Toast.makeText(ctx, "Password send to your email address", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
+                ref.onForgotPassRequestSubmitted();
             } else {
+                progressDialog.dismiss();
                 NotFoundDialog.show();
             }
         }

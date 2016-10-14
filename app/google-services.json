@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "372803220899-04cido15acfljbusgtsnbl3c4l4jmc9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thinktechsol.msquare",
+            "certificate_hash": "22A6918DC1B324C3356DB512A46831AB4A0E225D"
+          }
+        },
+        {
           "client_id": "372803220899-ic9mcaebvs0sv24uc9srgjip8ug7jd58.apps.googleusercontent.com",
           "client_type": 3
         }

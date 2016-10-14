@@ -189,8 +189,10 @@ public class GetBuyerDetails2 {
                 globels.getGlobelRef().state = BuyerDetails.get(0).state;
                 globels.getGlobelRef().phoneNo = BuyerDetails.get(0).phoneNo;
 
-                globels.getGlobelRef().address = BuyerDetails.get(0).houseNo + ", " + BuyerDetails.get(0).streetNo + ", " + BuyerDetails.get(0).area + ", " +
-                        BuyerDetails.get(0).state + ", " + BuyerDetails.get(0).phoneNo;
+
+
+                globels.getGlobelRef().address = BuyerDetails.get(0).houseNo + " " + BuyerDetails.get(0).streetNo + " " + BuyerDetails.get(0).area + " " +
+                        BuyerDetails.get(0).state + " " + BuyerDetails.get(0).phoneNo;
 
                 //progressDialog.dismiss();
             } else {

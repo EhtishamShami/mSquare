@@ -16,9 +16,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import okhttp3.internal.Util;
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.adapter.BuyerWishListAdapter;
 import thinktechsol.msquare.globels.globels;
@@ -103,25 +105,33 @@ public class BuyerBookingAddressActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                editor.putString("houseNo", houseET.getText().toString());
-                editor.putString("streetNo", streetAddresET.getText().toString());
-                editor.putString("area", areaET.getText().toString());
-                editor.putString("state", stateET.getText().toString());
-                editor.putString("phoneNo", phoneET.getText().toString());
+                if (streetAddresET.getText().toString().trim().length() > 0
+                        && houseET.getText().toString().trim().length() > 0
+                        && areaET.getText().toString().trim().length() > 0
+                        && phoneET.getText().toString().trim().length() > 0) {
 
-                address = houseET.getText().toString() + " " + streetAddresET.getText().toString() + " " + areaET.getText().toString() + " " + stateET.getText().toString() + " " + phoneET.getText().toString();
+                    editor.putString("houseNo", houseET.getText().toString());
+                    editor.putString("streetNo", streetAddresET.getText().toString());
+                    editor.putString("area", areaET.getText().toString());
+                    editor.putString("state", stateET.getText().toString());
+                    editor.putString("phoneNo", phoneET.getText().toString());
 
-                globels.getGlobelRef().address = address;
+                    address = houseET.getText().toString() + " " + streetAddresET.getText().toString() + " " + areaET.getText().toString() + " " + stateET.getText().toString() + " " + phoneET.getText().toString();
 
-                Log.e("BuyerBooking", "email issssssssssss=" + email);
-                Log.e("BuyerBooking", "email issssssssssss=" + globels.getGlobelRef().buyerEmailId);
+                    globels.getGlobelRef().address = address;
+
+                    Log.e("BuyerBooking", "email issssssssssss=" + email);
+                    Log.e("BuyerBooking", "email issssssssssss=" + globels.getGlobelRef().buyerEmailId);
 //                ,globels.getGlobelRef().buyerLoginResponse.get(0).email
 
-                new UpdateBuyerAddressService(BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId, houseET.getText().toString(),
-                        streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString(), globels.getGlobelRef().buyerEmailId);
-                finish();
+                    new UpdateBuyerAddressService(BuyerBookingAddressActivity.this, globels.getGlobelRef().buyerLoginId, houseET.getText().toString(),
+                            streetAddresET.getText().toString(), areaET.getText().toString(), stateET.getText().toString(), phoneET.getText().toString(), globels.getGlobelRef().buyerEmailId);
+                    finish();
+                } else
+                    Toast.makeText(BuyerBookingAddressActivity.this, "Please fill all the field first", Toast.LENGTH_SHORT).show();
             }
         });
+
 //        adapter = new BuyerServiceSellersListAdapter(BuyerWishListActivity.this, R.layout.buyer_service_seller_list_item, globels.getGlobelRef().SellersProductDetailList);
 //        listView.setAdapter(adapter);
     }

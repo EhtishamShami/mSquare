@@ -1,11 +1,15 @@
-package thinktechsol.msquare.fragments;
+package thinktechsol.msquare.activities;
 
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,7 +18,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
-import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.adapter.AddProductAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.AddProductItem;
@@ -22,43 +25,64 @@ import thinktechsol.msquare.model.SellerProductItem;
 import thinktechsol.msquare.services.SellerProductList;
 import thinktechsol.msquare.utils.Constant;
 
-public class SellerAddProductFragment extends Fragment {
+/**
+ * Created by LENOVO on 10/14/2016.
+ */
 
+public class ProductCategoryActivity extends Activity {
     TextView title;
+    public static ImageView backBtn;
     RelativeLayout titlebarlayout, bottombarlayout;
     static String AddProductScreenTagbackButton = "AddProduct";
     ListView listView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_sellerdashboard_product, container, false);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_product_category);
+
+        new SellerProductList(this, ProductCategoryActivity.this, globels.getGlobelRef().sellerLoginServiceId);
 
         SellerDeshBoardActivity.getContext().backBtn.setTag(AddProductScreenTagbackButton);
-//        int colorCode[] = {R.color.cat_item1_color, R.color.cat_item2_color, R.color.cat_item3_color, R.color.cat_item4_color};
+        titlebarlayout = (RelativeLayout) findViewById(R.id.titlebar);
+        title = (TextView) findViewById(R.id.title);
+        backBtn = (ImageView) findViewById(R.id.backBtn);
+        // title bar
+        backBtn.setLayoutParams(AppLayoutParam2(10f, 10f, 0, 0, 0, 0));
+//        btn_menu.setVisibility(View.VISIBLE);
+//        btn_menu.setBackgroundResource(R.drawable.edit_menu);
+//        btn_menu.setLayoutParams(AppLayoutParam3(8f, 12f, 0, 0, 1, 0, "right"));
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        titlebarlayout.setBackgroundColor(this.getResources().getColor(R.color.buyerHomeActivityTitleBarColor));
+        titlebarlayout.setLayoutParams(AppLayoutParam(10.00f, 100f, 0, 0, 0, 0, null));
+        title.setText("Product Category");
+//        // title bar end
 
 
-//        new SellerProductList(getActivity(), SellerAddProductFragment.this, globels.getGlobelRef().sellerLoginServiceId);
+        listView = (ListView) findViewById(R.id.listView);
 
+    }
 
-        listView = (ListView) v.findViewById(R.id.listView);
-//        ArrayList<AddProductItem> m_parts = new ArrayList<AddProductItem>();
-//        m_parts.add(new AddProductItem("a", R.drawable.messages, colorCode[0]));
-//        m_parts.add(new AddProductItem("b", R.drawable.customer, R.color.customerColor));
-//        m_parts.add(new AddProductItem("c", R.drawable.order, R.color.orderColor));
-//        m_parts.add(new AddProductItem("d", R.drawable.product, R.color.productColor));
-//        m_parts.add(new AddProductItem("a", R.drawable.messages, colorCode[0]));
-
-
-//        try {
-//            AddProductAdapter m_adapter = new AddProductAdapter(getActivity(), R.layout.dashboard_row_item1, m_parts);
-//            customerList.setAdapter(m_adapter);
-//        } catch (Exception e) {
-//            Log.e("SellerAddProduct", "adapter=" + e);
-//        }
-
-        return v;
+    public RelativeLayout.LayoutParams AppLayoutParam2(float height, float width, float mL, float mT, float mR, float mB) {
+        RelativeLayout.LayoutParams paramName = new RelativeLayout.LayoutParams(
+                Constant.getSize("w", width),
+                Constant.getSize("h", height));
+        paramName.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+//        if (below != null)
+//            paramName.addRule(RelativeLayout.BELOW, below.getId());
+        paramName.setMargins(Constant.getSize("h", mL), Constant.getSize("h", mT), Constant.getSize("h", mR), Constant.getSize("h", mB));
+        return paramName;
     }
 
     public RelativeLayout.LayoutParams AppLayoutParam(float height, float width, float mL, float mT, float mR, float mB, View below) {
@@ -102,10 +126,9 @@ public class SellerAddProductFragment extends Fragment {
             m_parts.add(new AddProductItem(list.get(i).id, list.get(i).name, Constant.imgbaseUrl + list.get(i).thumb, colorCode[colorId]));
             colorId = (colorId < 3) ? colorId += 1 : 0;
         }
-
         try {
-//            AddProductAdapter m_adapter = new AddProductAdapter(getActivity(),SellerAddProductFragment.this, R.layout.dashboard_row_item1, m_parts);
-//            listView.setAdapter(m_adapter);
+            AddProductAdapter m_adapter = new AddProductAdapter(this, ProductCategoryActivity.this, R.layout.dashboard_row_item1, m_parts);
+            listView.setAdapter(m_adapter);
         } catch (Exception e) {
             Log.e("SellerAddProduct", "adapter=" + e);
         }

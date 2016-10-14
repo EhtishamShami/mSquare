@@ -62,6 +62,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
     Button confrmBookingBtn;
     EditText etDescription;
     String StaffId = "0";
+    ImageView changeUser_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         sellersDetailLayout = (RelativeLayout) findViewById(R.id.sellersDetailLayout);
         userName = (TextView) findViewById(R.id.userName);
         changeUser = (TextView) findViewById(R.id.changeUser);
+        changeUser_icon = (ImageView) findViewById(R.id.changeUser_icon);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvServiceProvider = (TextView) findViewById(R.id.tvServiceProvider);
@@ -513,11 +515,13 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
     public void fillProductListWithData(ArrayList<BuyerGetStaffModel> list) {
 
-//        if (list.size() > 0) {
-        changeUser.setVisibility(View.VISIBLE);
-//        } else
-//            changeUser.setVisibility(View.GONE)
-        ;
+        if (list.size() > 0) {
+            changeUser.setVisibility(View.VISIBLE);
+        } else {
+            changeUser.setVisibility(View.GONE);
+            changeUser_icon.setVisibility(View.GONE);
+        }
+
         ChangeServiceProviderListAdapter adapter = new ChangeServiceProviderListAdapter(this, BuyerReservationActivity.this, R.layout.change_service_provider_list_adapter_item, list);
         staffListView.setAdapter(adapter);
     }

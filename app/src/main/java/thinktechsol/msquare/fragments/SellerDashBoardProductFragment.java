@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.activities.AddOrViewProActivity;
+import thinktechsol.msquare.activities.ProductCategoryActivity;
 import thinktechsol.msquare.activities.SellerDeshBoardActivity;
 import thinktechsol.msquare.activities.SellerViewProActivity;
 import thinktechsol.msquare.activities.SellersOrdersActivity;
@@ -210,9 +211,12 @@ public class SellerDashBoardProductFragment extends Fragment {
                 if (position.equals("left")) {
                     Constant.addOrViewProduct = true;
 
-                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
-                    title = "Add Product";
-                    frag = fragobj;
+//                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
+//                    title = "Add Product";
+//                    frag = fragobj;
+
+                    Intent addPro = new Intent(getActivity(), ProductCategoryActivity.class);
+                    getActivity().startActivity(addPro);
                 } else {
                     // Constant.addOrViewProduct = false;
 //                    SellerAddProductFragment fragobj = new SellerAddProductFragment();
@@ -226,6 +230,9 @@ public class SellerDashBoardProductFragment extends Fragment {
                 }
                 break;
         }
+
+
+
 
         if (frag != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
