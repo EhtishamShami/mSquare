@@ -97,8 +97,11 @@ public class GetSellerStaffService {
                     String id = staffDetailsJSONObj.getString("id");
                     String name = staffDetailsJSONObj.getString("name");
                     String sellerId = staffDetailsJSONObj.getString("sellerId");
+                    String fromTime = staffDetailsJSONObj.getString("fromTime");
+                    String toTime = staffDetailsJSONObj.getString("toTime");
+                    String status = staffDetailsJSONObj.getString("status");
 
-                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name));
+                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name, fromTime, toTime, status));
                 }
 
             }

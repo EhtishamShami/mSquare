@@ -3,8 +3,7 @@ package thinktechsol.msquare.model;
 /**
  * Created by arshadiqbal on 06/09/16.
  */
-public class SellerDetailsByIdModel
-{
+public class SellerDetailsByIdModel {
     public String sellerRatings;
     public String logo;
     public String status;
@@ -29,8 +28,10 @@ public class SellerDetailsByIdModel
     public String latitude;
     public String datetime;
     public String mobileNo;
+    public String citystate;
+    public String country;
 
-    public SellerDetailsByIdModel(String sellerRatings, String logo, String status, String tradeNo, String documents, String lName, String fromTime, String companyName, String password, String toTime, String fName, String id, String phoneNo, String email, String address, String deviceType, String deviceToken, String description, String activationCode, String service, String longitude, String latitude, String datetime, String mobileNo) {
+    public SellerDetailsByIdModel(String sellerRatings, String logo, String status, String tradeNo, String documents, String lName, String fromTime, String companyName, String password, String toTime, String fName, String id, String phoneNo, String email, String address, String deviceType, String deviceToken, String description, String activationCode, String service, String longitude, String latitude, String datetime, String mobileNo, String citystate, String country) {
         this.sellerRatings = sellerRatings;
         this.logo = logo;
         this.status = status;
@@ -55,5 +56,7 @@ public class SellerDetailsByIdModel
         this.latitude = latitude;
         this.datetime = datetime;
         this.mobileNo = mobileNo;
+        this.citystate = citystate;
+        this.country = country;
     }
 }

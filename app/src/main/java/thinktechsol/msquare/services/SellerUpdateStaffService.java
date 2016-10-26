@@ -8,10 +8,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -22,32 +18,33 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 import thinktechsol.msquare.activities.SellerLoginActivity;
-import thinktechsol.msquare.activities.buyer.BuyerLoginActivity;
-import thinktechsol.msquare.model.GetSellerStaffModel;
+import thinktechsol.msquare.activities.SellerViewStaffActivity;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
 
-public class ForgotPasswordServiceSeller {
+public class SellerUpdateStaffService {
 
     private static final String TAG_SUCCESS = "success";
 
-    String _url = "forgotPassword/";
+    String _url = "updateStaff";
     Context ctx;
     ProgressDialog progressDialog;
     AlertDialog NotFoundDialog;
-    SellerLoginActivity ref;
-    private static final String TAG = "AddSellerStaffService";
-    String email;
-    String name;
+    Context ref;
+    private static final String TAG = "UpdateStaffSer";
+    String id;
+    String status, fromTime, toTime, name;
+    String isStaffStatus;
 
-    public ForgotPasswordServiceSeller(final Context ctx, SellerLoginActivity ref, String email) {
+    public SellerUpdateStaffService(final Context ctx, SellerViewStaffActivity ref, String id, String status) {
         this.ctx = ctx;
         this.ref = ref;
 
-        this.email = email;
+        this.id = id;
+        this.status = status;
+
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage("Processing Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -68,58 +65,47 @@ public class ForgotPasswordServiceSeller {
         NotFoundDialog = builder.create();
         NotFoundDialog.setCancelable(false);
 
-
-        new AddStaffDetail().execute("0");
+        isStaffStatus = "updateStatus";
+        new UpdateStaffDetail().execute("0");
     }
 
+    public SellerUpdateStaffService(final Context ctx, Context ref, String id, String fromTime, String toTime, String name) {
+        this.ctx = ctx;
+        this.ref = ref;
 
-//    private ArrayList<GetSellerStaffModel> returnParsedJsonObject(String result) {
-//
-//        JSONObject resultObject = null;
-//        JSONArray jsonArray = null;
-//
-//        ArrayList<GetSellerStaffModel> StaffDetailsList = new ArrayList<GetSellerStaffModel>();
-//
-//        try {
-//            JSONObject parentObject = new JSONObject(result);
-//
-//            JSONObject parentJSONObj = parentObject.getJSONObject("results");
-//
-//            boolean isResponse = parentJSONObj.getBoolean("response");
-//            Log.e(TAG, "getSellerDetail reponse is=" + isResponse);
-//
-//            String JsonBuyerDetails = parentJSONObj.getString("data");
-//
-//            if (!JsonBuyerDetails.equals("false")) {
-//
-////                JSONObject staffDetails = parentJSONObj.getJSONObject("data");
-//
-//                JSONArray staffDetailsArray = parentJSONObj.getJSONArray("data");
-//
-//                for (int i = 0; i < staffDetailsArray.length(); i++) {
-//                    JSONObject staffDetailsJSONObj = (JSONObject) staffDetailsArray.get(i);
-//
-//                    String id = staffDetailsJSONObj.getString("id");
-//                    String name = staffDetailsJSONObj.getString("name");
-//                    String sellerId = staffDetailsJSONObj.getString("sellerId");
-//
-//                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name));
-//                }
-//
-//            }
-//        } catch (JSONException e) {
-//            Log.e(TAG, "JSONExc getStaff_time=" + e);
-//            e.printStackTrace();
-//            NotFoundDialog.show();
-//        }
-//        return StaffDetailsList;
-//    }
+        this.id = id;
+        this.fromTime = fromTime;
+        this.toTime = toTime;
+        this.name = name;
 
+        progressDialog = new ProgressDialog(ctx);
+        progressDialog.setMessage("Processing Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setMessage("Plesae try again! Internet problem Or Unregistered Email address");
+        builder.setTitle("Not Found");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        NotFoundDialog = builder.create();
+        NotFoundDialog.setCancelable(false);
+
+        isStaffStatus = "updateStaffDetails";
+        new UpdateStaffDetail().execute("0");
+    }
 
     /**
      * Background Async Task to fetch all services
      */
-    class AddStaffDetail extends AsyncTask<String, String, String> {
+    class UpdateStaffDetail extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -129,7 +115,7 @@ public class ForgotPasswordServiceSeller {
         protected String doInBackground(String... input) {
             try {
                 URL url = new URL(Constant.baseUrl + _url);
-                Log.e(TAG, "Forgot Password url=" + url);
+                Log.e(TAG, "UpdateStaffDetail url=" + url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -138,9 +124,19 @@ public class ForgotPasswordServiceSeller {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String post_data =
-                        URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
-
+                String post_data;
+                if (isStaffStatus.equals("updateStatus")) {
+                    post_data =
+                            URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8")
+                                    + "&" + URLEncoder.encode("status", "UTF-8") + "=" + URLEncoder.encode(status, "UTF-8");
+                } else {
+                    post_data =
+                            URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8")
+                                    + "&" + URLEncoder.encode("fromTime", "UTF-8") + "=" + URLEncoder.encode(fromTime, "UTF-8")
+                                    + "&" + URLEncoder.encode("toTime", "UTF-8") + "=" + URLEncoder.encode(toTime, "UTF-8")
+                                    + "&" + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")
+                    ;
+                }
                 bufferedWriter.write(post_data);
 
                 bufferedWriter.close();
@@ -156,15 +152,15 @@ public class ForgotPasswordServiceSeller {
                 }
                 bufferedReader.close();
                 inputStream.close();
-                Log.e(TAG, "AddStaffDetail result=" + result);
+                Log.e(TAG, "UpdateStaff result=" + result);
                 return result;
 
             } catch (MalformedURLException e) {
-                Log.e(TAG, "MalformedURLException=" + e);
+                Log.e(TAG, "UpdateStaff error=" + e);
                 progressDialog.dismiss();
                 return null;
             } catch (Exception e) {
-                Log.e(TAG, "exception Exception=" + e);
+                Log.e(TAG, "UpdateStaff Exception=" + e);
                 progressDialog.dismiss();
                 return null;
             }
@@ -172,15 +168,15 @@ public class ForgotPasswordServiceSeller {
 
 
         protected void onPostExecute(String response) {
-            Log.e(TAG, "forgot password list PostExec" + response);
-            if (response != null && response.contains("Password send to email")) {
+            Log.e(TAG, "UpdateStaff PostExec" + response);
+            if (response != null && response.contains("true")) {
                 //ArrayList<GetSellerStaffModel> StaffDetails = returnParsedJsonObject(response);
 //                returnParsedJsonObject(response);
 //                Log.e(TAG, "getServiceSellers list pr1212o" + list.size());
                 // ref.onStaffAdded(true);
-                Toast.makeText(ctx, "Password send to your email address", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Record is Updated", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                ref.onForgotPassRequestSubmitted();
+//                ref.onForgotPassRequestSubmitted();
             } else {
                 progressDialog.dismiss();
                 NotFoundDialog.show();

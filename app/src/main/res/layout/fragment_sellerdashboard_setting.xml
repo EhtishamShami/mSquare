@@ -28,6 +28,17 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/avatar" />
 
+                <TextView
+                    android:id="@+id/edit_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="15dp"
+                    android:text="Edit"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textStyle="bold" />
+
                 <View
                     android:id="@+id/line"
                     android:layout_width="fill_parent"
@@ -41,39 +52,40 @@
                 android:id="@+id/seller_detials_layout"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_below="@+id/imgs"
                 android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:layout_below="@+id/imgs">
+                android:gravity="center_vertical">
 
                 <RelativeLayout
                     android:id="@+id/seller_title_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ffffff"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:background="#ffffff">
 
                     <TextView
                         android:id="@+id/ownerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="4dp"
                         android:text="OWNER NAME:"
-                       android:layout_centerVertical="true"
-                        android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/seller_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="Seller Name"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/ownerName"
+                        android:text="Seller Name"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="13sp" />
+
                     <View
                         android:id="@+id/line3"
                         android:layout_width="1dp"
@@ -146,10 +158,10 @@
                         android:id="@+id/btnViewStaff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_head_right"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/arrow_head_right" />
 
                     <View
                         android:id="@+id/lineStaff"
@@ -289,11 +301,11 @@
                         android:textSize="16sp" />
 
                     <!--<View-->
-                        <!--android:id="@+id/linelogout"-->
-                        <!--android:layout_width="fill_parent"-->
-                        <!--android:layout_height="0.3dp"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:background="#949391" />-->
+                    <!--android:id="@+id/linelogout"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="0.3dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="#949391" />-->
 
                 </RelativeLayout>
 

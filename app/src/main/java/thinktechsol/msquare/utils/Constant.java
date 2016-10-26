@@ -5,8 +5,10 @@ import android.view.animation.AlphaAnimation;
 
 import java.util.ArrayList;
 
+import thinktechsol.msquare.model.GetSellerStaffModel;
 import thinktechsol.msquare.model.Response.ProductImages;
 import thinktechsol.msquare.model.Response.getSellerProductsResponse;
+import thinktechsol.msquare.model.SellerDetailsByIdModel;
 
 /**
  * Created by Arshad.Iqbal on 5/17/2016.
@@ -42,6 +44,9 @@ public class Constant {
 
     //    add or view product selection switch
     public static boolean addOrViewProduct;
+
+    public static GetSellerStaffModel singleStaff;
+    public static SellerDetailsByIdModel sellerDetailsObj;
 
     public static String logInAs;
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/lbl"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:layout_centerVertical="true"/>-->
+
+
+        <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/lbl"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="7dp"-->
+        <!--android:src="@drawable/avatar"-->
+        <!--app:civ_border_color="#FF000000"-->
+        <!--app:civ_border_width="0dp" />-->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/staffName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Staff Name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="20sp" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/status"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/sellers_title"-->
+            <!--android:text="aaaaasdfsdd"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:textSize="12sp"></TextView>-->
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/isEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/switch_list_selector"
+            android:paddingRight="20dp"
+            android:paddingTop="40dp"></CheckBox>
+    </RelativeLayout>
+</RelativeLayout>

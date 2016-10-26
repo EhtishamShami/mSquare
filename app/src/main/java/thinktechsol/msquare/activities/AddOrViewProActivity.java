@@ -683,7 +683,7 @@ public class AddOrViewProActivity extends Activity implements UploadImgInterface
                 now.get(Calendar.MINUTE),
                 true
         );
-        tpd.setTitle("TimePicker Title");
+        tpd.setTitle("Pick the Time");
         tpd.setMaxTime(6, 59, 0);
         tpd.setMinTime(0, 10, 0);
         tpd.setStartTime(0, 15);

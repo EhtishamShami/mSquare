@@ -125,11 +125,14 @@ public class GetSellerDetailsById {
                 String latitude = sellerDetails.getString("latitude");
                 String datetime = sellerDetails.getString("datetime");
                 String mobileNo = sellerDetails.getString("mobileNo");
+                String citystate = sellerDetails.getString("citystate");
+                String country = sellerDetails.getString("country");
 
 
                 Log.e(TAG, "rating of seller=" + ratingSD);
                 SellerDetailsList.add(new SellerDetailsByIdModel(
-                        ratingSD,  logo,  status,  tradeNo,  documents,  lName,  fromTime,  companyName,  password,  toTime,  fName,  id,  phoneNo,  email,  address,  deviceType,  deviceToken,  description,  activationCode,  service,  longitude,  latitude,  datetime,  mobileNo
+                        ratingSD,  logo,  status,  tradeNo,  documents,  lName,  fromTime,  companyName,  password,  toTime,  fName,  id,  phoneNo,  email,  address,  deviceType,  deviceToken,  description,  activationCode,  service,
+                        longitude,  latitude,  datetime,  mobileNo,citystate,country
                 ));
 
             }

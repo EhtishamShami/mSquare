@@ -23,6 +23,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.adapter.ViewProductListAdapter;
+import thinktechsol.msquare.adapter.ViewStaffListAdapter;
 import thinktechsol.msquare.globels.globels;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
 import thinktechsol.msquare.model.GetSellerStaffModel;
@@ -129,13 +131,15 @@ public class SellerViewStaffActivity extends Activity {
 
         Log.e("StaffDetails", "StaffDetails size is=" + StaffDetails.size());
 
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < StaffDetails.size(); i++) {
-            list.add(StaffDetails.get(i).name);
-        }
+//        ArrayList<GetSellerStaffModel> list = new ArrayList<GetSellerStaffModel>();
+//        for (int i = 0; i < StaffDetails.size(); i++) {
+//            list.add(StaffDetails.get(i).name);
+//        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SellerViewStaffActivity.this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
+        ViewStaffListAdapter m_adapter = new ViewStaffListAdapter(SellerViewStaffActivity.this, SellerViewStaffActivity.this, R.layout.view_staff_list_item, StaffDetails);
+        listView.setAdapter(m_adapter);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SellerViewStaffActivity.this, android.R.layout.simple_list_item_1, StaffDetails);
+//        listView.setAdapter(adapter);
 
     }
 

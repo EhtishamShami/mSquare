@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titlebar"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/lbl_staff_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Basic Info:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_fname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="15dp"
+            android:layout_below="@+id/lbl_staff_name"
+            android:layout_marginTop="9dp"
+            android:imeOptions="actionNext"
+            android:ems="10"
+            android:singleLine="true"
+            android:nextFocusDown="@+id/et_lname"
+            android:background="@drawable/bg_edittext" />
+
+        <EditText
+            android:id="@+id/et_lname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="15dp"
+            android:imeOptions="actionNext"
+            android:ems="10"
+            android:singleLine="true"
+            android:nextFocusDown="@+id/et_phone"
+            android:layout_below="@+id/et_fname"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_edittext" />
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="15dp"
+            android:imeOptions="actionNext"
+            android:ems="10"
+            android:singleLine="true"
+            android:nextFocusDown="@+id/et_city_state"
+            android:layout_below="@+id/et_lname"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_edittext" />
+
+        <EditText
+            android:id="@+id/et_city_state"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:imeOptions="actionDone"
+            android:ems="10"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:layout_below="@+id/et_phone"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_edittext" />
+
+        <TextView
+            android:id="@+id/lbl_staff_timing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_city_state"
+            android:layout_marginTop="20dp"
+            android:text="Update Store Timings:"
+            android:textSize="20sp"
+
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lbl_staff_timing"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal">
+
+            <RelativeLayout
+                android:id="@+id/lbl_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/lbl_start_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="Start Time"
+                    android:textColor="@android:color/holo_green_light"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lbl_end_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="End Time"
+                    android:textColor="@android:color/holo_green_light"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_layout"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/start_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="6:00 AM"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/end_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="12:00 AM"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

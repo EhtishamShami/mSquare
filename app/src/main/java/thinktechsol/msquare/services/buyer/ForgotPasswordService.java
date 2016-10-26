@@ -72,47 +72,47 @@ public class ForgotPasswordService {
     }
 
 
-    private ArrayList<GetSellerStaffModel> returnParsedJsonObject(String result) {
-
-        JSONObject resultObject = null;
-        JSONArray jsonArray = null;
-
-        ArrayList<GetSellerStaffModel> StaffDetailsList = new ArrayList<GetSellerStaffModel>();
-
-        try {
-            JSONObject parentObject = new JSONObject(result);
-
-            JSONObject parentJSONObj = parentObject.getJSONObject("results");
-
-            boolean isResponse = parentJSONObj.getBoolean("response");
-            Log.e(TAG, "getSellerDetail reponse is=" + isResponse);
-
-            String JsonBuyerDetails = parentJSONObj.getString("data");
-
-            if (!JsonBuyerDetails.equals("false")) {
-
-//                JSONObject staffDetails = parentJSONObj.getJSONObject("data");
-
-                JSONArray staffDetailsArray = parentJSONObj.getJSONArray("data");
-
-                for (int i = 0; i < staffDetailsArray.length(); i++) {
-                    JSONObject staffDetailsJSONObj = (JSONObject) staffDetailsArray.get(i);
-
-                    String id = staffDetailsJSONObj.getString("id");
-                    String name = staffDetailsJSONObj.getString("name");
-                    String sellerId = staffDetailsJSONObj.getString("sellerId");
-
-                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name));
-                }
-
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONExc getStaff_time=" + e);
-            e.printStackTrace();
-            NotFoundDialog.show();
-        }
-        return StaffDetailsList;
-    }
+//    private ArrayList<GetSellerStaffModel> returnParsedJsonObject(String result) {
+//
+//        JSONObject resultObject = null;
+//        JSONArray jsonArray = null;
+//
+//        ArrayList<GetSellerStaffModel> StaffDetailsList = new ArrayList<GetSellerStaffModel>();
+//
+//        try {
+//            JSONObject parentObject = new JSONObject(result);
+//
+//            JSONObject parentJSONObj = parentObject.getJSONObject("results");
+//
+//            boolean isResponse = parentJSONObj.getBoolean("response");
+//            Log.e(TAG, "getSellerDetail reponse is=" + isResponse);
+//
+//            String JsonBuyerDetails = parentJSONObj.getString("data");
+//
+//            if (!JsonBuyerDetails.equals("false")) {
+//
+////                JSONObject staffDetails = parentJSONObj.getJSONObject("data");
+//
+//                JSONArray staffDetailsArray = parentJSONObj.getJSONArray("data");
+//
+//                for (int i = 0; i < staffDetailsArray.length(); i++) {
+//                    JSONObject staffDetailsJSONObj = (JSONObject) staffDetailsArray.get(i);
+//
+//                    String id = staffDetailsJSONObj.getString("id");
+//                    String name = staffDetailsJSONObj.getString("name");
+//                    String sellerId = staffDetailsJSONObj.getString("sellerId");
+//
+//                    StaffDetailsList.add(new GetSellerStaffModel(id, sellerId, name));
+//                }
+//
+//            }
+//        } catch (JSONException e) {
+//            Log.e(TAG, "JSONExc getStaff_time=" + e);
+//            e.printStackTrace();
+//            NotFoundDialog.show();
+//        }
+//        return StaffDetailsList;
+//    }
 
 
     /**

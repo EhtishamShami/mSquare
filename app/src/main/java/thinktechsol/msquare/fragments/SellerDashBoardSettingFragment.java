@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import thinktechsol.msquare.R;
+import thinktechsol.msquare.activities.SellerEditActivity;
 import thinktechsol.msquare.activities.SellerViewStaffActivity;
 import thinktechsol.msquare.activities.UserTypeActivity;
 import thinktechsol.msquare.globels.globels;
@@ -31,7 +32,7 @@ import thinktechsol.msquare.utils.Constant;
 
 public class SellerDashBoardSettingFragment extends Fragment {
 
-    TextView seller_title, staffText, phoneText, addressText, logoutText, emailText;
+    TextView seller_title, staffText, phoneText, addressText, logoutText, emailText, edit_user;
     RelativeLayout titlebarlayout, seller_detials_layout, seller_title_layout, ratinglayout, staff_layout, seller_email_layout, phone_layout, address_layout, seller_logout_layout;
     RatingBar rating;
     ImageView userImage, btnViewStaff, logoutImg;
@@ -89,7 +90,13 @@ public class SellerDashBoardSettingFragment extends Fragment {
         addressText = (TextView) v.findViewById(R.id.addressText);
         logoutText = (TextView) v.findViewById(R.id.logoutText);
         logoutImg = (ImageView) v.findViewById(R.id.logoutImg);
-
+        edit_user = (TextView) v.findViewById(R.id.edit_user);
+        edit_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SellerEditActivity.class));
+            }
+        });
 
         rating = (RatingBar) v.findViewById(R.id.rating);
         LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
@@ -151,7 +158,7 @@ public class SellerDashBoardSettingFragment extends Fragment {
 
     public void fillProductListWithData(ArrayList<SellerDetailsByIdModel> SellerDetail) {
         try {
-
+            Constant.sellerDetailsObj = SellerDetail.get(0);
             seller_title.setText("" + SellerDetail.get(0).fName + " " + SellerDetail.get(0).lName);
             //staffText.setText(""+SellerDetail.get(0));
             emailText.setText("" + SellerDetail.get(0).email);
