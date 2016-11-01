@@ -30,6 +30,8 @@ import java.util.Locale;
 
 import thinktechsol.msquare.R;
 import thinktechsol.msquare.model.Buyer.BuyerWishListModel;
+import thinktechsol.msquare.services.SellerUpdateService;
+import thinktechsol.msquare.services.SellerUpdateStaffService;
 import thinktechsol.msquare.utils.Constant;
 
 public class SellerEditActivity extends Activity implements TimePickerDialog.OnTimeSetListener {
@@ -63,22 +65,22 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
         SellerFromTime = 200;/*timeToMinConversion(Constant.sellerDetailsObj.fromTime);*/
         SellerToTime = 370;/*timeToMinConversion(Constant.sellerDetailsObj.toTime);*/
 
-        showPopUp();
+//        showPopUp();
 //        String str_date="11-June-07";
 //        DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss zzz yyyy");
 //        Date date = formatter.parse(str_date);
 
-        String expectedPattern = "HH:mm:ss";
-        SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
-        try {
-            String userInput = "HH:mm:ss";
-            Date date = formatter.parse(userInput);
-            Log.e("SellerEditStaff", "From Time=" + userInput);
-            System.out.println(date);
-        } catch (ParseException e) {
-            Log.e("SellerEditStaff", "excep From Time=" + e);
-            e.printStackTrace();
-        }
+//        String expectedPattern = "HH:mm:ss";
+//        SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+//        try {
+//            String userInput = "HH:mm:ss";
+//            Date date = formatter.parse(userInput);
+//            Log.e("SellerEditStaff", "From Time=" + userInput);
+//            System.out.println(date);
+//        } catch (ParseException e) {
+//            Log.e("SellerEditStaff", "excep From Time=" + e);
+//            e.printStackTrace();
+//        }
 
 //        Constant.singleStaff
         titlebarlayout = (RelativeLayout) findViewById(R.id.titlebarlayout);
@@ -107,8 +109,14 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (Constant.sellerDetailsObj.fromTime)
-//                    new SellerUpdateStaffService(SellerEditStaffActivity.this, SellerEditStaffActivity.this, Constant.singleStaff.id, fromTime, toTime, et_staff_name.getText().toString());
+                if (et_phone.getText().toString() != null && et_fname.getText().toString() != null
+                        && et_lname.getText().toString() != null && et_city_state.getText().toString() != null
+                        && fromTime != null && toTime != null) {
+                    new SellerUpdateService(SellerEditActivity.this, SellerEditActivity.this,
+                            Constant.sellerDetailsObj.id, fromTime, toTime, et_fname.getText().toString(), et_lname.getText().toString(),
+                            et_phone.getText().toString(), Constant.sellerDetailsObj.phoneNo, et_city_state.getText().toString()
+                    );
+                }
             }
         });
         title.setText("Edit User");
@@ -122,16 +130,16 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_city_state = (EditText) findViewById(R.id.et_city_state);
 
-        et_fname.setText(""+Constant.sellerDetailsObj.fName);
+        et_fname.setText("" + Constant.sellerDetailsObj.fName);
         et_fname.setSelection(et_fname.getText().length());
 
-        et_lname.setText(""+Constant.sellerDetailsObj.lName);
+        et_lname.setText("" + Constant.sellerDetailsObj.lName);
         et_lname.setSelection(et_lname.getText().length());
 
-        et_phone.setText(""+Constant.sellerDetailsObj.mobileNo);
+        et_phone.setText("" + Constant.sellerDetailsObj.mobileNo);
         et_phone.setSelection(et_phone.getText().length());
 
-        et_city_state.setText(""+Constant.sellerDetailsObj.citystate);
+        et_city_state.setText("" + Constant.sellerDetailsObj.address);
         et_city_state.setSelection(et_city_state.getText().length());
 
         lbl_start_timing = (TextView) findViewById(R.id.lbl_start_timing);
@@ -140,8 +148,8 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
         start_timing = (TextView) findViewById(R.id.start_timing);
         end_timing = (TextView) findViewById(R.id.end_timing);
 
-
-        //et_staff_name.setText("" + Constant.singleStaff.name);
+        start_timing.setText("" + Constant.sellerDetailsObj.fromTime);
+        end_timing.setText("" + Constant.sellerDetailsObj.toTime);
 
         lbl_start_timing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,10 +166,6 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
                 show_time_picker(lbl_end_timing);
             }
         });
-//        listView = (ListView) findViewById(R.id.list);
-//        adapter = new BuyerViewStaffAdapter(BuyerViewStaffActivity.this, android.R.layout.simple_list_item_1, list);
-
-
     }
 
     public void show_time_picker(View v) {
@@ -185,23 +189,15 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (TimeClickedView.equals("startTimeTv")) {
-//            Toast.makeText(getApplicationContext(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
+
             fromTime = hourOfDay + ":" + minute + ":00";
-            staffFromTime = hourOfDay * 60 + minute;
-            if (staffFromTime > SellerFromTime && staffFromTime < SellerToTime) {
-                boolean isPM = (hourOfDay >= 12);
-                start_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
-            } else {
-                timeNotMatchedAlert.show();
-            }
+            boolean isPM = (hourOfDay >= 12);
+            start_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
 
         } else {
-
             toTime = hourOfDay + ":" + minute + ":00";
-            staffToTime = hourOfDay * 60 + minute;
             boolean isPM = (hourOfDay >= 12);
             end_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
-            //endTimeTv.setText(hourOfDay+":"+minute);
         }
     }
 

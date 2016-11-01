@@ -53,7 +53,7 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
     EditText et_staff_name;
     TextView lbl_start_timing, lbl_end_timing, start_timing, end_timing;
     String fromTime, toTime;
-    int SellerFromTime, SellerToTime, staffFromTime, staffToTime;
+    int SellerFromTime = 0, SellerToTime = 0, staffFromTimeInMin, staffToTimeInMin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +68,11 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
 
 //        String SellerFromTime = Constant.sellerDetailsObj.fromTime;
 
-        SellerFromTime = 200;/*timeToMinConversion(Constant.sellerDetailsObj.fromTime);*/
-        SellerToTime = 370;/*timeToMinConversion(Constant.sellerDetailsObj.toTime);*/
+        if (Constant.sellerDetailsObj.fromTime != null || Constant.sellerDetailsObj.fromTime.length() > 0)
+            SellerFromTime = timeToMinConversion(Constant.sellerDetailsObj.fromTime);
+
+        if (Constant.sellerDetailsObj.toTime != null || Constant.sellerDetailsObj.toTime.length() > 0)
+            SellerToTime = timeToMinConversion(Constant.sellerDetailsObj.toTime);
 
         showPopUp();
 //        String str_date="11-June-07";
@@ -116,7 +119,7 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
             @Override
             public void onClick(View v) {
 //                if (Constant.sellerDetailsObj.fromTime)
-//                    new SellerUpdateStaffService(SellerEditStaffActivity.this, SellerEditStaffActivity.this, Constant.singleStaff.id, fromTime, toTime, et_staff_name.getText().toString());
+                new SellerUpdateStaffService(SellerEditStaffActivity.this, SellerEditStaffActivity.this, Constant.singleStaff.id, fromTime, toTime, et_staff_name.getText().toString());
             }
         });
         title.setText("Edit Staff");
@@ -132,6 +135,15 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
         start_timing = (TextView) findViewById(R.id.start_timing);
         end_timing = (TextView) findViewById(R.id.end_timing);
 
+        if (Constant.singleStaff.fromTime == null || Constant.singleStaff.fromTime.length() == 0)
+            start_timing.setText("00:00:00");
+        else
+            start_timing.setText("" + ChangeMyTimeToAmPm(Constant.singleStaff.fromTime));
+
+        if (Constant.singleStaff.fromTime == null || Constant.singleStaff.fromTime.length() == 0)
+            end_timing.setText("00:00:00");
+        else
+            end_timing.setText("" + ChangeMyTimeToAmPm(Constant.singleStaff.toTime));
 
         et_staff_name.setText("" + Constant.singleStaff.name);
 
@@ -169,7 +181,6 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
 //        tpd.setMinTime(0, 10, 0);
 //        tpd.setStartTime(0, 15);
         tpd.show();
-
     }
 
     int ConvertedSelectedTimeToMinuteStartTime, ConvertedSelectedTimeToMinuteEndTime;
@@ -179,8 +190,8 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
         if (TimeClickedView.equals("startTimeTv")) {
 //            Toast.makeText(getApplicationContext(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
             fromTime = hourOfDay + ":" + minute + ":00";
-            staffFromTime = hourOfDay * 60 + minute;
-            if (staffFromTime > SellerFromTime && staffFromTime < SellerToTime) {
+            staffFromTimeInMin = hourOfDay * 60 + minute;
+            if (SellerFromTime != 0 && staffFromTimeInMin >= SellerFromTime && staffFromTimeInMin <= SellerToTime) {
                 boolean isPM = (hourOfDay >= 12);
                 start_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
             } else {
@@ -190,10 +201,13 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
         } else {
 
             toTime = hourOfDay + ":" + minute + ":00";
-            staffToTime = hourOfDay * 60 + minute;
-            boolean isPM = (hourOfDay >= 12);
-            end_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
-            //endTimeTv.setText(hourOfDay+":"+minute);
+            staffToTimeInMin = hourOfDay * 60 + minute;
+            if (SellerToTime != 0 && staffToTimeInMin >= SellerFromTime && staffToTimeInMin <= SellerToTime) {
+                boolean isPM = (hourOfDay >= 12);
+                end_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
+            } else {
+                timeNotMatchedAlert.show();
+            }
         }
     }
 
@@ -295,5 +309,21 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
         });
         timeNotMatchedAlert = builder.create();
         timeNotMatchedAlert.setCancelable(false);
+    }
+
+    public String ChangeMyTimeToAmPm(String time) {
+//        String input = "2014-04-25 17:03:13";
+        String input = time;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("KK:mm a");
+//        System.out.println(outputFormat.format(inputFormat.parse(input)));
+        try {
+//            Log.e("SellerEditStaffAct", "changed time formater=" + outputFormat.format(inputFormat.parse(input)));
+            return outputFormat.format(inputFormat.parse(input));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

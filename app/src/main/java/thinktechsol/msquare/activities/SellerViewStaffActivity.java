@@ -143,6 +143,14 @@ public class SellerViewStaffActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (globels.getGlobelRef().sellerLoginId != null && globels.getGlobelRef().sellerLoginId.length() > 0)
+            new GetSellerStaffService(this, this, globels.getGlobelRef().sellerLoginId);
+    }
+
     public void onStaffAdded(boolean isAdded) {
         if (isAdded) {
             addStaffDialog.dismiss();
