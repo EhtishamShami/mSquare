@@ -482,13 +482,6 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                     public void onSuccess(LoginResult loginResult) {
 
                         try {
-                            //final Profile profile = Profile.getCurrentProfile();
-                            // Log.e("BuyerLoginActivity", "link of profile=" + profile.getName());
-//                            Log.e("BuyerLoginActivity", "link of profile img=" + profile.getProfilePictureUri(500,500));
-//                            Log.e("BuyerLoginActivity", "link of profile img=" +);
-                            //profile.getName();
-
-                            // Facebook Email address
                             GraphRequest request = GraphRequest.newMeRequest(
                                     loginResult.getAccessToken(),
                                     new GraphRequest.GraphJSONObjectCallback() {
@@ -496,15 +489,12 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                                         public void onCompleted(
                                                 JSONObject object,
                                                 GraphResponse response) {
-                                            Log.e("LoginActivity Response ", "fbb response of fb=" + response);
-                                            Log.e("LoginActivity Response ", "fbb object of fb 2=" + object);
                                             try {
                                                 if (object.has("email"))
                                                     emailOfFbLogin = object.getString("email");
 
                                                 nameOfFbLogin = object.getString("name");
 
-                                                Log.e("LoginActivity= ", "email of fb login is=" + emailOfFbLogin);
                                                 RegisterRequestModel requestModel = new RegisterRequestModel(nameOfFbLogin, nameOfFbLogin, emailOfFbLogin, "", "facebook", "", "1");
                                                 new BuyerRegisterationForSocialMedia(BuyerLoginActivity.this, BuyerLoginActivity.this, requestModel);
                                             } catch (JSONException e) {
@@ -520,7 +510,7 @@ public class BuyerLoginActivity extends FragmentActivity implements GoogleApiCli
                             Constant.logInAs = "facebook";
 
                         } catch (Exception e) {
-                            Toast.makeText(BuyerLoginActivity.this, "Login Failed Please try again=====" + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BuyerLoginActivity.this, "Login Failed Please try again", Toast.LENGTH_SHORT).show();
                             Log.e("BuyerLoginActivity", "catching the exception=" + e);
                         }
                     }

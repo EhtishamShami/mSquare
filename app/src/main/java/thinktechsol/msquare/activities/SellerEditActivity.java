@@ -182,6 +182,7 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
 //        tpd.setStartTime(0, 15);
         tpd.show();
 
+
     }
 
     int ConvertedSelectedTimeToMinuteStartTime, ConvertedSelectedTimeToMinuteEndTime;
@@ -190,12 +191,38 @@ public class SellerEditActivity extends Activity implements TimePickerDialog.OnT
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (TimeClickedView.equals("startTimeTv")) {
 
-            fromTime = hourOfDay + ":" + minute + ":00";
+            String minutes = null, hours = null;
+            if (Integer.toString(minute).length() > 1)
+                minutes = Integer.toString(minute);
+            else
+                minutes = "0" + Integer.toString(minute);
+
+            if (Integer.toString(hourOfDay).length() > 1)
+                hours = Integer.toString(hourOfDay);
+            else
+                hours = "0" + hourOfDay;
+
+
+            fromTime = hours + ":" + minutes + ":00";
+
             boolean isPM = (hourOfDay >= 12);
             start_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
 
         } else {
-            toTime = hourOfDay + ":" + minute + ":00";
+
+            String minutes = null, hours = null;
+            if (Integer.toString(minute).length() > 1)
+                minutes = Integer.toString(minute);
+            else
+                minutes = "0" + Integer.toString(minute);
+
+            if (Integer.toString(hourOfDay).length() > 1)
+                hours = Integer.toString(hourOfDay);
+            else
+                hours = "0" + hourOfDay;
+
+            toTime = hours + ":" + minutes + ":00";
+
             boolean isPM = (hourOfDay >= 12);
             end_timing.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
         }

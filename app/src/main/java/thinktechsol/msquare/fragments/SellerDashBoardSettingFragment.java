@@ -215,5 +215,11 @@ public class SellerDashBoardSettingFragment extends Fragment {
         return paramName;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (globels.getGlobelRef().sellerLoginId != null && globels.getGlobelRef().sellerLoginId.length() > 0)
+            new GetSellerDetailsById(getActivity(), SellerDashBoardSettingFragment.this, globels.getGlobelRef().sellerLoginId);
+    }
 
 }

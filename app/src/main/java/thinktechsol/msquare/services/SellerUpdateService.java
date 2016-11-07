@@ -1,5 +1,6 @@
 package thinktechsol.msquare.services;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import thinktechsol.msquare.activities.SellerEditActivity;
 import thinktechsol.msquare.activities.SellerViewStaffActivity;
 import thinktechsol.msquare.utils.Constant;
 //import org.json..parser.JSONParser;
@@ -73,6 +75,7 @@ public class SellerUpdateService {
 
 //        isStaffStatus = "updateStaffDetails";
         new UpdateSellerDetail().execute("0");
+
     }
 
     /**
@@ -89,6 +92,7 @@ public class SellerUpdateService {
             try {
                 URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "UpdateSeller url=" + url);
+                Log.e(TAG, "UpdateSeller values=" + fromTime+" && "+toTime);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);

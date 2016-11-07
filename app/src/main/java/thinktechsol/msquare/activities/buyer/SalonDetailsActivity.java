@@ -19,11 +19,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -52,7 +54,7 @@ import thinktechsol.msquare.services.buyer.GetServiceSellersSearch3;
 import thinktechsol.msquare.services.getServiceSellers;
 import thinktechsol.msquare.utils.Constant;
 
-public class SalonDetailsActivity extends FragmentActivity {
+public class SalonDetailsActivity extends AppCompatActivity {
 
     RelativeLayout titlebarlayout;
     TextView title;
@@ -93,16 +95,14 @@ public class SalonDetailsActivity extends FragmentActivity {
         btn_menu.setVisibility(View.VISIBLE);
         title.setVisibility(View.GONE);
 
-//        searchView.setBackgroundColor(this.getResources().getColor(R.color.search));
 
-        FloatingActionButton filterBtn = (FloatingActionButton) findViewById(R.id.filterBtn);
-//        filterBtn.setBackgroundColor(this.getResources().getColor(globels.getGlobelRef().them_color));
-//        filterBtn.setBackgroundColor(Color.parseColor(globels.getGlobelRef().them_color2));
-//        filterBtn.setBackgroundTintList(ColorStateList.valueOf(globels.getGlobelRef().them_color2));
-        filterBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(globels.getGlobelRef().them_color)));
+//        FloatingActionButton filterBtn = (FloatingActionButton) findViewById(R.id.filterBtn);
+//        filterBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(globels.getGlobelRef().them_color)));
 
-//        filterBtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(globels.getGlobelRef().them_color2)));
-//        filterBtn.setBackgroundDrawable(new ColorDrawable(Color.parseColor(globels.getGlobelRef().them_color2)));
+        de.hdodenhof.circleimageview.CircleImageView filterBtn = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.filterBtn);
+        filterBtn.setFillColor(getResources().getColor(globels.getGlobelRef().them_color));
+//        filterBtn.setBackgroundColor(getResources().getColor(globels.getGlobelRef().them_color));
+
 
         btn_menu.setBackgroundResource(R.drawable.btn_menu);
 

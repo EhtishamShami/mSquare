@@ -188,8 +188,22 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (TimeClickedView.equals("startTimeTv")) {
-//            Toast.makeText(getApplicationContext(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
-            fromTime = hourOfDay + ":" + minute + ":00";
+
+            String minutes = null, hours = null;
+            if (Integer.toString(minute).length() > 1)
+                minutes = Integer.toString(minute);
+            else
+                minutes = "0" + Integer.toString(minute);
+
+            if (Integer.toString(hourOfDay).length() > 1)
+                hours = Integer.toString(hourOfDay);
+            else
+                hours = "0" + hourOfDay;
+
+            fromTime = hours + ":" + minutes + ":00";
+//            fromTime = hourOfDay + ":" + minute + ":00";
+
+
             staffFromTimeInMin = hourOfDay * 60 + minute;
             if (SellerFromTime != 0 && staffFromTimeInMin >= SellerFromTime && staffFromTimeInMin <= SellerToTime) {
                 boolean isPM = (hourOfDay >= 12);
@@ -200,7 +214,21 @@ public class SellerEditStaffActivity extends Activity implements TimePickerDialo
 
         } else {
 
-            toTime = hourOfDay + ":" + minute + ":00";
+            String minutes = null, hours = null;
+            if (Integer.toString(minute).length() > 1)
+                minutes = Integer.toString(minute);
+            else
+                minutes = "0" + Integer.toString(minute);
+
+            if (Integer.toString(hourOfDay).length() > 1)
+                hours = Integer.toString(hourOfDay);
+            else
+                hours = "0" + hourOfDay;
+
+            toTime = hours + ":" + minutes + ":00";
+
+//            toTime = hourOfDay + ":" + minute + ":00";
+
             staffToTimeInMin = hourOfDay * 60 + minute;
             if (SellerToTime != 0 && staffToTimeInMin >= SellerFromTime && staffToTimeInMin <= SellerToTime) {
                 boolean isPM = (hourOfDay >= 12);

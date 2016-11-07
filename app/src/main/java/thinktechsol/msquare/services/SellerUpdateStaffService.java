@@ -116,6 +116,7 @@ public class SellerUpdateStaffService {
             try {
                 URL url = new URL(Constant.baseUrl + _url);
                 Log.e(TAG, "UpdateStaffDetail url=" + url);
+                Log.e(TAG, "UpdateSeller values=" + fromTime+" && "+toTime);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
