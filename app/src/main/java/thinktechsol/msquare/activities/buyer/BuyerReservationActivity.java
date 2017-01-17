@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
@@ -162,6 +163,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         mNewEvents = new ArrayList<WeekViewEvent>();
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
+
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
@@ -183,7 +185,6 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         mWeekView.setNumberOfVisibleDays(5);
         mWeekView.setHourHeight(250);
-
 //        mWeekView.setXScrollingSpeed(5);
 
         // Lets change some dimensions to best fit the view.
@@ -225,7 +226,7 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
                         String sellerId = globels.getGlobelRef().productList.get(0).sellerInfo.id;
                         String buyerId = globels.getGlobelRef().buyerLoginId;
                         String extraRemarks = etDescription.getText().toString();
-                        String serviceRequestTime = selectedDateForPostingToService + " " + selectedTimeForPostingToService;
+                        String serviceRequestTime = selectedDateForPostingToService + " " + tvTime.getText().toString().trim();
                         String staffId = StaffId;
 
                         ConfirmBookingModel obj = new ConfirmBookingModel(sellerId, buyerId, extraRemarks, serviceRequestTime, staffId, globels.getGlobelRef().selectedServicesIds, globels.getGlobelRef().selectedProductsIds, globels.getGlobelRef().selectedQuantityIds);
@@ -356,7 +357,9 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         //Toast.makeText(this, "onMonthChange: " + newEvents, Toast.LENGTH_SHORT).show();
         return newEvents;
-    }
+}
+
+
 
     private ArrayList<WeekViewEvent> getNewEvents(int year, int month) {
 
@@ -415,12 +418,13 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 //        mWeekView.setShowNowLine(true);
 
 //        String value = String.format("%02d %02d %02d", time.get(Calendar.YEAR), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-//        Toast.makeText(this, "selected Date: " + new SimpleDateFormat("yyyy MMM dd").format(time.getTime()), Toast.LENGTH_SHORT).show();
+   //     Toast.makeText(this, "selected Date: " + new SimpleDateFormat("yyyy MMM dd").format(time.getTime()), Toast.LENGTH_SHORT).show();
 
         dateFormatForPosting = new SimpleDateFormat("yyyy-MM-dd");
         tvDate.setText(new SimpleDateFormat("yyyy MMM dd").format(time.getTime()));
         selectedDateForPostingToService = dateFormatForPosting.format(time.getTime());
 
+    //mWeekView.goToDate(time.getTime());
         tvTime.setText("");
 //        new GetStaffTime(this, BuyerReservationActivity.this, "1", "30", selectedDateForPostingToService);
         new GetStaffTime(this, BuyerReservationActivity.this, StaffId, globels.getGlobelRef().SelectedServicesDeliveryTime, selectedDateForPostingToService);
@@ -501,9 +505,10 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
         tvDate.setText(dateFormat2.format(cal.getTime()));
         //tvTime.setText(dateFormat3.format(cal.getTime()));
 
-        if (dateFormatForPosting != null)
+        if (dateFormatForPosting != null) {
             selectedDateForPostingToService = dateFormatForPosting.format(cal.getTime());
-        selectedTimeForPostingToService = dateFormat3.format(cal.getTime());
+        }
+            selectedTimeForPostingToService = dateFormat3.format(cal.getTime());
 
 
         dateFormatForPosting = new SimpleDateFormat("yyyy-MM-dd");
@@ -534,5 +539,6 @@ public class BuyerReservationActivity extends Activity implements WeekView.Event
 
         TimeListAdapter adapter = new TimeListAdapter(this, BuyerReservationActivity.this, R.layout.time_list_adapter_item, staffTimeList);
         timelisview.setAdapter(adapter);
+
     }
 }

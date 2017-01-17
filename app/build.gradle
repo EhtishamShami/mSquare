@@ -35,8 +35,8 @@ android {
         applicationId "thinktechsol.msquare"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 9
-        versionName "1.9"
+        versionCode 11
+        versionName "2.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

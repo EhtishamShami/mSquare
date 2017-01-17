@@ -305,6 +305,13 @@ public class HomeActivity extends Activity {
                 ));
             }
         }
+        if(list.size()%2==1){
+
+            m_parts.add(new HomeItem(id1, status1, description1, name1, parent1, Constant.imgbaseUrl + thumb1, categoryType1, bgColors[ColorCounter][0],
+                    id2, status2, description2, name2, parent2, Constant.imgbaseUrl + thumb2, categoryType2, bgColors[ColorCounter][1], 100
+            ));
+            m_parts.remove(0);
+        }
 
         HomeAdapter m_adapter = new HomeAdapter(HomeActivity.this, R.layout.home_row_item, m_parts);
         listview.setAdapter(m_adapter);
